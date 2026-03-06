@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Global Blockchain Economic Adoption Index</title>
+    <title>Global Blockchain Adaptability Index</title>
     <script src="https://d3js.org/d3.v7.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/topojson-client@3"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -42,10 +42,42 @@
             margin: 0 auto;
         }
 
+        /* === DIMENSION TABS === */
+        .dimension-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 6px;
+            margin: 20px auto 0;
+            max-width: 720px;
+            padding: 0 24px;
+            flex-wrap: wrap;
+        }
+        .dim-tab {
+            padding: 9px 20px;
+            border: 1px solid #ddd;
+            background: #fff;
+            border-radius: 8px;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.82rem;
+            font-weight: 500;
+            color: #5a6a7a;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .dim-tab:hover {
+            background: #f0f4f8;
+            border-color: #bcc;
+        }
+        .dim-tab.active {
+            background: #0a4c6a;
+            color: #fff;
+            border-color: #0a4c6a;
+        }
+
         /* === MAP === */
         .map-section {
             max-width: 1100px;
-            margin: 28px auto 0;
+            margin: 20px auto 0;
             padding: 0 24px;
             position: relative;
         }
@@ -123,7 +155,7 @@
             box-shadow: 0 8px 32px rgba(0,0,0,0.14);
             border: 1px solid #e8e8e8;
             font-size: 0.85rem;
-            max-width: 330px;
+            max-width: 340px;
             opacity: 0;
             transition: opacity 0.2s ease;
             z-index: 1000;
@@ -154,24 +186,40 @@
             color: #0a4c6a;
             margin: 6px 0 2px;
         }
-        .tooltip .detail-grid {
+        .tooltip .score-label {
+            font-size: 0.7rem;
+            color: #9aa5b0;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 4px;
+        }
+        .tooltip .sub-scores {
             display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 8px 18px;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 8px;
             margin-top: 10px;
             padding-top: 10px;
             border-top: 1px solid #f0ece4;
         }
-        .tooltip .detail-label {
-            color: #9aa5b0;
-            font-size: 0.68rem;
-            text-transform: uppercase;
-            letter-spacing: 0.6px;
-            margin-bottom: 1px;
+        .tooltip .sub-score-item {
+            text-align: center;
         }
-        .tooltip .detail-value {
-            font-weight: 500;
+        .tooltip .sub-score-label {
+            color: #9aa5b0;
+            font-size: 0.62rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 3px;
+        }
+        .tooltip .sub-score-value {
+            font-weight: 600;
             color: #2c3e50;
+            font-size: 0.95rem;
+        }
+        .tooltip .sub-score-tier {
+            font-size: 0.62rem;
+            color: #7a8a9a;
+            margin-top: 1px;
         }
         .tooltip .key-driver {
             margin-top: 10px;
@@ -239,6 +287,12 @@
             margin-bottom: 12px;
             color: #1a2a3a;
         }
+        .methodology h3 {
+            font-family: 'Source Serif 4', Georgia, serif;
+            font-size: 1.05rem;
+            margin: 18px 0 8px;
+            color: #1a2a3a;
+        }
         .methodology p {
             font-size: 0.9rem;
             color: #5a6b7c;
@@ -253,6 +307,14 @@
             margin: 14px 0;
             color: #3a4a5a;
             border-left: 4px solid #0a4c6a;
+        }
+        .methodology ul {
+            margin: 8px 0 8px 20px;
+            font-size: 0.88rem;
+            color: #5a6b7c;
+        }
+        .methodology li {
+            margin-bottom: 4px;
         }
 
         /* === TABLE === */
@@ -282,20 +344,20 @@
         thead th {
             background: #0a4c6a;
             color: #fff;
-            padding: 13px 18px;
+            padding: 13px 14px;
             text-align: left;
-            font-size: 0.76rem;
+            font-size: 0.73rem;
             font-weight: 600;
             text-transform: uppercase;
             letter-spacing: 0.6px;
         }
         thead th:first-child {
             text-align: center;
-            width: 60px;
+            width: 54px;
         }
         tbody td {
-            padding: 11px 18px;
-            font-size: 0.86rem;
+            padding: 11px 14px;
+            font-size: 0.84rem;
             border-bottom: 1px solid #f4f2ed;
         }
         tbody tr:last-child td {
@@ -314,7 +376,7 @@
             color: #0a4c6a;
         }
         .score-bar-cell {
-            width: 120px;
+            width: 100px;
         }
         .score-bar-bg {
             width: 100%;
@@ -328,16 +390,10 @@
             border-radius: 4px;
             transition: width 0.6s ease;
         }
-        .confidence-badge {
-            display: inline-block;
-            padding: 2px 8px;
-            border-radius: 4px;
-            font-size: 0.72rem;
-            font-weight: 600;
+        .sub-score-td {
+            font-size: 0.82rem;
+            color: #5a6a7a;
         }
-        .confidence-high { background: #e8f5e9; color: #2e7d32; }
-        .confidence-medium { background: #fff3e0; color: #e65100; }
-        .confidence-low { background: #fce4ec; color: #c62828; }
 
         /* === FOOTER === */
         .footer {
@@ -352,12 +408,14 @@
         @media (max-width: 768px) {
             .header h1 { font-size: 1.6rem; }
             .header .subtitle { font-size: 0.84rem; }
-            .tooltip { max-width: 270px; padding: 14px 16px; }
+            .tooltip { max-width: 280px; padding: 14px 16px; }
             .legend-canvas { width: 180px; }
             .legend-no-data { margin-left: 12px; }
-            thead th, tbody td { padding: 8px 10px; font-size: 0.78rem; }
+            thead th, tbody td { padding: 8px 8px; font-size: 0.74rem; }
             .score-bar-cell { display: none; }
+            .hide-mobile { display: none; }
             .methodology { padding: 20px; }
+            .dim-tab { padding: 7px 14px; font-size: 0.76rem; }
         }
     </style>
 </head>
@@ -365,8 +423,16 @@
 
     <!-- HEADER -->
     <div class="header">
-        <h1>Global Blockchain Economic Adoption Index</h1>
-        <p class="subtitle">Measuring economic blockchain penetration and regulatory clarity across 20 nations using ownership rates, on-chain volume, exchange activity, remittance flows, and regulatory framework analysis</p>
+        <h1>Global Blockchain Adaptability Index</h1>
+        <p class="subtitle">A composite measure of blockchain readiness across 20 nations, combining economic adoption, regulatory clarity, and technical infrastructure</p>
+    </div>
+
+    <!-- DIMENSION TABS -->
+    <div class="dimension-tabs">
+        <button class="dim-tab active" data-dim="overall">Overall Score</button>
+        <button class="dim-tab" data-dim="economic">Economic Adoption</button>
+        <button class="dim-tab" data-dim="regulatory">Regulatory Clarity</button>
+        <button class="dim-tab" data-dim="technical">Technical Infrastructure</button>
     </div>
 
     <!-- MAP -->
@@ -383,9 +449,9 @@
 
     <!-- LEGEND -->
     <div class="legend-section">
-        <span class="legend-labels">0.1</span>
+        <span class="legend-labels" id="legend-min">0.29</span>
         <canvas id="legend-canvas" class="legend-canvas" width="280" height="14"></canvas>
-        <span class="legend-labels">0.85</span>
+        <span class="legend-labels" id="legend-max">0.79</span>
         <div class="legend-no-data">
             <div class="swatch"></div>
             <span>No data</span>
@@ -395,37 +461,51 @@
     <!-- METHODOLOGY -->
     <div class="methodology">
         <h2>Methodology</h2>
-        <p>The Economic Adoption Score quantifies blockchain economic penetration across 20 selected countries using four normalized, weighted indicators:</p>
-        <div class="formula-box">Economic Score = (Ownership &times; 0.30) + (Chainalysis Rank &times; 0.30) + (Volume &times; 0.20) + (Remittances &times; 0.20)</div>
-        <p>Scores range from 0 to 1, where higher values indicate greater economic adoption. Only 20 countries were selected for analysis based on data availability and regional diversity. Countries shown in gray on the map were not included in this study. Confidence ratings reflect the completeness and reliability of the underlying data for each country.</p>
-        <h2 style="margin-top:24px;">Regulatory Clarity Index</h2>
-        <p>The Regulatory Clarity Index measures how clearly defined and accessible the blockchain/stablecoin regulatory environment is in each country. Each country is scored across six dimensions:</p>
-        <div class="formula-box">Reg. Score = (Stablecoin Law + Licensing Framework + Tax Clarity + Banking Access + Enforcement Stance + DeFi Recognition) / 18</div>
-        <p>Each dimension is rated 1&ndash;3 (Hostile/Absent = 1, Partial/In Progress = 2, Clear/Supportive = 3). The composite is normalized to a 0&ndash;1 scale. Higher scores indicate a more developed, clear, and enabling regulatory environment &mdash; not necessarily lenient, but legally well-defined with pathways for compliant operation.</p>
-        <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:10px;">
-            <span style="padding:3px 10px;border-radius:5px;font-size:0.78rem;font-weight:600;background:#e8f5e9;color:#2e7d32;">0.8&ndash;1.0 Comprehensive</span>
-            <span style="padding:3px 10px;border-radius:5px;font-size:0.78rem;font-weight:600;background:#fff3e0;color:#e65100;">0.6&ndash;0.8 Developing</span>
-            <span style="padding:3px 10px;border-radius:5px;font-size:0.78rem;font-weight:600;background:#fbe9e7;color:#bf360c;">0.4&ndash;0.6 Ambiguous</span>
-            <span style="padding:3px 10px;border-radius:5px;font-size:0.78rem;font-weight:600;background:#fce4ec;color:#c62828;">0.2&ndash;0.4 Hostile/Absent</span>
-        </div>
+        <p>The <strong>Overall Blockchain Adaptability Score</strong> measures how well-positioned a country is for blockchain adoption by averaging three equally-weighted dimensions:</p>
+        <div class="formula-box">Overall Score = (Economic Score + Regulatory Score + Technical Score) / 3</div>
+
+        <h3>1. Economic Adoption Score</h3>
+        <p>Quantifies real-world blockchain economic penetration using four normalized, weighted indicators:</p>
+        <div class="formula-box">Economic = (Ownership &times; 0.30) + (Chainalysis Rank &times; 0.30) + (Volume &times; 0.20) + (Remittances &times; 0.20)</div>
+
+        <h3>2. Regulatory Clarity Index</h3>
+        <p>Evaluates how clearly a country has defined its legal framework for blockchain and crypto. Six dimensions are each rated 1&ndash;3:</p>
+        <div class="formula-box">Regulatory = (Stablecoin Law + Licensing + Tax Clarity + Banking Access + Enforcement + DeFi Recognition) / 18</div>
+        <ul>
+            <li><strong>Comprehensive</strong> (0.83&ndash;1.0): Clear, multi-faceted regulatory framework</li>
+            <li><strong>Developing</strong> (0.61&ndash;0.82): Active regulation in progress</li>
+            <li><strong>Ambiguous</strong> (0.40&ndash;0.60): Minimal or unclear rules</li>
+            <li><strong>Hostile</strong> (&lt;0.40): Bans or no recognition</li>
+        </ul>
+
+        <h3>3. Technical Infrastructure Score</h3>
+        <p>Measures the physical blockchain network presence within a country. Four dimensions are each rated 1&ndash;3:</p>
+        <div class="formula-box">Technical = (BTC Nodes + ETH Nodes + Mining Hashrate + Lightning/Validators) / 12</div>
+        <ul>
+            <li><strong>Major Hub</strong> (0.90&ndash;1.0): Top-tier node count and mining presence</li>
+            <li><strong>Strong</strong> (0.75&ndash;0.89): Significant infrastructure</li>
+            <li><strong>Moderate</strong> (0.58&ndash;0.74): Notable but limited presence</li>
+            <li><strong>Emerging</strong> (0.42&ndash;0.57): Early-stage infrastructure</li>
+            <li><strong>Minimal</strong> (&lt;0.42): Negligible network footprint</li>
+        </ul>
+
+        <p style="margin-top:16px;">Scores range from 0 to 1, where higher values indicate greater blockchain adaptability. The overall score equally weights all three dimensions, recognizing that true blockchain readiness requires economic demand, legal clarity, and network infrastructure working together. Only 20 countries were selected based on data availability and regional diversity.</p>
     </div>
 
     <!-- TABLE -->
     <div class="table-section">
-        <h2>Country Rankings</h2>
+        <h2 id="table-title">Country Rankings &mdash; Overall Score</h2>
         <div class="table-wrapper">
             <table>
                 <thead>
                     <tr>
                         <th>Rank</th>
                         <th>Country</th>
-                        <th>Econ. Score</th>
+                        <th>Overall</th>
                         <th class="score-bar-cell"></th>
-                        <th>Reg. Clarity</th>
-                        <th>Ownership</th>
-                        <th>Volume (BTC/24h)</th>
-                        <th>Remit/Capita</th>
-                        <th>Confidence</th>
+                        <th>Economic</th>
+                        <th>Regulatory</th>
+                        <th>Technical</th>
                     </tr>
                 </thead>
                 <tbody id="table-body"></tbody>
@@ -438,41 +518,156 @@
 
     <!-- FOOTER -->
     <div class="footer">
-        University Research Project &middot; Global Blockchain Economic Adoption Index &middot; 2025
+        University Research Project &middot; Global Blockchain Adaptability Index &middot; 2025
     </div>
 
     <script>
     // ========================================
-    // DATA
+    // DATA — All three dimensions per country
     // ========================================
-    const adoptionData = [
-        { rank: 1,  country: "Vietnam",        id: "704", score: 0.840, confidence: "High",    volume: "Est. 15,000", ownership: "21.19%", chainalysisRank: "5",   remitCapita: "$139.51", keyDriver: "Highest ownership rate (21.2%)",       regScore: 0.556, regLabel: "Ambiguous" },
-        { rank: 2,  country: "Ukraine",        id: "804", score: 0.717, confidence: "High",    volume: "Est. 8,000",  ownership: "10.57%", chainalysisRank: "6",   remitCapita: "$396.68", keyDriver: "Highest remittances/capita",           regScore: 0.889, regLabel: "Comprehensive" },
-        { rank: 3,  country: "India",          id: "356", score: 0.686, confidence: "High",    volume: "Est. 45,000", ownership: "6.55%",  chainalysisRank: "1",   remitCapita: "$83.12",  keyDriver: "#1 Chainalysis rank; 93.5M owners",   regScore: 0.611, regLabel: "Developing" },
-        { rank: 4,  country: "Philippines",    id: "608", score: 0.679, confidence: "High",    volume: "Est. 5,000",  ownership: "13.43%", chainalysisRank: "8",   remitCapita: "$340.29", keyDriver: "High remittances + ownership",         regScore: 0.778, regLabel: "Developing" },
-        { rank: 5,  country: "Nigeria",        id: "566", score: 0.667, confidence: "High",    volume: "Est. 12,000", ownership: "5.93%",  chainalysisRank: "2",   remitCapita: "$85.78",  keyDriver: "#2 Chainalysis; DeFi leader",          regScore: 0.667, regLabel: "Developing" },
-        { rank: 6,  country: "Indonesia",      id: "360", score: 0.597, confidence: "High",    volume: "4,200",       ownership: "4.40%",  chainalysisRank: "3",   remitCapita: "$51.44",  keyDriver: "#1 DeFi adoption globally",            regScore: 0.667, regLabel: "Developing" },
-        { rank: 7,  country: "United States",  id: "840", score: 0.595, confidence: "High",    volume: "246,813",     ownership: "15.56%", chainalysisRank: "4",   remitCapita: "$24.94",  keyDriver: "High ownership; Coinbase/Kraken",     regScore: 0.778, regLabel: "Developing" },
-        { rank: 8,  country: "Venezuela",      id: "862", score: 0.550, confidence: "Medium+", volume: "Est. 3,000",  ownership: "10.30%", chainalysisRank: "13",  remitCapita: "N/A",     keyDriver: "Currency crisis driver",               regScore: 0.556, regLabel: "Ambiguous" },
-        { rank: 9,  country: "Pakistan",       id: "586", score: 0.512, confidence: "High",    volume: "Est. 4,000",  ownership: "6.60%",  chainalysisRank: "9",   remitCapita: "$107.30", keyDriver: "#4 CEX rank",                          regScore: 0.556, regLabel: "Ambiguous" },
-        { rank: 10, country: "Brazil",         id: "76",  score: 0.506, confidence: "High",    volume: "Est. 8,000",  ownership: "11.99%", chainalysisRank: "10",  remitCapita: "$21.00",  keyDriver: "Largest LatAm market (26M)",           regScore: 0.889, regLabel: "Comprehensive" },
-        { rank: 11, country: "Argentina",      id: "32",  score: 0.437, confidence: "High",    volume: "Est. 6,000",  ownership: "9.73%",  chainalysisRank: "15",  remitCapita: "$22.16",  keyDriver: "Currency instability driver",           regScore: 0.611, regLabel: "Developing" },
-        { rank: 12, country: "Thailand",       id: "764", score: 0.432, confidence: "High",    volume: "Est. 4,500",  ownership: "9.61%",  chainalysisRank: "16",  remitCapita: "$135.17", keyDriver: "Balanced indicators",                   regScore: 0.833, regLabel: "Comprehensive" },
-        { rank: 13, country: "Russia",         id: "643", score: 0.429, confidence: "High",    volume: "Est. 18,000", ownership: "6.06%",  chainalysisRank: "7",   remitCapita: "$18.19",  keyDriver: "Sanctions driving adoption",            regScore: 0.611, regLabel: "Developing" },
-        { rank: 14, country: "Turkey",         id: "792", score: 0.381, confidence: "High",    volume: "6,018",       ownership: "5.62%",  chainalysisRank: "11",  remitCapita: "$12.06",  keyDriver: "Lira volatility; BtcTurk",             regScore: 0.722, regLabel: "Developing" },
-        { rank: 15, country: "United Kingdom", id: "826", score: 0.379, confidence: "High",    volume: "Est. 12,000", ownership: "5.74%",  chainalysisRank: "12",  remitCapita: "$65.50",  keyDriver: "Developed market",                     regScore: 0.833, regLabel: "Comprehensive" },
-        { rank: 16, country: "South Korea",    id: "410", score: 0.310, confidence: "High",    volume: "82,816",      ownership: "4.09%",  chainalysisRank: "19",  remitCapita: "$136.04", keyDriver: "Upbit/Bithumb dominant",               regScore: 0.722, regLabel: "Developing" },
-        { rank: 17, country: "Japan",          id: "392", score: 0.285, confidence: "Medium+", volume: "8,084",       ownership: "4.13%",  chainalysisRank: "N/A", remitCapita: "$37.84",  keyDriver: "Regulated; bitFlyer/Bitbank",           regScore: 0.944, regLabel: "Comprehensive" },
-        { rank: 18, country: "Bangladesh",     id: "50",  score: 0.258, confidence: "Medium+", volume: "Est. 500",    ownership: "2.50%",  chainalysisRank: "N/A", remitCapita: "$129.28", keyDriver: "High remit, low ownership",             regScore: 0.333, regLabel: "Hostile" },
-        { rank: 19, country: "Yemen",          id: "887", score: 0.195, confidence: "Low*",    volume: "Est. <100",   ownership: "N/A",    chainalysisRank: "N/A", remitCapita: "$87.15",  keyDriver: "Only remittance data",                  regScore: 0.333, regLabel: "Hostile" },
-        { rank: 20, country: "Ethiopia",       id: "231", score: 0.125, confidence: "Medium+", volume: "Est. <100",   ownership: "1.79%",  chainalysisRank: "N/A", remitCapita: "$4.19",   keyDriver: "Lowest ownership",                     regScore: 0.333, regLabel: "Hostile" }
+    const countries = [
+        {
+            country: "Vietnam", id: "704",
+            economic: { score: 0.840, ownership: "21.19%", volume: "Est. 15,000", remitCapita: "$139.51", chainalysisRank: "5", confidence: "High", keyDriver: "Highest ownership rate (21.2%)" },
+            regulatory: { score: 0.556, label: "Ambiguous", stablecoin: 1, licensing: 2, tax: 2, banking: 2, enforcement: 2, defi: 1 },
+            technical: { score: 0.583, label: "Moderate", btc: 2, eth: 2, mining: 1, ln: 2 }
+        },
+        {
+            country: "Ukraine", id: "804",
+            economic: { score: 0.717, ownership: "10.57%", volume: "Est. 8,000", remitCapita: "$396.68", chainalysisRank: "6", confidence: "High", keyDriver: "Highest remittances/capita" },
+            regulatory: { score: 0.889, label: "Comprehensive", stablecoin: 2, licensing: 3, tax: 3, banking: 3, enforcement: 3, defi: 2 },
+            technical: { score: 0.583, label: "Moderate", btc: 2, eth: 2, mining: 1, ln: 2 }
+        },
+        {
+            country: "India", id: "356",
+            economic: { score: 0.686, ownership: "6.55%", volume: "Est. 45,000", remitCapita: "$83.12", chainalysisRank: "1", confidence: "High", keyDriver: "#1 Chainalysis rank; 93.5M owners" },
+            regulatory: { score: 0.611, label: "Developing", stablecoin: 1, licensing: 2, tax: 3, banking: 2, enforcement: 2, defi: 1 },
+            technical: { score: 0.667, label: "Moderate", btc: 3, eth: 2, mining: 1, ln: 2 }
+        },
+        {
+            country: "Philippines", id: "608",
+            economic: { score: 0.679, ownership: "13.43%", volume: "Est. 5,000", remitCapita: "$340.29", chainalysisRank: "8", confidence: "High", keyDriver: "High remittances + ownership" },
+            regulatory: { score: 0.778, label: "Developing", stablecoin: 2, licensing: 3, tax: 2, banking: 3, enforcement: 3, defi: 1 },
+            technical: { score: 0.500, label: "Emerging", btc: 2, eth: 2, mining: 1, ln: 1 }
+        },
+        {
+            country: "Nigeria", id: "566",
+            economic: { score: 0.667, ownership: "5.93%", volume: "Est. 12,000", remitCapita: "$85.78", chainalysisRank: "2", confidence: "High", keyDriver: "#2 Chainalysis; DeFi leader" },
+            regulatory: { score: 0.667, label: "Developing", stablecoin: 2, licensing: 2, tax: 2, banking: 3, enforcement: 2, defi: 1 },
+            technical: { score: 0.500, label: "Emerging", btc: 2, eth: 1, mining: 1, ln: 2 }
+        },
+        {
+            country: "Indonesia", id: "360",
+            economic: { score: 0.597, ownership: "4.40%", volume: "4,200", remitCapita: "$51.44", chainalysisRank: "3", confidence: "High", keyDriver: "#1 DeFi adoption globally" },
+            regulatory: { score: 0.667, label: "Developing", stablecoin: 1, licensing: 3, tax: 3, banking: 2, enforcement: 2, defi: 1 },
+            technical: { score: 0.667, label: "Moderate", btc: 2, eth: 2, mining: 3, ln: 1 }
+        },
+        {
+            country: "United States", id: "840",
+            economic: { score: 0.595, ownership: "15.56%", volume: "246,813", remitCapita: "$24.94", chainalysisRank: "4", confidence: "High", keyDriver: "High ownership; Coinbase/Kraken" },
+            regulatory: { score: 0.778, label: "Developing", stablecoin: 2, licensing: 2, tax: 3, banking: 2, enforcement: 3, defi: 2 },
+            technical: { score: 1.000, label: "Major Hub", btc: 3, eth: 3, mining: 3, ln: 3 }
+        },
+        {
+            country: "Venezuela", id: "862",
+            economic: { score: 0.550, ownership: "10.30%", volume: "Est. 3,000", remitCapita: "N/A", chainalysisRank: "13", confidence: "Medium+", keyDriver: "Currency crisis driver" },
+            regulatory: { score: 0.556, label: "Ambiguous", stablecoin: 1, licensing: 2, tax: 2, banking: 2, enforcement: 2, defi: 1 },
+            technical: { score: 0.333, label: "Minimal", btc: 1, eth: 1, mining: 1, ln: 1 }
+        },
+        {
+            country: "Pakistan", id: "586",
+            economic: { score: 0.512, ownership: "6.60%", volume: "Est. 4,000", remitCapita: "$107.30", chainalysisRank: "9", confidence: "High", keyDriver: "#4 CEX rank" },
+            regulatory: { score: 0.556, label: "Ambiguous", stablecoin: 1, licensing: 2, tax: 2, banking: 2, enforcement: 2, defi: 1 },
+            technical: { score: 0.417, label: "Emerging", btc: 2, eth: 1, mining: 1, ln: 1 }
+        },
+        {
+            country: "Brazil", id: "76",
+            economic: { score: 0.506, ownership: "11.99%", volume: "Est. 8,000", remitCapita: "$21.00", chainalysisRank: "10", confidence: "High", keyDriver: "Largest LatAm market (26M)" },
+            regulatory: { score: 0.889, label: "Comprehensive", stablecoin: 2, licensing: 3, tax: 3, banking: 3, enforcement: 3, defi: 2 },
+            technical: { score: 0.750, label: "Strong", btc: 3, eth: 2, mining: 1, ln: 3 }
+        },
+        {
+            country: "Argentina", id: "32",
+            economic: { score: 0.437, ownership: "9.73%", volume: "Est. 6,000", remitCapita: "$22.16", chainalysisRank: "15", confidence: "High", keyDriver: "Currency instability driver" },
+            regulatory: { score: 0.611, label: "Developing", stablecoin: 1, licensing: 2, tax: 2, banking: 2, enforcement: 3, defi: 1 },
+            technical: { score: 0.667, label: "Moderate", btc: 2, eth: 2, mining: 2, ln: 2 }
+        },
+        {
+            country: "Thailand", id: "764",
+            economic: { score: 0.432, ownership: "9.61%", volume: "Est. 4,500", remitCapita: "$135.17", chainalysisRank: "16", confidence: "High", keyDriver: "Balanced indicators" },
+            regulatory: { score: 0.833, label: "Comprehensive", stablecoin: 2, licensing: 3, tax: 3, banking: 3, enforcement: 2, defi: 2 },
+            technical: { score: 0.583, label: "Moderate", btc: 2, eth: 2, mining: 1, ln: 2 }
+        },
+        {
+            country: "Russia", id: "643",
+            economic: { score: 0.429, ownership: "6.06%", volume: "Est. 18,000", remitCapita: "$18.19", chainalysisRank: "7", confidence: "High", keyDriver: "Sanctions driving adoption" },
+            regulatory: { score: 0.611, label: "Developing", stablecoin: 1, licensing: 2, tax: 3, banking: 2, enforcement: 2, defi: 1 },
+            technical: { score: 1.000, label: "Major Hub", btc: 3, eth: 3, mining: 3, ln: 3 }
+        },
+        {
+            country: "Turkey", id: "792",
+            economic: { score: 0.381, ownership: "5.62%", volume: "6,018", remitCapita: "$12.06", chainalysisRank: "11", confidence: "High", keyDriver: "Lira volatility; BtcTurk" },
+            regulatory: { score: 0.722, label: "Developing", stablecoin: 2, licensing: 3, tax: 2, banking: 3, enforcement: 2, defi: 1 },
+            technical: { score: 0.667, label: "Moderate", btc: 3, eth: 2, mining: 1, ln: 2 }
+        },
+        {
+            country: "United Kingdom", id: "826",
+            economic: { score: 0.379, ownership: "5.74%", volume: "Est. 12,000", remitCapita: "$65.50", chainalysisRank: "12", confidence: "High", keyDriver: "Developed market" },
+            regulatory: { score: 0.833, label: "Comprehensive", stablecoin: 2, licensing: 3, tax: 3, banking: 2, enforcement: 3, defi: 2 },
+            technical: { score: 0.833, label: "Strong", btc: 3, eth: 3, mining: 1, ln: 3 }
+        },
+        {
+            country: "South Korea", id: "410",
+            economic: { score: 0.310, ownership: "4.09%", volume: "82,816", remitCapita: "$136.04", chainalysisRank: "19", confidence: "High", keyDriver: "Upbit/Bithumb dominant" },
+            regulatory: { score: 0.722, label: "Developing", stablecoin: 2, licensing: 3, tax: 2, banking: 2, enforcement: 2, defi: 2 },
+            technical: { score: 0.667, label: "Moderate", btc: 3, eth: 2, mining: 1, ln: 2 }
+        },
+        {
+            country: "Japan", id: "392",
+            economic: { score: 0.285, ownership: "4.13%", volume: "8,084", remitCapita: "$37.84", chainalysisRank: "N/A", confidence: "Medium+", keyDriver: "Regulated; bitFlyer/Bitbank" },
+            regulatory: { score: 0.944, label: "Comprehensive", stablecoin: 3, licensing: 3, tax: 3, banking: 3, enforcement: 3, defi: 2 },
+            technical: { score: 0.750, label: "Strong", btc: 3, eth: 3, mining: 1, ln: 2 }
+        },
+        {
+            country: "Bangladesh", id: "50",
+            economic: { score: 0.258, ownership: "2.50%", volume: "Est. 500", remitCapita: "$129.28", chainalysisRank: "N/A", confidence: "Medium+", keyDriver: "High remit, low ownership" },
+            regulatory: { score: 0.333, label: "Hostile", stablecoin: 1, licensing: 1, tax: 1, banking: 1, enforcement: 1, defi: 1 },
+            technical: { score: 0.333, label: "Minimal", btc: 1, eth: 1, mining: 1, ln: 1 }
+        },
+        {
+            country: "Yemen", id: "887",
+            economic: { score: 0.195, ownership: "N/A", volume: "Est. <100", remitCapita: "$87.15", chainalysisRank: "N/A", confidence: "Low*", keyDriver: "Only remittance data" },
+            regulatory: { score: 0.333, label: "Hostile", stablecoin: 1, licensing: 1, tax: 1, banking: 1, enforcement: 1, defi: 1 },
+            technical: { score: 0.333, label: "Minimal", btc: 1, eth: 1, mining: 1, ln: 1 }
+        },
+        {
+            country: "Ethiopia", id: "231",
+            economic: { score: 0.125, ownership: "1.79%", volume: "Est. <100", remitCapita: "$4.19", chainalysisRank: "N/A", confidence: "Medium+", keyDriver: "Lowest ownership" },
+            regulatory: { score: 0.333, label: "Hostile", stablecoin: 1, licensing: 1, tax: 1, banking: 1, enforcement: 1, defi: 1 },
+            technical: { score: 0.500, label: "Emerging", btc: 1, eth: 1, mining: 3, ln: 1 }
+        }
     ];
+
+    // Compute overall score for each country
+    countries.forEach(c => {
+        c.overall = +((c.economic.score + c.regulatory.score + c.technical.score) / 3).toFixed(3);
+    });
+
+    // Sort by overall and assign ranks
+    countries.sort((a, b) => b.overall - a.overall);
+    countries.forEach((c, i) => { c.overallRank = i + 1; });
+
+    // Also assign per-dimension ranks
+    ["economic", "regulatory", "technical"].forEach(dim => {
+        const sorted = [...countries].sort((a, b) => b[dim].score - a[dim].score);
+        sorted.forEach((c, i) => { c[dim].rank = i + 1; });
+    });
 
     // Lookup by numeric ID
     const dataById = {};
-    adoptionData.forEach(d => { dataById[d.id] = d; });
+    countries.forEach(c => { dataById[c.id] = c; });
 
-    // Country names (ISO 3166-1 numeric → name)
+    // Country names (ISO 3166-1 numeric)
     const countryNames = {
         "4":"Afghanistan","8":"Albania","12":"Algeria","24":"Angola","32":"Argentina",
         "36":"Australia","40":"Austria","31":"Azerbaijan","44":"Bahamas","48":"Bahrain",
@@ -481,7 +676,7 @@
         "100":"Bulgaria","854":"Burkina Faso","108":"Burundi","116":"Cambodia",
         "120":"Cameroon","124":"Canada","140":"Central African Rep.","148":"Chad",
         "152":"Chile","156":"China","170":"Colombia","178":"Congo",
-        "180":"Dem. Rep. Congo","188":"Costa Rica","384":"Côte d'Ivoire",
+        "180":"Dem. Rep. Congo","188":"Costa Rica","384":"Cote d'Ivoire",
         "191":"Croatia","192":"Cuba","196":"Cyprus","203":"Czechia","208":"Denmark",
         "262":"Djibouti","214":"Dominican Rep.","218":"Ecuador","818":"Egypt",
         "222":"El Salvador","226":"Eq. Guinea","232":"Eritrea","233":"Estonia",
@@ -515,16 +710,42 @@
         "860":"Uzbekistan","862":"Venezuela","704":"Vietnam","887":"Yemen",
         "894":"Zambia","716":"Zimbabwe"
     };
-    // Override with exact data names
-    adoptionData.forEach(d => { countryNames[d.id] = d.country; });
+    countries.forEach(c => { countryNames[c.id] = c.country; });
 
     // ========================================
-    // COLOR SCALE — cream to sage to deep teal
+    // ACTIVE DIMENSION STATE
     // ========================================
-    const colorScale = d3.scaleSequential()
-        .domain([0.10, 0.85])
-        .interpolator(d3.interpolateRgbBasis(["#faf3e0", "#c4ddb2", "#5ba8b5", "#1a6b7a", "#0a3d62"]));
+    let activeDim = "overall";
+
+    function getScore(c) {
+        return activeDim === "overall" ? c.overall : c[activeDim].score;
+    }
+    function getRank(c) {
+        return activeDim === "overall" ? c.overallRank : c[activeDim].rank;
+    }
+
+    // Dimension metadata
+    const dimMeta = {
+        overall:    { title: "Overall Score",            min: 0.25, max: 0.80, colors: ["#faf3e0","#c4ddb2","#5ba8b5","#1a6b7a","#0a3d62"] },
+        economic:   { title: "Economic Adoption",        min: 0.10, max: 0.85, colors: ["#faf3e0","#c4ddb2","#5ba8b5","#1a6b7a","#0a3d62"] },
+        regulatory: { title: "Regulatory Clarity",       min: 0.30, max: 0.95, colors: ["#fef3e0","#f5d6a0","#d4915c","#9b5a30","#5c2d10"] },
+        technical:  { title: "Technical Infrastructure", min: 0.30, max: 1.00, colors: ["#e8f0fe","#a4c8f0","#5b8fd4","#2e5fa1","#143566"] }
+    };
+
+    // ========================================
+    // COLOR SCALE
+    // ========================================
+    let colorScale = d3.scaleSequential()
+        .domain([dimMeta.overall.min, dimMeta.overall.max])
+        .interpolator(d3.interpolateRgbBasis(dimMeta.overall.colors));
     const noDataColor = "#e0e0e0";
+
+    function updateColorScale() {
+        const meta = dimMeta[activeDim];
+        colorScale = d3.scaleSequential()
+            .domain([meta.min, meta.max])
+            .interpolator(d3.interpolateRgbBasis(meta.colors));
+    }
 
     // ========================================
     // MAP
@@ -539,7 +760,6 @@
         .attr("viewBox", `0 0 ${width} ${height}`)
         .attr("preserveAspectRatio", "xMidYMid meet");
 
-    // Ocean background
     svg.append("rect")
         .attr("width", width)
         .attr("height", height)
@@ -571,28 +791,29 @@
         const name = countryNames[id] || "Unknown";
 
         if (data) {
-            const regColor = data.regScore >= 0.8 ? '#2e7d32' : data.regScore >= 0.6 ? '#e65100' : data.regScore >= 0.4 ? '#bf360c' : '#c62828';
-            const regBg = data.regScore >= 0.8 ? '#e8f5e9' : data.regScore >= 0.6 ? '#fff3e0' : data.regScore >= 0.4 ? '#fbe9e7' : '#fce4ec';
+            const rank = getRank(data);
+            const score = getScore(data);
             tooltip.innerHTML = `
-                <h3>${data.country} <span class="rank-badge">#${data.rank}</span></h3>
-                <div class="score-line">${data.score.toFixed(3)}</div>
-                <div style="display:flex;gap:12px;align-items:center;margin:6px 0 2px;">
-                    <div style="font-size:0.72rem;color:#9aa5b0;text-transform:uppercase;letter-spacing:0.5px;">Economic Score</div>
-                </div>
-                <div style="margin:8px 0;padding:8px 12px;background:${regBg};border-radius:8px;border-left:3px solid ${regColor};">
-                    <div style="font-size:0.68rem;color:#9aa5b0;text-transform:uppercase;letter-spacing:0.6px;margin-bottom:2px;">Regulatory Clarity Index</div>
-                    <div style="display:flex;align-items:center;gap:8px;">
-                        <span style="font-size:1.15rem;font-weight:600;color:${regColor};">${data.regScore.toFixed(3)}</span>
-                        <span style="font-size:0.75rem;font-weight:500;color:${regColor};padding:1px 7px;background:rgba(255,255,255,0.6);border-radius:4px;">${data.regLabel}</span>
+                <h3>${data.country} <span class="rank-badge">#${rank}</span></h3>
+                <div class="score-label">${dimMeta[activeDim].title}</div>
+                <div class="score-line">${score.toFixed(3)}</div>
+                <div class="sub-scores">
+                    <div class="sub-score-item">
+                        <div class="sub-score-label">Economic</div>
+                        <div class="sub-score-value">${data.economic.score.toFixed(3)}</div>
+                    </div>
+                    <div class="sub-score-item">
+                        <div class="sub-score-label">Regulatory</div>
+                        <div class="sub-score-value">${data.regulatory.score.toFixed(3)}</div>
+                        <div class="sub-score-tier">${data.regulatory.label}</div>
+                    </div>
+                    <div class="sub-score-item">
+                        <div class="sub-score-label">Technical</div>
+                        <div class="sub-score-value">${data.technical.score.toFixed(3)}</div>
+                        <div class="sub-score-tier">${data.technical.label}</div>
                     </div>
                 </div>
-                <div class="detail-grid">
-                    <div><div class="detail-label">Ownership</div><div class="detail-value">${data.ownership}</div></div>
-                    <div><div class="detail-label">24h Volume (BTC)</div><div class="detail-value">${data.volume}</div></div>
-                    <div><div class="detail-label">Remit / Capita</div><div class="detail-value">${data.remitCapita}</div></div>
-                    <div><div class="detail-label">Confidence</div><div class="detail-value">${data.confidence}</div></div>
-                </div>
-                <div class="key-driver">&ldquo;${data.keyDriver}&rdquo;</div>`;
+                <div class="key-driver">&ldquo;${data.economic.keyDriver}&rdquo;</div>`;
         } else {
             tooltip.innerHTML = `<h3>${name}</h3><p class="no-data-msg">No data available</p>`;
         }
@@ -617,23 +838,24 @@
         tooltip.classList.remove("visible");
     }
 
-    // Close tooltip on background touch (mobile)
     document.addEventListener("touchstart", hideTooltip, { passive: true });
 
     // ========================================
     // LOAD & RENDER MAP
     // ========================================
-    d3.json("https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json").then(world => {
-        const countries = topojson.feature(world, world.objects.countries);
+    let countryPaths;
 
-        g.selectAll("path.country-path")
-            .data(countries.features)
+    d3.json("https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json").then(world => {
+        const feats = topojson.feature(world, world.objects.countries);
+
+        countryPaths = g.selectAll("path.country-path")
+            .data(feats.features)
             .join("path")
             .attr("class", d => "country-path" + (dataById[String(d.id)] ? "" : " no-data"))
             .attr("d", pathGen)
             .attr("fill", d => {
                 const data = dataById[String(d.id)];
-                return data ? colorScale(data.score) : noDataColor;
+                return data ? colorScale(getScore(data)) : noDataColor;
             })
             .on("mouseover", function(event, d) { showTooltip(event, d); })
             .on("mousemove", function(event) { positionTooltip(event); })
@@ -648,39 +870,80 @@
     // ========================================
     // LEGEND GRADIENT
     // ========================================
-    const canvas = document.getElementById("legend-canvas");
-    const ctx = canvas.getContext("2d");
-    for (let i = 0; i < canvas.width; i++) {
-        const val = 0.10 + (i / canvas.width) * (0.85 - 0.10);
-        ctx.fillStyle = colorScale(val);
-        ctx.fillRect(i, 0, 1, canvas.height);
+    function renderLegend() {
+        const meta = dimMeta[activeDim];
+        document.getElementById("legend-min").textContent = meta.min.toFixed(2);
+        document.getElementById("legend-max").textContent = meta.max.toFixed(2);
+        const canvas = document.getElementById("legend-canvas");
+        const ctx = canvas.getContext("2d");
+        for (let i = 0; i < canvas.width; i++) {
+            const val = meta.min + (i / canvas.width) * (meta.max - meta.min);
+            ctx.fillStyle = colorScale(val);
+            ctx.fillRect(i, 0, 1, canvas.height);
+        }
     }
+    renderLegend();
 
     // ========================================
     // TABLE
     // ========================================
-    const tbody = document.getElementById("table-body");
-    adoptionData.forEach(d => {
-        const tr = document.createElement("tr");
-        const confClass = d.confidence.startsWith("High") ? "confidence-high"
-            : d.confidence.startsWith("Low") ? "confidence-low" : "confidence-medium";
-        const barPct = ((d.score - 0.1) / (0.85 - 0.1) * 100).toFixed(1);
-        const regClass = d.regScore >= 0.8 ? 'confidence-high' : d.regScore >= 0.6 ? 'confidence-medium' : 'confidence-low';
-        tr.innerHTML = `
-            <td class="rank-cell">${d.rank}</td>
-            <td>${d.country}</td>
-            <td class="score-cell">${d.score.toFixed(3)}</td>
-            <td class="score-bar-cell">
-                <div class="score-bar-bg">
-                    <div class="score-bar-fill" style="width:${barPct}%; background:${colorScale(d.score)};"></div>
-                </div>
-            </td>
-            <td><span class="confidence-badge ${regClass}">${d.regScore.toFixed(2)} ${d.regLabel}</span></td>
-            <td>${d.ownership}</td>
-            <td>${d.volume}</td>
-            <td>${d.remitCapita}</td>
-            <td><span class="confidence-badge ${confClass}">${d.confidence}</span></td>`;
-        tbody.appendChild(tr);
+    function renderTable() {
+        const dimLabel = dimMeta[activeDim].title;
+        document.getElementById("table-title").innerHTML = `Country Rankings &mdash; ${dimLabel}`;
+
+        const sorted = [...countries].sort((a, b) => getScore(b) - getScore(a));
+        const tbody = document.getElementById("table-body");
+        tbody.innerHTML = "";
+
+        sorted.forEach((c, i) => {
+            const rank = i + 1;
+            const score = getScore(c);
+            const meta = dimMeta[activeDim];
+            const barPct = Math.min(100, Math.max(0, ((score - meta.min) / (meta.max - meta.min) * 100))).toFixed(1);
+            const tr = document.createElement("tr");
+            tr.innerHTML = `
+                <td class="rank-cell">${rank}</td>
+                <td>${c.country}</td>
+                <td class="score-cell">${score.toFixed(3)}</td>
+                <td class="score-bar-cell">
+                    <div class="score-bar-bg">
+                        <div class="score-bar-fill" style="width:${barPct}%; background:${colorScale(score)};"></div>
+                    </div>
+                </td>
+                <td class="sub-score-td">${c.economic.score.toFixed(3)}</td>
+                <td class="sub-score-td">${c.regulatory.score.toFixed(3)}</td>
+                <td class="sub-score-td">${c.technical.score.toFixed(3)}</td>`;
+            tbody.appendChild(tr);
+        });
+    }
+    renderTable();
+
+    // ========================================
+    // DIMENSION TAB SWITCHING
+    // ========================================
+    document.querySelectorAll(".dim-tab").forEach(tab => {
+        tab.addEventListener("click", function() {
+            const dim = this.dataset.dim;
+            if (dim === activeDim) return;
+
+            document.querySelector(".dim-tab.active").classList.remove("active");
+            this.classList.add("active");
+            activeDim = dim;
+
+            updateColorScale();
+
+            // Re-color map
+            if (countryPaths) {
+                countryPaths.transition().duration(400)
+                    .attr("fill", d => {
+                        const data = dataById[String(d.id)];
+                        return data ? colorScale(getScore(data)) : noDataColor;
+                    });
+            }
+
+            renderLegend();
+            renderTable();
+        });
     });
     </script>
 </body>
