@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Technical Infrastructure Data — Blockchain Adaptability Index</title>
+    <script type="module" src="https://unpkg.com/@splinetool/viewer@1.9.82/build/spline-viewer.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #f4f3ef;
+            color: #2c3e50;
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        /* === NAV BAR === */
+        .nav-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 18px 28px;
+        }
+        .nav-back {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+            color: #0a4c6a;
+            font-size: 0.88rem;
+            font-weight: 500;
+            padding: 8px 16px;
+            border-radius: 8px;
+            border: 1px solid #d8dce0;
+            background: #fff;
+            transition: all 0.2s;
+        }
+        .nav-back:hover {
+            background: #eef3f7;
+            border-color: #0a4c6a;
+        }
+        .nav-back svg {
+            width: 16px;
+            height: 16px;
+        }
+        .nav-title {
+            font-family: 'Source Serif 4', Georgia, serif;
+            font-size: 1rem;
+            color: #5a6a7a;
+            font-weight: 600;
+        }
+
+        /* === HERO SECTION (Spline + intro) === */
+        .hero {
+            max-width: 1200px;
+            margin: 0 auto 40px;
+            padding: 0 28px;
+        }
+        .hero-card {
+            display: flex;
+            border-radius: 18px;
+            overflow: hidden;
+            background: linear-gradient(135deg, #e8edf2 0%, #dce4ec 50%, #d0dbe6 100%);
+            border: 1px solid #d0d6dc;
+            box-shadow: 0 4px 24px rgba(0,0,0,0.06);
+            min-height: 420px;
+            position: relative;
+        }
+
+        /* Spotlight SVG */
+        .spotlight-svg {
+            position: absolute;
+            top: -40%;
+            left: -10%;
+            width: 120%;
+            height: 170%;
+            pointer-events: none;
+            z-index: 1;
+            opacity: 0;
+            animation: spotlightFadeIn 1.5s ease forwards 0.5s;
+        }
+        @keyframes spotlightFadeIn {
+            to { opacity: 1; }
+        }
+
+        .hero-text {
+            flex: 1;
+            padding: 48px 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            position: relative;
+            z-index: 2;
+        }
+        .hero-text h1 {
+            font-family: 'Source Serif 4', Georgia, serif;
+            font-size: 2.6rem;
+            font-weight: 700;
+            line-height: 1.15;
+            margin-bottom: 16px;
+            background: linear-gradient(to bottom, #1a2a3a, #4a6a8a);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .hero-text p {
+            font-size: 0.95rem;
+            color: #5a6b7c;
+            max-width: 420px;
+            line-height: 1.7;
+        }
+        .hero-spline {
+            flex: 1;
+            position: relative;
+            z-index: 2;
+            min-height: 380px;
+        }
+        .hero-spline spline-viewer {
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+        /* Override Spline's default dark canvas background */
+        .hero-spline spline-viewer::part(canvas) {
+            background: transparent !important;
+        }
+        /* Hide Spline watermark */
+        .hero-spline spline-viewer #logo,
+        .hero-spline spline-viewer a[href*="spline"] {
+            display: none !important;
+        }
+
+        /* === DATA TABLE SECTION === */
+        .data-section {
+            max-width: 1200px;
+            margin: 0 auto 60px;
+            padding: 0 28px;
+        }
+        .section-header {
+            text-align: center;
+            margin-bottom: 28px;
+        }
+        .section-header h2 {
+            font-family: 'Source Serif 4', Georgia, serif;
+            font-size: 1.6rem;
+            color: #1a2a3a;
+            margin-bottom: 8px;
+        }
+        .section-header p {
+            font-size: 0.88rem;
+            color: #7a8a9a;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* Formula card */
+        .formula-card {
+            background: #fff;
+            border: 1px solid #e4e8ec;
+            border-radius: 14px;
+            padding: 22px 28px;
+            margin-bottom: 28px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.03);
+        }
+        .formula-card h3 {
+            font-family: 'Source Serif 4', Georgia, serif;
+            font-size: 1.05rem;
+            color: #1a2a3a;
+            margin-bottom: 10px;
+        }
+        .formula-box {
+            background: #f8f5ef;
+            padding: 12px 18px;
+            border-radius: 8px;
+            font-family: 'Courier New', 'Consolas', monospace;
+            font-size: 0.86rem;
+            color: #3a4a5a;
+            border-left: 4px solid #2e5fa1;
+            margin-bottom: 14px;
+        }
+        .rating-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 10px;
+        }
+        .rating-item {
+            display: flex;
+            align-items: baseline;
+            gap: 8px;
+            font-size: 0.84rem;
+            color: #5a6b7c;
+        }
+        .rating-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        /* Table */
+        .table-wrapper {
+            background: #fff;
+            border-radius: 14px;
+            overflow: hidden;
+            box-shadow: 0 2px 14px rgba(0,0,0,0.04);
+            border: 1px solid #e4e8ec;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        thead th {
+            background: #1a3a5c;
+            color: #fff;
+            padding: 14px 16px;
+            text-align: left;
+            font-size: 0.73rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.7px;
+        }
+        thead th:first-child {
+            text-align: center;
+            width: 54px;
+        }
+        tbody td {
+            padding: 12px 16px;
+            font-size: 0.84rem;
+            border-bottom: 1px solid #f0eeea;
+        }
+        tbody tr:last-child td { border-bottom: none; }
+        tbody tr:hover { background: #faf8f3; }
+
+        .rank-cell {
+            text-align: center;
+            font-weight: 700;
+            color: #1a3a5c;
+        }
+        .score-cell {
+            font-weight: 700;
+            color: #1a3a5c;
+            font-size: 0.92rem;
+        }
+
+        /* Rating badges (1-3 scale) */
+        .rating-badge {
+            display: inline-block;
+            width: 26px;
+            height: 26px;
+            line-height: 26px;
+            text-align: center;
+            border-radius: 6px;
+            font-size: 0.76rem;
+            font-weight: 700;
+            color: #fff;
+        }
+        .rating-1 { background: #c0c8d0; }
+        .rating-2 { background: #6a9bc0; }
+        .rating-3 { background: #1a5a8a; }
+
+        /* Tier labels */
+        .tier-badge {
+            display: inline-block;
+            padding: 3px 10px;
+            border-radius: 5px;
+            font-size: 0.72rem;
+            font-weight: 600;
+        }
+        .tier-major-hub { background: #dbeafe; color: #1e40af; }
+        .tier-strong { background: #d1fae5; color: #065f46; }
+        .tier-moderate { background: #fef3c7; color: #92400e; }
+        .tier-emerging { background: #ffe4e6; color: #9f1239; }
+        .tier-minimal { background: #f3f4f6; color: #6b7280; }
+
+        /* Score bar */
+        .score-bar-cell { width: 90px; }
+        .score-bar-bg {
+            width: 100%;
+            height: 8px;
+            background: #eceae4;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        .score-bar-fill {
+            height: 100%;
+            border-radius: 4px;
+            background: linear-gradient(90deg, #6a9bc0, #1a3a5c);
+        }
+
+        /* Sources */
+        .sources {
+            max-width: 1200px;
+            margin: 0 auto 60px;
+            padding: 0 28px;
+        }
+        .sources-card {
+            background: #fff;
+            border: 1px solid #e4e8ec;
+            border-radius: 14px;
+            padding: 24px 28px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.03);
+        }
+        .sources-card h3 {
+            font-family: 'Source Serif 4', Georgia, serif;
+            font-size: 1.05rem;
+            color: #1a2a3a;
+            margin-bottom: 12px;
+        }
+        .sources-card ul {
+            list-style: none;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+        }
+        .sources-card li {
+            font-size: 0.82rem;
+            color: #5a6b7c;
+            padding-left: 16px;
+            position: relative;
+        }
+        .sources-card li::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 8px;
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: #6a9bc0;
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 24px;
+            font-size: 0.78rem;
+            color: #aab5c0;
+            border-top: 1px solid #eee;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero-card { flex-direction: column; min-height: auto; }
+            .hero-text { padding: 32px 24px; }
+            .hero-text h1 { font-size: 1.8rem; }
+            .hero-spline { min-height: 300px; }
+            thead th, tbody td { padding: 8px 10px; font-size: 0.74rem; }
+            .score-bar-cell { display: none; }
+            .hide-mobile { display: none; }
+            .sources-card ul { grid-template-columns: 1fr; }
+            .rating-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- NAV -->
+    <nav class="nav-bar">
+        <a href="index.html" class="nav-back">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+            Back to Map
+        </a>
+        <span class="nav-title">Blockchain Adaptability Index</span>
+    </nav>
+
+    <!-- HERO WITH SPLINE 3D -->
+    <section class="hero">
+        <div class="hero-card">
+            <!-- Spotlight effect -->
+            <svg class="spotlight-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 3787 2842" fill="none">
+                <g filter="url(#spotlight-filter)">
+                    <ellipse cx="1924.71" cy="273.501" rx="1924.71" ry="273.501"
+                        transform="matrix(-0.822377 -0.568943 -0.568943 0.822377 3631.88 2291.09)"
+                        fill="#8ab4d6" fill-opacity="0.18" />
+                </g>
+                <defs>
+                    <filter id="spotlight-filter" x="0.86" y="0.84" width="3785.16" height="2840.26"
+                        filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+                        <feFlood flood-opacity="0" result="BackgroundImageFix"/>
+                        <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
+                        <feGaussianBlur stdDeviation="151" result="blur"/>
+                    </filter>
+                </defs>
+            </svg>
+
+            <div class="hero-text">
+                <h1>Technical Infrastructure Data</h1>
+                <p>
+                    Detailed breakdown of each country's blockchain network footprint —
+                    Bitcoin and Ethereum node counts, mining hashrate share, and
+                    Lightning Network / validator participation. This raw data powers
+                    the Technical Infrastructure dimension of our composite index.
+                </p>
+            </div>
+            <div class="hero-spline">
+                <spline-viewer
+                    url="https://prod.spline.design/kZDDjO5HuC9GJUM2/scene.splinecode"
+                    loading="lazy"
+                ></spline-viewer>
+            </div>
+        </div>
+    </section>
+
+    <!-- FORMULA EXPLANATION -->
+    <section class="data-section">
+        <div class="section-header">
+            <h2>Technical Infrastructure Score</h2>
+            <p>Measuring the physical blockchain network presence within each country across four dimensions, each rated on a 1&ndash;3 scale</p>
+        </div>
+
+        <div class="formula-card">
+            <h3>Scoring Formula</h3>
+            <div class="formula-box">Technical Score = (BTC Nodes + ETH Nodes + Mining Hashrate + Lightning/Validators) / 12</div>
+            <div class="rating-grid">
+                <div class="rating-item">
+                    <div class="rating-dot" style="background:#1a5a8a;"></div>
+                    <span><strong>BTC Nodes:</strong> 3 = 100+, 2 = 10&ndash;99, 1 = &lt;10</span>
+                </div>
+                <div class="rating-item">
+                    <div class="rating-dot" style="background:#1a5a8a;"></div>
+                    <span><strong>ETH Nodes:</strong> 3 = 50+, 2 = 5&ndash;49, 1 = &lt;5</span>
+                </div>
+                <div class="rating-item">
+                    <div class="rating-dot" style="background:#1a5a8a;"></div>
+                    <span><strong>Mining Hashrate:</strong> 3 = &gt;1% global, 2 = 0.01&ndash;1%, 1 = ~0%</span>
+                </div>
+                <div class="rating-item">
+                    <div class="rating-dot" style="background:#1a5a8a;"></div>
+                    <span><strong>LN/Validators:</strong> 3 = 50+, 2 = 5&ndash;49, 1 = &lt;5</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- DATA TABLE -->
+        <div class="table-wrapper">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Rank</th>
+                        <th>Country</th>
+                        <th>BTC Nodes</th>
+                        <th>ETH Nodes</th>
+                        <th>Mining</th>
+                        <th>LN / Val.</th>
+                        <th>Score</th>
+                        <th class="score-bar-cell"></th>
+                        <th>Tier</th>
+                    </tr>
+                </thead>
+                <tbody id="table-body"></tbody>
+            </table>
+        </div>
+    </section>
+
+    <!-- DATA SOURCES -->
+    <section class="sources">
+        <div class="sources-card">
+            <h3>Data Sources</h3>
+            <ul>
+                <li><strong>Bitcoin nodes:</strong> Bitnodes.io (~24,500 reachable globally, US leads with 2,339)</li>
+                <li><strong>Ethereum nodes:</strong> Ethernodes.org (~6,300&ndash;10,979 globally, US 33&ndash;41%)</li>
+                <li><strong>Mining hashrate:</strong> Hashrate Index 2026 (US 37.5%, Russia 16.4%, Ethiopia 2.6%, Indonesia 2.1%)</li>
+                <li><strong>Lightning Network:</strong> mempool.space node estimates</li>
+                <li><strong>Notable:</strong> Ethiopia ranks top 10 globally for mining (2.6% hashrate via hydro power)</li>
+                <li><strong>Notable:</strong> Indonesia emerging mining hub at 2.1% global hashrate</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <div class="footer">
+        University Research Project &middot; Global Blockchain Adaptability Index &middot; 2025
+    </div>
+
+    <script>
+    // Remove Spline watermark from shadow DOM
+    function hideSplineLogo() {
+        const viewer = document.querySelector('spline-viewer');
+        if (!viewer || !viewer.shadowRoot) return;
+        const logo = viewer.shadowRoot.querySelector('#logo');
+        if (logo) { logo.style.display = 'none'; return; }
+        // Also try anchor links
+        viewer.shadowRoot.querySelectorAll('a').forEach(a => {
+            if (a.href && a.href.includes('spline')) a.style.display = 'none';
+        });
+        // Hide any div overlay after the canvas
+        const canvas = viewer.shadowRoot.querySelector('canvas');
+        if (canvas) {
+            let sib = canvas.nextElementSibling;
+            while (sib) { sib.style.display = 'none'; sib = sib.nextElementSibling; }
+        }
+    }
+    // Retry until the shadow DOM is ready
+    const logoInterval = setInterval(() => {
+        const viewer = document.querySelector('spline-viewer');
+        if (viewer && viewer.shadowRoot) {
+            hideSplineLogo();
+            // Watch for late-added elements
+            const observer = new MutationObserver(hideSplineLogo);
+            observer.observe(viewer.shadowRoot, { childList: true, subtree: true });
+            clearInterval(logoInterval);
+        }
+    }, 500);
+    setTimeout(() => clearInterval(logoInterval), 15000);
+
+    const techData = [
+        { country: "United States",  btc: 3, eth: 3, mining: 3, ln: 3, score: 1.000, label: "Major Hub" },
+        { country: "Russia",         btc: 3, eth: 3, mining: 3, ln: 3, score: 1.000, label: "Major Hub" },
+        { country: "United Kingdom", btc: 3, eth: 3, mining: 1, ln: 3, score: 0.833, label: "Strong" },
+        { country: "Japan",          btc: 3, eth: 3, mining: 1, ln: 2, score: 0.750, label: "Strong" },
+        { country: "Brazil",         btc: 3, eth: 2, mining: 1, ln: 3, score: 0.750, label: "Strong" },
+        { country: "India",          btc: 3, eth: 2, mining: 1, ln: 2, score: 0.667, label: "Moderate" },
+        { country: "South Korea",    btc: 3, eth: 2, mining: 1, ln: 2, score: 0.667, label: "Moderate" },
+        { country: "Turkey",         btc: 3, eth: 2, mining: 1, ln: 2, score: 0.667, label: "Moderate" },
+        { country: "Argentina",      btc: 2, eth: 2, mining: 2, ln: 2, score: 0.667, label: "Moderate" },
+        { country: "Indonesia",      btc: 2, eth: 2, mining: 3, ln: 1, score: 0.667, label: "Moderate" },
+        { country: "Ukraine",        btc: 2, eth: 2, mining: 1, ln: 2, score: 0.583, label: "Moderate" },
+        { country: "Thailand",       btc: 2, eth: 2, mining: 1, ln: 2, score: 0.583, label: "Moderate" },
+        { country: "Vietnam",        btc: 2, eth: 2, mining: 1, ln: 2, score: 0.583, label: "Moderate" },
+        { country: "Nigeria",        btc: 2, eth: 1, mining: 1, ln: 2, score: 0.500, label: "Emerging" },
+        { country: "Philippines",    btc: 2, eth: 2, mining: 1, ln: 1, score: 0.500, label: "Emerging" },
+        { country: "Ethiopia",       btc: 1, eth: 1, mining: 3, ln: 1, score: 0.500, label: "Emerging" },
+        { country: "Pakistan",       btc: 2, eth: 1, mining: 1, ln: 1, score: 0.417, label: "Emerging" },
+        { country: "Venezuela",      btc: 1, eth: 1, mining: 1, ln: 1, score: 0.333, label: "Minimal" },
+        { country: "Bangladesh",     btc: 1, eth: 1, mining: 1, ln: 1, score: 0.333, label: "Minimal" },
+        { country: "Yemen",          btc: 1, eth: 1, mining: 1, ln: 1, score: 0.333, label: "Minimal" }
+    ];
+
+    const tierClasses = {
+        "Major Hub": "tier-major-hub",
+        "Strong":    "tier-strong",
+        "Moderate":  "tier-moderate",
+        "Emerging":  "tier-emerging",
+        "Minimal":   "tier-minimal"
+    };
+
+    const tbody = document.getElementById("table-body");
+    techData.forEach((d, i) => {
+        const barPct = (d.score * 100).toFixed(1);
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+            <td class="rank-cell">${i + 1}</td>
+            <td>${d.country}</td>
+            <td><span class="rating-badge rating-${d.btc}">${d.btc}</span></td>
+            <td><span class="rating-badge rating-${d.eth}">${d.eth}</span></td>
+            <td><span class="rating-badge rating-${d.mining}">${d.mining}</span></td>
+            <td><span class="rating-badge rating-${d.ln}">${d.ln}</span></td>
+            <td class="score-cell">${d.score.toFixed(3)}</td>
+            <td class="score-bar-cell">
+                <div class="score-bar-bg">
+                    <div class="score-bar-fill" style="width:${barPct}%;"></div>
+                </div>
+            </td>
+            <td><span class="tier-badge ${tierClasses[d.label]}">${d.label}</span></td>`;
+        tbody.appendChild(tr);
+    });
+    </script>
+</body>
+</html>
