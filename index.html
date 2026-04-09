@@ -485,6 +485,8 @@
                         { label: '[IDX]  ECONOMIC_ADOPTION', cls: 'highlight-econ', name: 'ECONOMIC_ADOPTION' },
                         { label: '[IDX]  REGULATORY_CLARITY', cls: 'highlight-reg', name: 'REGULATORY_CLARITY' },
                         { label: '[IDX]  TECH_INFRASTRUCTURE', cls: 'highlight-infra', name: 'TECH_INFRASTRUCTURE' },
+                        { label: '[DOC]  ECON_METHODOLOGY', cls: 'highlight-econ', name: 'ECON_METHODOLOGY' },
+                        { label: '[DOC]  KEY_FINDINGS', cls: 'highlight-map', name: 'KEY_FINDINGS' },
                     ];
 
                     files.forEach((f, idx) => {
@@ -610,6 +612,16 @@
             responseLine.style.color = '#44bbff';
             terminalElement.insertBefore(responseLine, inputLine);
             setTimeout(() => navigateTo('data.html'), 800);
+        } else if (cmd === 'OPEN ECON_METHODOLOGY') {
+            responseLine.textContent = '> LOADING METHODOLOGY DATA...';
+            responseLine.style.color = '#C5A55A';
+            terminalElement.insertBefore(responseLine, inputLine);
+            setTimeout(() => navigateTo('econ-methodology.html'), 800);
+        } else if (cmd === 'OPEN KEY_FINDINGS') {
+            responseLine.textContent = '> LOADING KEY FINDINGS...';
+            responseLine.style.color = '#5ce65c';
+            terminalElement.insertBefore(responseLine, inputLine);
+            setTimeout(() => navigateTo('findings.html'), 800);
         } else if (cmd === 'HELP') {
             responseLine.innerHTML =
                 '> COMMANDS:<br>' +

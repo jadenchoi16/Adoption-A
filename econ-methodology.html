@@ -1,0 +1,764 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Economic Scoring Methodology | Adoption-A</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=VT323&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #fafaf7;
+            color: #2c3e50;
+            line-height: 1.6;
+        }
+
+        /* === HOME BUTTON === */
+        .home-btn {
+            position: fixed;
+            top: 18px;
+            left: 20px;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            text-decoration: none;
+            color: #0a4c6a;
+            font-family: 'VT323', monospace;
+            font-size: 1rem;
+            font-weight: 500;
+            padding: 7px 14px;
+            border-radius: 8px;
+            border: 1px solid #d8dce0;
+            background: #fff;
+            transition: all 0.2s;
+            z-index: 50;
+            letter-spacing: 0.5px;
+        }
+        .home-btn:hover {
+            background: #eef3f7;
+            border-color: #0a4c6a;
+        }
+
+        /* === HEADER === */
+        .header {
+            text-align: center;
+            padding: 52px 24px 20px;
+            max-width: 860px;
+            margin: 0 auto;
+        }
+        .header h1 {
+            font-family: 'Source Serif 4', Georgia, serif;
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: #1a2a3a;
+            letter-spacing: -0.5px;
+            margin-bottom: 10px;
+        }
+        .header .subtitle {
+            font-size: 0.92rem;
+            color: #7a8a9a;
+            font-weight: 300;
+            max-width: 640px;
+            margin: 0 auto;
+        }
+        .header .version-badge {
+            display: inline-block;
+            background: #0a4c6a;
+            color: #fff;
+            padding: 3px 12px;
+            border-radius: 5px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-top: 10px;
+            letter-spacing: 0.5px;
+        }
+
+        /* === SECTIONS === */
+        .section {
+            max-width: 1100px;
+            margin: 28px auto;
+            padding: 0 24px;
+        }
+        .card {
+            background: #fff;
+            border-radius: 14px;
+            box-shadow: 0 2px 14px rgba(0,0,0,0.04);
+            border: 1px solid #ebebeb;
+            padding: 28px 32px;
+            margin-bottom: 24px;
+        }
+        .card h2 {
+            font-family: 'Source Serif 4', Georgia, serif;
+            font-size: 1.35rem;
+            margin-bottom: 14px;
+            color: #1a2a3a;
+        }
+        .card h3 {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: #1a2a3a;
+            margin: 18px 0 8px;
+        }
+        .card p {
+            font-size: 0.88rem;
+            color: #5a6b7c;
+            margin-bottom: 8px;
+        }
+        .card ul {
+            font-size: 0.88rem;
+            color: #5a6b7c;
+            padding-left: 20px;
+            margin-bottom: 10px;
+        }
+        .card li {
+            margin-bottom: 4px;
+        }
+
+        .formula-box {
+            background: #f8f5ef;
+            padding: 14px 18px;
+            border-radius: 8px;
+            font-family: 'Courier New', 'Consolas', monospace;
+            font-size: 0.85rem;
+            margin: 14px 0;
+            color: #3a4a5a;
+            border-left: 4px solid #0a4c6a;
+            overflow-x: auto;
+        }
+
+        /* === TAB NAVIGATION === */
+        .tab-nav {
+            display: flex;
+            gap: 4px;
+            margin-bottom: 0;
+            flex-wrap: wrap;
+        }
+        .tab-btn {
+            padding: 10px 20px;
+            border: 1px solid #ddd;
+            border-bottom: none;
+            background: #f5f3ee;
+            border-radius: 8px 8px 0 0;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.82rem;
+            font-weight: 500;
+            color: #7a8a9a;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .tab-btn:hover {
+            background: #fff;
+            color: #1a2a3a;
+        }
+        .tab-btn.active {
+            background: #fff;
+            color: #0a4c6a;
+            font-weight: 600;
+            border-color: #ebebeb;
+        }
+        .tab-content {
+            display: none;
+            background: #fff;
+            border: 1px solid #ebebeb;
+            border-radius: 0 14px 14px 14px;
+            padding: 24px 28px;
+            box-shadow: 0 2px 14px rgba(0,0,0,0.04);
+        }
+        .tab-content.active {
+            display: block;
+        }
+
+        /* === TABLES === */
+        .data-table-wrapper {
+            overflow-x: auto;
+            margin: 14px 0;
+            border-radius: 10px;
+            border: 1px solid #ebebeb;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.8rem;
+        }
+        thead th {
+            background: #0a4c6a;
+            color: #fff;
+            padding: 10px 12px;
+            text-align: left;
+            font-size: 0.72rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            white-space: nowrap;
+            position: sticky;
+            top: 0;
+        }
+        thead th:first-child { text-align: center; }
+        tbody td {
+            padding: 8px 12px;
+            border-bottom: 1px solid #f4f2ed;
+            white-space: nowrap;
+        }
+        tbody tr:last-child td { border-bottom: none; }
+        tbody tr:hover { background: #faf8f3; }
+        .rank-cell { text-align: center; font-weight: 700; color: #0a4c6a; }
+        .score-cell { font-weight: 600; color: #0a4c6a; }
+        .num-cell { text-align: right; font-variant-numeric: tabular-nums; }
+        .highlight-cell { background: #f0f7fa; font-weight: 600; }
+
+        /* === WEIGHT BARS === */
+        .weight-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin: 14px 0;
+        }
+        .weight-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .weight-label {
+            width: 160px;
+            font-size: 0.84rem;
+            font-weight: 500;
+            color: #2c3e50;
+            flex-shrink: 0;
+        }
+        .weight-bar-bg {
+            flex: 1;
+            height: 24px;
+            background: #f0ece4;
+            border-radius: 6px;
+            overflow: hidden;
+            position: relative;
+        }
+        .weight-bar-fill {
+            height: 100%;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding-right: 8px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: #fff;
+        }
+        .weight-category {
+            font-size: 0.72rem;
+            color: #9aa5b0;
+            width: 80px;
+            text-align: right;
+            flex-shrink: 0;
+        }
+
+        /* === NORMALIZATION INFO === */
+        .norm-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin: 14px 0;
+        }
+        .norm-card {
+            background: #f8f5ef;
+            border-radius: 10px;
+            padding: 16px;
+            border-left: 4px solid #0a4c6a;
+        }
+        .norm-card h4 {
+            font-size: 0.82rem;
+            color: #0a4c6a;
+            margin-bottom: 4px;
+        }
+        .norm-card .used-for {
+            font-size: 0.75rem;
+            color: #9aa5b0;
+            margin-bottom: 6px;
+        }
+        .norm-card p {
+            font-size: 0.82rem;
+            color: #5a6b7c;
+            margin-bottom: 0;
+        }
+        .norm-card code {
+            background: #e8e4da;
+            padding: 1px 5px;
+            border-radius: 3px;
+            font-size: 0.78rem;
+        }
+
+        /* === SOURCES === */
+        .source-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin: 14px 0;
+        }
+        .source-item {
+            display: flex;
+            flex-direction: column;
+            background: #f8f5ef;
+            padding: 12px 14px;
+            border-radius: 8px;
+        }
+        .source-item .src-label {
+            font-size: 0.72rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: #9aa5b0;
+            margin-bottom: 2px;
+        }
+        .source-item .src-name {
+            font-size: 0.84rem;
+            font-weight: 500;
+            color: #2c3e50;
+        }
+        .source-item .src-year {
+            font-size: 0.75rem;
+            color: #7a8a9a;
+        }
+        .source-item a {
+            font-size: 0.78rem;
+            color: #0a4c6a;
+        }
+
+        /* === FOOTER === */
+        .footer {
+            text-align: center;
+            padding: 24px;
+            font-size: 0.78rem;
+            color: #aab5c0;
+            border-top: 1px solid #eee;
+            margin-top: 20px;
+        }
+
+        /* === RESPONSIVE === */
+        @media (max-width: 768px) {
+            .header h1 { font-size: 1.5rem; }
+            .norm-grid, .source-grid { grid-template-columns: 1fr; }
+            .card { padding: 18px; }
+            .tab-content { padding: 16px; }
+            .weight-label { width: 120px; font-size: 0.78rem; }
+            table { font-size: 0.72rem; }
+            thead th, tbody td { padding: 6px 8px; }
+        }
+    </style>
+</head>
+<body>
+
+    <a href="map.html#economic" class="home-btn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+        BACK TO MAP
+    </a>
+
+    <!-- HEADER -->
+    <div class="header">
+        <h1>Economic Scoring Methodology</h1>
+        <p class="subtitle">How the Economic Adoption Score is calculated &mdash; raw data, normalization methods, weights, and final composite scores for all 20 countries</p>
+        <div class="version-badge">VERSION F &middot; CHAINALYSIS DECOMPOSITION</div>
+    </div>
+
+    <!-- FORMULA OVERVIEW -->
+    <div class="section">
+        <div class="card">
+            <h2>Composite Formula</h2>
+            <p>The Economic Adoption Score combines seven normalized indicators, each weighted by how directly it reflects genuine crypto economic activity:</p>
+            <div class="formula-box">Score = (CEX Activity &times; 0.15) + (DeFi &times; 0.10) + (Ownership &times; 0.25) + (Remittances &times; 0.15) + (Currency Instability &times; 0.10) + (CEX/GDP &times; 0.15) + (Internet &times; 0.10)</div>
+
+            <h3>Indicator Weights</h3>
+            <div class="weight-list">
+                <div class="weight-item">
+                    <span class="weight-label">Crypto Ownership %</span>
+                    <div class="weight-bar-bg"><div class="weight-bar-fill" style="width:100%; background:#0a4c6a;">25%</div></div>
+                    <span class="weight-category">Adoption</span>
+                </div>
+                <div class="weight-item">
+                    <span class="weight-label">CEX Activity</span>
+                    <div class="weight-bar-bg"><div class="weight-bar-fill" style="width:60%; background:#1a6b7a;">15%</div></div>
+                    <span class="weight-category">On-Chain</span>
+                </div>
+                <div class="weight-item">
+                    <span class="weight-label">CEX Volume / GDP</span>
+                    <div class="weight-bar-bg"><div class="weight-bar-fill" style="width:60%; background:#1a6b7a;">15%</div></div>
+                    <span class="weight-category">Trading</span>
+                </div>
+                <div class="weight-item">
+                    <span class="weight-label">Remittances / Capita</span>
+                    <div class="weight-bar-bg"><div class="weight-bar-fill" style="width:60%; background:#5ba8b5;">15%</div></div>
+                    <span class="weight-category">Utility</span>
+                </div>
+                <div class="weight-item">
+                    <span class="weight-label">DeFi Activity</span>
+                    <div class="weight-bar-bg"><div class="weight-bar-fill" style="width:40%; background:#7ac4c4;">10%</div></div>
+                    <span class="weight-category">On-Chain</span>
+                </div>
+                <div class="weight-item">
+                    <span class="weight-label">Currency Instability</span>
+                    <div class="weight-bar-bg"><div class="weight-bar-fill" style="width:40%; background:#c4a55a;">10%</div></div>
+                    <span class="weight-category">Utility</span>
+                </div>
+                <div class="weight-item">
+                    <span class="weight-label">Internet Penetration</span>
+                    <div class="weight-bar-bg"><div class="weight-bar-fill" style="width:40%; background:#a0b8a0;">10%</div></div>
+                    <span class="weight-category">Infrastructure</span>
+                </div>
+            </div>
+
+            <p style="font-size:0.82rem; color:#7a8a9a; margin-top:12px;"><strong>Total Chainalysis influence:</strong> 25% (15% CEX + 10% DeFi) &mdash; same total weight as the previous version, but now using Chainalysis's raw sub-index ranks with our own weighting instead of importing their composite score.</p>
+        </div>
+    </div>
+
+    <!-- TABBED DATA SECTION -->
+    <div class="section">
+        <div class="tab-nav">
+            <button class="tab-btn active" onclick="switchTab('scores')">Final Scores</button>
+            <button class="tab-btn" onclick="switchTab('raw')">Raw Data</button>
+            <button class="tab-btn" onclick="switchTab('normalized')">Normalized Values</button>
+            <button class="tab-btn" onclick="switchTab('chainalysis')">Chainalysis Breakdown</button>
+        </div>
+
+        <!-- TAB 1: FINAL SCORES -->
+        <div class="tab-content active" id="tab-scores">
+            <p>Final composite scores ranked from highest to lowest. Each score is the weighted sum of all seven normalized indicators.</p>
+            <div class="data-table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Rank</th>
+                            <th>Country</th>
+                            <th>CEX Act<br>(15%)</th>
+                            <th>DeFi<br>(10%)</th>
+                            <th>Own %<br>(25%)</th>
+                            <th>Remit<br>(15%)</th>
+                            <th>Curr Inst<br>(10%)</th>
+                            <th>CEX/GDP<br>(15%)</th>
+                            <th>Internet<br>(10%)</th>
+                            <th>Score</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td class="rank-cell">1</td><td>Vietnam</td><td class="num-cell">0.881</td><td class="num-cell">0.861</td><td class="num-cell">1.000</td><td class="num-cell">0.343</td><td class="num-cell">0.369</td><td class="num-cell">0.651</td><td class="num-cell">0.833</td><td class="score-cell">0.737</td></tr>
+                        <tr><td class="rank-cell">2</td><td>Ukraine</td><td class="num-cell">0.810</td><td class="num-cell">0.806</td><td class="num-cell">0.474</td><td class="num-cell">1.000</td><td class="num-cell">0.485</td><td class="num-cell">0.743</td><td class="num-cell">0.748</td><td class="score-cell">0.705</td></tr>
+                        <tr><td class="rank-cell">3</td><td>Philippines</td><td class="num-cell">0.667</td><td class="num-cell">0.667</td><td class="num-cell">0.616</td><td class="num-cell">0.670</td><td class="num-cell">0.303</td><td class="num-cell">0.565</td><td class="num-cell">0.802</td><td class="score-cell">0.616</td></tr>
+                        <tr><td class="rank-cell">4</td><td>United States</td><td class="num-cell">0.762</td><td class="num-cell">0.972</td><td class="num-cell">0.721</td><td class="num-cell">0.023</td><td class="num-cell">0.145</td><td class="num-cell">0.529</td><td class="num-cell">0.963</td><td class="score-cell">0.585</td></tr>
+                        <tr><td class="rank-cell">5</td><td>Brazil</td><td class="num-cell">0.810</td><td class="num-cell">0.889</td><td class="num-cell">0.544</td><td class="num-cell">0.017</td><td class="num-cell">0.361</td><td class="num-cell">0.370</td><td class="num-cell">0.827</td><td class="score-cell">0.523</td></tr>
+                        <tr><td class="rank-cell">6</td><td>India</td><td class="num-cell">1.000</td><td class="num-cell">1.000</td><td class="num-cell">0.275</td><td class="num-cell">0.157</td><td class="num-cell">0.345</td><td class="num-cell">0.350</td><td class="num-cell">0.638</td><td class="score-cell">0.493</td></tr>
+                        <tr><td class="rank-cell">7</td><td>Nigeria</td><td class="num-cell">0.690</td><td class="num-cell">0.944</td><td class="num-cell">0.244</td><td class="num-cell">0.147</td><td class="num-cell">0.513</td><td class="num-cell">0.770</td><td class="num-cell">0.361</td><td class="score-cell">0.484</td></tr>
+                        <tr><td class="rank-cell">8</td><td>Pakistan</td><td class="num-cell">0.929</td><td class="num-cell">0.750</td><td class="num-cell">0.277</td><td class="num-cell">0.254</td><td class="num-cell">0.469</td><td class="num-cell">0.496</td><td class="num-cell">0.377</td><td class="score-cell">0.481</td></tr>
+                        <tr><td class="rank-cell">9</td><td>South Korea</td><td class="num-cell">0.452</td><td class="num-cell">0.361</td><td class="num-cell">0.153</td><td class="num-cell">0.341</td><td class="num-cell">0.235</td><td class="num-cell">1.000</td><td class="num-cell">0.985</td><td class="score-cell">0.465</td></tr>
+                        <tr><td class="rank-cell">10</td><td>Venezuela</td><td class="num-cell">0.381</td><td class="num-cell">0.000</td><td class="num-cell">0.461</td><td class="num-cell">0.189</td><td class="num-cell">0.967</td><td class="num-cell">0.521</td><td class="num-cell">0.662</td><td class="score-cell">0.442</td></tr>
+                        <tr><td class="rank-cell">11</td><td>Indonesia</td><td class="num-cell">0.667</td><td class="num-cell">0.917</td><td class="num-cell">0.168</td><td class="num-cell">0.065</td><td class="num-cell">0.347</td><td class="num-cell">0.552</td><td class="num-cell">0.790</td><td class="score-cell">0.440</td></tr>
+                        <tr><td class="rank-cell">12</td><td>Russia</td><td class="num-cell">0.595</td><td class="num-cell">0.778</td><td class="num-cell">0.251</td><td class="num-cell">0.084</td><td class="num-cell">0.456</td><td class="num-cell">0.269</td><td class="num-cell">0.932</td><td class="score-cell">0.421</td></tr>
+                        <tr><td class="rank-cell">13</td><td>Turkey</td><td class="num-cell">0.500</td><td class="num-cell">0.417</td><td class="num-cell">0.229</td><td class="num-cell">0.000</td><td class="num-cell">0.521</td><td class="num-cell">0.617</td><td class="num-cell">0.885</td><td class="score-cell">0.407</td></tr>
+                        <tr><td class="rank-cell">14</td><td>Thailand</td><td class="num-cell">0.143</td><td class="num-cell">0.611</td><td class="num-cell">0.426</td><td class="num-cell">0.207</td><td class="num-cell">0.192</td><td class="num-cell">0.360</td><td class="num-cell">0.937</td><td class="score-cell">0.387</td></tr>
+                        <tr><td class="rank-cell">15</td><td>Argentina</td><td class="num-cell">0.167</td><td class="num-cell">0.222</td><td class="num-cell">0.432</td><td class="num-cell">0.026</td><td class="num-cell">0.642</td><td class="num-cell">0.358</td><td class="num-cell">0.854</td><td class="score-cell">0.363</td></tr>
+                        <tr><td class="rank-cell">16</td><td>United Kingdom</td><td class="num-cell">0.190</td><td class="num-cell">0.694</td><td class="num-cell">0.235</td><td class="num-cell">0.162</td><td class="num-cell">0.124</td><td class="num-cell">0.000</td><td class="num-cell">1.000</td><td class="score-cell">0.293</td></tr>
+                        <tr><td class="rank-cell">17</td><td>Japan</td><td class="num-cell">0.000</td><td class="num-cell">0.583</td><td class="num-cell">0.155</td><td class="num-cell">0.017</td><td class="num-cell">0.285</td><td class="num-cell">0.485</td><td class="num-cell">0.837</td><td class="score-cell">0.284</td></tr>
+                        <tr><td class="rank-cell">18</td><td>Bangladesh</td><td class="num-cell">0.381</td><td class="num-cell">0.639</td><td class="num-cell">0.074</td><td class="num-cell">0.243</td><td class="num-cell">0.473</td><td class="num-cell">0.117</td><td class="num-cell">0.362</td><td class="score-cell">0.277</td></tr>
+                        <tr><td class="rank-cell">19</td><td>Yemen</td><td class="num-cell">0.310</td><td class="num-cell">0.444</td><td class="num-cell">0.000</td><td class="num-cell">0.199</td><td class="num-cell">0.569</td><td class="num-cell">0.261</td><td class="num-cell">0.113</td><td class="score-cell">0.228</td></tr>
+                        <tr><td class="rank-cell">20</td><td>Ethiopia</td><td class="num-cell">0.190</td><td class="num-cell">0.833</td><td class="num-cell">0.039</td><td class="num-cell">0.007</td><td class="num-cell">0.553</td><td class="num-cell">0.194</td><td class="num-cell">0.000</td><td class="score-cell">0.207</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <p style="font-size:0.78rem; color:#9aa5b0;">Average composite: 0.442 &middot; Median: 0.441 &middot; Std deviation: 0.146</p>
+        </div>
+
+        <!-- TAB 2: RAW DATA -->
+        <div class="tab-content" id="tab-raw">
+            <p>Raw input values before any normalization. These are the actual data points collected from the sources listed below. All Chainalysis ranks are out of 151 countries, PPP-weighted.</p>
+            <div class="data-table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Country</th>
+                            <th>Retail<br>CEX Rank</th>
+                            <th>Inst.<br>CEX Rank</th>
+                            <th>DeFi<br>Rank</th>
+                            <th>Crypto<br>Own %</th>
+                            <th>Remit<br>Total ($B)</th>
+                            <th>Pop.<br>(M)</th>
+                            <th>Inflation<br>%</th>
+                            <th>CEX Vol<br>24h ($M)</th>
+                            <th>GDP<br>($B)</th>
+                            <th>Internet<br>%</th>
+                            <th>5yr Deprc<br>%</th>
+                            <th>Heritage<br>Fin Free</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>Vietnam</td><td class="num-cell">3</td><td class="num-cell">4</td><td class="num-cell">6</td><td class="num-cell">21.19</td><td class="num-cell">18.0</td><td class="num-cell">99.5</td><td class="num-cell">3.35</td><td class="num-cell">2,500</td><td class="num-cell">459.5</td><td class="num-cell">86.0</td><td class="num-cell">18</td><td class="num-cell">40</td></tr>
+                        <tr><td>India</td><td class="num-cell">1</td><td class="num-cell">1</td><td class="num-cell">1</td><td class="num-cell">6.55</td><td class="num-cell">129.0</td><td class="num-cell">1,438</td><td class="num-cell">3.21</td><td class="num-cell">3,500</td><td class="num-cell">3,909.9</td><td class="num-cell">70.0</td><td class="num-cell">10</td><td class="num-cell">40</td></tr>
+                        <tr><td>Ukraine</td><td class="num-cell">4</td><td class="num-cell">6</td><td class="num-cell">8</td><td class="num-cell">10.57</td><td class="num-cell">18.6</td><td class="num-cell">37.0</td><td class="num-cell">7.60</td><td class="num-cell">1,800</td><td class="num-cell">190.7</td><td class="num-cell">79.0</td><td class="num-cell">55</td><td class="num-cell">30</td></tr>
+                        <tr><td>Philippines</td><td class="num-cell">6</td><td class="num-cell">10</td><td class="num-cell">13</td><td class="num-cell">13.43</td><td class="num-cell">40.0</td><td class="num-cell">117.3</td><td class="num-cell">2.40</td><td class="num-cell">1,500</td><td class="num-cell">461.6</td><td class="num-cell">83.5</td><td class="num-cell">12</td><td class="num-cell">50</td></tr>
+                        <tr><td>Nigeria</td><td class="num-cell">7</td><td class="num-cell">8</td><td class="num-cell">3</td><td class="num-cell">5.93</td><td class="num-cell">19.5</td><td class="num-cell">230.0</td><td class="num-cell">15.06</td><td class="num-cell">2,800</td><td class="num-cell">252.1</td><td class="num-cell">47.3</td><td class="num-cell">110</td><td class="num-cell">40</td></tr>
+                        <tr><td>Indonesia</td><td class="num-cell">9</td><td class="num-cell">7</td><td class="num-cell">4</td><td class="num-cell">4.40</td><td class="num-cell">12.5</td><td class="num-cell">279.1</td><td class="num-cell">4.76</td><td class="num-cell">4,200</td><td class="num-cell">1,396.3</td><td class="num-cell">82.5</td><td class="num-cell">15</td><td class="num-cell">50</td></tr>
+                        <tr><td>Pakistan</td><td class="num-cell">2</td><td class="num-cell">3</td><td class="num-cell">10</td><td class="num-cell">6.60</td><td class="num-cell">33.0</td><td class="num-cell">240.5</td><td class="num-cell">7.00</td><td class="num-cell">800</td><td class="num-cell">371.4</td><td class="num-cell">48.6</td><td class="num-cell">40</td><td class="num-cell">30</td></tr>
+                        <tr><td>United States</td><td class="num-cell">10</td><td class="num-cell">2</td><td class="num-cell">2</td><td class="num-cell">15.56</td><td class="num-cell">8.0</td><td class="num-cell">335.0</td><td class="num-cell">2.40</td><td class="num-cell">76,659</td><td class="num-cell">29,298</td><td class="num-cell">96.7</td><td class="num-cell">0</td><td class="num-cell">70</td></tr>
+                        <tr><td>Brazil</td><td class="num-cell">5</td><td class="num-cell">5</td><td class="num-cell">5</td><td class="num-cell">11.99</td><td class="num-cell">4.6</td><td class="num-cell">216.4</td><td class="num-cell">3.81</td><td class="num-cell">2,200</td><td class="num-cell">2,179.4</td><td class="num-cell">85.5</td><td class="num-cell">30</td><td class="num-cell">50</td></tr>
+                        <tr><td>Thailand</td><td class="num-cell">21</td><td class="num-cell">17</td><td class="num-cell">15</td><td class="num-cell">9.61</td><td class="num-cell">8.2</td><td class="num-cell">71.8</td><td class="num-cell">-0.88</td><td class="num-cell">500</td><td class="num-cell">526.5</td><td class="num-cell">94.5</td><td class="num-cell">5</td><td class="num-cell">60</td></tr>
+                        <tr><td>South Korea</td><td class="num-cell">12</td><td class="num-cell">13</td><td class="num-cell">24</td><td class="num-cell">4.09</td><td class="num-cell">9.3</td><td class="num-cell">51.7</td><td class="num-cell">2.00</td><td class="num-cell">82,816</td><td class="num-cell">1,875.4</td><td class="num-cell">98.5</td><td class="num-cell">15</td><td class="num-cell">70</td></tr>
+                        <tr><td>Russia</td><td class="num-cell">8</td><td class="num-cell">11</td><td class="num-cell">9</td><td class="num-cell">6.06</td><td class="num-cell">7.8</td><td class="num-cell">144.2</td><td class="num-cell">5.90</td><td class="num-cell">1,200</td><td class="num-cell">2,173.2</td><td class="num-cell">94.1</td><td class="num-cell">35</td><td class="num-cell">30</td></tr>
+                        <tr><td>Argentina</td><td class="num-cell">18</td><td class="num-cell">19</td><td class="num-cell">29</td><td class="num-cell">9.73</td><td class="num-cell">1.2</td><td class="num-cell">46.7</td><td class="num-cell">33.10</td><td class="num-cell">600</td><td class="num-cell">637.2</td><td class="num-cell">87.7</td><td class="num-cell">500</td><td class="num-cell">30</td></tr>
+                        <tr><td>Turkey</td><td class="num-cell">11</td><td class="num-cell">12</td><td class="num-cell">22</td><td class="num-cell">5.62</td><td class="num-cell">1.1</td><td class="num-cell">85.8</td><td class="num-cell">31.53</td><td class="num-cell">6,018</td><td class="num-cell">1,358.3</td><td class="num-cell">90.3</td><td class="num-cell">300</td><td class="num-cell">60</td></tr>
+                        <tr><td>Venezuela</td><td class="num-cell">13</td><td class="num-cell">15</td><td class="num-cell">37</td><td class="num-cell">10.30</td><td class="num-cell">3.0</td><td class="num-cell">28.4</td><td class="num-cell">618.00</td><td class="num-cell">300</td><td class="num-cell">119.8</td><td class="num-cell">72.0</td><td class="num-cell">9,000</td><td class="num-cell">10</td></tr>
+                        <tr><td>United Kingdom</td><td class="num-cell">27</td><td class="num-cell">9</td><td class="num-cell">12</td><td class="num-cell">5.74</td><td class="num-cell">6.3</td><td class="num-cell">68.3</td><td class="num-cell">3.00</td><td class="num-cell">400</td><td class="num-cell">3,644.6</td><td class="num-cell">99.7</td><td class="num-cell">0</td><td class="num-cell">80</td></tr>
+                        <tr><td>Bangladesh</td><td class="num-cell">14</td><td class="num-cell">14</td><td class="num-cell">14</td><td class="num-cell">2.50</td><td class="num-cell">23.0</td><td class="num-cell">174.7</td><td class="num-cell">9.13</td><td class="num-cell">100</td><td class="num-cell">450.5</td><td class="num-cell">47.4</td><td class="num-cell">30</td><td class="num-cell">30</td></tr>
+                        <tr><td>Japan</td><td class="num-cell">17</td><td class="num-cell">27</td><td class="num-cell">16</td><td class="num-cell">4.13</td><td class="num-cell">2.6</td><td class="num-cell">124.0</td><td class="num-cell">1.50</td><td class="num-cell">8,084</td><td class="num-cell">4,019.4</td><td class="num-cell">86.3</td><td class="num-cell">35</td><td class="num-cell">60</td></tr>
+                        <tr><td>Yemen</td><td class="num-cell">15</td><td class="num-cell">16</td><td class="num-cell">21</td><td class="num-cell">1.00</td><td class="num-cell">3.8</td><td class="num-cell">34.4</td><td class="num-cell">10.00</td><td class="num-cell">10</td><td class="num-cell">19.1</td><td class="num-cell">27.0</td><td class="num-cell">60</td><td class="num-cell">10</td></tr>
+                        <tr><td>Ethiopia</td><td class="num-cell">16</td><td class="num-cell">20</td><td class="num-cell">7</td><td class="num-cell">1.79</td><td class="num-cell">2.1</td><td class="num-cell">129.0</td><td class="num-cell">9.70</td><td class="num-cell">50</td><td class="num-cell">142.1</td><td class="num-cell">17.7</td><td class="num-cell">100</td><td class="num-cell">20</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <p style="font-size:0.78rem; color:#9aa5b0;">Sources: Chainalysis 2025 Index, Triple-A, World Bank, CoinGecko, IMF, Trading Economics, Heritage Foundation, DataReportal/ITU. Full source links in the Sources section below.</p>
+        </div>
+
+        <!-- TAB 3: NORMALIZED VALUES -->
+        <div class="tab-content" id="tab-normalized">
+            <p>After normalization, all values are on a 0&ndash;1 scale. Each column shows the normalized value that gets multiplied by its weight in the final formula. See the Normalization Methods section below for how each transformation works.</p>
+            <div class="data-table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Country</th>
+                            <th>CEX Act<br><span style="font-weight:400;text-transform:none;">Inv. Min-Max</span></th>
+                            <th>DeFi<br><span style="font-weight:400;text-transform:none;">Inv. Min-Max</span></th>
+                            <th>Own %<br><span style="font-weight:400;text-transform:none;">Min-Max</span></th>
+                            <th>Remit/Cap<br><span style="font-weight:400;text-transform:none;">Min-Max</span></th>
+                            <th>Curr Inst<br><span style="font-weight:400;text-transform:none;">Composite</span></th>
+                            <th>CEX/GDP<br><span style="font-weight:400;text-transform:none;">Log Min-Max</span></th>
+                            <th>Internet<br><span style="font-weight:400;text-transform:none;">Min-Max</span></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>Vietnam</td><td class="num-cell highlight-cell">0.881</td><td class="num-cell">0.861</td><td class="num-cell highlight-cell">1.000</td><td class="num-cell">0.343</td><td class="num-cell">0.369</td><td class="num-cell">0.651</td><td class="num-cell">0.833</td></tr>
+                        <tr><td>Ukraine</td><td class="num-cell">0.810</td><td class="num-cell">0.806</td><td class="num-cell">0.474</td><td class="num-cell highlight-cell">1.000</td><td class="num-cell">0.485</td><td class="num-cell">0.743</td><td class="num-cell">0.748</td></tr>
+                        <tr><td>Philippines</td><td class="num-cell">0.667</td><td class="num-cell">0.667</td><td class="num-cell">0.616</td><td class="num-cell">0.670</td><td class="num-cell">0.303</td><td class="num-cell">0.565</td><td class="num-cell">0.802</td></tr>
+                        <tr><td>United States</td><td class="num-cell">0.762</td><td class="num-cell highlight-cell">0.972</td><td class="num-cell">0.721</td><td class="num-cell">0.023</td><td class="num-cell">0.145</td><td class="num-cell">0.529</td><td class="num-cell">0.963</td></tr>
+                        <tr><td>Brazil</td><td class="num-cell">0.810</td><td class="num-cell">0.889</td><td class="num-cell">0.544</td><td class="num-cell">0.017</td><td class="num-cell">0.361</td><td class="num-cell">0.370</td><td class="num-cell">0.827</td></tr>
+                        <tr><td>India</td><td class="num-cell highlight-cell">1.000</td><td class="num-cell highlight-cell">1.000</td><td class="num-cell">0.275</td><td class="num-cell">0.157</td><td class="num-cell">0.345</td><td class="num-cell">0.350</td><td class="num-cell">0.638</td></tr>
+                        <tr><td>Nigeria</td><td class="num-cell">0.690</td><td class="num-cell">0.944</td><td class="num-cell">0.244</td><td class="num-cell">0.147</td><td class="num-cell">0.513</td><td class="num-cell highlight-cell">0.770</td><td class="num-cell">0.361</td></tr>
+                        <tr><td>Pakistan</td><td class="num-cell">0.929</td><td class="num-cell">0.750</td><td class="num-cell">0.277</td><td class="num-cell">0.254</td><td class="num-cell">0.469</td><td class="num-cell">0.496</td><td class="num-cell">0.377</td></tr>
+                        <tr><td>South Korea</td><td class="num-cell">0.452</td><td class="num-cell">0.361</td><td class="num-cell">0.153</td><td class="num-cell">0.341</td><td class="num-cell">0.235</td><td class="num-cell highlight-cell">1.000</td><td class="num-cell highlight-cell">0.985</td></tr>
+                        <tr><td>Venezuela</td><td class="num-cell">0.381</td><td class="num-cell">0.000</td><td class="num-cell">0.461</td><td class="num-cell">0.189</td><td class="num-cell highlight-cell">0.967</td><td class="num-cell">0.521</td><td class="num-cell">0.662</td></tr>
+                        <tr><td>Indonesia</td><td class="num-cell">0.667</td><td class="num-cell">0.917</td><td class="num-cell">0.168</td><td class="num-cell">0.065</td><td class="num-cell">0.347</td><td class="num-cell">0.552</td><td class="num-cell">0.790</td></tr>
+                        <tr><td>Russia</td><td class="num-cell">0.595</td><td class="num-cell">0.778</td><td class="num-cell">0.251</td><td class="num-cell">0.084</td><td class="num-cell">0.456</td><td class="num-cell">0.269</td><td class="num-cell">0.932</td></tr>
+                        <tr><td>Turkey</td><td class="num-cell">0.500</td><td class="num-cell">0.417</td><td class="num-cell">0.229</td><td class="num-cell">0.000</td><td class="num-cell">0.521</td><td class="num-cell">0.617</td><td class="num-cell">0.885</td></tr>
+                        <tr><td>Thailand</td><td class="num-cell">0.143</td><td class="num-cell">0.611</td><td class="num-cell">0.426</td><td class="num-cell">0.207</td><td class="num-cell">0.192</td><td class="num-cell">0.360</td><td class="num-cell">0.937</td></tr>
+                        <tr><td>Argentina</td><td class="num-cell">0.167</td><td class="num-cell">0.222</td><td class="num-cell">0.432</td><td class="num-cell">0.026</td><td class="num-cell">0.642</td><td class="num-cell">0.358</td><td class="num-cell">0.854</td></tr>
+                        <tr><td>United Kingdom</td><td class="num-cell">0.190</td><td class="num-cell">0.694</td><td class="num-cell">0.235</td><td class="num-cell">0.162</td><td class="num-cell">0.124</td><td class="num-cell">0.000</td><td class="num-cell highlight-cell">1.000</td></tr>
+                        <tr><td>Japan</td><td class="num-cell">0.000</td><td class="num-cell">0.583</td><td class="num-cell">0.155</td><td class="num-cell">0.017</td><td class="num-cell">0.285</td><td class="num-cell">0.485</td><td class="num-cell">0.837</td></tr>
+                        <tr><td>Bangladesh</td><td class="num-cell">0.381</td><td class="num-cell">0.639</td><td class="num-cell">0.074</td><td class="num-cell">0.243</td><td class="num-cell">0.473</td><td class="num-cell">0.117</td><td class="num-cell">0.362</td></tr>
+                        <tr><td>Yemen</td><td class="num-cell">0.310</td><td class="num-cell">0.444</td><td class="num-cell">0.000</td><td class="num-cell">0.199</td><td class="num-cell">0.569</td><td class="num-cell">0.261</td><td class="num-cell">0.113</td></tr>
+                        <tr><td>Ethiopia</td><td class="num-cell">0.190</td><td class="num-cell highlight-cell">0.833</td><td class="num-cell">0.039</td><td class="num-cell">0.007</td><td class="num-cell">0.553</td><td class="num-cell">0.194</td><td class="num-cell">0.000</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <p style="font-size:0.78rem; color:#9aa5b0;">Highlighted cells indicate a country leads or is near the top for that indicator. All values normalized within the 20-country sample.</p>
+        </div>
+
+        <!-- TAB 4: CHAINALYSIS BREAKDOWN -->
+        <div class="tab-content" id="tab-chainalysis">
+            <p>The Chainalysis 2025 Global Crypto Adoption Index provides three sub-indexes (out of 151 countries). Version F decomposes these instead of using the composite, allowing our model to weight CEX vs DeFi activity separately.</p>
+            <div class="data-table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Country</th>
+                            <th>Overall<br>Rank</th>
+                            <th>Retail<br>CEX Rank</th>
+                            <th>Inst.<br>CEX Rank</th>
+                            <th>DeFi<br>Rank</th>
+                            <th>CEX Avg<br>(Used)</th>
+                            <th>Our CEX<br>Norm</th>
+                            <th>Our DeFi<br>Norm</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>India</td><td class="rank-cell">1</td><td class="num-cell">1</td><td class="num-cell">1</td><td class="num-cell">1</td><td class="num-cell">1.0</td><td class="num-cell">1.000</td><td class="num-cell">1.000</td></tr>
+                        <tr><td>United States</td><td class="rank-cell">2</td><td class="num-cell">10</td><td class="num-cell">2</td><td class="num-cell">2</td><td class="num-cell">6.0</td><td class="num-cell">0.762</td><td class="num-cell">0.972</td></tr>
+                        <tr><td>Pakistan</td><td class="rank-cell">3</td><td class="num-cell">2</td><td class="num-cell">3</td><td class="num-cell">10</td><td class="num-cell">2.5</td><td class="num-cell">0.929</td><td class="num-cell">0.750</td></tr>
+                        <tr><td>Vietnam</td><td class="rank-cell">4</td><td class="num-cell">3</td><td class="num-cell">4</td><td class="num-cell">6</td><td class="num-cell">3.5</td><td class="num-cell">0.881</td><td class="num-cell">0.861</td></tr>
+                        <tr><td>Brazil</td><td class="rank-cell">5</td><td class="num-cell">5</td><td class="num-cell">5</td><td class="num-cell">5</td><td class="num-cell">5.0</td><td class="num-cell">0.810</td><td class="num-cell">0.889</td></tr>
+                        <tr><td>Nigeria</td><td class="rank-cell">6</td><td class="num-cell">7</td><td class="num-cell">8</td><td class="num-cell">3</td><td class="num-cell">7.5</td><td class="num-cell">0.690</td><td class="num-cell">0.944</td></tr>
+                        <tr><td>Indonesia</td><td class="rank-cell">7</td><td class="num-cell">9</td><td class="num-cell">7</td><td class="num-cell">4</td><td class="num-cell">8.0</td><td class="num-cell">0.667</td><td class="num-cell">0.917</td></tr>
+                        <tr><td>Ukraine</td><td class="rank-cell">8</td><td class="num-cell">4</td><td class="num-cell">6</td><td class="num-cell">8</td><td class="num-cell">5.0</td><td class="num-cell">0.810</td><td class="num-cell">0.806</td></tr>
+                        <tr><td>Philippines</td><td class="rank-cell">9</td><td class="num-cell">6</td><td class="num-cell">10</td><td class="num-cell">13</td><td class="num-cell">8.0</td><td class="num-cell">0.667</td><td class="num-cell">0.667</td></tr>
+                        <tr><td>Russia</td><td class="rank-cell">10</td><td class="num-cell">8</td><td class="num-cell">11</td><td class="num-cell">9</td><td class="num-cell">9.5</td><td class="num-cell">0.595</td><td class="num-cell">0.778</td></tr>
+                        <tr><td>United Kingdom</td><td class="rank-cell">11</td><td class="num-cell">27</td><td class="num-cell">9</td><td class="num-cell">12</td><td class="num-cell">18.0</td><td class="num-cell">0.190</td><td class="num-cell">0.694</td></tr>
+                        <tr><td>Ethiopia</td><td class="rank-cell">12</td><td class="num-cell">16</td><td class="num-cell">20</td><td class="num-cell">7</td><td class="num-cell">18.0</td><td class="num-cell">0.190</td><td class="num-cell">0.833</td></tr>
+                        <tr><td>Bangladesh</td><td class="rank-cell">13</td><td class="num-cell">14</td><td class="num-cell">14</td><td class="num-cell">14</td><td class="num-cell">14.0</td><td class="num-cell">0.381</td><td class="num-cell">0.639</td></tr>
+                        <tr><td>Turkey</td><td class="rank-cell">14</td><td class="num-cell">11</td><td class="num-cell">12</td><td class="num-cell">22</td><td class="num-cell">11.5</td><td class="num-cell">0.500</td><td class="num-cell">0.417</td></tr>
+                        <tr><td>South Korea</td><td class="rank-cell">15</td><td class="num-cell">12</td><td class="num-cell">13</td><td class="num-cell">24</td><td class="num-cell">12.5</td><td class="num-cell">0.452</td><td class="num-cell">0.361</td></tr>
+                        <tr><td>Yemen</td><td class="rank-cell">16</td><td class="num-cell">15</td><td class="num-cell">16</td><td class="num-cell">21</td><td class="num-cell">15.5</td><td class="num-cell">0.310</td><td class="num-cell">0.444</td></tr>
+                        <tr><td>Thailand</td><td class="rank-cell">17</td><td class="num-cell">21</td><td class="num-cell">17</td><td class="num-cell">15</td><td class="num-cell">19.0</td><td class="num-cell">0.143</td><td class="num-cell">0.611</td></tr>
+                        <tr><td>Venezuela</td><td class="rank-cell">18</td><td class="num-cell">13</td><td class="num-cell">15</td><td class="num-cell">37</td><td class="num-cell">14.0</td><td class="num-cell">0.381</td><td class="num-cell">0.000</td></tr>
+                        <tr><td>Japan</td><td class="rank-cell">19</td><td class="num-cell">17</td><td class="num-cell">27</td><td class="num-cell">16</td><td class="num-cell">22.0</td><td class="num-cell">0.000</td><td class="num-cell">0.583</td></tr>
+                        <tr><td>Argentina</td><td class="rank-cell">20</td><td class="num-cell">18</td><td class="num-cell">19</td><td class="num-cell">29</td><td class="num-cell">18.5</td><td class="num-cell">0.167</td><td class="num-cell">0.222</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <h3 style="margin-top:18px;">Why Decompose?</h3>
+            <ul>
+                <li><strong>Our own weighting:</strong> Version E used Chainalysis's composite rank (geometric mean of all sub-indexes). This meant our model partially imported their weighting decisions. Decomposing lets us weight CEX vs DeFi activity ourselves.</li>
+                <li><strong>Surface hidden signals:</strong> Countries like Ethiopia (#7 DeFi) and Nigeria (#3 DeFi) show strong decentralized activity that gets diluted in Chainalysis's composite. Our decomposition surfaces this.</li>
+                <li><strong>Avoid double-counting:</strong> Our CEX Volume/GDP metric uses CoinGecko data (raw exchange volume), while Chainalysis measures PPP-weighted on-chain flows. Pearson correlation between them is 0.382 &mdash; well below the 0.7 concern threshold.</li>
+            </ul>
+            <h3>2025 Methodology Changes (by Chainalysis)</h3>
+            <ul>
+                <li><strong>Dropped:</strong> Retail DeFi sub-index (skewed by low-frequency behavior)</li>
+                <li><strong>Added:</strong> Institutional CEX sub-index (captures ETF-era flows)</li>
+                <li><strong>Net effect:</strong> More weight on centralized + institutional activity</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- NORMALIZATION METHODS -->
+    <div class="section">
+        <div class="card">
+            <h2>Normalization Methods</h2>
+            <p>Every indicator uses different units &mdash; ranks, percentages, dollars, ratios. You cannot add "rank #3" to "21% ownership." Normalization converts everything to a 0&ndash;1 scale so indicators are comparable and can be combined into a weighted composite score.</p>
+
+            <div class="norm-grid">
+                <div class="norm-card">
+                    <h4>1. Standard Min-Max</h4>
+                    <div class="used-for">Used for: Ownership %, Remittances/Capita, Internet %</div>
+                    <p>Formula: <code>(x &minus; min) / (max &minus; min)</code><br>
+                    Lowest value in sample = 0, highest = 1. Everything else falls proportionally between them. Simple, intuitive, preserves proportional distance.</p>
+                </div>
+                <div class="norm-card">
+                    <h4>2. Inverted Min-Max</h4>
+                    <div class="used-for">Used for: CEX Activity Rank, DeFi Rank</div>
+                    <p>Formula: <code>(max &minus; x) / (max &minus; min)</code><br>
+                    Same as standard but flipped &mdash; because for ranks, lower is better. Without inverting, rank #1 (India) would score lowest. After inverting: rank #1 = highest score.</p>
+                </div>
+                <div class="norm-card">
+                    <h4>3. Log Transform &rarr; Min-Max</h4>
+                    <div class="used-for">Used for: Inflation, Depreciation, CEX Vol/GDP</div>
+                    <p>First take <code>LN(value)</code>, then apply standard min-max. Extreme outliers (Venezuela's 618% inflation) would crush everything else without log transform. Log compresses extremes while preserving rank order.</p>
+                </div>
+                <div class="norm-card">
+                    <h4>4. Composite Average</h4>
+                    <div class="used-for">Used for: Currency Instability (3 sub-indicators)</div>
+                    <p>Three signals &mdash; log(inflation), depreciation, capital controls &mdash; each normalized individually (0&ndash;1), then averaged. Captures why people need a crypto hedge, not just one symptom.</p>
+                </div>
+                <div class="norm-card">
+                    <h4>5. Arithmetic Average of Ranks</h4>
+                    <div class="used-for">Used for: CEX Activity (Retail + Inst. CEX)</div>
+                    <p>Retail CEX rank and Institutional CEX rank are averaged before normalization. Rewards balanced activity across both grassroots and institutional flows.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- LIMITATIONS -->
+    <div class="section">
+        <div class="card">
+            <h2>Key Limitations</h2>
+            <p>Transparent acknowledgment of model constraints. These are known limitations, not oversights.</p>
+            <ul>
+                <li><strong>Ownership data fragility:</strong> Triple-A survey data carries the highest weight (25%) but has unpublished confidence intervals. Sensitivity analysis shows rankings remain directionally stable at &plusmn;30% variation.</li>
+                <li><strong>CEX volume is a snapshot:</strong> CoinGecko 24h volume is a single day's reading (March 2026). A 30&ndash;90 day average would be more robust but is unavailable via the free-tier API.</li>
+                <li><strong>Mixed data vintages:</strong> Indicators span different periods &mdash; Chainalysis 2025, Ownership 2024, Inflation Feb/Mar 2026, CEX volume live, GDP 2024.</li>
+                <li><strong>Min-max sample dependency:</strong> Scores are normalized within only 20 countries. Adding or removing a country would shift all normalized values.</li>
+                <li><strong>Chainalysis ranks are ordinal:</strong> We treat ranks as cardinal (equal intervals). Underlying cardinal values require an enterprise license.</li>
+                <li><strong>No P2P or stablecoin data:</strong> Important for Nigeria, Venezuela, and Ethiopia where informal channels dominate, but no public country-level data available.</li>
+            </ul>
+            <p style="font-size:0.82rem; color:#7a8a9a; margin-top:8px; font-style:italic;">This model prioritizes transparency over precision. Every limitation above is a conscious design choice driven by data availability constraints in a non-funded academic project.</p>
+        </div>
+    </div>
+
+    <!-- SOURCES -->
+    <div class="section">
+        <div class="card">
+            <h2>Data Sources</h2>
+            <div class="source-grid">
+                <div class="source-item">
+                    <span class="src-label">On-Chain Flows</span>
+                    <span class="src-name">Chainalysis 2025 Global Crypto Adoption Index</span>
+                    <span class="src-year">2025 (published Oct 2025)</span>
+                    <a href="https://www.chainalysis.com/blog/2025-global-crypto-adoption-index/" target="_blank" rel="noopener">chainalysis.com</a>
+                </div>
+                <div class="source-item">
+                    <span class="src-label">Crypto Ownership</span>
+                    <span class="src-name">Triple-A Global Crypto Ownership Data</span>
+                    <span class="src-year">2024</span>
+                    <a href="https://www.triple-a.io/cryptocurrency-ownership-data" target="_blank" rel="noopener">triple-a.io</a>
+                </div>
+                <div class="source-item">
+                    <span class="src-label">Exchange Volume</span>
+                    <span class="src-name">CoinGecko Top Crypto Exchanges</span>
+                    <span class="src-year">Live (Mar 2026)</span>
+                    <a href="https://www.coingecko.com/en/exchanges" target="_blank" rel="noopener">coingecko.com</a>
+                </div>
+                <div class="source-item">
+                    <span class="src-label">Remittances</span>
+                    <span class="src-name">World Bank Migration &amp; Remittances Brief</span>
+                    <span class="src-year">2024 est. (Dec 2024)</span>
+                    <a href="https://blogs.worldbank.org/en/peoplemove/in-2024--remittance-flows-to-low--and-middle-income-countries-ar" target="_blank" rel="noopener">worldbank.org</a>
+                </div>
+                <div class="source-item">
+                    <span class="src-label">GDP</span>
+                    <span class="src-name">IMF World Economic Outlook (Oct 2025)</span>
+                    <span class="src-year">2024</span>
+                    <a href="https://www.worldometers.info/gdp/gdp-by-country/" target="_blank" rel="noopener">worldometers.info</a>
+                </div>
+                <div class="source-item">
+                    <span class="src-label">Inflation</span>
+                    <span class="src-name">Trading Economics (national statistics)</span>
+                    <span class="src-year">Feb/Mar 2026 YoY</span>
+                    <a href="https://tradingeconomics.com/country-list/inflation-rate-" target="_blank" rel="noopener">tradingeconomics.com</a>
+                </div>
+                <div class="source-item">
+                    <span class="src-label">Currency Depreciation</span>
+                    <span class="src-name">XE.com / FRED / Central bank data</span>
+                    <span class="src-year">5yr vs USD (2020&ndash;2025)</span>
+                    <a href="https://www.xe.com/currencytables/" target="_blank" rel="noopener">xe.com</a>
+                </div>
+                <div class="source-item">
+                    <span class="src-label">Financial Freedom</span>
+                    <span class="src-name">Heritage Foundation Index of Economic Freedom</span>
+                    <span class="src-year">2024</span>
+                    <a href="https://www.heritage.org/index/" target="_blank" rel="noopener">heritage.org</a>
+                </div>
+                <div class="source-item">
+                    <span class="src-label">Internet Penetration</span>
+                    <span class="src-name">DataReportal / Visual Capitalist / ITU</span>
+                    <span class="src-year">2024&ndash;2025</span>
+                    <a href="https://www.visualcapitalist.com/ranked-top-20-countries-with-the-most-internet-users/" target="_blank" rel="noopener">visualcapitalist.com</a>
+                </div>
+                <div class="source-item">
+                    <span class="src-label">Population</span>
+                    <span class="src-name">UN World Population Prospects / World Bank</span>
+                    <span class="src-year">2024</span>
+                    <a href="https://data.worldbank.org/indicator/SP.POP.TOTL" target="_blank" rel="noopener">worldbank.org</a>
+                </div>
+            </div>
+            <p style="font-size:0.78rem; color:#9aa5b0; margin-top:12px;">Last updated: March 2026. Major update: Chainalysis data upgraded from 2024 to 2025 index.</p>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <div class="footer">
+        University Research Project &middot; Global Blockchain Adaptability Index &middot; Economic Methodology V.F &middot; 2026
+    </div>
+
+    <script>
+    function switchTab(tabId) {
+        document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+        document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+
+        document.getElementById('tab-' + tabId).classList.add('active');
+
+        // Find and activate the correct button
+        const tabs = ['scores', 'raw', 'normalized', 'chainalysis'];
+        const idx = tabs.indexOf(tabId);
+        document.querySelectorAll('.tab-btn')[idx].classList.add('active');
+    }
+    </script>
+
+</body>
+</html>
