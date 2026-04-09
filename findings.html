@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Key Findings — Global Blockchain Adaptability Index</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=VT323&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #fafaf7;
+            color: #2c3e50;
+            line-height: 1.7;
+            min-height: 100vh;
+        }
+
+        /* Nav */
+        .nav-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 18px 28px;
+        }
+        .nav-back {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+            color: #0a4c6a;
+            font-size: 0.88rem;
+            font-weight: 500;
+            padding: 8px 16px;
+            border-radius: 8px;
+            border: 1px solid #d8dce0;
+            background: #fff;
+            transition: all 0.2s;
+        }
+        .nav-back:hover { background: #eef3f7; border-color: #0a4c6a; }
+        .nav-back svg { width: 16px; height: 16px; }
+        .nav-title {
+            font-family: 'Source Serif 4', Georgia, serif;
+            font-size: 1rem;
+            color: #5a6a7a;
+            font-weight: 600;
+        }
+
+        /* Hero */
+        .hero {
+            max-width: 1000px;
+            margin: 0 auto 40px;
+            padding: 0 28px;
+        }
+        .hero-card {
+            border-radius: 18px;
+            overflow: hidden;
+            background: linear-gradient(135deg, #0a3d62 0%, #1a6b7a 50%, #5ba8b5 100%);
+            padding: 52px 48px;
+            position: relative;
+        }
+        .hero-card::before {
+            content: '';
+            position: absolute;
+            top: 0; right: 0; bottom: 0; left: 0;
+            background: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.06'/%3E%3C/svg%3E");
+            opacity: 0.3;
+            pointer-events: none;
+        }
+        .hero-card h1 {
+            font-family: 'Source Serif 4', Georgia, serif;
+            font-size: 2.4rem;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 12px;
+            position: relative;
+        }
+        .hero-card p {
+            font-size: 1rem;
+            color: rgba(255,255,255,0.8);
+            max-width: 600px;
+            position: relative;
+        }
+        .hero-date {
+            font-family: 'VT323', monospace;
+            font-size: 0.9rem;
+            color: rgba(255,255,255,0.5);
+            margin-top: 16px;
+            letter-spacing: 1px;
+            position: relative;
+        }
+
+        /* Findings */
+        .findings {
+            max-width: 1000px;
+            margin: 0 auto 60px;
+            padding: 0 28px;
+        }
+
+        .finding-card {
+            background: #fff;
+            border-radius: 14px;
+            padding: 28px 32px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 14px rgba(0,0,0,0.04);
+            border: 1px solid #ebebeb;
+            border-left: 5px solid #0a4c6a;
+        }
+        .finding-card.insight-economic { border-left-color: #1a6b7a; }
+        .finding-card.insight-regulatory { border-left-color: #9b5a30; }
+        .finding-card.insight-technical { border-left-color: #2e5fa1; }
+        .finding-card.insight-cross { border-left-color: #5ba8b5; }
+        .finding-card.insight-business { border-left-color: #c06030; }
+
+        .finding-tag {
+            display: inline-block;
+            font-size: 0.68rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            padding: 3px 10px;
+            border-radius: 4px;
+            margin-bottom: 10px;
+        }
+        .tag-economic { background: #e0f2f1; color: #1a6b7a; }
+        .tag-regulatory { background: #fef3e0; color: #9b5a30; }
+        .tag-technical { background: #e8f0fe; color: #2e5fa1; }
+        .tag-cross { background: #e0f4f4; color: #0a4c6a; }
+        .tag-business { background: #fce8e0; color: #c06030; }
+
+        .finding-card h3 {
+            font-family: 'Source Serif 4', Georgia, serif;
+            font-size: 1.2rem;
+            color: #1a2a3a;
+            margin-bottom: 10px;
+        }
+        .finding-card p {
+            font-size: 0.9rem;
+            color: #5a6b7c;
+            margin-bottom: 8px;
+        }
+        .finding-card p:last-child { margin-bottom: 0; }
+        .finding-card strong { color: #2c3e50; }
+
+        .finding-stat {
+            display: inline-block;
+            font-family: 'VT323', monospace;
+            font-size: 1.1rem;
+            color: #0a4c6a;
+            background: #f0f6fa;
+            padding: 2px 8px;
+            border-radius: 4px;
+        }
+
+        .finding-card ul {
+            margin: 8px 0 8px 20px;
+            font-size: 0.88rem;
+            color: #5a6b7c;
+        }
+        .finding-card li { margin-bottom: 4px; }
+
+        /* Audience section */
+        .audience-section {
+            max-width: 1000px;
+            margin: 0 auto 60px;
+            padding: 0 28px;
+        }
+        .audience-section h2 {
+            font-family: 'Source Serif 4', Georgia, serif;
+            font-size: 1.4rem;
+            color: #1a2a3a;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .audience-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 16px;
+        }
+        .audience-card {
+            background: #fff;
+            border-radius: 14px;
+            padding: 24px;
+            box-shadow: 0 2px 14px rgba(0,0,0,0.04);
+            border: 1px solid #ebebeb;
+        }
+        .audience-card h4 {
+            font-family: 'Source Serif 4', Georgia, serif;
+            font-size: 1.05rem;
+            color: #1a2a3a;
+            margin-bottom: 8px;
+        }
+        .audience-card p {
+            font-size: 0.86rem;
+            color: #5a6b7c;
+        }
+        .audience-icon {
+            font-size: 1.6rem;
+            margin-bottom: 8px;
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 24px;
+            font-size: 0.78rem;
+            color: #aab5c0;
+            border-top: 1px solid #eee;
+        }
+        .footer a { color: #0a4c6a; text-decoration: none; }
+        .footer a:hover { text-decoration: underline; }
+
+        @media (max-width: 768px) {
+            .hero-card { padding: 36px 24px; }
+            .hero-card h1 { font-size: 1.7rem; }
+            .finding-card { padding: 20px 22px; }
+            .audience-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="nav-bar">
+        <a href="map.html" class="nav-back">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+            Back to Map
+        </a>
+        <span class="nav-title">Blockchain Adaptability Index</span>
+    </nav>
+
+    <section class="hero">
+        <div class="hero-card">
+            <h1>Key Findings</h1>
+            <p>Critical insights from analyzing blockchain adaptability across 20 countries and three dimensions&mdash;what the data reveals for businesses, policymakers, legal professionals, and investors.</p>
+            <div class="hero-date">DATA: MARCH 2026 &middot; 20 COUNTRIES &middot; 3 DIMENSIONS</div>
+        </div>
+    </section>
+
+    <section class="findings">
+
+        <!-- Finding 1 -->
+        <div class="finding-card insight-cross">
+            <span class="finding-tag tag-cross">Cross-Dimensional</span>
+            <h3>Adoption and Regulation Are Inversely Correlated</h3>
+            <p>Countries with the <strong>highest economic adoption</strong> tend to have some of the <strong>weakest regulatory frameworks</strong>, and vice versa. Vietnam leads the world in economic adoption (<span class="finding-stat">0.840</span>) but scores only <span class="finding-stat">0.556</span> on regulatory clarity (Ambiguous). Japan, on the other hand, has the most comprehensive regulatory framework (<span class="finding-stat">0.944</span>) but ranks near the bottom in economic adoption (<span class="finding-stat">0.285</span>).</p>
+            <p><strong>Implication:</strong> This suggests that heavy regulation may slow grassroots adoption, while light regulation enables rapid but potentially risky growth. The ideal balance&mdash;high adoption with clear rules&mdash;is rare. Ukraine (<span class="finding-stat">0.717</span> economic, <span class="finding-stat">0.889</span> regulatory) and Brazil (<span class="finding-stat">0.506</span> economic, <span class="finding-stat">0.889</span> regulatory) are the closest examples of achieving both.</p>
+        </div>
+
+        <!-- Finding 2 -->
+        <div class="finding-card insight-economic">
+            <span class="finding-tag tag-economic">Economic Adoption</span>
+            <h3>Developing Nations Lead in Grassroots Crypto Adoption</h3>
+            <p>The top 5 countries by economic adoption are all developing or emerging economies: <strong>Vietnam, Ukraine, India, Philippines, and Nigeria</strong>. These nations score between <span class="finding-stat">0.667</span> and <span class="finding-stat">0.840</span>, far outpacing developed nations like the United States (<span class="finding-stat">0.595</span>), United Kingdom (<span class="finding-stat">0.379</span>), and Japan (<span class="finding-stat">0.285</span>).</p>
+            <p><strong>Why?</strong> Three key drivers push adoption in developing nations:</p>
+            <ul>
+                <li><strong>Currency instability</strong> &mdash; Venezuela (10.3% ownership) and Argentina (9.7%) use crypto as a hedge against hyperinflation and currency devaluation</li>
+                <li><strong>Remittance corridors</strong> &mdash; Philippines ($340/capita) and Ukraine ($397/capita) have large diaspora populations sending money home via crypto to avoid traditional banking fees</li>
+                <li><strong>Financial exclusion</strong> &mdash; Nigeria (#2 Chainalysis rank) and Indonesia (#1 DeFi adoption globally) have large unbanked populations turning to crypto as their first financial tool</li>
+            </ul>
+        </div>
+
+        <!-- Finding 3 -->
+        <div class="finding-card insight-regulatory">
+            <span class="finding-tag tag-regulatory">Regulatory Clarity</span>
+            <h3>Only 5 of 20 Countries Have Comprehensive Regulation</h3>
+            <p>Just <strong>25% of countries</strong> in the index have reached "Comprehensive" regulatory status (scoring 0.83+): Japan (<span class="finding-stat">0.944</span>), Ukraine (<span class="finding-stat">0.889</span>), Brazil (<span class="finding-stat">0.889</span>), Thailand (<span class="finding-stat">0.833</span>), and the United Kingdom (<span class="finding-stat">0.833</span>). The remaining 75% are still Developing, Ambiguous, or Hostile.</p>
+            <p><strong>The DeFi gap is notable:</strong> Even among comprehensive regulators, no country scored a 3 on DeFi Recognition. This is the weakest sub-dimension across all 20 nations, reflecting the global struggle to classify and regulate decentralized protocols within traditional legal frameworks.</p>
+            <p><strong>For lawyers and compliance teams:</strong> Bangladesh, Yemen, and Ethiopia all score <span class="finding-stat">0.333</span> (Hostile)&mdash;the minimum possible score&mdash;with a 1 rating across all six regulatory sub-dimensions. Operating in these jurisdictions carries significant legal risk with no established framework to rely on.</p>
+        </div>
+
+        <!-- Finding 4 -->
+        <div class="finding-card insight-technical">
+            <span class="finding-tag tag-technical">Technical Infrastructure</span>
+            <h3>Blockchain Infrastructure Is Extremely Concentrated</h3>
+            <p>Only <strong>two countries</strong> score a perfect <span class="finding-stat">1.000</span> on technical infrastructure: the <strong>United States</strong> and <strong>Russia</strong>. Together they account for a combined 53.9% of global Bitcoin mining hashrate (US: 37.5%, Russia: 16.4%), run thousands of BTC and ETH nodes, and host significant Lightning Network and validator infrastructure.</p>
+            <p><strong>The surprise: Ethiopia.</strong> Despite scoring 0.333 (Hostile) on regulation and 0.125 on economic adoption&mdash;both near the bottom&mdash;Ethiopia scores <span class="finding-stat">0.500</span> on technical infrastructure, ranking 16th. The reason: Ethiopia contributes <strong>2.6% of global Bitcoin mining hashrate</strong>, powered by cheap hydroelectric energy from the Grand Ethiopian Renaissance Dam. This makes Ethiopia a top-10 mining country globally despite having almost no crypto adoption or regulation.</p>
+            <p><strong>Emerging story: Indonesia</strong> is following a similar pattern with 2.1% of global hashrate, likely driven by geothermal and coal energy. Indonesia also leads the world in DeFi adoption according to Chainalysis.</p>
+        </div>
+
+        <!-- Finding 5 -->
+        <div class="finding-card insight-cross">
+            <span class="finding-tag tag-cross">Cross-Dimensional</span>
+            <h3>The "Adaptability Gap" Between Developed and Developing Nations</h3>
+            <p>When all three dimensions are combined, the ranking reshuffles significantly. Ukraine leads overall (<span class="finding-stat">0.730</span>) because it scores well across all three dimensions&mdash;it's the only country in the top 5 for economic adoption that also has Comprehensive regulation.</p>
+            <p>Meanwhile, developed nations with strong regulation and infrastructure but lower adoption (Japan: <span class="finding-stat">0.660</span>, UK: <span class="finding-stat">0.682</span>) are overtaken by developing nations with explosive grassroots usage. The United States (<span class="finding-stat">0.791</span>) ranks high overall primarily because of its unmatched technical infrastructure, despite having a "Developing" regulatory framework.</p>
+            <p><strong>Key insight:</strong> The overall score rewards balance. Countries that excel in one dimension but lag in others (Vietnam: highest adoption but Ambiguous regulation; Japan: best regulation but low adoption) get averaged down. This reflects reality&mdash;a country needs all three pillars to be truly blockchain-ready.</p>
+        </div>
+
+        <!-- Finding 6 -->
+        <div class="finding-card insight-business">
+            <span class="finding-tag tag-business">Business &amp; Investment</span>
+            <h3>Market Entry Recommendations by Risk Profile</h3>
+            <p>Based on the three-dimensional analysis, countries cluster into distinct risk-reward profiles for blockchain businesses:</p>
+            <ul>
+                <li><strong>Low risk, proven market:</strong> United States, United Kingdom, Japan, Brazil &mdash; Strong regulation + infrastructure. Higher compliance costs but legal certainty. Best for regulated exchanges, institutional products, and enterprise blockchain.</li>
+                <li><strong>High growth, moderate risk:</strong> Ukraine, India, Philippines, Indonesia, Thailand &mdash; Large user bases with developing regulation. Good for consumer wallets, remittance services, DeFi platforms, and P2P exchanges.</li>
+                <li><strong>High growth, high risk:</strong> Vietnam, Nigeria, Pakistan, Argentina, Venezuela &mdash; Massive adoption driven by economic necessity, but regulatory ambiguity. Attractive user numbers, but unclear legal standing could change quickly.</li>
+                <li><strong>Infrastructure play:</strong> Russia, Ethiopia, Indonesia &mdash; Significant mining/node infrastructure with varying regulatory environments. Opportunities in mining operations, hosting services, and validator infrastructure.</li>
+                <li><strong>Avoid / Monitor:</strong> Bangladesh, Yemen &mdash; Hostile regulation, minimal infrastructure, and low adoption. No viable entry point currently; monitor for regulatory changes.</li>
+            </ul>
+        </div>
+
+        <!-- Finding 7 -->
+        <div class="finding-card insight-regulatory">
+            <span class="finding-tag tag-regulatory">Policy Insight</span>
+            <h3>Sanctions and Economic Crisis Are the Strongest Adoption Catalysts</h3>
+            <p>The data reveals that <strong>economic distress is a more powerful driver of crypto adoption than favorable regulation.</strong> Countries experiencing sanctions (Russia), hyperinflation (Venezuela, Argentina), conflict (Ukraine), or severe currency instability (Turkey, Nigeria) all show disproportionately high adoption relative to their economic development.</p>
+            <p>Russia, despite being labeled "Developing" in regulatory terms and facing international sanctions, maintains a <span class="finding-stat">0.429</span> economic adoption score and perfect <span class="finding-stat">1.000</span> technical infrastructure. Venezuela, with "Ambiguous" regulation, has <span class="finding-stat">10.3%</span> crypto ownership&mdash;higher than Japan, South Korea, or the United Kingdom.</p>
+            <p><strong>For policymakers:</strong> This suggests that restrictive policies alone cannot prevent adoption when citizens face economic necessity. Countries may be better served by channeling adoption through clear regulatory frameworks rather than attempting to prevent it.</p>
+        </div>
+
+        <!-- Finding 8 -->
+        <div class="finding-card insight-business">
+            <span class="finding-tag tag-business">Legal &amp; Compliance</span>
+            <h3>The Stablecoin Regulation Frontier</h3>
+            <p>Only <strong>Japan</strong> has achieved a top rating (3) for stablecoin-specific legislation among all 20 countries. Seven countries scored a 2 (partial frameworks in place), and the remaining 12 countries&mdash;more than half&mdash;scored a 1, meaning they have no stablecoin-specific laws.</p>
+            <p>This is significant because stablecoins (USDT, USDC) are the primary on-ramp for crypto in developing nations, used heavily for remittances and as dollar-pegged savings in countries with unstable currencies. The legal gap between how stablecoins are being <em>used</em> and how they are being <em>regulated</em> represents one of the largest areas of legal uncertainty in the global crypto landscape.</p>
+            <p><strong>For lawyers:</strong> Stablecoin regulation is the next major legal battleground. Firms should prepare for rapid regulatory changes in this space, particularly in the EU (MiCA), the US (pending legislation), and across Southeast Asia.</p>
+        </div>
+
+    </section>
+
+    <!-- WHO IS THIS FOR -->
+    <section class="audience-section">
+        <h2>Who Are These Findings For?</h2>
+        <div class="audience-grid">
+            <div class="audience-card">
+                <div class="audience-icon">&#x1F4BC;</div>
+                <h4>Business Executives</h4>
+                <p>Use the risk-reward profiles to identify which markets to enter, where to allocate resources, and which jurisdictions offer the best combination of user demand and legal certainty for blockchain products.</p>
+            </div>
+            <div class="audience-card">
+                <div class="audience-icon">&#x2696;</div>
+                <h4>Lawyers &amp; Compliance Teams</h4>
+                <p>The regulatory clarity breakdown by sub-dimension (stablecoin, licensing, tax, banking, enforcement, DeFi) provides a granular view of legal risk in each jurisdiction. The hostile-tier countries warrant particular caution.</p>
+            </div>
+            <div class="audience-card">
+                <div class="audience-icon">&#x1F3DB;</div>
+                <h4>Policymakers &amp; Regulators</h4>
+                <p>The inverse correlation between adoption and regulation highlights the tension between enabling innovation and maintaining oversight. The data from Ukraine and Brazil shows that comprehensive regulation and high adoption can coexist.</p>
+            </div>
+            <div class="audience-card">
+                <div class="audience-icon">&#x1F4C8;</div>
+                <h4>Investors &amp; VCs</h4>
+                <p>The economic adoption and infrastructure scores identify where crypto users already are and where the network is being built. The highest-potential markets combine high adoption with improving regulation.</p>
+            </div>
+            <div class="audience-card">
+                <div class="audience-icon">&#x1F393;</div>
+                <h4>Researchers &amp; Academics</h4>
+                <p>The methodology section details every formula, weight justification, and data source. The cross-dimensional analysis reveals structural patterns that may be useful for further study on technology adoption in emerging markets.</p>
+            </div>
+            <div class="audience-card">
+                <div class="audience-icon">&#x26A1;</div>
+                <h4>Blockchain Developers</h4>
+                <p>The technical infrastructure scores show where nodes and validators are concentrated, where mining is growing, and which regions are underserved&mdash;useful for planning network expansion, choosing validator locations, or targeting developer communities.</p>
+            </div>
+        </div>
+    </section>
+
+    <div class="footer">
+        University Research Project &middot; Global Blockchain Adaptability Index &middot; 2026 &middot;
+        <a href="map.html">Interactive Map</a> &middot;
+        <a href="map.html#methodology">Methodology</a> &middot;
+        <a href="data.html">Data</a>
+    </div>
+
+</body>
+</html>
