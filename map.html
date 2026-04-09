@@ -711,6 +711,44 @@
             margin: 18px 0 8px;
             color: #1a2a3a;
         }
+        .methodology details {
+            border: 1px solid #ebebeb;
+            border-radius: 10px;
+            margin: 12px 0;
+            overflow: hidden;
+        }
+        .methodology summary {
+            font-family: 'Source Serif 4', Georgia, serif;
+            font-size: 1.05rem;
+            font-weight: 600;
+            color: #1a2a3a;
+            cursor: pointer;
+            padding: 12px 16px;
+            background: #f8f5ef;
+            list-style: none;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: background 0.2s;
+        }
+        .methodology summary::-webkit-details-marker { display: none; }
+        .methodology summary::after {
+            content: '+';
+            font-family: 'Inter', sans-serif;
+            font-size: 1.2rem;
+            font-weight: 300;
+            color: #7a8a9a;
+            transition: transform 0.2s;
+        }
+        .methodology details[open] summary::after {
+            content: '\2212';
+        }
+        .methodology summary:hover {
+            background: #f0ece4;
+        }
+        .methodology details .detail-body {
+            padding: 14px 16px 16px;
+        }
         .methodology p {
             font-size: 0.9rem;
             color: #5a6b7c;
@@ -943,77 +981,83 @@
         <div class="formula-box">Overall = (Economic &times; 0.333) + (Regulatory &times; 0.333) + (Technical &times; 0.333)</div>
         <p style="font-size:0.84rem; color:#7a8a9a;"><strong>Why equal weights?</strong> Economic adoption without regulatory clarity creates legal risk. Regulatory clarity without infrastructure means no network to regulate. Infrastructure without adoption means unused capacity. All three pillars must be present for a country to be truly blockchain-ready.</p>
 
-        <h3>1. Economic Adoption Score <span style="font-size:0.75rem;color:#7a8a9a;">(Version F)</span></h3>
-        <p>Quantifies real-world blockchain economic penetration using seven normalized, weighted indicators. Version F decomposes the Chainalysis composite index into separate CEX and DeFi sub-indexes, allowing our model to apply its own weighting rather than importing Chainalysis's internal methodology. <a href="econ-methodology.html" style="color:#0a4c6a;font-weight:500;">View full methodology breakdown &rarr;</a></p>
-        <div class="formula-box">Economic = (CEX Activity &times; 0.15) + (DeFi &times; 0.10) + (Ownership &times; 0.25) + (Remittances &times; 0.15) + (Currency Instability &times; 0.10) + (CEX/GDP &times; 0.15) + (Internet &times; 0.10)</div>
-        <ul>
-            <li><strong>Crypto Ownership % &times; 0.25</strong> &mdash; Population penetration rate from Triple-A data. The most direct measure of how many people are participating in the crypto economy.</li>
-            <li><strong>CEX Activity &times; 0.15</strong> &mdash; Average of Chainalysis Retail CEX and Institutional CEX sub-index ranks (PPP-weighted, inverted). Captures both grassroots and institutional exchange flows.</li>
-            <li><strong>CEX Volume / GDP &times; 0.15</strong> &mdash; CoinGecko 24h exchange volume divided by national GDP, log-transformed. Measures trading intensity relative to economic size.</li>
-            <li><strong>Remittances per Capita &times; 0.15</strong> &mdash; World Bank remittance inflows divided by population. Captures cross-border utility&mdash;one of blockchain's most tangible real-world use cases.</li>
-            <li><strong>DeFi Activity &times; 0.10</strong> &mdash; Chainalysis DeFi value received sub-index rank (PPP-weighted, inverted). Measures decentralized economic participation independently from CEX flows.</li>
-            <li><strong>Currency Instability &times; 0.10</strong> &mdash; Composite of log(inflation), 5-year currency depreciation vs USD, and Heritage capital controls score. Captures the economic pressure that drives crypto adoption as a hedge.</li>
-            <li><strong>Internet Penetration &times; 0.10</strong> &mdash; Infrastructure gating variable&mdash;can people actually access crypto? Countries with low connectivity are fundamentally limited.</li>
-        </ul>
+        <details>
+            <summary>1. Economic Adoption Score <span style="font-size:0.75rem;font-weight:400;color:#7a8a9a;margin-left:6px;">(Version F)</span></summary>
+            <div class="detail-body">
+                <p>Quantifies real-world blockchain economic penetration using seven normalized, weighted indicators. Version F decomposes the Chainalysis composite index into separate CEX and DeFi sub-indexes. <a href="econ-methodology.html" style="color:#0a4c6a;font-weight:500;">View full methodology breakdown &rarr;</a></p>
+                <div class="formula-box">Economic = (CEX Activity &times; 0.15) + (DeFi &times; 0.10) + (Ownership &times; 0.25) + (Remittances &times; 0.15) + (Currency Instability &times; 0.10) + (CEX/GDP &times; 0.15) + (Internet &times; 0.10)</div>
+                <ul>
+                    <li><strong>Crypto Ownership % &times; 0.25</strong> &mdash; Population penetration rate from Triple-A data.</li>
+                    <li><strong>CEX Activity &times; 0.15</strong> &mdash; Average of Chainalysis Retail CEX and Institutional CEX sub-index ranks (PPP-weighted, inverted).</li>
+                    <li><strong>CEX Volume / GDP &times; 0.15</strong> &mdash; CoinGecko 24h exchange volume divided by national GDP, log-transformed.</li>
+                    <li><strong>Remittances per Capita &times; 0.15</strong> &mdash; World Bank remittance inflows divided by population.</li>
+                    <li><strong>DeFi Activity &times; 0.10</strong> &mdash; Chainalysis DeFi value received sub-index rank (PPP-weighted, inverted).</li>
+                    <li><strong>Currency Instability &times; 0.10</strong> &mdash; Composite of log(inflation), 5-year depreciation vs USD, and Heritage capital controls.</li>
+                    <li><strong>Internet Penetration &times; 0.10</strong> &mdash; Infrastructure gating variable.</li>
+                </ul>
+            </div>
+        </details>
 
-        <h3>2. Regulatory Clarity Index</h3>
-        <p>Evaluates how clearly a country has defined its legal framework for blockchain and crypto. Six dimensions are each rated on a 1&ndash;3 scale and weighted equally, then normalized to a 0&ndash;1 range:</p>
-        <div class="formula-box">Regulatory = (Stablecoin &times; 0.167) + (Licensing &times; 0.167) + (Tax &times; 0.167) + (Banking &times; 0.167) + (Enforcement &times; 0.167) + (DeFi &times; 0.167)</div>
-        <p style="font-size:0.84rem; color:#7a8a9a;"><strong>Why equal weights?</strong> Each of the six sub-dimensions captures a distinct aspect of regulatory maturity. A country with strong licensing but no tax clarity still creates uncertainty. A country with clear tax rules but no banking access still blocks participation. All six must work together to form a coherent regulatory environment. Ratings: 3 = clear, codified rules; 2 = partial or in-progress framework; 1 = absent, banned, or no guidance.</p>
-        <ul>
-            <li><strong>Stablecoin Law:</strong> Whether the country has specific legislation governing stablecoin issuance, reserves, and usage</li>
-            <li><strong>Licensing Framework:</strong> Whether crypto exchanges and service providers must obtain licenses to operate</li>
-            <li><strong>Tax Clarity:</strong> Whether crypto gains, income, and transactions have defined tax treatment</li>
-            <li><strong>Banking Access:</strong> Whether crypto businesses can access traditional banking services</li>
-            <li><strong>Enforcement Stance:</strong> Whether the government actively enforces crypto regulations (vs. ignoring or banning)</li>
-            <li><strong>DeFi Recognition:</strong> Whether decentralized finance protocols are acknowledged within the legal framework</li>
-        </ul>
-        <p>Tier thresholds:</p>
-        <ul>
-            <li><strong>Comprehensive</strong> (0.83&ndash;1.0): Clear, multi-faceted regulatory framework</li>
-            <li><strong>Developing</strong> (0.61&ndash;0.82): Active regulation in progress</li>
-            <li><strong>Ambiguous</strong> (0.40&ndash;0.60): Minimal or unclear rules</li>
-            <li><strong>Hostile</strong> (&lt;0.40): Bans or no recognition</li>
-        </ul>
+        <details>
+            <summary>2. Regulatory Clarity Index</summary>
+            <div class="detail-body">
+                <p>Evaluates how clearly a country has defined its legal framework for blockchain and crypto. Six dimensions are each rated on a 1&ndash;3 scale and weighted equally, then normalized to a 0&ndash;1 range:</p>
+                <div class="formula-box">Regulatory = (Stablecoin &times; 0.167) + (Licensing &times; 0.167) + (Tax &times; 0.167) + (Banking &times; 0.167) + (Enforcement &times; 0.167) + (DeFi &times; 0.167)</div>
+                <p style="font-size:0.84rem; color:#7a8a9a;"><strong>Why equal weights?</strong> Each sub-dimension captures a distinct aspect of regulatory maturity. All six must work together to form a coherent regulatory environment. Ratings: 3 = clear, codified rules; 2 = partial or in-progress; 1 = absent, banned, or no guidance.</p>
+                <ul>
+                    <li><strong>Stablecoin Law:</strong> Legislation governing stablecoin issuance, reserves, and usage</li>
+                    <li><strong>Licensing Framework:</strong> Whether exchanges and service providers must obtain licenses</li>
+                    <li><strong>Tax Clarity:</strong> Defined tax treatment for crypto gains, income, and transactions</li>
+                    <li><strong>Banking Access:</strong> Whether crypto businesses can access traditional banking</li>
+                    <li><strong>Enforcement Stance:</strong> Active enforcement of crypto regulations</li>
+                    <li><strong>DeFi Recognition:</strong> Whether DeFi protocols are acknowledged within the legal framework</li>
+                </ul>
+                <p>Tier thresholds:</p>
+                <ul>
+                    <li><strong>Comprehensive</strong> (0.83&ndash;1.0) &middot; <strong>Developing</strong> (0.61&ndash;0.82) &middot; <strong>Ambiguous</strong> (0.40&ndash;0.60) &middot; <strong>Hostile</strong> (&lt;0.40)</li>
+                </ul>
+            </div>
+        </details>
 
-        <h3>3. Technical Infrastructure Score</h3>
-        <p>Measures the physical blockchain network presence within a country. Four dimensions are each rated on a 1&ndash;3 scale and weighted equally, then normalized to a 0&ndash;1 range:</p>
-        <div class="formula-box">Technical = (BTC Nodes &times; 0.25) + (ETH Nodes &times; 0.25) + (Mining Hashrate &times; 0.25) + (LN/Validators &times; 0.25)</div>
-        <p style="font-size:0.84rem; color:#7a8a9a;"><strong>Why equal weights?</strong> Each sub-dimension captures a different layer of blockchain infrastructure. BTC and ETH nodes measure network decentralization (Layer 1 consensus). Mining hashrate measures proof-of-work security contribution. Lightning/Validators measure Layer 2 scaling and proof-of-stake participation. No single layer is sufficient&mdash;a country mining heavily but running no nodes is contributing hashpower without verifying transactions. Ratings: 3 = significant global presence; 2 = moderate presence; 1 = negligible or absent.</p>
-        <ul>
-            <li><strong>BTC Nodes:</strong> 3 = 100+ reachable nodes; 2 = 10&ndash;99; 1 = &lt;10</li>
-            <li><strong>ETH Nodes:</strong> 3 = 50+ nodes; 2 = 5&ndash;49; 1 = &lt;5</li>
-            <li><strong>Mining Hashrate:</strong> 3 = &gt;1% of global hashrate; 2 = 0.01&ndash;1%; 1 = ~0%</li>
-            <li><strong>Lightning/Validators:</strong> 3 = 50+ LN nodes or significant validator stake; 2 = 5&ndash;49; 1 = &lt;5</li>
-        </ul>
-        <p>Tier thresholds:</p>
-        <ul>
-            <li><strong>Major Hub</strong> (0.90&ndash;1.0): Top-tier node count and mining presence</li>
-            <li><strong>Strong</strong> (0.75&ndash;0.89): Significant infrastructure</li>
-            <li><strong>Moderate</strong> (0.58&ndash;0.74): Notable but limited presence</li>
-            <li><strong>Emerging</strong> (0.42&ndash;0.57): Early-stage infrastructure</li>
-            <li><strong>Minimal</strong> (&lt;0.42): Negligible network footprint</li>
-        </ul>
+        <details>
+            <summary>3. Technical Infrastructure Score</summary>
+            <div class="detail-body">
+                <p>Measures the physical blockchain network presence within a country. Four dimensions are each rated on a 1&ndash;3 scale and weighted equally, then normalized to a 0&ndash;1 range:</p>
+                <div class="formula-box">Technical = (BTC Nodes &times; 0.25) + (ETH Nodes &times; 0.25) + (Mining Hashrate &times; 0.25) + (LN/Validators &times; 0.25)</div>
+                <ul>
+                    <li><strong>BTC Nodes:</strong> 3 = 100+; 2 = 10&ndash;99; 1 = &lt;10</li>
+                    <li><strong>ETH Nodes:</strong> 3 = 50+; 2 = 5&ndash;49; 1 = &lt;5</li>
+                    <li><strong>Mining Hashrate:</strong> 3 = &gt;1% global; 2 = 0.01&ndash;1%; 1 = ~0%</li>
+                    <li><strong>Lightning/Validators:</strong> 3 = 50+ LN nodes or significant stake; 2 = 5&ndash;49; 1 = &lt;5</li>
+                </ul>
+                <p>Tier thresholds:</p>
+                <ul>
+                    <li><strong>Major Hub</strong> (0.90&ndash;1.0) &middot; <strong>Strong</strong> (0.75&ndash;0.89) &middot; <strong>Moderate</strong> (0.58&ndash;0.74) &middot; <strong>Emerging</strong> (0.42&ndash;0.57) &middot; <strong>Minimal</strong> (&lt;0.42)</li>
+                </ul>
+            </div>
+        </details>
 
-        <p style="margin-top:16px;">All scores range from 0 to 1, where higher values indicate greater blockchain adaptability. The 20 countries were selected based on data availability, regional diversity, and representation across varying economic development levels.</p>
+        <details>
+            <summary>Data Sources</summary>
+            <div class="detail-body">
+                <ul>
+                    <li><strong>Chainalysis sub-indexes:</strong> <a href="https://www.chainalysis.com/blog/2025-global-crypto-adoption-index/" target="_blank" rel="noopener" style="color:#0a4c6a;">2025 Global Crypto Adoption Index</a> (pub. Oct 2025)</li>
+                    <li><strong>Crypto ownership:</strong> <a href="https://www.triple-a.io/cryptocurrency-ownership-data" target="_blank" rel="noopener" style="color:#0a4c6a;">Triple-A</a> 2024 estimates</li>
+                    <li><strong>CEX volume:</strong> <a href="https://www.coingecko.com/en/exchanges" target="_blank" rel="noopener" style="color:#0a4c6a;">CoinGecko</a> 24h exchange data (Mar 2026)</li>
+                    <li><strong>Remittances:</strong> <a href="https://blogs.worldbank.org/en/peoplemove/in-2024--remittance-flows-to-low--and-middle-income-countries-ar" target="_blank" rel="noopener" style="color:#0a4c6a;">World Bank</a> Migration &amp; Remittances Brief 2024</li>
+                    <li><strong>GDP:</strong> IMF World Economic Outlook (Oct 2025)</li>
+                    <li><strong>Inflation:</strong> Trading Economics (Feb/Mar 2026 YoY)</li>
+                    <li><strong>Currency depreciation:</strong> XE.com / FRED (5yr vs USD, 2020&ndash;2025)</li>
+                    <li><strong>Financial freedom:</strong> <a href="https://www.heritage.org/index/" target="_blank" rel="noopener" style="color:#0a4c6a;">Heritage Foundation</a> 2024</li>
+                    <li><strong>Internet penetration:</strong> DataReportal / ITU 2024&ndash;2025</li>
+                    <li><strong>Regulatory data:</strong> Library of Congress, PwC Global Crypto Regulation Report 2025</li>
+                    <li><strong>BTC nodes:</strong> <a href="https://bitnodes.io" target="_blank" rel="noopener" style="color:#0a4c6a;">Bitnodes.io</a> &middot; <strong>ETH nodes:</strong> <a href="https://ethernodes.org" target="_blank" rel="noopener" style="color:#0a4c6a;">Ethernodes.org</a></li>
+                    <li><strong>Mining hashrate:</strong> <a href="https://hashrateindex.com" target="_blank" rel="noopener" style="color:#0a4c6a;">Hashrate Index</a> 2026 &middot; <strong>Lightning:</strong> <a href="https://mempool.space/lightning" target="_blank" rel="noopener" style="color:#0a4c6a;">mempool.space</a></li>
+                </ul>
+            </div>
+        </details>
 
-        <h3>Data Sources</h3>
-        <ul>
-            <li><strong>Chainalysis sub-indexes:</strong> <a href="https://www.chainalysis.com/blog/2025-global-crypto-adoption-index/" target="_blank" rel="noopener" style="color:#0a4c6a;">2025 Global Crypto Adoption Index</a> (pub. Oct 2025)</li>
-            <li><strong>Crypto ownership:</strong> <a href="https://www.triple-a.io/cryptocurrency-ownership-data" target="_blank" rel="noopener" style="color:#0a4c6a;">Triple-A</a> 2024 estimates</li>
-            <li><strong>CEX volume:</strong> <a href="https://www.coingecko.com/en/exchanges" target="_blank" rel="noopener" style="color:#0a4c6a;">CoinGecko</a> 24h exchange data (Mar 2026)</li>
-            <li><strong>Remittances:</strong> <a href="https://blogs.worldbank.org/en/peoplemove/in-2024--remittance-flows-to-low--and-middle-income-countries-ar" target="_blank" rel="noopener" style="color:#0a4c6a;">World Bank</a> Migration &amp; Remittances Brief 2024</li>
-            <li><strong>GDP:</strong> IMF World Economic Outlook (Oct 2025)</li>
-            <li><strong>Inflation:</strong> Trading Economics (Feb/Mar 2026 YoY)</li>
-            <li><strong>Currency depreciation:</strong> XE.com / FRED (5yr vs USD, 2020&ndash;2025)</li>
-            <li><strong>Financial freedom:</strong> <a href="https://www.heritage.org/index/" target="_blank" rel="noopener" style="color:#0a4c6a;">Heritage Foundation</a> Index of Economic Freedom 2024</li>
-            <li><strong>Internet penetration:</strong> DataReportal / ITU 2024&ndash;2025</li>
-            <li><strong>Regulatory data:</strong> Library of Congress surveys, PwC Global Crypto Regulation Report 2025</li>
-            <li><strong>BTC nodes:</strong> <a href="https://bitnodes.io" target="_blank" rel="noopener" style="color:#0a4c6a;">Bitnodes.io</a> (~24,500 reachable globally)</li>
-            <li><strong>ETH nodes:</strong> <a href="https://ethernodes.org" target="_blank" rel="noopener" style="color:#0a4c6a;">Ethernodes.org</a></li>
-            <li><strong>Mining hashrate:</strong> <a href="https://hashrateindex.com" target="_blank" rel="noopener" style="color:#0a4c6a;">Hashrate Index</a> 2026 data</li>
-            <li><strong>Lightning Network:</strong> <a href="https://mempool.space/lightning" target="_blank" rel="noopener" style="color:#0a4c6a;">mempool.space</a> node estimates</li>
-        </ul>
+        <p style="margin-top:16px; font-size:0.84rem; color:#7a8a9a;">All scores range from 0 to 1. The 20 countries were selected based on data availability, regional diversity, and representation across varying economic development levels.</p>
     </div>
 
     <!-- TABLE -->
