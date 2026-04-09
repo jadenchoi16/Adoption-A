@@ -413,28 +413,41 @@
     <section class="data-section">
         <div class="section-header">
             <h2>Technical Infrastructure Score</h2>
-            <p>Measuring the physical blockchain network presence within each country across four dimensions, each rated on a 1&ndash;3 scale</p>
+            <p>Five continuous pillars measured per 100k internet users, aggregated via weighted geometric mean (v2). Near-zero performance on any pillar pulls the full score toward zero.</p>
         </div>
 
         <div class="formula-card">
-            <h3>Scoring Formula</h3>
-            <div class="formula-box">Technical Score = (BTC Nodes + ETH Nodes + Mining Hashrate + Lightning/Validators) / 12</div>
+            <h3>Scoring Formula &mdash; Version 2 <span style="font-size:0.78rem;font-weight:400;color:#7a8a9a;">(Weighted Geometric Mean, Per-Capita Adjusted)</span></h3>
+            <div class="formula-box">Technical Score = BTC<sup>0.25</sup> &times; ETH<sup>0.25</sup> &times; Mining<sup>0.15</sup> &times; LN<sup>0.20</sup> &times; Enabling<sup>0.15</sup></div>
+            <div class="formula-box" style="font-size:0.80rem;">Each pillar (except Enabling) = min(1, ln(nodes_per_100k_internet_users + 1) / ln(ceiling + 1))</div>
             <div class="rating-grid">
                 <div class="rating-item">
                     <div class="rating-dot" style="background:#1a5a8a;"></div>
-                    <span><strong>BTC Nodes:</strong> 3 = 100+, 2 = 10&ndash;99, 1 = &lt;10</span>
+                    <span><strong>BTC Nodes (w=25%):</strong> Reachable nodes per 100k internet users &mdash; log-scaled, ceiling 1.1. Source: <a href="https://bitnodes.io" target="_blank" style="color:#0a4c6a;">Bitnodes.io</a></span>
                 </div>
                 <div class="rating-item">
                     <div class="rating-dot" style="background:#1a5a8a;"></div>
-                    <span><strong>ETH Nodes:</strong> 3 = 50+, 2 = 5&ndash;49, 1 = &lt;5</span>
+                    <span><strong>ETH Nodes (w=25%):</strong> Reachable nodes per 100k internet users &mdash; log-scaled, ceiling 1.2. Source: <a href="https://ethernodes.org" target="_blank" style="color:#0a4c6a;">Ethernodes.org</a></span>
                 </div>
                 <div class="rating-item">
                     <div class="rating-dot" style="background:#1a5a8a;"></div>
-                    <span><strong>Mining Hashrate:</strong> 3 = &gt;1% global, 2 = 0.01&ndash;1%, 1 = ~0%</span>
+                    <span><strong>Mining Hashrate (w=15%):</strong> % of global BTC hashrate &mdash; log-scaled, ceiling 40%. Source: <a href="https://hashrateindex.com" target="_blank" style="color:#0a4c6a;">Hashrate Index 2026</a></span>
                 </div>
                 <div class="rating-item">
                     <div class="rating-dot" style="background:#1a5a8a;"></div>
-                    <span><strong>LN/Validators:</strong> 3 = 50+, 2 = 5&ndash;49, 1 = &lt;5</span>
+                    <span><strong>Lightning Network (w=20%):</strong> LN nodes per 100k internet users &mdash; log-scaled, ceiling 1.5. Source: <a href="https://mempool.emzy.de/graphs/lightning/nodes-per-country" target="_blank" style="color:#0a4c6a;">mempool.emzy.de</a></span>
+                </div>
+                <div class="rating-item">
+                    <div class="rating-dot" style="background:#1a5a8a;"></div>
+                    <span><strong>Enabling Environment (w=15%):</strong> Composite of internet penetration (40%), electricity access (30%), avg speed (30%). Sources: ITU, World Bank, Speedtest</span>
+                </div>
+                <div class="rating-item">
+                    <div class="rating-dot" style="background:#6a9bc0;"></div>
+                    <span><strong>Why geometric mean?</strong> Non-compensatory: near-zero performance on any pillar pulls the composite toward zero. Recommended by OECD, Chainalysis, and HDI methodology.</span>
+                </div>
+                <div class="rating-item">
+                    <div class="rating-dot" style="background:#6a9bc0;"></div>
+                    <span><strong>Why internet users as denominator?</strong> Raw population penalizes low-connectivity countries twice. Internet users is the actual relevant base (per Chainalysis Global Adoption Index).</span>
                 </div>
             </div>
         </div>
@@ -446,10 +459,11 @@
                     <tr>
                         <th>Rank</th>
                         <th>Country</th>
-                        <th>BTC Nodes</th>
-                        <th>ETH Nodes</th>
-                        <th>Mining</th>
-                        <th>LN / Val.</th>
+                        <th>BTC /100k</th>
+                        <th>ETH /100k</th>
+                        <th>Mining %</th>
+                        <th>LN /100k</th>
+                        <th>Enabling</th>
                         <th>Score</th>
                         <th class="score-bar-cell"></th>
                         <th>Tier</th>
@@ -465,12 +479,15 @@
         <div class="sources-card">
             <h3>Data Sources</h3>
             <ul>
-                <li><strong>Bitcoin nodes:</strong> <a href="https://bitnodes.io" target="_blank" rel="noopener" style="color:#0a4c6a;">Bitnodes.io</a> (~24,500 reachable globally, US leads with 2,339)</li>
-                <li><strong>Ethereum nodes:</strong> <a href="https://ethernodes.org" target="_blank" rel="noopener" style="color:#0a4c6a;">Ethernodes.org</a> (~6,300&ndash;10,979 globally, US 33&ndash;41%)</li>
-                <li><strong>Mining hashrate:</strong> <a href="https://hashrateindex.com" target="_blank" rel="noopener" style="color:#0a4c6a;">Hashrate Index</a> 2026 (US 37.5%, Russia 16.4%, Ethiopia 2.6%, Indonesia 2.1%)</li>
-                <li><strong>Lightning Network:</strong> <a href="https://mempool.space/lightning" target="_blank" rel="noopener" style="color:#0a4c6a;">mempool.space</a> node estimates</li>
-                <li><strong>Notable:</strong> Ethiopia ranks top 10 globally for mining (2.6% hashrate via hydro power)</li>
-                <li><strong>Notable:</strong> Indonesia emerging mining hub at 2.1% global hashrate</li>
+                <li><strong>Bitcoin nodes:</strong> <a href="https://bitnodes.io" target="_blank" rel="noopener" style="color:#0a4c6a;">Bitnodes.io</a> &mdash; reachable global nodes; per-100k normalized by internet user count</li>
+                <li><strong>Ethereum nodes:</strong> <a href="https://ethernodes.org" target="_blank" rel="noopener" style="color:#0a4c6a;">Ethernodes.org</a> &mdash; reachable ETH clients globally; per-100k normalized</li>
+                <li><strong>Mining hashrate:</strong> <a href="https://hashrateindex.com" target="_blank" rel="noopener" style="color:#0a4c6a;">Hashrate Index 2026</a> (US 37.5%, Russia 16.4%, Ethiopia 2.6%, Indonesia 2.1%)</li>
+                <li><strong>Lightning Network:</strong> <a href="https://mempool.emzy.de/graphs/lightning/nodes-per-country" target="_blank" rel="noopener" style="color:#0a4c6a;">mempool.emzy.de</a> &mdash; LN nodes per country, per-100k normalized</li>
+                <li><strong>Internet users (denominator):</strong> <a href="https://worldpopulationreview.com/country-rankings/internet-users-by-country" target="_blank" rel="noopener" style="color:#0a4c6a;">World Population Review</a> / ITU 2024&ndash;2025</li>
+                <li><strong>Internet penetration &amp; speed:</strong> ITU / <a href="https://saily.com/blog/internet-connectivity-index/" target="_blank" rel="noopener" style="color:#0a4c6a;">Speedtest Global Index 2025</a></li>
+                <li><strong>Electricity access:</strong> World Bank / <a href="https://trackingsdg7.esmap.org" target="_blank" rel="noopener" style="color:#0a4c6a;">Tracking SDG7 Report</a></li>
+                <li><strong>Methodology basis:</strong> OECD Handbook on Composite Indicators (geometric mean); Chainalysis Global Adoption Index (internet-user denominator)</li>
+                <li><strong>v2 key findings:</strong> India drops to Nascent (0.060) &mdash; 759M internet users makes per-capita node density tiny. UK is Advanced not a leader &mdash; near-zero mining pulls geometric mean down. Ethiopia drops from Emerging to Nascent: 2.6% mining cannot compensate for near-zero nodes.</li>
             </ul>
         </div>
     </section>
@@ -512,36 +529,53 @@
     }, 500);
     setTimeout(() => clearInterval(logoInterval), 15000);
 
+    // v2 Technical Infrastructure Data
+    // Pillar scores are continuous 0-1 (log-scaled per 100k internet users)
+    // Composite = weighted geometric mean
     const techData = [
-        { country: "United States",  btc: 3, eth: 3, mining: 3, ln: 3, score: 1.000, label: "Major Hub" },
-        { country: "Russia",         btc: 3, eth: 3, mining: 3, ln: 3, score: 1.000, label: "Major Hub" },
-        { country: "United Kingdom", btc: 3, eth: 3, mining: 1, ln: 3, score: 0.833, label: "Strong" },
-        { country: "Japan",          btc: 3, eth: 3, mining: 1, ln: 2, score: 0.750, label: "Strong" },
-        { country: "Brazil",         btc: 3, eth: 2, mining: 1, ln: 3, score: 0.750, label: "Strong" },
-        { country: "India",          btc: 3, eth: 2, mining: 1, ln: 2, score: 0.667, label: "Moderate" },
-        { country: "South Korea",    btc: 3, eth: 2, mining: 1, ln: 2, score: 0.667, label: "Moderate" },
-        { country: "Turkey",         btc: 3, eth: 2, mining: 1, ln: 2, score: 0.667, label: "Moderate" },
-        { country: "Argentina",      btc: 2, eth: 2, mining: 2, ln: 2, score: 0.667, label: "Moderate" },
-        { country: "Indonesia",      btc: 2, eth: 2, mining: 3, ln: 1, score: 0.667, label: "Moderate" },
-        { country: "Ukraine",        btc: 2, eth: 2, mining: 1, ln: 2, score: 0.583, label: "Moderate" },
-        { country: "Thailand",       btc: 2, eth: 2, mining: 1, ln: 2, score: 0.583, label: "Moderate" },
-        { country: "Vietnam",        btc: 2, eth: 2, mining: 1, ln: 2, score: 0.583, label: "Moderate" },
-        { country: "Nigeria",        btc: 2, eth: 1, mining: 1, ln: 2, score: 0.500, label: "Emerging" },
-        { country: "Philippines",    btc: 2, eth: 2, mining: 1, ln: 1, score: 0.500, label: "Emerging" },
-        { country: "Ethiopia",       btc: 1, eth: 1, mining: 3, ln: 1, score: 0.500, label: "Emerging" },
-        { country: "Pakistan",       btc: 2, eth: 1, mining: 1, ln: 1, score: 0.417, label: "Emerging" },
-        { country: "Venezuela",      btc: 1, eth: 1, mining: 1, ln: 1, score: 0.333, label: "Minimal" },
-        { country: "Bangladesh",     btc: 1, eth: 1, mining: 1, ln: 1, score: 0.333, label: "Minimal" },
-        { country: "Yemen",          btc: 1, eth: 1, mining: 1, ln: 1, score: 0.333, label: "Minimal" }
+        { country: "United States",  btcPer100k: 0.751, btcScore: 0.754, ethPer100k: 0.674, ethScore: 0.653, miningPct: 37.50, miningScore: 0.983, lnPer100k: 1.123, lnScore: 0.821, enablingScore: 0.964, score: 0.799, label: "Network Leader" },
+        { country: "Russia",         btcPer100k: 0.632, btcScore: 0.660, ethPer100k: 0.524, ethScore: 0.534, miningPct: 16.40, miningScore: 0.769, lnPer100k: 0.385, lnScore: 0.355, enablingScore: 0.814, score: 0.584, label: "Advanced" },
+        { country: "United Kingdom", btcPer100k: 1.036, btcScore: 0.956, ethPer100k: 0.920, ethScore: 0.827, miningPct:  0.05, miningScore: 0.013, lnPer100k: 1.187, lnScore: 0.854, enablingScore: 0.917, score: 0.470, label: "Advanced" },
+        { country: "Japan",          btcPer100k: 0.615, btcScore: 0.646, ethPer100k: 0.571, ethScore: 0.574, miningPct:  0.05, miningScore: 0.013, lnPer100k: 0.690, lnScore: 0.573, enablingScore: 0.930, score: 0.360, label: "Developing" },
+        { country: "Argentina",      btcPer100k: 0.338, btcScore: 0.392, ethPer100k: 0.327, ethScore: 0.359, miningPct:  0.30, miningScore: 0.071, lnPer100k: 0.545, lnScore: 0.474, enablingScore: 0.780, score: 0.342, label: "Developing" },
+        { country: "South Korea",    btcPer100k: 0.414, btcScore: 0.466, ethPer100k: 0.398, ethScore: 0.425, miningPct:  0.05, miningScore: 0.013, lnPer100k: 0.596, lnScore: 0.510, enablingScore: 0.988, score: 0.303, label: "Developing" },
+        { country: "Ukraine",        btcPer100k: 0.313, btcScore: 0.367, ethPer100k: 0.284, ethScore: 0.317, miningPct:  0.05, miningScore: 0.013, lnPer100k: 0.478, lnScore: 0.426, enablingScore: 0.708, score: 0.244, label: "Developing" },
+        { country: "Brazil",         btcPer100k: 0.244, btcScore: 0.294, ethPer100k: 0.212, ethScore: 0.244, miningPct:  0.10, miningScore: 0.026, lnPer100k: 0.364, lnScore: 0.338, enablingScore: 0.749, score: 0.231, label: "Developing" },
+        { country: "Turkey",         btcPer100k: 0.257, btcScore: 0.308, ethPer100k: 0.221, ethScore: 0.254, miningPct:  0.05, miningScore: 0.013, lnPer100k: 0.345, lnScore: 0.323, enablingScore: 0.775, score: 0.212, label: "Developing" },
+        { country: "Thailand",       btcPer100k: 0.147, btcScore: 0.185, ethPer100k: 0.134, ethScore: 0.160, miningPct:  0.02, miningScore: 0.010, lnPer100k: 0.237, lnScore: 0.232, enablingScore: 0.783, score: 0.150, label: "Emerging" },
+        { country: "Vietnam",        btcPer100k: 0.117, btcScore: 0.149, ethPer100k: 0.106, ethScore: 0.128, miningPct:  0.02, miningScore: 0.010, lnPer100k: 0.238, lnScore: 0.233, enablingScore: 0.730, score: 0.133, label: "Emerging" },
+        { country: "Philippines",    btcPer100k: 0.070, btcScore: 0.091, ethPer100k: 0.086, ethScore: 0.105, miningPct:  0.01, miningScore: 0.010, lnPer100k: 0.123, lnScore: 0.126, enablingScore: 0.676, score: 0.098, label: "Emerging" },
+        { country: "Indonesia",      btcPer100k: 0.037, btcScore: 0.049, ethPer100k: 0.042, ethScore: 0.052, miningPct:  2.10, miningScore: 0.305, lnPer100k: 0.038, lnScore: 0.041, enablingScore: 0.597, score: 0.092, label: "Emerging" },
+        { country: "Venezuela",      btcPer100k: 0.083, btcScore: 0.107, ethPer100k: 0.056, ethScore: 0.069, miningPct:  0.05, miningScore: 0.013, lnPer100k: 0.116, lnScore: 0.119, enablingScore: 0.600, score: 0.092, label: "Emerging" },
+        { country: "Nigeria",        btcPer100k: 0.060, btcScore: 0.079, ethPer100k: 0.039, ethScore: 0.048, miningPct:  0.02, miningScore: 0.010, lnPer100k: 0.116, lnScore: 0.119, enablingScore: 0.381, score: 0.070, label: "Nascent" },
+        { country: "Ethiopia",       btcPer100k: 0.030, btcScore: 0.040, ethPer100k: 0.019, ethScore: 0.024, miningPct:  2.60, miningScore: 0.345, lnPer100k: 0.056, lnScore: 0.059, enablingScore: 0.236, score: 0.068, label: "Nascent" },
+        { country: "Pakistan",       btcPer100k: 0.057, btcScore: 0.075, ethPer100k: 0.042, ethScore: 0.052, miningPct:  0.01, miningScore: 0.010, lnPer100k: 0.070, lnScore: 0.074, enablingScore: 0.457, score: 0.066, label: "Nascent" },
+        { country: "India",          btcPer100k: 0.046, btcScore: 0.061, ethPer100k: 0.041, ethScore: 0.051, miningPct:  0.05, miningScore: 0.013, lnPer100k: 0.037, lnScore: 0.040, enablingScore: 0.600, score: 0.060, label: "Nascent" },
+        { country: "Yemen",          btcPer100k: 0.039, btcScore: 0.052, ethPer100k: 0.026, ethScore: 0.033, miningPct:  0.001,miningScore: 0.010, lnPer100k: 0.052, lnScore: 0.055, enablingScore: 0.279, score: 0.047, label: "Nascent" },
+        { country: "Bangladesh",     btcPer100k: 0.024, btcScore: 0.032, ethPer100k: 0.018, ethScore: 0.022, miningPct:  0.005,miningScore: 0.010, lnPer100k: 0.022, lnScore: 0.024, enablingScore: 0.488, score: 0.035, label: "Nascent" }
     ];
 
     const tierClasses = {
-        "Major Hub": "tier-major-hub",
-        "Strong":    "tier-strong",
-        "Moderate":  "tier-moderate",
-        "Emerging":  "tier-emerging",
-        "Minimal":   "tier-minimal"
+        "Network Leader": "tier-major-hub",
+        "Advanced":       "tier-strong",
+        "Developing":     "tier-moderate",
+        "Emerging":       "tier-emerging",
+        "Nascent":        "tier-minimal"
     };
+
+    // Helper: format per-100k value
+    function fmt100k(v) { return v.toFixed(3); }
+    // Helper: pillar score bar
+    function pillarBar(score) {
+        const pct = (score * 100).toFixed(1);
+        const col = score >= 0.6 ? '#1a5a8a' : score >= 0.3 ? '#6a9bc0' : '#c0c8d0';
+        return `<div style="display:flex;align-items:center;gap:5px;">
+            <div style="width:44px;height:6px;background:#eceae4;border-radius:3px;overflow:hidden;">
+                <div style="width:${pct}%;height:100%;background:${col};border-radius:3px;"></div>
+            </div>
+            <span style="font-size:0.74rem;color:#5a6b7c;">${score.toFixed(3)}</span>
+        </div>`;
+    }
 
     const tbody = document.getElementById("table-body");
     techData.forEach((d, i) => {
@@ -549,11 +583,24 @@
         const tr = document.createElement("tr");
         tr.innerHTML = `
             <td class="rank-cell">${i + 1}</td>
-            <td>${d.country}</td>
-            <td><span class="rating-badge rating-${d.btc}">${d.btc}</span></td>
-            <td><span class="rating-badge rating-${d.eth}">${d.eth}</span></td>
-            <td><span class="rating-badge rating-${d.mining}">${d.mining}</span></td>
-            <td><span class="rating-badge rating-${d.ln}">${d.ln}</span></td>
+            <td><strong>${d.country}</strong></td>
+            <td>
+                <div style="font-size:0.78rem;color:#3a4a5a;font-weight:600;">${fmt100k(d.btcPer100k)}</div>
+                ${pillarBar(d.btcScore)}
+            </td>
+            <td>
+                <div style="font-size:0.78rem;color:#3a4a5a;font-weight:600;">${fmt100k(d.ethPer100k)}</div>
+                ${pillarBar(d.ethScore)}
+            </td>
+            <td>
+                <div style="font-size:0.78rem;color:#3a4a5a;font-weight:600;">${d.miningPct.toFixed(3)}%</div>
+                ${pillarBar(d.miningScore)}
+            </td>
+            <td>
+                <div style="font-size:0.78rem;color:#3a4a5a;font-weight:600;">${fmt100k(d.lnPer100k)}</div>
+                ${pillarBar(d.lnScore)}
+            </td>
+            <td>${pillarBar(d.enablingScore)}</td>
             <td class="score-cell">${d.score.toFixed(3)}</td>
             <td class="score-bar-cell">
                 <div class="score-bar-bg">

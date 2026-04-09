@@ -1020,20 +1020,23 @@
         </details>
 
         <details>
-            <summary>3. Technical Infrastructure Score</summary>
+            <summary>3. Technical Infrastructure Score <span style="font-size:0.75rem;font-weight:400;color:#7a8a9a;margin-left:6px;">(Version 2)</span></summary>
             <div class="detail-body">
-                <p>Measures the physical blockchain network presence within a country. Four dimensions are each rated on a 1&ndash;3 scale and weighted equally, then normalized to a 0&ndash;1 range:</p>
-                <div class="formula-box">Technical = (BTC Nodes &times; 0.25) + (ETH Nodes &times; 0.25) + (Mining Hashrate &times; 0.25) + (LN/Validators &times; 0.25)</div>
+                <p>Measures each country's blockchain network footprint using five continuous, per-capita pillars aggregated with a <strong>weighted geometric mean</strong> (non-compensatory). All node/LN metrics are normalized per 100k internet users &mdash; not raw population &mdash; to fairly compare countries of different sizes. Near-zero performance on any pillar pulls the composite toward zero. <a href="data.html" style="color:#0a4c6a;font-weight:500;">View full data table &rarr;</a></p>
+                <div class="formula-box">Technical = BTC_Score<sup>0.25</sup> &times; ETH_Score<sup>0.25</sup> &times; Mining_Score<sup>0.15</sup> &times; LN_Score<sup>0.20</sup> &times; Enabling_Score<sup>0.15</sup></div>
+                <p style="font-size:0.84rem;color:#7a8a9a;margin-bottom:8px;"><strong>Each pillar score</strong> = min(1, ln(raw_per_100k + 1) / ln(ceiling + 1)), yielding a continuous 0&ndash;1 value. Mining uses global hashrate % directly. Enabling Environment is a composite of internet penetration, electricity access, and average internet speed.</p>
                 <ul>
-                    <li><strong>BTC Nodes:</strong> 3 = 100+; 2 = 10&ndash;99; 1 = &lt;10</li>
-                    <li><strong>ETH Nodes:</strong> 3 = 50+; 2 = 5&ndash;49; 1 = &lt;5</li>
-                    <li><strong>Mining Hashrate:</strong> 3 = &gt;1% global; 2 = 0.01&ndash;1%; 1 = ~0%</li>
-                    <li><strong>Lightning/Validators:</strong> 3 = 50+ LN nodes or significant stake; 2 = 5&ndash;49; 1 = &lt;5</li>
+                    <li><strong>BTC Nodes (w=0.25):</strong> Reachable BTC nodes per 100k internet users &mdash; ceiling 1.1/100k. Source: <a href="https://bitnodes.io" target="_blank" style="color:#0a4c6a;">Bitnodes.io</a></li>
+                    <li><strong>ETH Nodes (w=0.25):</strong> Reachable ETH nodes per 100k internet users &mdash; ceiling 1.2/100k. Source: <a href="https://ethernodes.org" target="_blank" style="color:#0a4c6a;">Ethernodes.org</a></li>
+                    <li><strong>Mining Hashrate (w=0.15):</strong> Country share of global BTC hashrate, log-normalized &mdash; ceiling 40%. Source: <a href="https://hashrateindex.com" target="_blank" style="color:#0a4c6a;">Hashrate Index</a></li>
+                    <li><strong>Lightning Network (w=0.20):</strong> LN nodes per 100k internet users &mdash; ceiling 1.5/100k. Source: <a href="https://mempool.emzy.de/graphs/lightning/nodes-per-country" target="_blank" style="color:#0a4c6a;">mempool.emzy.de</a></li>
+                    <li><strong>Enabling Environment (w=0.15):</strong> Composite of internet penetration (40%), electricity access (30%), avg internet speed (30%). Sources: ITU, World Bank, Speedtest Global Index</li>
                 </ul>
-                <p>Tier thresholds:</p>
+                <p>Tier thresholds (v2):</p>
                 <ul>
-                    <li><strong>Major Hub</strong> (0.90&ndash;1.0) &middot; <strong>Strong</strong> (0.75&ndash;0.89) &middot; <strong>Moderate</strong> (0.58&ndash;0.74) &middot; <strong>Emerging</strong> (0.42&ndash;0.57) &middot; <strong>Minimal</strong> (&lt;0.42)</li>
+                    <li><strong>Network Leader</strong> (&ge;0.70) &middot; <strong>Advanced</strong> (0.45&ndash;0.69) &middot; <strong>Developing</strong> (0.20&ndash;0.44) &middot; <strong>Emerging</strong> (0.08&ndash;0.19) &middot; <strong>Nascent</strong> (&lt;0.08)</li>
                 </ul>
+                <p style="font-size:0.84rem;color:#7a8a9a;"><strong>Key v2 findings:</strong> India drops dramatically (0.060) due to its 759M internet users base making per-capita node density tiny despite decent absolute counts. UK ranks Advanced (0.470) not Major Hub &mdash; near-zero mining (0.05% hashrate) penalizes it under geometric mean. Ethiopia drops from Emerging to Nascent: its 2.6% mining share cannot compensate for near-zero nodes in every other pillar.</p>
             </div>
         </details>
 
@@ -1052,7 +1055,10 @@
                     <li><strong>Internet penetration:</strong> DataReportal / ITU 2024&ndash;2025</li>
                     <li><strong>Regulatory data:</strong> Library of Congress, PwC Global Crypto Regulation Report 2025</li>
                     <li><strong>BTC nodes:</strong> <a href="https://bitnodes.io" target="_blank" rel="noopener" style="color:#0a4c6a;">Bitnodes.io</a> &middot; <strong>ETH nodes:</strong> <a href="https://ethernodes.org" target="_blank" rel="noopener" style="color:#0a4c6a;">Ethernodes.org</a></li>
-                    <li><strong>Mining hashrate:</strong> <a href="https://hashrateindex.com" target="_blank" rel="noopener" style="color:#0a4c6a;">Hashrate Index</a> 2026 &middot; <strong>Lightning:</strong> <a href="https://mempool.space/lightning" target="_blank" rel="noopener" style="color:#0a4c6a;">mempool.space</a></li>
+                    <li><strong>Mining hashrate:</strong> <a href="https://hashrateindex.com" target="_blank" rel="noopener" style="color:#0a4c6a;">Hashrate Index</a> 2026 &middot; <strong>Lightning:</strong> <a href="https://mempool.emzy.de/graphs/lightning/nodes-per-country" target="_blank" rel="noopener" style="color:#0a4c6a;">mempool.emzy.de</a></li>
+                    <li><strong>Internet users (denominator):</strong> <a href="https://worldpopulationreview.com/country-rankings/internet-users-by-country" target="_blank" rel="noopener" style="color:#0a4c6a;">World Population Review</a> / ITU 2024&ndash;2025</li>
+                    <li><strong>Enabling environment:</strong> ITU internet penetration &middot; World Bank electricity access &middot; <a href="https://saily.com/blog/internet-connectivity-index/" target="_blank" rel="noopener" style="color:#0a4c6a;">Speedtest Global Index 2025</a></li>
+                    <li><strong>Methodology:</strong> Weighted geometric mean per OECD Handbook on Composite Indicators; per-capita normalization per <a href="https://www.chainalysis.com/blog/2025-global-crypto-adoption-index/" target="_blank" rel="noopener" style="color:#0a4c6a;">Chainalysis Global Adoption Index</a></li>
                 </ul>
             </div>
         </details>
@@ -1098,83 +1104,83 @@
         { country: "Vietnam", id: "704", region: "asia",
             economic: { score: 0.737, ownership: "21.19%", volume: "$2,500M", remitCapita: "$180.90", chainalysisRank: "4", confidence: "High", keyDriver: "Highest ownership (21.2%) + strong CEX ranks" },
             regulatory: { score: 0.556, label: "Ambiguous", stablecoin: 1, licensing: 2, tax: 2, banking: 2, enforcement: 2, defi: 1 },
-            technical: { score: 0.583, label: "Moderate", btc: 2, eth: 2, mining: 1, ln: 2 } },
+            technical: { score: 0.133, label: "Emerging", btcScore: 0.149, ethScore: 0.128, miningScore: 0.010, lnScore: 0.233, enablingScore: 0.730 } },
         { country: "Ukraine", id: "804", region: "europe",
             economic: { score: 0.705, ownership: "10.57%", volume: "$1,800M", remitCapita: "$502.70", chainalysisRank: "8", confidence: "High", keyDriver: "Highest remittances/capita + currency instability" },
             regulatory: { score: 0.889, label: "Comprehensive", stablecoin: 2, licensing: 3, tax: 3, banking: 3, enforcement: 3, defi: 2 },
-            technical: { score: 0.583, label: "Moderate", btc: 2, eth: 2, mining: 1, ln: 2 } },
+            technical: { score: 0.244, label: "Developing", btcScore: 0.367, ethScore: 0.317, miningScore: 0.013, lnScore: 0.426, enablingScore: 0.708 } },
         { country: "India", id: "356", region: "asia",
             economic: { score: 0.493, ownership: "6.55%", volume: "$3,500M", remitCapita: "$89.71", chainalysisRank: "1", confidence: "High", keyDriver: "#1 across all Chainalysis sub-indexes" },
             regulatory: { score: 0.611, label: "Developing", stablecoin: 1, licensing: 2, tax: 3, banking: 2, enforcement: 2, defi: 1 },
-            technical: { score: 0.667, label: "Moderate", btc: 3, eth: 2, mining: 1, ln: 2 } },
+            technical: { score: 0.060, label: "Nascent", btcScore: 0.061, ethScore: 0.051, miningScore: 0.013, lnScore: 0.040, enablingScore: 0.600 } },
         { country: "Philippines", id: "608", region: "asia",
             economic: { score: 0.616, ownership: "13.43%", volume: "$1,500M", remitCapita: "$341.01", chainalysisRank: "9", confidence: "High", keyDriver: "High ownership + strong remittances/capita" },
             regulatory: { score: 0.778, label: "Developing", stablecoin: 2, licensing: 3, tax: 2, banking: 3, enforcement: 3, defi: 1 },
-            technical: { score: 0.500, label: "Emerging", btc: 2, eth: 2, mining: 1, ln: 1 } },
+            technical: { score: 0.098, label: "Emerging", btcScore: 0.091, ethScore: 0.105, miningScore: 0.010, lnScore: 0.126, enablingScore: 0.676 } },
         { country: "Nigeria", id: "566", region: "africa",
             economic: { score: 0.484, ownership: "5.93%", volume: "$2,800M", remitCapita: "$84.78", chainalysisRank: "6", confidence: "High", keyDriver: "DeFi #3 + strong CEX/GDP ratio" },
             regulatory: { score: 0.667, label: "Developing", stablecoin: 2, licensing: 2, tax: 2, banking: 3, enforcement: 2, defi: 1 },
-            technical: { score: 0.500, label: "Emerging", btc: 2, eth: 1, mining: 1, ln: 2 } },
+            technical: { score: 0.070, label: "Nascent", btcScore: 0.079, ethScore: 0.048, miningScore: 0.010, lnScore: 0.119, enablingScore: 0.381 } },
         { country: "Indonesia", id: "360", region: "asia",
             economic: { score: 0.440, ownership: "4.40%", volume: "$4,200M", remitCapita: "$44.79", chainalysisRank: "7", confidence: "High", keyDriver: "DeFi #4 + strong CEX activity" },
             regulatory: { score: 0.667, label: "Developing", stablecoin: 1, licensing: 3, tax: 3, banking: 2, enforcement: 2, defi: 1 },
-            technical: { score: 0.667, label: "Moderate", btc: 2, eth: 2, mining: 3, ln: 1 } },
+            technical: { score: 0.092, label: "Emerging", btcScore: 0.049, ethScore: 0.052, miningScore: 0.305, lnScore: 0.041, enablingScore: 0.597 } },
         { country: "United States", id: "840", region: "americas",
             economic: { score: 0.585, ownership: "15.56%", volume: "$76,659M", remitCapita: "$23.88", chainalysisRank: "2", confidence: "High", keyDriver: "DeFi #2, Inst CEX #2 + high ownership" },
             regulatory: { score: 0.778, label: "Developing", stablecoin: 2, licensing: 2, tax: 3, banking: 2, enforcement: 3, defi: 2 },
-            technical: { score: 1.000, label: "Major Hub", btc: 3, eth: 3, mining: 3, ln: 3 } },
+            technical: { score: 0.799, label: "Network Leader", btcScore: 0.754, ethScore: 0.653, miningScore: 0.983, lnScore: 0.821, enablingScore: 0.964 } },
         { country: "Venezuela", id: "862", region: "americas",
             economic: { score: 0.442, ownership: "10.30%", volume: "$300M", remitCapita: "$105.63", chainalysisRank: "18", confidence: "Medium+", keyDriver: "Extreme currency instability drives adoption" },
             regulatory: { score: 0.556, label: "Ambiguous", stablecoin: 1, licensing: 2, tax: 2, banking: 2, enforcement: 2, defi: 1 },
-            technical: { score: 0.333, label: "Minimal", btc: 1, eth: 1, mining: 1, ln: 1 } },
+            technical: { score: 0.092, label: "Emerging", btcScore: 0.107, ethScore: 0.069, miningScore: 0.013, lnScore: 0.119, enablingScore: 0.600 } },
         { country: "Pakistan", id: "586", region: "asia",
             economic: { score: 0.481, ownership: "6.60%", volume: "$800M", remitCapita: "$137.21", chainalysisRank: "3", confidence: "High", keyDriver: "Retail CEX #2, Inst CEX #3" },
             regulatory: { score: 0.556, label: "Ambiguous", stablecoin: 1, licensing: 2, tax: 2, banking: 2, enforcement: 2, defi: 1 },
-            technical: { score: 0.417, label: "Emerging", btc: 2, eth: 1, mining: 1, ln: 1 } },
+            technical: { score: 0.066, label: "Nascent", btcScore: 0.075, ethScore: 0.052, miningScore: 0.010, lnScore: 0.074, enablingScore: 0.457 } },
         { country: "Brazil", id: "76", region: "americas",
             economic: { score: 0.523, ownership: "11.99%", volume: "$2,200M", remitCapita: "$21.26", chainalysisRank: "5", confidence: "High", keyDriver: "Balanced #5 across all Chainalysis sub-indexes" },
             regulatory: { score: 0.889, label: "Comprehensive", stablecoin: 2, licensing: 3, tax: 3, banking: 3, enforcement: 3, defi: 2 },
-            technical: { score: 0.750, label: "Strong", btc: 3, eth: 2, mining: 1, ln: 3 } },
+            technical: { score: 0.231, label: "Developing", btcScore: 0.294, ethScore: 0.244, miningScore: 0.026, lnScore: 0.338, enablingScore: 0.749 } },
         { country: "Argentina", id: "32", region: "americas",
             economic: { score: 0.363, ownership: "9.73%", volume: "$600M", remitCapita: "$25.70", chainalysisRank: "20", confidence: "High", keyDriver: "Weak Chainalysis ranks; currency instability offsets" },
             regulatory: { score: 0.611, label: "Developing", stablecoin: 1, licensing: 2, tax: 2, banking: 2, enforcement: 3, defi: 1 },
-            technical: { score: 0.667, label: "Moderate", btc: 2, eth: 2, mining: 2, ln: 2 } },
+            technical: { score: 0.342, label: "Developing", btcScore: 0.392, ethScore: 0.359, miningScore: 0.071, lnScore: 0.474, enablingScore: 0.780 } },
         { country: "Thailand", id: "764", region: "asia",
             economic: { score: 0.387, ownership: "9.61%", volume: "$500M", remitCapita: "$114.21", chainalysisRank: "17", confidence: "High", keyDriver: "Weak Chainalysis CEX ranks drag score down" },
             regulatory: { score: 0.833, label: "Comprehensive", stablecoin: 2, licensing: 3, tax: 3, banking: 3, enforcement: 2, defi: 2 },
-            technical: { score: 0.583, label: "Moderate", btc: 2, eth: 2, mining: 1, ln: 2 } },
+            technical: { score: 0.150, label: "Emerging", btcScore: 0.185, ethScore: 0.160, miningScore: 0.010, lnScore: 0.232, enablingScore: 0.783 } },
         { country: "Russia", id: "643", region: "europe",
             economic: { score: 0.421, ownership: "6.06%", volume: "$1,200M", remitCapita: "$54.09", chainalysisRank: "10", confidence: "High", keyDriver: "Solid mid-range CEX + currency instability boost" },
             regulatory: { score: 0.611, label: "Developing", stablecoin: 1, licensing: 2, tax: 3, banking: 2, enforcement: 2, defi: 1 },
-            technical: { score: 1.000, label: "Major Hub", btc: 3, eth: 3, mining: 3, ln: 3 } },
+            technical: { score: 0.584, label: "Advanced", btcScore: 0.660, ethScore: 0.534, miningScore: 0.769, lnScore: 0.355, enablingScore: 0.814 } },
         { country: "Turkey", id: "792", region: "middleeast",
             economic: { score: 0.407, ownership: "5.62%", volume: "$6,018M", remitCapita: "$12.82", chainalysisRank: "14", confidence: "High", keyDriver: "Strong CEX/GDP ratio; Lira instability" },
             regulatory: { score: 0.722, label: "Developing", stablecoin: 2, licensing: 3, tax: 2, banking: 3, enforcement: 2, defi: 1 },
-            technical: { score: 0.667, label: "Moderate", btc: 3, eth: 2, mining: 1, ln: 2 } },
+            technical: { score: 0.212, label: "Developing", btcScore: 0.308, ethScore: 0.254, miningScore: 0.013, lnScore: 0.323, enablingScore: 0.775 } },
         { country: "United Kingdom", id: "826", region: "europe",
             economic: { score: 0.293, ownership: "5.74%", volume: "$400M", remitCapita: "$92.24", chainalysisRank: "11", confidence: "High", keyDriver: "Highest internet access; lowest CEX/GDP" },
             regulatory: { score: 0.833, label: "Comprehensive", stablecoin: 2, licensing: 3, tax: 3, banking: 2, enforcement: 3, defi: 2 },
-            technical: { score: 0.833, label: "Strong", btc: 3, eth: 3, mining: 1, ln: 3 } },
+            technical: { score: 0.470, label: "Advanced", btcScore: 0.956, ethScore: 0.827, miningScore: 0.013, lnScore: 0.854, enablingScore: 0.917 } },
         { country: "South Korea", id: "410", region: "asia",
             economic: { score: 0.465, ownership: "4.09%", volume: "$82,816M", remitCapita: "$179.88", chainalysisRank: "15", confidence: "High", keyDriver: "Highest CEX/GDP ratio (Upbit/Bithumb)" },
             regulatory: { score: 0.722, label: "Developing", stablecoin: 2, licensing: 3, tax: 2, banking: 2, enforcement: 2, defi: 2 },
-            technical: { score: 0.667, label: "Moderate", btc: 3, eth: 2, mining: 1, ln: 2 } },
+            technical: { score: 0.303, label: "Developing", btcScore: 0.466, ethScore: 0.425, miningScore: 0.013, lnScore: 0.510, enablingScore: 0.988 } },
         { country: "Japan", id: "392", region: "asia",
             economic: { score: 0.284, ownership: "4.13%", volume: "$8,084M", remitCapita: "$20.97", chainalysisRank: "19", confidence: "High", keyDriver: "Worst CEX avg rank; moderate DeFi + internet" },
             regulatory: { score: 0.944, label: "Comprehensive", stablecoin: 3, licensing: 3, tax: 3, banking: 3, enforcement: 3, defi: 2 },
-            technical: { score: 0.750, label: "Strong", btc: 3, eth: 3, mining: 1, ln: 2 } },
+            technical: { score: 0.360, label: "Developing", btcScore: 0.646, ethScore: 0.574, miningScore: 0.013, lnScore: 0.573, enablingScore: 0.930 } },
         { country: "Bangladesh", id: "50", region: "asia",
             economic: { score: 0.277, ownership: "2.50%", volume: "$100M", remitCapita: "$131.65", chainalysisRank: "13", confidence: "Medium+", keyDriver: "Strong Chainalysis ranks (#14 retail, #14 DeFi)" },
             regulatory: { score: 0.333, label: "Hostile", stablecoin: 1, licensing: 1, tax: 1, banking: 1, enforcement: 1, defi: 1 },
-            technical: { score: 0.333, label: "Minimal", btc: 1, eth: 1, mining: 1, ln: 1 } },
+            technical: { score: 0.035, label: "Nascent", btcScore: 0.032, ethScore: 0.022, miningScore: 0.010, lnScore: 0.024, enablingScore: 0.488 } },
         { country: "Yemen", id: "887", region: "middleeast",
             economic: { score: 0.228, ownership: "1.00%", volume: "$10M", remitCapita: "$110.47", chainalysisRank: "16", confidence: "Low*", keyDriver: "Currency instability + limited infrastructure" },
             regulatory: { score: 0.333, label: "Hostile", stablecoin: 1, licensing: 1, tax: 1, banking: 1, enforcement: 1, defi: 1 },
-            technical: { score: 0.333, label: "Minimal", btc: 1, eth: 1, mining: 1, ln: 1 } },
+            technical: { score: 0.047, label: "Nascent", btcScore: 0.052, ethScore: 0.033, miningScore: 0.010, lnScore: 0.055, enablingScore: 0.279 } },
         { country: "Ethiopia", id: "231", region: "africa",
             economic: { score: 0.207, ownership: "1.79%", volume: "$50M", remitCapita: "$16.28", chainalysisRank: "12", confidence: "Medium+", keyDriver: "DeFi #7 exceptional; worst internet access (17.7%)" },
             regulatory: { score: 0.333, label: "Hostile", stablecoin: 1, licensing: 1, tax: 1, banking: 1, enforcement: 1, defi: 1 },
-            technical: { score: 0.500, label: "Emerging", btc: 1, eth: 1, mining: 3, ln: 1 } }
+            technical: { score: 0.068, label: "Nascent", btcScore: 0.040, ethScore: 0.024, miningScore: 0.345, lnScore: 0.059, enablingScore: 0.236 } }
     ];
 
     countries.forEach(c => {
@@ -1254,7 +1260,7 @@
         overall:    { title: "Overall Score",            min: 0.25, max: 0.80, colors: ["#faf3e0","#c4ddb2","#5ba8b5","#1a6b7a","#0a3d62"] },
         economic:   { title: "Economic Adoption",        min: 0.10, max: 0.85, colors: ["#faf3e0","#c4ddb2","#5ba8b5","#1a6b7a","#0a3d62"] },
         regulatory: { title: "Regulatory Clarity",       min: 0.30, max: 0.95, colors: ["#fef3e0","#f5d6a0","#d4915c","#9b5a30","#5c2d10"] },
-        technical:  { title: "Technical Infrastructure", min: 0.30, max: 1.00, colors: ["#e8f0fe","#a4c8f0","#5b8fd4","#2e5fa1","#143566"] }
+        technical:  { title: "Technical Infrastructure", min: 0.03, max: 0.80, colors: ["#e8f0fe","#a4c8f0","#5b8fd4","#2e5fa1","#143566"] }
     };
 
     // Region mapping for non-indexed countries (for dimming)
