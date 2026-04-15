@@ -1,0 +1,842 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Country Profile — Global Blockchain Adaptability Index</title>
+    <meta property="og:title" content="Blockchain Adaptability Index — Country Profile">
+    <meta property="og:description" content="Deep-dive into blockchain adoption, regulation, and infrastructure for this country.">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=VT323&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #fafaf7;
+            color: #2c3e50;
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        /* Nav */
+        .nav-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 18px 28px;
+        }
+        .nav-back {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+            color: #0a4c6a;
+            font-size: 0.88rem;
+            font-weight: 500;
+            padding: 8px 16px;
+            border-radius: 8px;
+            border: 1px solid #d8dce0;
+            background: #fff;
+            transition: all 0.2s;
+        }
+        .nav-back:hover { background: #eef3f7; border-color: #0a4c6a; }
+        .nav-back svg { width: 16px; height: 16px; }
+        .nav-title {
+            font-family: 'Source Serif 4', Georgia, serif;
+            font-size: 1rem;
+            color: #5a6a7a;
+            font-weight: 600;
+        }
+
+        /* Hero */
+        .hero {
+            max-width: 1000px;
+            margin: 0 auto 36px;
+            padding: 0 28px;
+        }
+        .hero-card {
+            border-radius: 18px;
+            overflow: hidden;
+            background: linear-gradient(135deg, #0a3d62 0%, #1a6b7a 50%, #5ba8b5 100%);
+            padding: 48px;
+            position: relative;
+        }
+        .hero-card::before {
+            content: '';
+            position: absolute;
+            top: 0; right: 0; bottom: 0; left: 0;
+            background: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.06'/%3E%3C/svg%3E");
+            opacity: 0.3;
+            pointer-events: none;
+        }
+        .hero-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 20px;
+            position: relative;
+        }
+        .hero-left h1 {
+            font-family: 'Source Serif 4', Georgia, serif;
+            font-size: 2.6rem;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 4px;
+        }
+        .hero-rank {
+            display: inline-block;
+            background: rgba(255,255,255,0.2);
+            color: #fff;
+            padding: 4px 14px;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            backdrop-filter: blur(4px);
+        }
+        .hero-right {
+            text-align: center;
+            position: relative;
+        }
+        .hero-score-label {
+            font-size: 0.72rem;
+            color: rgba(255,255,255,0.6);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .hero-score {
+            font-size: 3.6rem;
+            font-weight: 700;
+            color: #fff;
+            line-height: 1;
+        }
+        .hero-region {
+            font-size: 0.82rem;
+            color: rgba(255,255,255,0.5);
+            margin-top: 8px;
+            position: relative;
+        }
+        .share-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            margin-top: 16px;
+            padding: 8px 18px;
+            border-radius: 8px;
+            border: 1px solid rgba(255,255,255,0.3);
+            background: rgba(255,255,255,0.1);
+            color: #fff;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.82rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            position: relative;
+            backdrop-filter: blur(4px);
+        }
+        .share-btn:hover { background: rgba(255,255,255,0.2); }
+        .share-btn svg { width: 14px; height: 14px; }
+        .share-toast {
+            position: absolute;
+            bottom: -30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #fff;
+            color: #0a4c6a;
+            padding: 4px 12px;
+            border-radius: 4px;
+            font-size: 0.72rem;
+            font-weight: 600;
+            opacity: 0;
+            transition: opacity 0.3s;
+            pointer-events: none;
+            white-space: nowrap;
+        }
+        .share-toast.visible { opacity: 1; }
+
+        /* Radar section */
+        .radar-section {
+            max-width: 1000px;
+            margin: 0 auto 32px;
+            padding: 0 28px;
+        }
+        .radar-card {
+            background: #fff;
+            border-radius: 14px;
+            padding: 32px;
+            box-shadow: 0 2px 14px rgba(0,0,0,0.04);
+            border: 1px solid #ebebeb;
+            display: flex;
+            align-items: center;
+            gap: 40px;
+            flex-wrap: wrap;
+        }
+        .radar-chart-container {
+            flex: 0 0 280px;
+            display: flex;
+            justify-content: center;
+        }
+        .dimension-cards {
+            flex: 1;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+            min-width: 300px;
+        }
+        .dim-card {
+            text-align: center;
+            padding: 20px 12px;
+            border-radius: 12px;
+            background: #f8f7f4;
+        }
+        .dim-card-label {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.6px;
+            color: #9aa5b0;
+            margin-bottom: 6px;
+        }
+        .dim-card-score {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: #1a2a3a;
+        }
+        .dim-card-rank {
+            font-size: 0.75rem;
+            color: #7a8a9a;
+            margin-top: 2px;
+        }
+        .dim-card-tier {
+            display: inline-block;
+            margin-top: 6px;
+            padding: 2px 10px;
+            border-radius: 4px;
+            font-size: 0.68rem;
+            font-weight: 600;
+        }
+        .tier-comprehensive { background: #e8f5e9; color: #2e7d32; }
+        .tier-developing { background: #fff3e0; color: #e65100; }
+        .tier-ambiguous { background: #fce4ec; color: #c62828; }
+        .tier-hostile { background: #f3e5f5; color: #7b1fa2; }
+        .tier-network-leader { background: #e3f2fd; color: #1565c0; }
+        .tier-advanced { background: #e8f5e9; color: #2e7d32; }
+        .tier-developing-tech { background: #fff3e0; color: #e65100; }
+        .tier-emerging { background: #fce4ec; color: #c62828; }
+        .tier-nascent { background: #f3e5f5; color: #7b1fa2; }
+
+        /* Narrative */
+        .narrative-section {
+            max-width: 1000px;
+            margin: 0 auto 32px;
+            padding: 0 28px;
+        }
+        .narrative-card {
+            background: #fff;
+            border-radius: 14px;
+            padding: 28px 32px;
+            box-shadow: 0 2px 14px rgba(0,0,0,0.04);
+            border: 1px solid #ebebeb;
+            border-left: 5px solid #0a4c6a;
+        }
+        .narrative-card h3 {
+            font-family: 'Source Serif 4', Georgia, serif;
+            font-size: 1.15rem;
+            color: #1a2a3a;
+            margin-bottom: 10px;
+        }
+        .narrative-card p {
+            font-size: 0.92rem;
+            color: #5a6b7c;
+            line-height: 1.8;
+        }
+
+        /* Breakdown sections */
+        .breakdown-section {
+            max-width: 1000px;
+            margin: 0 auto 32px;
+            padding: 0 28px;
+        }
+        .breakdown-card {
+            background: #fff;
+            border-radius: 14px;
+            padding: 28px 32px;
+            box-shadow: 0 2px 14px rgba(0,0,0,0.04);
+            border: 1px solid #ebebeb;
+        }
+        .breakdown-card h3 {
+            font-family: 'Source Serif 4', Georgia, serif;
+            font-size: 1.15rem;
+            color: #1a2a3a;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .breakdown-card h3 .dim-badge {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.68rem;
+            font-weight: 600;
+            padding: 3px 10px;
+            border-radius: 4px;
+        }
+        .badge-econ { background: #e0f2f1; color: #1a6b7a; }
+        .badge-reg { background: #fef3e0; color: #9b5a30; }
+        .badge-tech { background: #e8f0fe; color: #2e5fa1; }
+
+        /* Horizontal bar chart */
+        .bar-row {
+            display: flex;
+            align-items: center;
+            margin-bottom: 14px;
+        }
+        .bar-row:last-child { margin-bottom: 0; }
+        .bar-label {
+            width: 160px;
+            font-size: 0.82rem;
+            color: #5a6a7a;
+            flex-shrink: 0;
+        }
+        .bar-track {
+            flex: 1;
+            height: 10px;
+            background: #f0ece4;
+            border-radius: 5px;
+            overflow: hidden;
+            margin: 0 12px;
+        }
+        .bar-fill {
+            height: 100%;
+            border-radius: 5px;
+            transition: width 0.8s ease;
+        }
+        .bar-value {
+            width: 60px;
+            text-align: right;
+            font-size: 0.82rem;
+            font-weight: 600;
+            color: #1a2a3a;
+            flex-shrink: 0;
+        }
+
+        /* Regulatory grid */
+        .reg-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 14px;
+        }
+        .reg-item {
+            text-align: center;
+            padding: 18px 12px;
+            border-radius: 10px;
+            background: #f8f7f4;
+        }
+        .reg-item-label {
+            font-size: 0.72rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: #9aa5b0;
+            margin-bottom: 8px;
+        }
+        .reg-item-rating {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 36px;
+            height: 36px;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #fff;
+        }
+        .rating-1 { background: #c0c8d0; }
+        .rating-2 { background: #6a9bc0; }
+        .rating-3 { background: #1a5a8a; }
+        .reg-item-desc {
+            font-size: 0.72rem;
+            color: #7a8a9a;
+            margin-top: 6px;
+        }
+
+        /* Key stats row */
+        .stats-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 14px;
+            margin-bottom: 20px;
+        }
+        .stat-item {
+            text-align: center;
+            padding: 14px 10px;
+            background: #f8f7f4;
+            border-radius: 10px;
+        }
+        .stat-item-label {
+            font-size: 0.68rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: #9aa5b0;
+            margin-bottom: 4px;
+        }
+        .stat-item-value {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #1a2a3a;
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 24px;
+            font-size: 0.78rem;
+            color: #aab5c0;
+            border-top: 1px solid #eee;
+            margin-top: 40px;
+        }
+        .footer a { color: #0a4c6a; text-decoration: none; }
+        .footer a:hover { text-decoration: underline; }
+
+        /* Not found */
+        .not-found {
+            max-width: 600px;
+            margin: 80px auto;
+            text-align: center;
+            padding: 0 28px;
+        }
+        .not-found h1 {
+            font-family: 'Source Serif 4', Georgia, serif;
+            font-size: 2rem;
+            color: #1a2a3a;
+            margin-bottom: 12px;
+        }
+        .not-found p { color: #7a8a9a; margin-bottom: 20px; }
+        .not-found a {
+            display: inline-block;
+            padding: 10px 24px;
+            background: #0a4c6a;
+            color: #fff;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        @media (max-width: 768px) {
+            .hero-card { padding: 32px 24px; }
+            .hero-left h1 { font-size: 1.8rem; }
+            .hero-score { font-size: 2.4rem; }
+            .radar-card { flex-direction: column; padding: 24px; }
+            .radar-chart-container { flex: none; }
+            .dimension-cards { grid-template-columns: 1fr; min-width: auto; }
+            .reg-grid { grid-template-columns: repeat(2, 1fr); }
+            .bar-label { width: 110px; font-size: 0.76rem; }
+            .stats-row { grid-template-columns: repeat(2, 1fr); }
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="nav-bar">
+        <a href="map.html" class="nav-back">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+            Back to Map
+        </a>
+        <span class="nav-title">Blockchain Adaptability Index</span>
+    </nav>
+
+    <div id="page-content"></div>
+
+    <div class="footer">
+        University Research Project &middot; Global Blockchain Adaptability Index &middot; 2026 &middot;
+        <a href="map.html">Interactive Map</a> &middot;
+        <a href="findings.html">Key Findings</a> &middot;
+        <a href="map.html#methodology">Methodology</a>
+    </div>
+
+    <script>
+    // ========================================
+    // DATA (same as map.html)
+    // ========================================
+    const countries = [
+        { country: "Vietnam", id: "704", region: "Asia",
+            economic: { score: 0.737, ownership: "21.19%", volume: "$2,500M", remitCapita: "$180.90", chainalysisRank: "4", confidence: "High", keyDriver: "Highest ownership (21.2%) + strong CEX ranks" },
+            regulatory: { score: 0.556, label: "Ambiguous", stablecoin: 1, licensing: 2, tax: 2, banking: 2, enforcement: 2, defi: 1 },
+            technical: { score: 0.133, label: "Emerging", btcScore: 0.149, ethScore: 0.128, miningScore: 0.010, lnScore: 0.233, enablingScore: 0.730 },
+            narrative: "Vietnam leads the world in crypto ownership at 21.2%, driven by a young, tech-savvy population and growing remittance corridors from its diaspora. Despite ranking #1 in economic adoption, regulatory clarity remains ambiguous\u2014no stablecoin legislation or DeFi recognition exists, creating significant legal uncertainty for businesses operating in the market." },
+        { country: "Ukraine", id: "804", region: "Europe",
+            economic: { score: 0.705, ownership: "10.57%", volume: "$1,800M", remitCapita: "$502.70", chainalysisRank: "8", confidence: "High", keyDriver: "Highest remittances/capita + currency instability" },
+            regulatory: { score: 0.889, label: "Comprehensive", stablecoin: 2, licensing: 3, tax: 3, banking: 3, enforcement: 3, defi: 2 },
+            technical: { score: 0.244, label: "Developing", btcScore: 0.367, ethScore: 0.317, miningScore: 0.013, lnScore: 0.426, enablingScore: 0.708 },
+            narrative: "Ukraine combines the highest remittances per capita ($502.70) in the index with comprehensive regulation, making it the most balanced country overall. Currency instability from the ongoing conflict has accelerated crypto adoption as both a hedge and a cross-border payment tool, while the government has proactively established licensing and tax frameworks." },
+        { country: "India", id: "356", region: "Asia",
+            economic: { score: 0.493, ownership: "6.55%", volume: "$3,500M", remitCapita: "$89.71", chainalysisRank: "1", confidence: "High", keyDriver: "#1 across all Chainalysis sub-indexes" },
+            regulatory: { score: 0.611, label: "Developing", stablecoin: 1, licensing: 2, tax: 3, banking: 2, enforcement: 2, defi: 1 },
+            technical: { score: 0.060, label: "Nascent", btcScore: 0.061, ethScore: 0.051, miningScore: 0.013, lnScore: 0.040, enablingScore: 0.600 },
+            narrative: "India ranks #1 on the Chainalysis Global Adoption Index across all sub-indexes, but relatively low ownership (6.55%) reflects the scale of its 1.4 billion population. A punitive 30% crypto tax and the absence of DeFi recognition keep regulatory clarity at \u2018Developing,\u2019 while 759 million internet users make per-capita infrastructure metrics appear nascent despite decent absolute node counts." },
+        { country: "Philippines", id: "608", region: "Asia",
+            economic: { score: 0.616, ownership: "13.43%", volume: "$1,500M", remitCapita: "$341.01", chainalysisRank: "9", confidence: "High", keyDriver: "High ownership + strong remittances/capita" },
+            regulatory: { score: 0.778, label: "Developing", stablecoin: 2, licensing: 3, tax: 2, banking: 3, enforcement: 3, defi: 1 },
+            technical: { score: 0.098, label: "Emerging", btcScore: 0.091, ethScore: 0.105, miningScore: 0.010, lnScore: 0.126, enablingScore: 0.676 },
+            narrative: "The Philippines benefits from one of the world\u2019s largest remittance corridors at $341 per capita, and its 13.4% ownership rate reflects crypto\u2019s role as a practical financial tool for a population with limited banking access. The BSP-regulated exchange licensing framework is among the strongest in Southeast Asia, though DeFi remains unrecognized." },
+        { country: "Nigeria", id: "566", region: "Africa",
+            economic: { score: 0.484, ownership: "5.93%", volume: "$2,800M", remitCapita: "$84.78", chainalysisRank: "6", confidence: "High", keyDriver: "DeFi #3 + strong CEX/GDP ratio" },
+            regulatory: { score: 0.667, label: "Developing", stablecoin: 2, licensing: 2, tax: 2, banking: 3, enforcement: 2, defi: 1 },
+            technical: { score: 0.070, label: "Nascent", btcScore: 0.079, ethScore: 0.048, miningScore: 0.010, lnScore: 0.119, enablingScore: 0.381 },
+            narrative: "Nigeria shows massive DeFi adoption (#3 globally) driven by financial exclusion and limited banking access in a country where over 40% of adults are unbanked. After initially banning crypto in 2021, Nigeria reversed course and is now developing a licensing framework, reflecting the impossibility of suppressing adoption when economic necessity drives demand." },
+        { country: "Indonesia", id: "360", region: "Asia",
+            economic: { score: 0.440, ownership: "4.40%", volume: "$4,200M", remitCapita: "$44.79", chainalysisRank: "7", confidence: "High", keyDriver: "DeFi #4 + strong CEX activity" },
+            regulatory: { score: 0.667, label: "Developing", stablecoin: 1, licensing: 3, tax: 3, banking: 2, enforcement: 2, defi: 1 },
+            technical: { score: 0.092, label: "Emerging", btcScore: 0.049, ethScore: 0.052, miningScore: 0.305, lnScore: 0.041, enablingScore: 0.597 },
+            narrative: "Indonesia leads global DeFi adoption according to Chainalysis and contributes 2.1% of global Bitcoin mining hashrate, likely driven by geothermal and coal energy. Its regulatory approach treats crypto as a commodity rather than currency, with clear licensing and tax requirements, though stablecoin and DeFi legislation remain absent." },
+        { country: "United States", id: "840", region: "Americas",
+            economic: { score: 0.585, ownership: "15.56%", volume: "$76,659M", remitCapita: "$23.88", chainalysisRank: "2", confidence: "High", keyDriver: "DeFi #2, Inst CEX #2 + high ownership" },
+            regulatory: { score: 0.778, label: "Developing", stablecoin: 2, licensing: 2, tax: 3, banking: 2, enforcement: 3, defi: 2 },
+            technical: { score: 0.799, label: "Network Leader", btcScore: 0.754, ethScore: 0.653, miningScore: 0.983, lnScore: 0.821, enablingScore: 0.964 },
+            narrative: "The US is the only \u2018Network Leader\u2019 in technical infrastructure, hosting 37.5% of global Bitcoin mining and the most BTC, ETH, and Lightning Network nodes of any country. Despite this dominance, comprehensive regulatory clarity remains elusive\u2014stablecoin-specific and DeFi legislation are still pending, keeping the US at \u2018Developing\u2019 despite being the world\u2019s largest crypto market by volume." },
+        { country: "Venezuela", id: "862", region: "Americas",
+            economic: { score: 0.442, ownership: "10.30%", volume: "$300M", remitCapita: "$105.63", chainalysisRank: "18", confidence: "Medium+", keyDriver: "Extreme currency instability drives adoption" },
+            regulatory: { score: 0.556, label: "Ambiguous", stablecoin: 1, licensing: 2, tax: 2, banking: 2, enforcement: 2, defi: 1 },
+            technical: { score: 0.092, label: "Emerging", btcScore: 0.107, ethScore: 0.069, miningScore: 0.013, lnScore: 0.119, enablingScore: 0.600 },
+            narrative: "Extreme currency instability\u2014hyperinflation and 99%+ depreciation of the bol\u00edvar vs. USD\u2014drives Venezuela\u2019s 10.3% crypto ownership, higher than Japan, South Korea, or the United Kingdom. Crypto serves as a functional dollar substitute and remittance channel, with USDT widely used for everyday transactions despite ambiguous regulation and limited infrastructure." },
+        { country: "Pakistan", id: "586", region: "Asia",
+            economic: { score: 0.481, ownership: "6.60%", volume: "$800M", remitCapita: "$137.21", chainalysisRank: "3", confidence: "High", keyDriver: "Retail CEX #2, Inst CEX #3" },
+            regulatory: { score: 0.556, label: "Ambiguous", stablecoin: 1, licensing: 2, tax: 2, banking: 2, enforcement: 2, defi: 1 },
+            technical: { score: 0.066, label: "Nascent", btcScore: 0.075, ethScore: 0.052, miningScore: 0.010, lnScore: 0.074, enablingScore: 0.457 },
+            narrative: "Pakistan ranks #3 on Chainalysis\u2019s overall index, with its #2 retail CEX sub-ranking indicating massive grassroots exchange activity driven by remittance flows ($137.21/capita). Regulatory ambiguity persists with no stablecoin law or DeFi recognition, though recent government statements suggest a regulatory framework is forthcoming." },
+        { country: "Brazil", id: "76", region: "Americas",
+            economic: { score: 0.523, ownership: "11.99%", volume: "$2,200M", remitCapita: "$21.26", chainalysisRank: "5", confidence: "High", keyDriver: "Balanced #5 across all Chainalysis sub-indexes" },
+            regulatory: { score: 0.889, label: "Comprehensive", stablecoin: 2, licensing: 3, tax: 3, banking: 3, enforcement: 3, defi: 2 },
+            technical: { score: 0.231, label: "Developing", btcScore: 0.294, ethScore: 0.244, miningScore: 0.026, lnScore: 0.338, enablingScore: 0.749 },
+            narrative: "Brazil combines comprehensive regulation (tied with Ukraine for highest) with the 5th-highest Chainalysis ranking, making it the most legally certain crypto market in Latin America. Its clear tax framework, licensed exchange ecosystem, and banking access for crypto businesses provide a model for how developing nations can achieve both high adoption and regulatory clarity." },
+        { country: "Argentina", id: "32", region: "Americas",
+            economic: { score: 0.363, ownership: "9.73%", volume: "$600M", remitCapita: "$25.70", chainalysisRank: "20", confidence: "High", keyDriver: "Weak Chainalysis ranks; currency instability offsets" },
+            regulatory: { score: 0.611, label: "Developing", stablecoin: 1, licensing: 2, tax: 2, banking: 2, enforcement: 3, defi: 1 },
+            technical: { score: 0.342, label: "Developing", btcScore: 0.392, ethScore: 0.359, miningScore: 0.071, lnScore: 0.474, enablingScore: 0.780 },
+            narrative: "Despite ranking last (#20) on Chainalysis, Argentina\u2019s 9.7% ownership is driven by chronic currency instability, capital controls, and a generation accustomed to protecting savings in non-peso assets. Argentina has notably strong technical infrastructure for its region, with the highest Lightning Network density in Latin America." },
+        { country: "Thailand", id: "764", region: "Asia",
+            economic: { score: 0.387, ownership: "9.61%", volume: "$500M", remitCapita: "$114.21", chainalysisRank: "17", confidence: "High", keyDriver: "Weak Chainalysis CEX ranks drag score down" },
+            regulatory: { score: 0.833, label: "Comprehensive", stablecoin: 2, licensing: 3, tax: 3, banking: 3, enforcement: 2, defi: 2 },
+            technical: { score: 0.150, label: "Emerging", btcScore: 0.185, ethScore: 0.160, miningScore: 0.010, lnScore: 0.232, enablingScore: 0.783 },
+            narrative: "Thailand has one of the clearest licensing and tax frameworks in Asia, achieving \u2018Comprehensive\u2019 regulatory status. However, weak Chainalysis CEX rankings drag its economic score down despite 9.6% ownership, suggesting that adoption may be more concentrated in informal or P2P channels rather than regulated exchanges." },
+        { country: "Russia", id: "643", region: "Europe",
+            economic: { score: 0.421, ownership: "6.06%", volume: "$1,200M", remitCapita: "$54.09", chainalysisRank: "10", confidence: "High", keyDriver: "Solid mid-range CEX + currency instability boost" },
+            regulatory: { score: 0.611, label: "Developing", stablecoin: 1, licensing: 2, tax: 3, banking: 2, enforcement: 2, defi: 1 },
+            technical: { score: 0.584, label: "Advanced", btcScore: 0.660, ethScore: 0.534, miningScore: 0.769, lnScore: 0.355, enablingScore: 0.814 },
+            narrative: "Russia is one of only two countries with \u2018Advanced\u2019 or higher technical infrastructure, driven by 16.4% of global Bitcoin hashrate and strong node counts. International sanctions have paradoxically boosted crypto adoption as an alternative financial channel, while regulatory clarity remains at \u2018Developing\u2019 with tax frameworks in place but stablecoin and DeFi legislation absent." },
+        { country: "Turkey", id: "792", region: "Middle East",
+            economic: { score: 0.407, ownership: "5.62%", volume: "$6,018M", remitCapita: "$12.82", chainalysisRank: "14", confidence: "High", keyDriver: "Strong CEX/GDP ratio; Lira instability" },
+            regulatory: { score: 0.722, label: "Developing", stablecoin: 2, licensing: 3, tax: 2, banking: 3, enforcement: 2, defi: 1 },
+            technical: { score: 0.212, label: "Developing", btcScore: 0.308, ethScore: 0.254, miningScore: 0.013, lnScore: 0.323, enablingScore: 0.775 },
+            narrative: "Turkey benefits from a strong CEX-to-GDP ratio driven by persistent Lira instability, with $6 billion in daily exchange volume despite moderate ownership rates. Its developing regulatory framework includes exchange licensing and banking access for crypto businesses, though DeFi remains unrecognized." },
+        { country: "United Kingdom", id: "826", region: "Europe",
+            economic: { score: 0.293, ownership: "5.74%", volume: "$400M", remitCapita: "$92.24", chainalysisRank: "11", confidence: "High", keyDriver: "Highest internet access; lowest CEX/GDP" },
+            regulatory: { score: 0.833, label: "Comprehensive", stablecoin: 2, licensing: 3, tax: 3, banking: 2, enforcement: 3, defi: 2 },
+            technical: { score: 0.470, label: "Advanced", btcScore: 0.956, ethScore: 0.827, miningScore: 0.013, lnScore: 0.854, enablingScore: 0.917 },
+            narrative: "The UK has the highest per-capita BTC and Lightning Network node density in the index, ranking \u2018Advanced\u2019 in technical infrastructure despite near-zero mining. Comprehensive regulation and strong enforcement make it one of the safest jurisdictions for crypto businesses, but grassroots economic adoption lags behind developing nations." },
+        { country: "South Korea", id: "410", region: "Asia",
+            economic: { score: 0.465, ownership: "4.09%", volume: "$82,816M", remitCapita: "$179.88", chainalysisRank: "15", confidence: "High", keyDriver: "Highest CEX/GDP ratio (Upbit/Bithumb)" },
+            regulatory: { score: 0.722, label: "Developing", stablecoin: 2, licensing: 3, tax: 2, banking: 2, enforcement: 2, defi: 2 },
+            technical: { score: 0.303, label: "Developing", btcScore: 0.466, ethScore: 0.425, miningScore: 0.013, lnScore: 0.510, enablingScore: 0.988 },
+            narrative: "South Korea has the world\u2019s highest CEX-to-GDP ratio, driven by Upbit and Bithumb generating $82.8 billion in daily volume\u2014more than any other country relative to its economy. Despite this intense exchange activity, ownership remains low at 4.09%, suggesting a trader-heavy rather than adoption-heavy market." },
+        { country: "Japan", id: "392", region: "Asia",
+            economic: { score: 0.284, ownership: "4.13%", volume: "$8,084M", remitCapita: "$20.97", chainalysisRank: "19", confidence: "High", keyDriver: "Worst CEX avg rank; moderate DeFi + internet" },
+            regulatory: { score: 0.944, label: "Comprehensive", stablecoin: 3, licensing: 3, tax: 3, banking: 3, enforcement: 3, defi: 2 },
+            technical: { score: 0.360, label: "Developing", btcScore: 0.646, ethScore: 0.574, miningScore: 0.013, lnScore: 0.573, enablingScore: 0.930 },
+            narrative: "Japan has the most comprehensive regulatory framework in the world (0.944) and is the only country to score a 3 on stablecoin legislation. However, this heavy regulation appears to constrain grassroots adoption\u2014Japan ranks 19th economically, illustrating the tension between legal certainty and market growth." },
+        { country: "Bangladesh", id: "50", region: "Asia",
+            economic: { score: 0.277, ownership: "2.50%", volume: "$100M", remitCapita: "$131.65", chainalysisRank: "13", confidence: "Medium+", keyDriver: "Strong Chainalysis ranks (#14 retail, #14 DeFi)" },
+            regulatory: { score: 0.333, label: "Hostile", stablecoin: 1, licensing: 1, tax: 1, banking: 1, enforcement: 1, defi: 1 },
+            technical: { score: 0.035, label: "Nascent", btcScore: 0.032, ethScore: 0.022, miningScore: 0.010, lnScore: 0.024, enablingScore: 0.488 },
+            narrative: "Bangladesh maintains a \u2018Hostile\u2019 regulatory stance with minimum scores across all six dimensions\u2014crypto is effectively banned. Despite this, it ranks #13 on Chainalysis, suggesting significant underground adoption driven by strong remittance flows ($131.65/capita) from its large diaspora in the Gulf states." },
+        { country: "Yemen", id: "887", region: "Middle East",
+            economic: { score: 0.228, ownership: "1.00%", volume: "$10M", remitCapita: "$110.47", chainalysisRank: "16", confidence: "Low*", keyDriver: "Currency instability + limited infrastructure" },
+            regulatory: { score: 0.333, label: "Hostile", stablecoin: 1, licensing: 1, tax: 1, banking: 1, enforcement: 1, defi: 1 },
+            technical: { score: 0.047, label: "Nascent", btcScore: 0.052, ethScore: 0.033, miningScore: 0.010, lnScore: 0.055, enablingScore: 0.279 },
+            narrative: "Yemen is the lowest-confidence country in the index, with extremely limited infrastructure, hostile regulation, and ongoing conflict. Currency instability is the primary driver of what little adoption exists, with remittances ($110.47/capita) representing the main use case for crypto in the absence of any formal regulatory or financial framework." },
+        { country: "Ethiopia", id: "231", region: "Africa",
+            economic: { score: 0.207, ownership: "1.79%", volume: "$50M", remitCapita: "$16.28", chainalysisRank: "12", confidence: "Medium+", keyDriver: "DeFi #7 exceptional; worst internet access (17.7%)" },
+            regulatory: { score: 0.333, label: "Hostile", stablecoin: 1, licensing: 1, tax: 1, banking: 1, enforcement: 1, defi: 1 },
+            technical: { score: 0.068, label: "Nascent", btcScore: 0.040, ethScore: 0.024, miningScore: 0.345, lnScore: 0.059, enablingScore: 0.236 },
+            narrative: "Ethiopia is a paradox: hostile regulation and the worst internet access in the index (17.7%) coexist with 2.6% of global Bitcoin mining hashrate, powered by cheap hydroelectric energy from the Grand Ethiopian Renaissance Dam. This makes Ethiopia a top-10 mining country globally despite having almost no crypto adoption, regulation, or broader digital infrastructure." }
+    ];
+
+    // Compute scores and ranks
+    countries.forEach(c => {
+        c.overall = +((c.economic.score + c.regulatory.score + c.technical.score) / 3).toFixed(3);
+    });
+    countries.sort((a, b) => b.overall - a.overall);
+    countries.forEach((c, i) => { c.overallRank = i + 1; });
+    ["economic", "regulatory", "technical"].forEach(dim => {
+        const sorted = [...countries].sort((a, b) => b[dim].score - a[dim].score);
+        sorted.forEach((c, i) => { c[dim].rank = i + 1; });
+    });
+
+    const dataById = {};
+    countries.forEach(c => { dataById[c.id] = c; });
+
+    // ========================================
+    // PARSE URL AND RENDER
+    // ========================================
+    const params = new URLSearchParams(window.location.search);
+    const countryId = params.get('id');
+    const data = countryId ? dataById[countryId] : null;
+
+    if (!data) {
+        document.getElementById('page-content').innerHTML = `
+            <div class="not-found">
+                <h1>Country Not Found</h1>
+                <p>The country you're looking for isn't in the index. We currently track 20 countries.</p>
+                <a href="map.html">Back to Map</a>
+            </div>`;
+    } else {
+        document.title = data.country + ' \u2014 Blockchain Adaptability Index';
+        renderCountryPage(data);
+    }
+
+    function renderCountryPage(c) {
+        const regTierClass = c.regulatory.label === 'Comprehensive' ? 'tier-comprehensive'
+            : c.regulatory.label === 'Developing' ? 'tier-developing'
+            : c.regulatory.label === 'Ambiguous' ? 'tier-ambiguous' : 'tier-hostile';
+
+        const techTierClass = c.technical.label === 'Network Leader' ? 'tier-network-leader'
+            : c.technical.label === 'Advanced' ? 'tier-advanced'
+            : c.technical.label === 'Developing' ? 'tier-developing-tech'
+            : c.technical.label === 'Emerging' ? 'tier-emerging' : 'tier-nascent';
+
+        let html = `
+        <!-- HERO -->
+        <section class="hero">
+            <div class="hero-card">
+                <div class="hero-top">
+                    <div class="hero-left">
+                        <h1>${c.country}</h1>
+                        <span class="hero-rank">#${c.overallRank} Overall</span>
+                        <div class="hero-region">${c.region}</div>
+                        <button class="share-btn" onclick="shareCountry()">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>
+                            Share Profile
+                            <span class="share-toast" id="shareToast">Link copied!</span>
+                        </button>
+                    </div>
+                    <div class="hero-right">
+                        <div class="hero-score-label">Overall Score</div>
+                        <div class="hero-score">${c.overall.toFixed(3)}</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- RADAR + DIMENSIONS -->
+        <section class="radar-section">
+            <div class="radar-card">
+                <div class="radar-chart-container" id="radarChart"></div>
+                <div class="dimension-cards">
+                    <div class="dim-card">
+                        <div class="dim-card-label">Economic</div>
+                        <div class="dim-card-score">${c.economic.score.toFixed(3)}</div>
+                        <div class="dim-card-rank">#${c.economic.rank} of 20</div>
+                    </div>
+                    <div class="dim-card">
+                        <div class="dim-card-label">Regulatory</div>
+                        <div class="dim-card-score">${c.regulatory.score.toFixed(3)}</div>
+                        <div class="dim-card-tier ${regTierClass}">${c.regulatory.label}</div>
+                    </div>
+                    <div class="dim-card">
+                        <div class="dim-card-label">Technical</div>
+                        <div class="dim-card-score">${c.technical.score.toFixed(3)}</div>
+                        <div class="dim-card-tier ${techTierClass}">${c.technical.label}</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- NARRATIVE -->
+        <section class="narrative-section">
+            <div class="narrative-card">
+                <h3>Country Profile</h3>
+                <p>${c.narrative}</p>
+            </div>
+        </section>
+
+        <!-- ECONOMIC BREAKDOWN -->
+        <section class="breakdown-section">
+            <div class="breakdown-card">
+                <h3>Economic Adoption <span class="dim-badge badge-econ">Score: ${c.economic.score.toFixed(3)}</span></h3>
+                <div class="stats-row">
+                    <div class="stat-item">
+                        <div class="stat-item-label">Ownership</div>
+                        <div class="stat-item-value">${c.economic.ownership}</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-item-label">24h Volume</div>
+                        <div class="stat-item-value">${c.economic.volume}</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-item-label">Remit / Capita</div>
+                        <div class="stat-item-value">${c.economic.remitCapita}</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-item-label">Chainalysis Rank</div>
+                        <div class="stat-item-value">#${c.economic.chainalysisRank}</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-item-label">Confidence</div>
+                        <div class="stat-item-value">${c.economic.confidence}</div>
+                    </div>
+                </div>
+                <p style="font-size:0.82rem; color:#7a8a9a; font-style:italic;">&ldquo;${c.economic.keyDriver}&rdquo;</p>
+                <p style="font-size:0.8rem; color:#aab5c0; margin-top:8px;"><a href="econ-methodology.html" style="color:#0a4c6a;">View full economic methodology &rarr;</a></p>
+            </div>
+        </section>
+
+        <!-- REGULATORY BREAKDOWN -->
+        <section class="breakdown-section">
+            <div class="breakdown-card">
+                <h3>Regulatory Clarity <span class="dim-badge badge-reg">${c.regulatory.label}</span></h3>
+                <div class="reg-grid">
+                    ${renderRegItem('Stablecoin Law', c.regulatory.stablecoin, 'Legislation governing stablecoin issuance and reserves')}
+                    ${renderRegItem('Licensing', c.regulatory.licensing, 'Exchange and service provider licensing requirements')}
+                    ${renderRegItem('Tax Clarity', c.regulatory.tax, 'Defined tax treatment for crypto transactions')}
+                    ${renderRegItem('Banking Access', c.regulatory.banking, 'Whether crypto businesses can access traditional banking')}
+                    ${renderRegItem('Enforcement', c.regulatory.enforcement, 'Active enforcement of crypto regulations')}
+                    ${renderRegItem('DeFi Recognition', c.regulatory.defi, 'Whether DeFi is acknowledged in the legal framework')}
+                </div>
+                <p style="font-size:0.78rem; color:#9aa5b0; margin-top:16px;">Rating scale: 3 = clear, codified rules &middot; 2 = partial or in-progress &middot; 1 = absent, banned, or no guidance</p>
+            </div>
+        </section>
+
+        <!-- TECHNICAL BREAKDOWN -->
+        <section class="breakdown-section">
+            <div class="breakdown-card">
+                <h3>Technical Infrastructure <span class="dim-badge badge-tech">${c.technical.label}</span></h3>
+                ${renderBar('BTC Nodes', c.technical.btcScore, '#2e5fa1')}
+                ${renderBar('ETH Nodes', c.technical.ethScore, '#2e5fa1')}
+                ${renderBar('Mining Hashrate', c.technical.miningScore, '#2e5fa1')}
+                ${renderBar('Lightning Network', c.technical.lnScore, '#2e5fa1')}
+                ${renderBar('Enabling Env.', c.technical.enablingScore, '#2e5fa1')}
+                <p style="font-size:0.8rem; color:#aab5c0; margin-top:16px;"><a href="data.html" style="color:#0a4c6a;">View full technical data table &rarr;</a></p>
+            </div>
+        </section>`;
+
+        document.getElementById('page-content').innerHTML = html;
+        drawRadar(c);
+    }
+
+    function renderRegItem(label, rating, desc) {
+        return `<div class="reg-item">
+            <div class="reg-item-label">${label}</div>
+            <div class="reg-item-rating rating-${rating}">${rating}</div>
+            <div class="reg-item-desc">${desc}</div>
+        </div>`;
+    }
+
+    function renderBar(label, score, color) {
+        const pct = (score * 100).toFixed(1);
+        return `<div class="bar-row">
+            <div class="bar-label">${label}</div>
+            <div class="bar-track"><div class="bar-fill" style="width:${pct}%; background:${color};"></div></div>
+            <div class="bar-value">${score.toFixed(3)}</div>
+        </div>`;
+    }
+
+    // ========================================
+    // RADAR CHART
+    // ========================================
+    function drawRadar(data) {
+        const container = document.getElementById('radarChart');
+        if (!container) return;
+        const size = 280, cx = size / 2, cy = size / 2, r = 100;
+        const dims = [
+            { label: 'Economic', value: data.economic.score },
+            { label: 'Regulatory', value: data.regulatory.score },
+            { label: 'Technical', value: data.technical.score }
+        ];
+        const n = dims.length;
+        const angleSlice = (Math.PI * 2) / n;
+
+        let svgHtml = `<svg width="${size}" height="${size}" viewBox="0 0 ${size} ${size}">`;
+
+        // Grid rings
+        [0.25, 0.5, 0.75, 1.0].forEach(level => {
+            const rr = r * level;
+            let points = [];
+            for (let i = 0; i < n; i++) {
+                const angle = angleSlice * i - Math.PI / 2;
+                points.push(`${cx + rr * Math.cos(angle)},${cy + rr * Math.sin(angle)}`);
+            }
+            svgHtml += `<polygon points="${points.join(' ')}" fill="none" stroke="#e0e0e0" stroke-width="1"/>`;
+            // Level label
+            if (level < 1.0) {
+                const angle = angleSlice * 0 - Math.PI / 2;
+                svgHtml += `<text x="${cx + rr * Math.cos(angle) + 4}" y="${cy + rr * Math.sin(angle) - 4}" font-size="9" fill="#ccc" font-family="Inter,sans-serif">${level.toFixed(2)}</text>`;
+            }
+        });
+
+        // Axis lines
+        for (let i = 0; i < n; i++) {
+            const angle = angleSlice * i - Math.PI / 2;
+            svgHtml += `<line x1="${cx}" y1="${cy}" x2="${cx + r * Math.cos(angle)}" y2="${cy + r * Math.sin(angle)}" stroke="#ddd" stroke-width="1"/>`;
+        }
+
+        // Data polygon
+        let dataPoints = [];
+        for (let i = 0; i < n; i++) {
+            const angle = angleSlice * i - Math.PI / 2;
+            const val = dims[i].value;
+            dataPoints.push(`${cx + r * val * Math.cos(angle)},${cy + r * val * Math.sin(angle)}`);
+        }
+        svgHtml += `<polygon points="${dataPoints.join(' ')}" fill="rgba(10,76,106,0.15)" stroke="#0a4c6a" stroke-width="2.5"/>`;
+
+        // Data dots + value labels
+        for (let i = 0; i < n; i++) {
+            const angle = angleSlice * i - Math.PI / 2;
+            const val = dims[i].value;
+            const dx = cx + r * val * Math.cos(angle);
+            const dy = cy + r * val * Math.sin(angle);
+            svgHtml += `<circle cx="${dx}" cy="${dy}" r="5" fill="#0a4c6a" stroke="#fff" stroke-width="2"/>`;
+        }
+
+        // Labels
+        for (let i = 0; i < n; i++) {
+            const angle = angleSlice * i - Math.PI / 2;
+            const lx = cx + (r + 30) * Math.cos(angle);
+            const ly = cy + (r + 30) * Math.sin(angle);
+            const anchor = Math.abs(Math.cos(angle)) < 0.1 ? 'middle' : Math.cos(angle) > 0 ? 'start' : 'end';
+            svgHtml += `<text x="${lx}" y="${ly}" text-anchor="${anchor}" dominant-baseline="middle" font-family="Inter,sans-serif" font-size="12" fill="#5a6a7a" font-weight="600">${dims[i].label}</text>`;
+            svgHtml += `<text x="${lx}" y="${ly + 15}" text-anchor="${anchor}" dominant-baseline="middle" font-family="Inter,sans-serif" font-size="11" fill="#0a4c6a" font-weight="700">${dims[i].value.toFixed(3)}</text>`;
+        }
+
+        svgHtml += '</svg>';
+        container.innerHTML = svgHtml;
+    }
+
+    // ========================================
+    // SHARE
+    // ========================================
+    function shareCountry() {
+        const url = window.location.href;
+        navigator.clipboard.writeText(url).then(() => {
+            const toast = document.getElementById('shareToast');
+            toast.classList.add('visible');
+            setTimeout(() => toast.classList.remove('visible'), 2000);
+        }).catch(() => {
+            // Fallback
+            const input = document.createElement('input');
+            input.value = url;
+            document.body.appendChild(input);
+            input.select();
+            document.execCommand('copy');
+            document.body.removeChild(input);
+            const toast = document.getElementById('shareToast');
+            toast.classList.add('visible');
+            setTimeout(() => toast.classList.remove('visible'), 2000);
+        });
+    }
+    </script>
+</body>
+</html>

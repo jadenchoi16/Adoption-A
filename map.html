@@ -4,7 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Global Blockchain Adaptability Index</title>
+    <meta property="og:title" content="Global Blockchain Adaptability Index">
+    <meta property="og:description" content="Interactive map measuring blockchain readiness across 20 nations — economic adoption, regulatory clarity, and technical infrastructure.">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
     <script src="https://d3js.org/d3.v7.min.js"></script>
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/topojson-client@3"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -63,35 +68,6 @@
             100% { width: 95%; }
         }
 
-        /* === HOME BUTTON === */
-        .home-btn {
-            position: fixed;
-            top: 18px;
-            left: 20px;
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            text-decoration: none;
-            color: #0a4c6a;
-            font-family: 'VT323', monospace;
-            font-size: 1rem;
-            font-weight: 500;
-            padding: 7px 14px;
-            border-radius: 8px;
-            border: 1px solid #d8dce0;
-            background: #fff;
-            transition: all 0.2s;
-            z-index: 50;
-            letter-spacing: 0.5px;
-        }
-        .home-btn:hover {
-            background: #eef3f7;
-            border-color: #0a4c6a;
-        }
-        .home-btn svg {
-            width: 14px;
-            height: 14px;
-        }
 
         /* === HEADER === */
         .header {
@@ -867,6 +843,217 @@
         }
         .site-footer a:hover { text-decoration: underline; }
 
+        /* === VIEW TOGGLE === */
+        .view-toggle {
+            display: inline-flex;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            overflow: hidden;
+            margin-left: 12px;
+        }
+        .view-btn {
+            padding: 8px 16px;
+            border: none;
+            background: #fff;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.82rem;
+            font-weight: 500;
+            color: #5a6a7a;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .view-btn:not(:last-child) { border-right: 1px solid #ddd; }
+        .view-btn:hover { background: #f0f4f8; }
+        .view-btn.active { background: #0a4c6a; color: #fff; }
+
+        /* === SCATTER CHART === */
+        .scatter-section {
+            max-width: 1100px;
+            margin: 20px auto 0;
+            padding: 0 24px;
+            display: none;
+        }
+        .scatter-section.visible { display: block; }
+        .scatter-wrapper {
+            background: #fff;
+            border-radius: 14px;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.06);
+            border: 1px solid #ebebeb;
+            padding: 24px;
+            position: relative;
+        }
+        .scatter-wrapper svg {
+            display: block;
+            width: 100%;
+            height: auto;
+        }
+        .scatter-title {
+            font-family: 'Source Serif 4', Georgia, serif;
+            font-size: 1.1rem;
+            color: #1a2a3a;
+            margin-bottom: 4px;
+        }
+        .scatter-subtitle {
+            font-size: 0.78rem;
+            color: #9aa5b0;
+            margin-bottom: 16px;
+        }
+        .scatter-legend {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+            margin-top: 12px;
+            font-size: 0.75rem;
+            color: #7a8a9a;
+        }
+        .scatter-legend-item {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        .scatter-legend-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+        }
+
+        /* === KEY INSIGHTS === */
+        .insights-section {
+            max-width: 1100px;
+            margin: 24px auto 0;
+            padding: 0 24px;
+        }
+        .insights-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 14px;
+        }
+        .insight-card {
+            background: #fff;
+            border-radius: 12px;
+            padding: 20px 22px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.03);
+            border: 1px solid #ebebeb;
+            border-left: 4px solid #0a4c6a;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .insight-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+        }
+        .insight-card.accent-econ { border-left-color: #1a6b7a; }
+        .insight-card.accent-reg { border-left-color: #9b5a30; }
+        .insight-card.accent-tech { border-left-color: #2e5fa1; }
+        .insight-card.accent-cross { border-left-color: #5ba8b5; }
+        .insight-tag {
+            display: inline-block;
+            font-size: 0.62rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.7px;
+            padding: 2px 8px;
+            border-radius: 3px;
+            margin-bottom: 8px;
+        }
+        .tag-econ { background: #e0f2f1; color: #1a6b7a; }
+        .tag-reg { background: #fef3e0; color: #9b5a30; }
+        .tag-tech { background: #e8f0fe; color: #2e5fa1; }
+        .tag-cross { background: #e0f4f4; color: #0a4c6a; }
+        .insight-card h4 {
+            font-family: 'Source Serif 4', Georgia, serif;
+            font-size: 0.95rem;
+            color: #1a2a3a;
+            margin-bottom: 6px;
+        }
+        .insight-card p {
+            font-size: 0.82rem;
+            color: #5a6b7c;
+            line-height: 1.55;
+        }
+        .insight-stat {
+            font-family: 'VT323', monospace;
+            font-size: 0.95rem;
+            color: #0a4c6a;
+            background: #f0f6fa;
+            padding: 1px 6px;
+            border-radius: 3px;
+        }
+
+        /* === EXPORT BAR === */
+        .export-bar {
+            display: flex;
+            gap: 8px;
+            margin-left: auto;
+        }
+        .export-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            padding: 7px 14px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background: #fff;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.78rem;
+            font-weight: 500;
+            color: #5a6a7a;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .export-btn:hover { background: #f0f4f8; border-color: #bcc; }
+        .export-btn svg { width: 14px; height: 14px; }
+        .export-toast {
+            position: fixed;
+            bottom: 24px;
+            left: 50%;
+            transform: translateX(-50%) translateY(20px);
+            background: #0a4c6a;
+            color: #fff;
+            padding: 10px 24px;
+            border-radius: 8px;
+            font-size: 0.84rem;
+            font-weight: 500;
+            opacity: 0;
+            transition: all 0.3s ease;
+            z-index: 3000;
+            pointer-events: none;
+        }
+        .export-toast.visible {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+
+        /* === ENHANCED LOADING === */
+        .loading-globe {
+            width: 60px;
+            height: 60px;
+            margin-bottom: 16px;
+            position: relative;
+        }
+        .loading-globe-circle {
+            width: 60px;
+            height: 60px;
+            border: 2px solid #e8e4da;
+            border-top-color: #0a4c6a;
+            border-radius: 50%;
+            animation: globeSpin 1s linear infinite;
+        }
+        .loading-globe-inner {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 30px;
+            height: 30px;
+            border: 1px solid #e8e4da;
+            border-left-color: #0a4c6a;
+            border-radius: 50%;
+            animation: globeSpin 1.5s linear infinite reverse;
+        }
+        @keyframes globeSpin {
+            to { transform: rotate(360deg); }
+        }
+
         /* === RESPONSIVE === */
         @media (max-width: 768px) {
             .header h1 { font-size: 1.6rem; }
@@ -882,6 +1069,10 @@
             .dim-tab { padding: 7px 14px; font-size: 0.76rem; }
             .search-box input { width: 160px; }
             .detail-card { padding: 24px 20px; }
+            .insights-grid { grid-template-columns: 1fr; }
+            .view-toggle { margin-left: 0; margin-top: 8px; }
+            .export-bar { margin-left: 0; margin-top: 8px; }
+            .scatter-wrapper { padding: 16px; }
         }
     </style>
 </head>
@@ -889,14 +1080,17 @@
 
     <!-- LOADING SCREEN -->
     <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-globe">
+            <div class="loading-globe-circle"></div>
+            <div class="loading-globe-inner"></div>
+        </div>
         <div class="loading-text">LOADING BLOCKCHAIN INDEX...</div>
         <div class="loading-bar"><div class="loading-bar-fill"></div></div>
     </div>
 
-    <a href="index.html" class="home-btn">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
-        Home
-    </a>
+    <!-- EXPORT TOAST -->
+    <div class="export-toast" id="exportToast"></div>
+
 
     <!-- HEADER -->
     <div class="header">
@@ -929,6 +1123,24 @@
                 <option value="middleeast">Middle East</option>
             </select>
             <button class="compare-toggle" id="compareToggle">Compare Countries</button>
+            <div class="view-toggle">
+                <button class="view-btn active" data-view="map">Map</button>
+                <button class="view-btn" data-view="scatter">Scatter</button>
+            </div>
+            <div class="export-bar">
+                <button class="export-btn" onclick="exportPNG()" title="Download map as image">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                    PNG
+                </button>
+                <button class="export-btn" onclick="exportCSV()" title="Download data as CSV">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                    CSV
+                </button>
+                <button class="export-btn" onclick="copyShareLink()" title="Copy link to clipboard">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+                    Share
+                </button>
+            </div>
         </div>
     </div>
 
@@ -953,6 +1165,42 @@
         <div class="legend-no-data">
             <div class="swatch"></div>
             <span>No data</span>
+        </div>
+    </div>
+
+    <!-- SCATTER CHART -->
+    <div class="scatter-section" id="scatterSection">
+        <div class="scatter-wrapper">
+            <div class="scatter-title">Adoption vs. Regulation vs. Infrastructure</div>
+            <div class="scatter-subtitle">X = Economic Adoption &middot; Y = Regulatory Clarity &middot; Bubble size = Technical Infrastructure</div>
+            <div id="scatterChart"></div>
+            <div class="scatter-legend" id="scatterLegend"></div>
+        </div>
+    </div>
+
+    <!-- KEY INSIGHTS -->
+    <div class="insights-section">
+        <div class="insights-grid">
+            <div class="insight-card accent-cross">
+                <span class="insight-tag tag-cross">Adoption vs. Regulation</span>
+                <h4>Vietnam Leads Adoption, Trails in Regulation</h4>
+                <p>Vietnam ranks #1 in economic adoption (<span class="insight-stat">0.737</span>) but only &ldquo;Ambiguous&rdquo; in regulatory clarity (<span class="insight-stat">0.556</span>)&mdash;the widest gap between adoption and regulation in the index.</p>
+            </div>
+            <div class="insight-card accent-reg">
+                <span class="insight-tag tag-reg">The Japan Paradox</span>
+                <h4>Best Regulation, Low Adoption</h4>
+                <p>Japan has the most comprehensive regulatory framework (<span class="insight-stat">0.944</span>) yet ranks 17th in economic adoption (<span class="insight-stat">0.284</span>)&mdash;suggesting heavy regulation may constrain grassroots growth.</p>
+            </div>
+            <div class="insight-card accent-tech">
+                <span class="insight-tag tag-tech">Infrastructure</span>
+                <h4>US Dominates Network Infrastructure</h4>
+                <p>The United States is the only &ldquo;Network Leader&rdquo; (<span class="insight-stat">0.799</span>), hosting 37.5% of global Bitcoin mining and the most BTC, ETH, and Lightning nodes.</p>
+            </div>
+            <div class="insight-card accent-cross">
+                <span class="insight-tag tag-cross">Pattern</span>
+                <h4>Hostile Regulation = Minimal Adoption</h4>
+                <p>All three &ldquo;Hostile&rdquo; regulation countries (Bangladesh, Yemen, Ethiopia) score below <span class="insight-stat">0.28</span> economically&mdash;no country with hostile regulation has achieved meaningful adoption.</p>
+            </div>
         </div>
     </div>
 
@@ -1425,7 +1673,10 @@
                     <div class="dim-tier">${data.technical.label}</div>
                 </div>
             </div>
-            <div class="detail-driver">&ldquo;${data.economic.keyDriver}&rdquo;</div>`;
+            <div class="detail-driver">&ldquo;${data.economic.keyDriver}&rdquo;</div>
+            <div style="text-align:center; margin-top:16px;">
+                <a href="country.html?id=${data.id}" style="display:inline-block; padding:10px 24px; background:#0a4c6a; color:#fff; border-radius:8px; text-decoration:none; font-size:0.85rem; font-weight:500; transition:background 0.2s;" onmouseover="this.style.background='#0d5f84'" onmouseout="this.style.background='#0a4c6a'">View Full Profile &rarr;</a>
+            </div>`;
 
         overlay.classList.add('visible');
         drawRadar(data);
@@ -1533,12 +1784,22 @@
             content.innerHTML = '<div class="compare-empty">Click countries on the map to compare (up to 3)</div>';
             return;
         }
-        let html = '<div class="compare-grid">';
-        compareList.forEach(id => {
+
+        const compareColors = ['#0a4c6a', '#c06030', '#2e7d32'];
+
+        // Build overlaid radar + cards
+        let html = '<div style="display:flex; align-items:center; gap:24px; flex-wrap:wrap;">';
+
+        // Overlaid radar chart
+        html += '<div style="flex:0 0 220px; display:flex; justify-content:center;" id="compareRadar"></div>';
+
+        // Country cards
+        html += '<div class="compare-grid" style="flex:1; min-width:200px;">';
+        compareList.forEach((id, idx) => {
             const c = dataById[id];
             if (!c) return;
             html += `
-                <div class="compare-country">
+                <div class="compare-country" style="border-top: 3px solid ${compareColors[idx]};">
                     <button class="compare-remove" onclick="removeCompare('${id}')">&times;</button>
                     <h4>${c.country}</h4>
                     <div class="compare-overall">${c.overall.toFixed(3)}</div>
@@ -1549,8 +1810,72 @@
                     </div>
                 </div>`;
         });
-        html += '</div>';
+        html += '</div></div>';
         content.innerHTML = html;
+
+        // Draw overlaid radar
+        drawCompareRadar(compareList, compareColors);
+    }
+
+    function drawCompareRadar(ids, colors) {
+        const container = document.getElementById('compareRadar');
+        if (!container) return;
+        const size = 220, cx = size / 2, cy = size / 2, r = 80;
+        const dims = ['Economic', 'Regulatory', 'Technical'];
+        const n = dims.length;
+        const angleSlice = (Math.PI * 2) / n;
+
+        let svgHtml = `<svg width="${size}" height="${size}" viewBox="0 0 ${size} ${size}">`;
+
+        // Grid rings
+        [0.25, 0.5, 0.75, 1.0].forEach(level => {
+            let points = [];
+            for (let i = 0; i < n; i++) {
+                const angle = angleSlice * i - Math.PI / 2;
+                points.push(`${cx + r * level * Math.cos(angle)},${cy + r * level * Math.sin(angle)}`);
+            }
+            svgHtml += `<polygon points="${points.join(' ')}" fill="none" stroke="#e0e0e0" stroke-width="1"/>`;
+        });
+
+        // Axis lines
+        for (let i = 0; i < n; i++) {
+            const angle = angleSlice * i - Math.PI / 2;
+            svgHtml += `<line x1="${cx}" y1="${cy}" x2="${cx + r * Math.cos(angle)}" y2="${cy + r * Math.sin(angle)}" stroke="#ddd" stroke-width="1"/>`;
+        }
+
+        // Data polygons (one per country)
+        ids.forEach((id, idx) => {
+            const c = dataById[id];
+            if (!c) return;
+            const scores = [c.economic.score, c.regulatory.score, c.technical.score];
+            let points = [];
+            for (let i = 0; i < n; i++) {
+                const angle = angleSlice * i - Math.PI / 2;
+                points.push(`${cx + r * scores[i] * Math.cos(angle)},${cy + r * scores[i] * Math.sin(angle)}`);
+            }
+            const color = colors[idx];
+            svgHtml += `<polygon points="${points.join(' ')}" fill="${color}22" stroke="${color}" stroke-width="2"/>`;
+
+            // Dots
+            for (let i = 0; i < n; i++) {
+                const angle = angleSlice * i - Math.PI / 2;
+                const dx = cx + r * scores[i] * Math.cos(angle);
+                const dy = cy + r * scores[i] * Math.sin(angle);
+                svgHtml += `<circle cx="${dx}" cy="${dy}" r="4" fill="${color}" stroke="#fff" stroke-width="1.5"/>`;
+            }
+        });
+
+        // Labels
+        for (let i = 0; i < n; i++) {
+            const angle = angleSlice * i - Math.PI / 2;
+            const lx = cx + (r + 22) * Math.cos(angle);
+            const ly = cy + (r + 22) * Math.sin(angle);
+            const anchor = Math.abs(Math.cos(angle)) < 0.1 ? 'middle' : Math.cos(angle) > 0 ? 'start' : 'end';
+            svgHtml += `<text x="${lx}" y="${ly}" text-anchor="${anchor}" dominant-baseline="middle" font-family="Inter,sans-serif" font-size="11" fill="#5a6a7a" font-weight="500">${dims[i]}</text>`;
+        }
+
+        svgHtml += '</svg>';
+        container.innerHTML = svgHtml;
     }
 
     function removeCompare(id) {
@@ -1720,6 +2045,248 @@
         const target = document.querySelector('.dim-tab[data-dim="' + hashDim + '"]');
         if (target) target.click();
     }
+
+    // ========================================
+    // VIEW TOGGLE (Map vs Scatter)
+    // ========================================
+    const mapSection = document.querySelector('.map-section');
+    const scatterSection = document.getElementById('scatterSection');
+
+    document.querySelectorAll('.view-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            document.querySelector('.view-btn.active').classList.remove('active');
+            this.classList.add('active');
+            const view = this.dataset.view;
+            if (view === 'scatter') {
+                mapSection.style.display = 'none';
+                scatterSection.classList.add('visible');
+                renderScatter();
+            } else {
+                mapSection.style.display = '';
+                scatterSection.classList.remove('visible');
+            }
+        });
+    });
+
+    // ========================================
+    // SCATTER / BUBBLE CHART
+    // ========================================
+    const regionColors = {
+        asia: '#1a6b7a',
+        europe: '#5ba8b5',
+        americas: '#c06030',
+        africa: '#2e5fa1',
+        middleeast: '#9b5a30'
+    };
+    const regionLabels = {
+        asia: 'Asia',
+        europe: 'Europe',
+        americas: 'Americas',
+        africa: 'Africa',
+        middleeast: 'Middle East'
+    };
+
+    let scatterRendered = false;
+
+    function renderScatter() {
+        if (scatterRendered) return;
+        scatterRendered = true;
+
+        const container = document.getElementById('scatterChart');
+        const margin = { top: 20, right: 30, bottom: 50, left: 55 };
+        const w = 700, h = 420;
+        const innerW = w - margin.left - margin.right;
+        const innerH = h - margin.top - margin.bottom;
+
+        const svg = d3.select(container).append('svg')
+            .attr('viewBox', `0 0 ${w} ${h}`)
+            .attr('preserveAspectRatio', 'xMidYMid meet');
+
+        const g = svg.append('g')
+            .attr('transform', `translate(${margin.left},${margin.top})`);
+
+        const x = d3.scaleLinear().domain([0.15, 0.80]).range([0, innerW]);
+        const y = d3.scaleLinear().domain([0.25, 1.0]).range([innerH, 0]);
+        const sizeScale = d3.scaleSqrt().domain([0, 0.85]).range([5, 35]);
+
+        // Grid lines
+        g.append('g')
+            .attr('transform', `translate(0,${innerH})`)
+            .call(d3.axisBottom(x).ticks(6).tickFormat(d3.format('.2f')))
+            .call(g => g.select('.domain').attr('stroke', '#ddd'))
+            .call(g => g.selectAll('.tick line').attr('stroke', '#eee').clone()
+                .attr('y2', -innerH).attr('stroke', '#f0f0f0'));
+
+        g.append('g')
+            .call(d3.axisLeft(y).ticks(6).tickFormat(d3.format('.2f')))
+            .call(g => g.select('.domain').attr('stroke', '#ddd'))
+            .call(g => g.selectAll('.tick line').attr('stroke', '#eee').clone()
+                .attr('x2', innerW).attr('stroke', '#f0f0f0'));
+
+        // Axis labels
+        svg.append('text')
+            .attr('x', w / 2).attr('y', h - 6)
+            .attr('text-anchor', 'middle')
+            .attr('font-family', 'Inter, sans-serif')
+            .attr('font-size', '12px')
+            .attr('fill', '#7a8a9a')
+            .text('Economic Adoption Score');
+
+        svg.append('text')
+            .attr('transform', `rotate(-90)`)
+            .attr('x', -h / 2).attr('y', 16)
+            .attr('text-anchor', 'middle')
+            .attr('font-family', 'Inter, sans-serif')
+            .attr('font-size', '12px')
+            .attr('fill', '#7a8a9a')
+            .text('Regulatory Clarity Score');
+
+        // Bubbles
+        const bubbles = g.selectAll('g.bubble')
+            .data(countries)
+            .join('g')
+            .attr('class', 'bubble')
+            .attr('transform', d => `translate(${x(d.economic.score)},${y(d.regulatory.score)})`)
+            .style('cursor', 'pointer')
+            .on('click', (event, d) => showDetailModal(d))
+            .on('mouseover', function(event, d) {
+                d3.select(this).select('circle').attr('stroke-width', 3).attr('stroke', '#333');
+                showTooltip(event, { id: d.id });
+            })
+            .on('mousemove', function(event) { positionTooltip(event); })
+            .on('mouseout', function() {
+                d3.select(this).select('circle').attr('stroke-width', 1.5).attr('stroke', '#fff');
+                hideTooltip();
+            });
+
+        bubbles.append('circle')
+            .attr('r', d => sizeScale(d.technical.score))
+            .attr('fill', d => regionColors[d.region] || '#999')
+            .attr('fill-opacity', 0.7)
+            .attr('stroke', '#fff')
+            .attr('stroke-width', 1.5);
+
+        bubbles.append('text')
+            .attr('dy', d => -sizeScale(d.technical.score) - 5)
+            .attr('text-anchor', 'middle')
+            .attr('font-family', 'Inter, sans-serif')
+            .attr('font-size', '10px')
+            .attr('fill', '#5a6a7a')
+            .attr('font-weight', '500')
+            .text(d => d.country.length > 12 ? d.country.slice(0, 10) + '..' : d.country);
+
+        // Legend
+        const legendContainer = document.getElementById('scatterLegend');
+        let legendHtml = '';
+        Object.keys(regionColors).forEach(key => {
+            legendHtml += `<div class="scatter-legend-item"><div class="scatter-legend-dot" style="background:${regionColors[key]}"></div>${regionLabels[key]}</div>`;
+        });
+        legendHtml += '<div class="scatter-legend-item" style="margin-left:16px;"><span style="opacity:0.6;">Bubble size = Technical score</span></div>';
+        legendContainer.innerHTML = legendHtml;
+    }
+
+    // ========================================
+    // EXPORT: PNG
+    // ========================================
+    function exportPNG() {
+        const target = document.querySelector('.view-btn.active').dataset.view === 'scatter'
+            ? document.querySelector('.scatter-wrapper')
+            : document.querySelector('.map-wrapper');
+        showExportToast('Generating image...');
+        html2canvas(target, { backgroundColor: '#fff', scale: 2 }).then(canvas => {
+            const link = document.createElement('a');
+            link.download = 'blockchain-index-map.png';
+            link.href = canvas.toDataURL('image/png');
+            link.click();
+            showExportToast('PNG downloaded!');
+        }).catch(() => {
+            showExportToast('PNG export failed');
+        });
+    }
+
+    // ========================================
+    // EXPORT: CSV
+    // ========================================
+    function exportCSV() {
+        const headers = ['Rank','Country','Region','Overall','Economic','Regulatory','Reg. Label','Technical','Tech Label','Ownership','Volume','Remit/Capita','Chainalysis Rank','Key Driver'];
+        const sorted = [...countries].sort((a, b) => b.overall - a.overall);
+        let csv = headers.join(',') + '\n';
+        sorted.forEach((c, i) => {
+            const row = [
+                i + 1,
+                '"' + c.country + '"',
+                c.region,
+                c.overall.toFixed(3),
+                c.economic.score.toFixed(3),
+                c.regulatory.score.toFixed(3),
+                c.regulatory.label,
+                c.technical.score.toFixed(3),
+                c.technical.label,
+                '"' + c.economic.ownership + '"',
+                '"' + c.economic.volume + '"',
+                '"' + c.economic.remitCapita + '"',
+                c.economic.chainalysisRank,
+                '"' + c.economic.keyDriver + '"'
+            ];
+            csv += row.join(',') + '\n';
+        });
+        const blob = new Blob([csv], { type: 'text/csv' });
+        const link = document.createElement('a');
+        link.download = 'blockchain-adaptability-index.csv';
+        link.href = URL.createObjectURL(blob);
+        link.click();
+        URL.revokeObjectURL(link.href);
+        showExportToast('CSV downloaded!');
+    }
+
+    // ========================================
+    // EXPORT: Share Link
+    // ========================================
+    function copyShareLink() {
+        const url = window.location.origin + window.location.pathname + (activeDim !== 'overall' ? '#' + activeDim : '');
+        navigator.clipboard.writeText(url).then(() => {
+            showExportToast('Link copied to clipboard!');
+        }).catch(() => {
+            // Fallback
+            const input = document.createElement('input');
+            input.value = url;
+            document.body.appendChild(input);
+            input.select();
+            document.execCommand('copy');
+            document.body.removeChild(input);
+            showExportToast('Link copied to clipboard!');
+        });
+    }
+
+    function showExportToast(msg) {
+        const toast = document.getElementById('exportToast');
+        toast.textContent = msg;
+        toast.classList.add('visible');
+        setTimeout(() => toast.classList.remove('visible'), 2500);
+    }
+
+    // ========================================
+    // DIMENSION SWITCH ENHANCEMENT — pulse on countries
+    // ========================================
+    const origDimTabHandler = document.querySelectorAll(".dim-tab");
+    origDimTabHandler.forEach(tab => {
+        tab.addEventListener("click", function() {
+            // After the main handler runs, pulse the top-ranked country
+            if (countryPaths) {
+                const sorted = [...countries].sort((a, b) => getScore(b) - getScore(a));
+                const topId = sorted[0].id;
+                countryPaths.each(function(d) {
+                    if (String(d.id) === topId) {
+                        d3.select(this)
+                            .transition().duration(200)
+                            .attr('stroke-width', 3).attr('stroke', '#ff6b35')
+                            .transition().duration(600)
+                            .attr('stroke-width', 0.4).attr('stroke', '#ffffff');
+                    }
+                });
+            }
+        });
+    });
     </script>
 </body>
 </html>
