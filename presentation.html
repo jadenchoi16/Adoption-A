@@ -576,11 +576,62 @@
             font-size: 0.92rem;
         }
 
+        /* === PRINT / SAVE AS PDF === */
+        @page {
+            size: 11in 6.1875in; /* 16:9 landscape, fits standard letter printing */
+            margin: 0;
+        }
         @media print {
-            html, body { overflow: visible; height: auto; }
-            .deck { position: static; }
-            .slide { display: flex !important; position: relative !important; page-break-after: always; height: 100vh; min-height: 720px; }
+            html, body {
+                overflow: visible !important;
+                height: auto !important;
+                background: #fff !important;
+                color-adjust: exact !important;
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+            .deck {
+                position: static !important;
+                display: block !important;
+                height: auto !important;
+                width: auto !important;
+                inset: auto !important;
+            }
+            .slide {
+                display: flex !important;
+                position: relative !important;
+                inset: auto !important;
+                width: 11in !important;
+                height: 6.1875in !important;
+                padding: 0.5in 0.7in !important;
+                page-break-after: always !important;
+                page-break-inside: avoid !important;
+                break-after: page !important;
+                break-inside: avoid !important;
+                overflow: hidden !important;
+            }
+            .slide:last-child {
+                page-break-after: auto !important;
+                break-after: auto !important;
+            }
             .deck-footer, .progress-bar, .help-overlay { display: none !important; }
+            /* Slightly tighten very large type so it never overflows the print page */
+            h1.title { font-size: 3.6rem !important; }
+            .section-header h1 { font-size: 4.2rem !important; }
+            h2 { font-size: 2.4rem !important; }
+            p, li { font-size: 1rem !important; }
+            p.lede { font-size: 1.15rem !important; }
+            .indicator-row { padding: 7px 0 !important; }
+            .indicator-name { font-size: 1.05rem !important; }
+            .indicator-desc { font-size: 0.85rem !important; }
+            .indicator-weight { font-size: 1.2rem !important; }
+            .big-stat .num { font-size: 3rem !important; }
+            .leader-row { padding: 8px 12px !important; margin-bottom: 5px !important; }
+            .market-card, .aud-card { padding: 12px 12px !important; }
+            .market-card h4, .aud-card h4 { font-size: 0.95rem !important; }
+            .market-card p, .aud-card p { font-size: 0.72rem !important; }
+            .vs-card .then { font-size: 1.1rem !important; }
+            .demo-card ol li { font-size: 0.95rem !important; padding-left: 42px !important; }
         }
 
         @media (max-width: 1100px) {
