@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Technical Infrastructure Methodology | Adoption-A</title>
+    <meta property="og:title" content="Technical Infrastructure Methodology — Blockchain Adaptability Index">
+    <meta property="og:description" content="Full breakdown of the Technical Infrastructure scoring model — pillar scores, normalization, weighted geometric mean, and data sources.">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=VT323&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #fafaf7;
+            color: #2c3e50;
+            line-height: 1.6;
+        }
+
+        .home-btn {
+            position: fixed;
+            top: 18px;
+            left: 20px;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            text-decoration: none;
+            color: #2e5fa1;
+            font-family: 'VT323', monospace;
+            font-size: 1rem;
+            font-weight: 500;
+            padding: 7px 14px;
+            border-radius: 8px;
+            border: 1px solid #d8dce0;
+            background: #fff;
+            transition: all 0.2s;
+            z-index: 50;
+            letter-spacing: 0.5px;
+        }
+        .home-btn:hover { background: #eef3f7; border-color: #2e5fa1; }
+
+        .header {
+            text-align: center;
+            padding: 52px 24px 20px;
+            max-width: 860px;
+            margin: 0 auto;
+        }
+        .header h1 {
+            font-family: 'Source Serif 4', Georgia, serif;
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: #1a2a3a;
+            letter-spacing: -0.5px;
+            margin-bottom: 10px;
+        }
+        .header .subtitle {
+            font-size: 0.92rem;
+            color: #7a8a9a;
+            font-weight: 300;
+            max-width: 640px;
+            margin: 0 auto;
+        }
+        .header .version-badge {
+            display: inline-block;
+            background: #2e5fa1;
+            color: #fff;
+            padding: 3px 12px;
+            border-radius: 5px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-top: 10px;
+            letter-spacing: 0.5px;
+        }
+
+        .section { max-width: 1100px; margin: 28px auto; padding: 0 24px; }
+        .card {
+            background: #fff;
+            border-radius: 14px;
+            box-shadow: 0 2px 14px rgba(0,0,0,0.04);
+            border: 1px solid #ebebeb;
+            padding: 28px 32px;
+            margin-bottom: 24px;
+        }
+        .card h2 {
+            font-family: 'Source Serif 4', Georgia, serif;
+            font-size: 1.35rem;
+            margin-bottom: 14px;
+            color: #1a2a3a;
+        }
+        .card h3 { font-size: 0.95rem; font-weight: 600; color: #1a2a3a; margin: 18px 0 8px; }
+        .card p { font-size: 0.88rem; color: #5a6b7c; margin-bottom: 8px; }
+        .card ul { font-size: 0.88rem; color: #5a6b7c; padding-left: 20px; margin-bottom: 10px; }
+        .card li { margin-bottom: 4px; }
+
+        .formula-box {
+            background: #f0f4fc;
+            padding: 14px 18px;
+            border-radius: 8px;
+            font-family: 'Courier New', 'Consolas', monospace;
+            font-size: 0.85rem;
+            margin: 14px 0;
+            color: #1a2a3a;
+            border-left: 4px solid #2e5fa1;
+            overflow-x: auto;
+        }
+
+        .tab-nav { display: flex; gap: 4px; margin-bottom: 0; flex-wrap: wrap; }
+        .tab-btn {
+            padding: 10px 20px;
+            border: 1px solid #ddd;
+            border-bottom: none;
+            background: #f5f3ee;
+            border-radius: 8px 8px 0 0;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.82rem;
+            font-weight: 500;
+            color: #7a8a9a;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .tab-btn:hover { background: #fff; color: #1a2a3a; }
+        .tab-btn.active { background: #fff; color: #2e5fa1; font-weight: 600; border-color: #ebebeb; }
+        .tab-content {
+            display: none;
+            background: #fff;
+            border: 1px solid #ebebeb;
+            border-radius: 0 14px 14px 14px;
+            padding: 24px 28px;
+            box-shadow: 0 2px 14px rgba(0,0,0,0.04);
+        }
+        .tab-content.active { display: block; }
+
+        .data-table-wrapper {
+            overflow-x: auto;
+            margin: 14px 0;
+            border-radius: 10px;
+            border: 1px solid #ebebeb;
+        }
+        table { width: 100%; border-collapse: collapse; font-size: 0.8rem; }
+        thead th {
+            background: #2e5fa1;
+            color: #fff;
+            padding: 10px 12px;
+            text-align: left;
+            font-size: 0.72rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            white-space: nowrap;
+            position: sticky;
+            top: 0;
+        }
+        thead th:first-child { text-align: center; }
+        tbody td { padding: 8px 12px; border-bottom: 1px solid #f4f2ed; white-space: nowrap; }
+        tbody tr:last-child td { border-bottom: none; }
+        tbody tr:hover { background: #f5f8ff; }
+        .rank-cell { text-align: center; font-weight: 700; color: #2e5fa1; }
+        .score-cell { font-weight: 600; color: #2e5fa1; }
+        .num-cell { text-align: right; font-variant-numeric: tabular-nums; }
+        .highlight-cell { background: #eef3ff; font-weight: 600; }
+        .tier-badge {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.72rem;
+            font-weight: 600;
+        }
+        .tier-leader { background: #143566; color: #fff; }
+        .tier-advanced { background: #2e5fa1; color: #fff; }
+        .tier-developing { background: #5b8fd4; color: #fff; }
+        .tier-emerging { background: #a4c8f0; color: #1a2a3a; }
+        .tier-nascent { background: #e8f0fe; color: #5a6a7a; border: 1px solid #c0d4f0; }
+
+        .weight-list { display: flex; flex-direction: column; gap: 10px; margin: 14px 0; }
+        .weight-item { display: flex; align-items: center; gap: 12px; }
+        .weight-label { width: 180px; font-size: 0.84rem; font-weight: 500; color: #2c3e50; flex-shrink: 0; }
+        .weight-bar-bg { flex: 1; height: 24px; background: #e8f0fe; border-radius: 6px; overflow: hidden; }
+        .weight-bar-fill { height: 100%; border-radius: 6px; display: flex; align-items: center; justify-content: flex-end; padding-right: 8px; font-size: 0.75rem; font-weight: 600; color: #fff; }
+        .weight-category { font-size: 0.72rem; color: #9aa5b0; width: 80px; text-align: right; flex-shrink: 0; }
+
+        .norm-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 14px 0; }
+        .norm-card {
+            background: #f0f4fc;
+            border-radius: 10px;
+            padding: 16px;
+            border-left: 4px solid #2e5fa1;
+        }
+        .norm-card h4 { font-size: 0.82rem; color: #2e5fa1; margin-bottom: 4px; }
+        .norm-card .used-for { font-size: 0.75rem; color: #9aa5b0; margin-bottom: 6px; }
+        .norm-card p { font-size: 0.82rem; color: #5a6b7c; margin-bottom: 0; }
+        .norm-card code { background: #d8e4f8; padding: 1px 5px; border-radius: 3px; font-size: 0.78rem; }
+
+        .source-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 14px 0; }
+        .source-item { display: flex; flex-direction: column; background: #f0f4fc; padding: 12px 14px; border-radius: 8px; }
+        .source-item .src-label { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.5px; color: #9aa5b0; margin-bottom: 2px; }
+        .source-item .src-name { font-size: 0.84rem; font-weight: 500; color: #2c3e50; }
+        .source-item .src-year { font-size: 0.75rem; color: #7a8a9a; }
+        .source-item a { font-size: 0.78rem; color: #2e5fa1; }
+
+        .footer {
+            text-align: center;
+            padding: 24px;
+            font-size: 0.78rem;
+            color: #aab5c0;
+            border-top: 1px solid #eee;
+            margin-top: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 { font-size: 1.5rem; }
+            .norm-grid, .source-grid { grid-template-columns: 1fr; }
+            .card { padding: 18px; }
+            .tab-content { padding: 16px; }
+            .weight-label { width: 130px; font-size: 0.78rem; }
+            table { font-size: 0.72rem; }
+            thead th, tbody td { padding: 6px 8px; }
+        }
+    </style>
+</head>
+<body>
+
+    <a href="map.html#technical" class="home-btn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><path d="M15 18l-6-6 6-6"/></svg>
+        BACK TO MAP
+    </a>
+
+    <div style="text-align:center; padding: 72px 24px 0; font-size:0.78rem; color:#9aa5b0;">
+        Also see:
+        <a href="econ-methodology.html" style="color:#0a4c6a; margin: 0 8px;">Economic Methodology</a>
+        <a href="regulatory-methodology.html" style="color:#9b5a30; margin: 0 8px;">Regulatory Methodology</a>
+    </div>
+
+    <div class="header">
+        <h1>Technical Infrastructure Methodology</h1>
+        <p class="subtitle">How the Technical Infrastructure Score is calculated &mdash; pillar scores, normalization method, weighted geometric mean, and all data sources for 20 countries</p>
+        <div class="version-badge">VERSION 2 &middot; WEIGHTED GEOMETRIC MEAN &middot; PER-CAPITA NORMALIZATION</div>
+    </div>
+
+    <!-- FORMULA OVERVIEW -->
+    <div class="section">
+        <div class="card">
+            <h2>Composite Formula</h2>
+            <p>The Technical Infrastructure Score uses a <strong>weighted geometric mean</strong> across five per-capita pillars. Unlike an arithmetic mean, the geometric mean is non-compensatory: near-zero performance on any single pillar pulls the composite score toward zero, preventing a dominant pillar from masking weakness elsewhere.</p>
+            <div class="formula-box">Technical = BTC_Score<sup>0.25</sup> &times; ETH_Score<sup>0.25</sup> &times; Mining_Score<sup>0.15</sup> &times; LN_Score<sup>0.20</sup> &times; Enabling_Score<sup>0.15</sup></div>
+            <p style="font-size:0.84rem;color:#7a8a9a;"><strong>Each pillar score</strong> = min(1, ln(raw_per_100k + 1) / ln(ceiling + 1)), yielding a continuous 0&ndash;1 value. Mining uses global hashrate % directly. All node/LN counts are per 100k internet users — not raw population — to fairly compare countries of different sizes.</p>
+
+            <h3>Pillar Weights</h3>
+            <div class="weight-list">
+                <div class="weight-item">
+                    <span class="weight-label">BTC Nodes</span>
+                    <div class="weight-bar-bg"><div class="weight-bar-fill" style="width:100%; background:#143566;">w = 0.25</div></div>
+                    <span class="weight-category">Decentralization</span>
+                </div>
+                <div class="weight-item">
+                    <span class="weight-label">ETH Nodes</span>
+                    <div class="weight-bar-bg"><div class="weight-bar-fill" style="width:100%; background:#2e5fa1;">w = 0.25</div></div>
+                    <span class="weight-category">Decentralization</span>
+                </div>
+                <div class="weight-item">
+                    <span class="weight-label">Lightning Network</span>
+                    <div class="weight-bar-bg"><div class="weight-bar-fill" style="width:80%; background:#5b8fd4;">w = 0.20</div></div>
+                    <span class="weight-category">Payments</span>
+                </div>
+                <div class="weight-item">
+                    <span class="weight-label">Mining Hashrate</span>
+                    <div class="weight-bar-bg"><div class="weight-bar-fill" style="width:60%; background:#7aaee0;">w = 0.15</div></div>
+                    <span class="weight-category">Security</span>
+                </div>
+                <div class="weight-item">
+                    <span class="weight-label">Enabling Environment</span>
+                    <div class="weight-bar-bg"><div class="weight-bar-fill" style="width:60%; background:#a4c8f0; color:#1a2a3a;">w = 0.15</div></div>
+                    <span class="weight-category">Infrastructure</span>
+                </div>
+            </div>
+            <p style="font-size:0.82rem; color:#7a8a9a; margin-top:12px;"><strong>Why geometric mean?</strong> A country with excellent nodes but no mining capacity (or vice versa) is not truly infrastructure-ready. The geometric mean penalizes extreme imbalances that an arithmetic mean would hide.</p>
+        </div>
+    </div>
+
+    <!-- TABBED DATA SECTION -->
+    <div class="section">
+        <div class="tab-nav">
+            <button class="tab-btn active" onclick="switchTab('scores')">Final Scores</button>
+            <button class="tab-btn" onclick="switchTab('pillars')">Pillar Scores</button>
+            <button class="tab-btn" onclick="switchTab('findings')">Key Findings</button>
+        </div>
+
+        <!-- TAB 1: FINAL SCORES -->
+        <div class="tab-content active" id="tab-scores">
+            <p>Final composite scores ranked from highest to lowest. Each score is the weighted geometric mean of the five normalized pillar scores.</p>
+            <div class="data-table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Rank</th>
+                            <th>Country</th>
+                            <th>Score</th>
+                            <th>Tier</th>
+                            <th>BTC Nodes<br>(w=0.25)</th>
+                            <th>ETH Nodes<br>(w=0.25)</th>
+                            <th>Mining<br>(w=0.15)</th>
+                            <th>Lightning<br>(w=0.20)</th>
+                            <th>Enabling<br>(w=0.15)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td class="rank-cell">1</td><td>United States</td><td class="score-cell">0.799</td><td><span class="tier-badge tier-leader">Network Leader</span></td><td class="num-cell highlight-cell">0.754</td><td class="num-cell">0.653</td><td class="num-cell highlight-cell">0.983</td><td class="num-cell highlight-cell">0.821</td><td class="num-cell highlight-cell">0.964</td></tr>
+                        <tr><td class="rank-cell">2</td><td>Russia</td><td class="score-cell">0.584</td><td><span class="tier-badge tier-advanced">Advanced</span></td><td class="num-cell">0.660</td><td class="num-cell">0.534</td><td class="num-cell">0.769</td><td class="num-cell">0.355</td><td class="num-cell">0.814</td></tr>
+                        <tr><td class="rank-cell">3</td><td>United Kingdom</td><td class="score-cell">0.470</td><td><span class="tier-badge tier-advanced">Advanced</span></td><td class="num-cell highlight-cell">0.956</td><td class="num-cell highlight-cell">0.827</td><td class="num-cell">0.013</td><td class="num-cell highlight-cell">0.854</td><td class="num-cell">0.917</td></tr>
+                        <tr><td class="rank-cell">4</td><td>Japan</td><td class="score-cell">0.360</td><td><span class="tier-badge tier-developing">Developing</span></td><td class="num-cell">0.646</td><td class="num-cell">0.574</td><td class="num-cell">0.013</td><td class="num-cell">0.573</td><td class="num-cell">0.930</td></tr>
+                        <tr><td class="rank-cell">5</td><td>Argentina</td><td class="score-cell">0.342</td><td><span class="tier-badge tier-developing">Developing</span></td><td class="num-cell">0.392</td><td class="num-cell">0.359</td><td class="num-cell">0.071</td><td class="num-cell">0.474</td><td class="num-cell">0.780</td></tr>
+                        <tr><td class="rank-cell">6</td><td>South Korea</td><td class="score-cell">0.303</td><td><span class="tier-badge tier-developing">Developing</span></td><td class="num-cell">0.466</td><td class="num-cell">0.425</td><td class="num-cell">0.013</td><td class="num-cell">0.510</td><td class="num-cell highlight-cell">0.988</td></tr>
+                        <tr><td class="rank-cell">7</td><td>Ukraine</td><td class="score-cell">0.244</td><td><span class="tier-badge tier-developing">Developing</span></td><td class="num-cell">0.367</td><td class="num-cell">0.317</td><td class="num-cell">0.013</td><td class="num-cell">0.426</td><td class="num-cell">0.708</td></tr>
+                        <tr><td class="rank-cell">8</td><td>Brazil</td><td class="score-cell">0.231</td><td><span class="tier-badge tier-developing">Developing</span></td><td class="num-cell">0.294</td><td class="num-cell">0.244</td><td class="num-cell">0.026</td><td class="num-cell">0.338</td><td class="num-cell">0.749</td></tr>
+                        <tr><td class="rank-cell">9</td><td>Turkey</td><td class="score-cell">0.212</td><td><span class="tier-badge tier-developing">Developing</span></td><td class="num-cell">0.308</td><td class="num-cell">0.254</td><td class="num-cell">0.013</td><td class="num-cell">0.323</td><td class="num-cell">0.775</td></tr>
+                        <tr><td class="rank-cell">10</td><td>Thailand</td><td class="score-cell">0.150</td><td><span class="tier-badge tier-emerging">Emerging</span></td><td class="num-cell">0.185</td><td class="num-cell">0.160</td><td class="num-cell">0.010</td><td class="num-cell">0.232</td><td class="num-cell">0.783</td></tr>
+                        <tr><td class="rank-cell">11</td><td>Vietnam</td><td class="score-cell">0.133</td><td><span class="tier-badge tier-emerging">Emerging</span></td><td class="num-cell">0.149</td><td class="num-cell">0.128</td><td class="num-cell">0.010</td><td class="num-cell">0.233</td><td class="num-cell">0.730</td></tr>
+                        <tr><td class="rank-cell">12</td><td>Philippines</td><td class="score-cell">0.098</td><td><span class="tier-badge tier-emerging">Emerging</span></td><td class="num-cell">0.091</td><td class="num-cell">0.105</td><td class="num-cell">0.010</td><td class="num-cell">0.126</td><td class="num-cell">0.676</td></tr>
+                        <tr><td class="rank-cell">13</td><td>Indonesia</td><td class="score-cell">0.092</td><td><span class="tier-badge tier-emerging">Emerging</span></td><td class="num-cell">0.049</td><td class="num-cell">0.052</td><td class="num-cell highlight-cell">0.305</td><td class="num-cell">0.041</td><td class="num-cell">0.597</td></tr>
+                        <tr><td class="rank-cell">13</td><td>Venezuela</td><td class="score-cell">0.092</td><td><span class="tier-badge tier-emerging">Emerging</span></td><td class="num-cell">0.107</td><td class="num-cell">0.069</td><td class="num-cell">0.013</td><td class="num-cell">0.119</td><td class="num-cell">0.600</td></tr>
+                        <tr><td class="rank-cell">15</td><td>Nigeria</td><td class="score-cell">0.070</td><td><span class="tier-badge tier-nascent">Nascent</span></td><td class="num-cell">0.079</td><td class="num-cell">0.048</td><td class="num-cell">0.010</td><td class="num-cell">0.119</td><td class="num-cell">0.381</td></tr>
+                        <tr><td class="rank-cell">16</td><td>Ethiopia</td><td class="score-cell">0.068</td><td><span class="tier-badge tier-nascent">Nascent</span></td><td class="num-cell">0.040</td><td class="num-cell">0.024</td><td class="num-cell">0.345</td><td class="num-cell">0.059</td><td class="num-cell">0.236</td></tr>
+                        <tr><td class="rank-cell">17</td><td>Pakistan</td><td class="score-cell">0.066</td><td><span class="tier-badge tier-nascent">Nascent</span></td><td class="num-cell">0.075</td><td class="num-cell">0.052</td><td class="num-cell">0.010</td><td class="num-cell">0.074</td><td class="num-cell">0.457</td></tr>
+                        <tr><td class="rank-cell">18</td><td>India</td><td class="score-cell">0.060</td><td><span class="tier-badge tier-nascent">Nascent</span></td><td class="num-cell">0.061</td><td class="num-cell">0.051</td><td class="num-cell">0.013</td><td class="num-cell">0.040</td><td class="num-cell">0.600</td></tr>
+                        <tr><td class="rank-cell">19</td><td>Yemen</td><td class="score-cell">0.047</td><td><span class="tier-badge tier-nascent">Nascent</span></td><td class="num-cell">0.052</td><td class="num-cell">0.033</td><td class="num-cell">0.010</td><td class="num-cell">0.055</td><td class="num-cell">0.279</td></tr>
+                        <tr><td class="rank-cell">20</td><td>Bangladesh</td><td class="score-cell">0.035</td><td><span class="tier-badge tier-nascent">Nascent</span></td><td class="num-cell">0.032</td><td class="num-cell">0.022</td><td class="num-cell">0.010</td><td class="num-cell">0.024</td><td class="num-cell">0.488</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <p style="font-size:0.78rem; color:#9aa5b0;">All pillar scores are normalized 0&ndash;1 using the log-ceiling method described in the Normalization section. Scores are the product of all five pillars raised to their respective exponents (weighted geometric mean).</p>
+        </div>
+
+        <!-- TAB 2: PILLAR SCORES -->
+        <div class="tab-content" id="tab-pillars">
+            <p>Each pillar measures a distinct aspect of blockchain network participation. BTC and ETH node density capture network decentralization; Lightning Network capacity signals payment infrastructure; Mining hashrate reflects network security contribution; Enabling Environment provides the foundational digital infrastructure gatekeeping variable.</p>
+            <h3>Pillar Definitions &amp; Ceilings</h3>
+            <div class="data-table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Pillar</th>
+                            <th>Unit</th>
+                            <th>Ceiling</th>
+                            <th>Normalization</th>
+                            <th>Source</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td><strong>BTC Nodes</strong></td><td>Reachable nodes / 100k internet users</td><td>1.1 / 100k</td><td>Log-ceiling: ln(x+1)/ln(ceiling+1)</td><td>Bitnodes.io</td></tr>
+                        <tr><td><strong>ETH Nodes</strong></td><td>Reachable nodes / 100k internet users</td><td>1.2 / 100k</td><td>Log-ceiling: ln(x+1)/ln(ceiling+1)</td><td>Ethernodes.org</td></tr>
+                        <tr><td><strong>Mining</strong></td><td>% of global BTC hashrate</td><td>40%</td><td>Log-ceiling: ln(x+1)/ln(41)</td><td>Hashrate Index</td></tr>
+                        <tr><td><strong>Lightning</strong></td><td>LN nodes / 100k internet users</td><td>1.5 / 100k</td><td>Log-ceiling: ln(x+1)/ln(ceiling+1)</td><td>mempool.emzy.de</td></tr>
+                        <tr><td><strong>Enabling Env.</strong></td><td>Composite 0&ndash;1</td><td>1.0</td><td>Weighted avg of sub-indicators</td><td>ITU, World Bank, Speedtest</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <h3>Enabling Environment Sub-Indicators</h3>
+            <div class="data-table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Country</th>
+                            <th>Internet Penet. %<br>(weight 40%)</th>
+                            <th>Electricity Access %<br>(weight 30%)</th>
+                            <th>Avg Speed Index<br>(weight 30%)</th>
+                            <th>Enabling Score</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>South Korea</td><td class="num-cell">98.5%</td><td class="num-cell">100%</td><td class="num-cell">Very High</td><td class="score-cell highlight-cell">0.988</td></tr>
+                        <tr><td>United States</td><td class="num-cell">96.7%</td><td class="num-cell">100%</td><td class="num-cell">Very High</td><td class="score-cell highlight-cell">0.964</td></tr>
+                        <tr><td>United Kingdom</td><td class="num-cell">99.7%</td><td class="num-cell">100%</td><td class="num-cell">High</td><td class="score-cell">0.917</td></tr>
+                        <tr><td>Japan</td><td class="num-cell">86.3%</td><td class="num-cell">100%</td><td class="num-cell">Very High</td><td class="score-cell">0.930</td></tr>
+                        <tr><td>Russia</td><td class="num-cell">94.1%</td><td class="num-cell">100%</td><td class="num-cell">High</td><td class="score-cell">0.814</td></tr>
+                        <tr><td>Argentina</td><td class="num-cell">87.7%</td><td class="num-cell">99%</td><td class="num-cell">Medium-High</td><td class="score-cell">0.780</td></tr>
+                        <tr><td>Turkey</td><td class="num-cell">90.3%</td><td class="num-cell">100%</td><td class="num-cell">Medium-High</td><td class="score-cell">0.775</td></tr>
+                        <tr><td>Thailand</td><td class="num-cell">94.5%</td><td class="num-cell">99.7%</td><td class="num-cell">Medium</td><td class="score-cell">0.783</td></tr>
+                        <tr><td>Brazil</td><td class="num-cell">85.5%</td><td class="num-cell">99.8%</td><td class="num-cell">Medium</td><td class="score-cell">0.749</td></tr>
+                        <tr><td>Vietnam</td><td class="num-cell">86.0%</td><td class="num-cell">99.4%</td><td class="num-cell">Medium</td><td class="score-cell">0.730</td></tr>
+                        <tr><td>Ukraine</td><td class="num-cell">79.0%</td><td class="num-cell">100%</td><td class="num-cell">Medium</td><td class="score-cell">0.708</td></tr>
+                        <tr><td>Philippines</td><td class="num-cell">83.5%</td><td class="num-cell">97%</td><td class="num-cell">Low-Medium</td><td class="score-cell">0.676</td></tr>
+                        <tr><td>Venezuela</td><td class="num-cell">72.0%</td><td class="num-cell">97%</td><td class="num-cell">Medium</td><td class="score-cell">0.600</td></tr>
+                        <tr><td>India</td><td class="num-cell">70.0%</td><td class="num-cell">97%</td><td class="num-cell">Medium</td><td class="score-cell">0.600</td></tr>
+                        <tr><td>Indonesia</td><td class="num-cell">82.5%</td><td class="num-cell">97.9%</td><td class="num-cell">Low-Medium</td><td class="score-cell">0.597</td></tr>
+                        <tr><td>Pakistan</td><td class="num-cell">48.6%</td><td class="num-cell">96%</td><td class="num-cell">Medium</td><td class="score-cell">0.457</td></tr>
+                        <tr><td>Bangladesh</td><td class="num-cell">47.4%</td><td class="num-cell">95%</td><td class="num-cell">Low</td><td class="score-cell">0.488</td></tr>
+                        <tr><td>Nigeria</td><td class="num-cell">47.3%</td><td class="num-cell">60%</td><td class="num-cell">Low</td><td class="score-cell">0.381</td></tr>
+                        <tr><td>Ethiopia</td><td class="num-cell">17.7%</td><td class="num-cell">48%</td><td class="num-cell">Very Low</td><td class="score-cell">0.236</td></tr>
+                        <tr><td>Yemen</td><td class="num-cell">27.0%</td><td class="num-cell">50%</td><td class="num-cell">Very Low</td><td class="score-cell">0.279</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <p style="font-size:0.78rem; color:#9aa5b0; margin-top:6px;">Enabling environment = internet penetration (40%) + electricity access (30%) + avg internet speed normalized index (30%). All components min-max normalized within the 20-country sample.</p>
+        </div>
+
+        <!-- TAB 3: KEY FINDINGS -->
+        <div class="tab-content" id="tab-findings">
+            <h3>Notable Patterns</h3>
+            <ul>
+                <li><strong>US is the sole Network Leader (0.799):</strong> Hosts ~37.5% of global Bitcoin mining, plus the most BTC, ETH, and Lightning nodes in absolute terms. Only country where raw dominance survives per-capita normalization at scale.</li>
+                <li><strong>UK ranks Advanced (0.470) despite near-zero mining:</strong> Its 0.013 mining score (just 0.05% of global hashrate) severely penalizes its composite under the geometric mean. Without the geometric mean penalty, it would rank far higher on node density alone.</li>
+                <li><strong>India drops to Nascent (0.060):</strong> With 759M internet users as the denominator, even its sizeable node counts yield very low per-capita density. A reminder that scale cuts both ways in the per-capita model.</li>
+                <li><strong>Ethiopia anomaly:</strong> Its 2.6% mining share (2nd highest in the sample after US) gives a mining pillar score of 0.345, but near-zero node density in every other pillar collapses the geometric mean to just 0.068 (Nascent). This illustrates the non-compensatory property of the geometric mean.</li>
+                <li><strong>Indonesia similarly mined but node-sparse:</strong> Mining score 0.305 (from significant hashrate), but its BTC (0.049) and LN (0.041) pillar scores are among the lowest. Geometric mean composite: 0.092 (Emerging).</li>
+                <li><strong>South Korea near-perfect Enabling (0.988):</strong> Highest internet penetration quality in the sample. However, mining score of 0.013 caps its composite at 0.303 (Developing).</li>
+            </ul>
+            <h3>Why the Geometric Mean?</h3>
+            <p>A country that hosts many BTC nodes but has no mining presence provides a different kind of infrastructure than one with balanced participation. The geometric mean ensures all pillars must contribute meaningfully. Concretely:</p>
+            <ul>
+                <li>If any single pillar = 0, the entire composite = 0</li>
+                <li>A pillar score of 0.010 (near-zero mining for most countries) acts as a 15% drag on the weighted exponent, pulling the composite down to at most ~0.93× of what a full mining score would yield</li>
+                <li>Countries that achieve balance across all five pillars outperform those with single-pillar dominance</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- NORMALIZATION -->
+    <div class="section">
+        <div class="card">
+            <h2>Normalization Method</h2>
+            <p>The log-ceiling normalization is used for all node and Lightning Network pillars. It compresses the extreme right-tail distribution of per-capita network participation while preserving meaningful differentiation at lower values.</p>
+            <div class="norm-grid">
+                <div class="norm-card">
+                    <h4>Log-Ceiling Formula</h4>
+                    <div class="used-for">Used for: BTC nodes, ETH nodes, Lightning Network</div>
+                    <p>Formula: <code>min(1, ln(x + 1) / ln(ceiling + 1))</code><br>
+                    Where x = raw per-100k-internet-users count. Countries exceeding the ceiling are capped at 1.0. Log transform compresses the long right tail (the US would dominate linearly).</p>
+                </div>
+                <div class="norm-card">
+                    <h4>Log-Ceiling (Mining)</h4>
+                    <div class="used-for">Used for: Mining hashrate %</div>
+                    <p>Formula: <code>min(1, ln(hashrate% + 1) / ln(41))</code><br>
+                    Ceiling = 40% of global hashrate. Mining is entered as global share percentage, not per-capita, since hashrate is a network-level resource regardless of internet user base.</p>
+                </div>
+                <div class="norm-card">
+                    <h4>Weighted Average</h4>
+                    <div class="used-for">Used for: Enabling Environment</div>
+                    <p>Three sub-indicators are each min-max normalized within the 20-country sample, then combined: <code>internet% &times; 0.40 + electricity% &times; 0.30 + speed_index &times; 0.30</code>.</p>
+                </div>
+                <div class="norm-card">
+                    <h4>Why Per 100k Internet Users?</h4>
+                    <div class="used-for">Denominator choice rationale</div>
+                    <p>Internet users (not total population) is the correct denominator because node operators must have internet access. Using total population would unfairly penalize countries with low internet penetration twice &mdash; once in the enabling environment and again in node density.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- LIMITATIONS -->
+    <div class="section">
+        <div class="card">
+            <h2>Key Limitations</h2>
+            <ul>
+                <li><strong>Node data is a snapshot:</strong> Bitnodes.io and Ethernodes.org measure reachable nodes at a point in time. Daily variance can be 5&ndash;10%. A 30-day average would be more robust.</li>
+                <li><strong>Mining attribution is approximate:</strong> Hashrate Index country attribution is based on IP geolocation of mining pool connections, which may not accurately reflect physical location of mining hardware (VPN usage, data center diversity).</li>
+                <li><strong>Lightning Network data:</strong> Only publicly announced LN nodes are counted. Private channels are a significant and growing portion of capacity, especially among merchant and institutional users.</li>
+                <li><strong>Min-max sample dependency:</strong> All normalization is relative within the 20-country sample. Adding/removing a country would shift all scores.</li>
+                <li><strong>Enabling environment speed index:</strong> Speedtest Global Index reflects consumer-grade speeds; enterprise and datacenter connectivity — more relevant for node operators — is not measured.</li>
+                <li><strong>No Solana/other L1 nodes:</strong> The model focuses on BTC and ETH infrastructure as the two largest networks by market cap, security, and node count. Other L1 ecosystems are not captured.</li>
+            </ul>
+            <p style="font-size:0.82rem; color:#7a8a9a; margin-top:8px; font-style:italic;">Version 2 introduced per-capita normalization against internet users (vs. population in v1) and the weighted geometric mean (vs. arithmetic weighted average in v1). These changes significantly affected countries with very large internet user bases (India, Indonesia).</p>
+        </div>
+    </div>
+
+    <!-- SOURCES -->
+    <div class="section">
+        <div class="card">
+            <h2>Data Sources</h2>
+            <div class="source-grid">
+                <div class="source-item">
+                    <span class="src-label">BTC Nodes</span>
+                    <span class="src-name">Bitnodes.io — Reachable Bitcoin Nodes</span>
+                    <span class="src-year">2025&ndash;2026 snapshot</span>
+                    <a href="https://bitnodes.io" target="_blank" rel="noopener">bitnodes.io</a>
+                </div>
+                <div class="source-item">
+                    <span class="src-label">ETH Nodes</span>
+                    <span class="src-name">Ethernodes.org — Ethereum Node Map</span>
+                    <span class="src-year">2025&ndash;2026 snapshot</span>
+                    <a href="https://ethernodes.org" target="_blank" rel="noopener">ethernodes.org</a>
+                </div>
+                <div class="source-item">
+                    <span class="src-label">Mining Hashrate</span>
+                    <span class="src-name">Hashrate Index — Country Hashrate Distribution</span>
+                    <span class="src-year">Early 2026</span>
+                    <a href="https://hashrateindex.com" target="_blank" rel="noopener">hashrateindex.com</a>
+                </div>
+                <div class="source-item">
+                    <span class="src-label">Lightning Network</span>
+                    <span class="src-name">mempool.emzy.de — LN Nodes by Country</span>
+                    <span class="src-year">2025&ndash;2026 snapshot</span>
+                    <a href="https://mempool.emzy.de/graphs/lightning/nodes-per-country" target="_blank" rel="noopener">mempool.emzy.de</a>
+                </div>
+                <div class="source-item">
+                    <span class="src-label">Internet Users (Denominator)</span>
+                    <span class="src-name">World Population Review / ITU</span>
+                    <span class="src-year">2024&ndash;2025</span>
+                    <a href="https://worldpopulationreview.com/country-rankings/internet-users-by-country" target="_blank" rel="noopener">worldpopulationreview.com</a>
+                </div>
+                <div class="source-item">
+                    <span class="src-label">Internet Penetration</span>
+                    <span class="src-name">DataReportal / ITU</span>
+                    <span class="src-year">2024&ndash;2025</span>
+                    <a href="https://datareportal.com" target="_blank" rel="noopener">datareportal.com</a>
+                </div>
+                <div class="source-item">
+                    <span class="src-label">Electricity Access</span>
+                    <span class="src-name">World Bank — Access to Electricity (% of population)</span>
+                    <span class="src-year">2022&ndash;2023</span>
+                    <a href="https://data.worldbank.org/indicator/EG.ELC.ACCS.ZS" target="_blank" rel="noopener">data.worldbank.org</a>
+                </div>
+                <div class="source-item">
+                    <span class="src-label">Internet Speed</span>
+                    <span class="src-name">Speedtest Global Index (Ookla)</span>
+                    <span class="src-year">2025</span>
+                    <a href="https://saily.com/blog/internet-connectivity-index/" target="_blank" rel="noopener">speedtest.net/global-index</a>
+                </div>
+                <div class="source-item">
+                    <span class="src-label">Methodology Reference</span>
+                    <span class="src-name">OECD Handbook on Constructing Composite Indicators</span>
+                    <span class="src-year">2008 (standard reference)</span>
+                    <a href="https://www.oecd.org/sdd/42495745.pdf" target="_blank" rel="noopener">oecd.org</a>
+                </div>
+                <div class="source-item">
+                    <span class="src-label">Per-Capita Approach</span>
+                    <span class="src-name">Chainalysis Global Crypto Adoption Index (PPP-weighted methodology)</span>
+                    <span class="src-year">2025</span>
+                    <a href="https://www.chainalysis.com/blog/2025-global-crypto-adoption-index/" target="_blank" rel="noopener">chainalysis.com</a>
+                </div>
+            </div>
+            <p style="font-size:0.78rem; color:#9aa5b0; margin-top:12px;">Last updated: Early 2026. Data collected between Q4 2025 and Q1 2026.</p>
+        </div>
+    </div>
+
+    <div class="footer">
+        University Research Project &middot; Global Blockchain Adaptability Index &middot; Technical Infrastructure Methodology V.2 &middot; 2026
+    </div>
+
+    <script>
+    function switchTab(tabId) {
+        document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+        document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+        document.getElementById('tab-' + tabId).classList.add('active');
+        const tabs = ['scores', 'pillars', 'findings'];
+        const idx = tabs.indexOf(tabId);
+        document.querySelectorAll('.tab-btn')[idx].classList.add('active');
+    }
+    </script>
+
+</body>
+</html>

@@ -1230,9 +1230,9 @@
         <p style="font-size:0.84rem; color:#7a8a9a;"><strong>Why equal weights?</strong> Economic adoption without regulatory clarity creates legal risk. Regulatory clarity without infrastructure means no network to regulate. Infrastructure without adoption means unused capacity. All three pillars must be present for a country to be truly blockchain-ready.</p>
 
         <details>
-            <summary>1. Economic Adoption Score <span style="font-size:0.75rem;font-weight:400;color:#7a8a9a;margin-left:6px;">(Version F)</span></summary>
+            <summary>1. Economic Adoption Score</summary>
             <div class="detail-body">
-                <p>Quantifies real-world blockchain economic penetration using seven normalized, weighted indicators. Version F decomposes the Chainalysis composite index into separate CEX and DeFi sub-indexes. <a href="econ-methodology.html" style="color:#0a4c6a;font-weight:500;">View full methodology breakdown &rarr;</a></p>
+                <p>Quantifies real-world blockchain economic penetration using seven normalized, weighted indicators. Decomposes the Chainalysis composite index into separate CEX and DeFi sub-indexes for independent weighting.</p>
                 <div class="formula-box">Economic = (CEX Activity &times; 0.15) + (DeFi &times; 0.10) + (Ownership &times; 0.25) + (Remittances &times; 0.15) + (Currency Instability &times; 0.10) + (CEX/GDP &times; 0.15) + (Internet &times; 0.10)</div>
                 <ul>
                     <li><strong>Crypto Ownership % &times; 0.25</strong> &mdash; Population penetration rate from Triple-A data.</li>
@@ -1243,15 +1243,15 @@
                     <li><strong>Currency Instability &times; 0.10</strong> &mdash; Composite of log(inflation), 5-year depreciation vs USD, and Heritage capital controls.</li>
                     <li><strong>Internet Penetration &times; 0.10</strong> &mdash; Infrastructure gating variable.</li>
                 </ul>
+                <p style="margin-top:14px;"><a href="econ-methodology.html" style="display:inline-block;padding:8px 18px;background:#0a4c6a;color:#fff;border-radius:7px;text-decoration:none;font-size:0.82rem;font-weight:500;">View full data breakdown &rarr;</a></p>
             </div>
         </details>
 
         <details>
             <summary>2. Regulatory Clarity Index</summary>
             <div class="detail-body">
-                <p>Evaluates how clearly a country has defined its legal framework for blockchain and crypto. Six dimensions are each rated on a 1&ndash;3 scale and weighted equally, then normalized to a 0&ndash;1 range:</p>
-                <div class="formula-box">Regulatory = (Stablecoin &times; 0.167) + (Licensing &times; 0.167) + (Tax &times; 0.167) + (Banking &times; 0.167) + (Enforcement &times; 0.167) + (DeFi &times; 0.167)</div>
-                <p style="font-size:0.84rem; color:#7a8a9a;"><strong>Why equal weights?</strong> Each sub-dimension captures a distinct aspect of regulatory maturity. All six must work together to form a coherent regulatory environment. Ratings: 3 = clear, codified rules; 2 = partial or in-progress; 1 = absent, banned, or no guidance.</p>
+                <p>Evaluates how clearly a country has defined its legal framework for blockchain and crypto. Six dimensions are each rated on a 1&ndash;3 scale (1 = absent/hostile, 2 = partial, 3 = clear &amp; codified), then summed and normalized to 0&ndash;1.</p>
+                <div class="formula-box">Regulatory = (Stablecoin + Licensing + Tax + Banking + Enforcement + DeFi) / 18</div>
                 <ul>
                     <li><strong>Stablecoin Law:</strong> Legislation governing stablecoin issuance, reserves, and usage</li>
                     <li><strong>Licensing Framework:</strong> Whether exchanges and service providers must obtain licenses</li>
@@ -1260,19 +1260,16 @@
                     <li><strong>Enforcement Stance:</strong> Active enforcement of crypto regulations</li>
                     <li><strong>DeFi Recognition:</strong> Whether DeFi protocols are acknowledged within the legal framework</li>
                 </ul>
-                <p>Tier thresholds:</p>
-                <ul>
-                    <li><strong>Comprehensive</strong> (0.83&ndash;1.0) &middot; <strong>Developing</strong> (0.61&ndash;0.82) &middot; <strong>Ambiguous</strong> (0.40&ndash;0.60) &middot; <strong>Hostile</strong> (&lt;0.40)</li>
-                </ul>
+                <p style="font-size:0.84rem; color:#7a8a9a; margin-top:6px;">Tier thresholds: <strong>Comprehensive</strong> (0.83&ndash;1.0) &middot; <strong>Developing</strong> (0.61&ndash;0.82) &middot; <strong>Ambiguous</strong> (0.40&ndash;0.60) &middot; <strong>Hostile</strong> (&lt;0.40)</p>
+                <p style="margin-top:14px;"><a href="regulatory-methodology.html" style="display:inline-block;padding:8px 18px;background:#9b5a30;color:#fff;border-radius:7px;text-decoration:none;font-size:0.82rem;font-weight:500;">View full data breakdown &rarr;</a></p>
             </div>
         </details>
 
         <details>
-            <summary>3. Technical Infrastructure Score <span style="font-size:0.75rem;font-weight:400;color:#7a8a9a;margin-left:6px;">(Version 2)</span></summary>
+            <summary>3. Technical Infrastructure Score</summary>
             <div class="detail-body">
-                <p>Measures each country's blockchain network footprint using five continuous, per-capita pillars aggregated with a <strong>weighted geometric mean</strong> (non-compensatory). All node/LN metrics are normalized per 100k internet users &mdash; not raw population &mdash; to fairly compare countries of different sizes. Near-zero performance on any pillar pulls the composite toward zero. <a href="data.html" style="color:#0a4c6a;font-weight:500;">View full data table &rarr;</a></p>
+                <p>Measures each country's blockchain network footprint using five continuous, per-capita pillars aggregated with a <strong>weighted geometric mean</strong> (non-compensatory). All node/LN metrics are normalized per 100k internet users to fairly compare countries of different sizes.</p>
                 <div class="formula-box">Technical = BTC_Score<sup>0.25</sup> &times; ETH_Score<sup>0.25</sup> &times; Mining_Score<sup>0.15</sup> &times; LN_Score<sup>0.20</sup> &times; Enabling_Score<sup>0.15</sup></div>
-                <p style="font-size:0.84rem;color:#7a8a9a;margin-bottom:8px;"><strong>Each pillar score</strong> = min(1, ln(raw_per_100k + 1) / ln(ceiling + 1)), yielding a continuous 0&ndash;1 value. Mining uses global hashrate % directly. Enabling Environment is a composite of internet penetration, electricity access, and average internet speed.</p>
                 <ul>
                     <li><strong>BTC Nodes (w=0.25):</strong> Reachable BTC nodes per 100k internet users &mdash; ceiling 1.1/100k. Source: <a href="https://bitnodes.io" target="_blank" style="color:#0a4c6a;">Bitnodes.io</a></li>
                     <li><strong>ETH Nodes (w=0.25):</strong> Reachable ETH nodes per 100k internet users &mdash; ceiling 1.2/100k. Source: <a href="https://ethernodes.org" target="_blank" style="color:#0a4c6a;">Ethernodes.org</a></li>
@@ -1280,11 +1277,8 @@
                     <li><strong>Lightning Network (w=0.20):</strong> LN nodes per 100k internet users &mdash; ceiling 1.5/100k. Source: <a href="https://mempool.emzy.de/graphs/lightning/nodes-per-country" target="_blank" style="color:#0a4c6a;">mempool.emzy.de</a></li>
                     <li><strong>Enabling Environment (w=0.15):</strong> Composite of internet penetration (40%), electricity access (30%), avg internet speed (30%). Sources: ITU, World Bank, Speedtest Global Index</li>
                 </ul>
-                <p>Tier thresholds (v2):</p>
-                <ul>
-                    <li><strong>Network Leader</strong> (&ge;0.70) &middot; <strong>Advanced</strong> (0.45&ndash;0.69) &middot; <strong>Developing</strong> (0.20&ndash;0.44) &middot; <strong>Emerging</strong> (0.08&ndash;0.19) &middot; <strong>Nascent</strong> (&lt;0.08)</li>
-                </ul>
-                <p style="font-size:0.84rem;color:#7a8a9a;"><strong>Key v2 findings:</strong> India drops dramatically (0.060) due to its 759M internet users base making per-capita node density tiny despite decent absolute counts. UK ranks Advanced (0.470) not Major Hub &mdash; near-zero mining (0.05% hashrate) penalizes it under geometric mean. Ethiopia drops from Emerging to Nascent: its 2.6% mining share cannot compensate for near-zero nodes in every other pillar.</p>
+                <p style="font-size:0.84rem; color:#7a8a9a; margin-top:6px;">Tier thresholds: <strong>Network Leader</strong> (&ge;0.70) &middot; <strong>Advanced</strong> (0.45&ndash;0.69) &middot; <strong>Developing</strong> (0.20&ndash;0.44) &middot; <strong>Emerging</strong> (0.08&ndash;0.19) &middot; <strong>Nascent</strong> (&lt;0.08)</p>
+                <p style="margin-top:14px;"><a href="tech-methodology.html" style="display:inline-block;padding:8px 18px;background:#2e5fa1;color:#fff;border-radius:7px;text-decoration:none;font-size:0.82rem;font-weight:500;">View full data breakdown &rarr;</a></p>
             </div>
         </details>
 
@@ -1505,8 +1499,8 @@
     }
 
     const dimMeta = {
-        overall:    { title: "Overall Score",            min: 0.25, max: 0.80, colors: ["#faf3e0","#c4ddb2","#5ba8b5","#1a6b7a","#0a3d62"] },
-        economic:   { title: "Economic Adoption",        min: 0.10, max: 0.85, colors: ["#faf3e0","#c4ddb2","#5ba8b5","#1a6b7a","#0a3d62"] },
+        overall:    { title: "Overall Score",            min: 0.25, max: 0.80, colors: ["#f0f7fa","#7ec8d8","#2e8fa0","#1a5f70","#0a3d50"] },
+        economic:   { title: "Economic Adoption",        min: 0.10, max: 0.85, colors: ["#f0faf4","#86d3a8","#2ebc7a","#1a7a4e","#0d3d28"] },
         regulatory: { title: "Regulatory Clarity",       min: 0.30, max: 0.95, colors: ["#fef3e0","#f5d6a0","#d4915c","#9b5a30","#5c2d10"] },
         technical:  { title: "Technical Infrastructure", min: 0.03, max: 0.80, colors: ["#e8f0fe","#a4c8f0","#5b8fd4","#2e5fa1","#143566"] }
     };

@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Regulatory Clarity Methodology | Adoption-A</title>
+    <meta property="og:title" content="Regulatory Clarity Methodology — Blockchain Adaptability Index">
+    <meta property="og:description" content="Full breakdown of the Regulatory Clarity Index — dimension ratings, scoring methodology, tier classifications, and data sources for 20 countries.">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=VT323&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #fafaf7;
+            color: #2c3e50;
+            line-height: 1.6;
+        }
+
+        .home-btn {
+            position: fixed;
+            top: 18px;
+            left: 20px;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            text-decoration: none;
+            color: #9b5a30;
+            font-family: 'VT323', monospace;
+            font-size: 1rem;
+            font-weight: 500;
+            padding: 7px 14px;
+            border-radius: 8px;
+            border: 1px solid #d8dce0;
+            background: #fff;
+            transition: all 0.2s;
+            z-index: 50;
+            letter-spacing: 0.5px;
+        }
+        .home-btn:hover { background: #fef6ee; border-color: #9b5a30; }
+
+        .header {
+            text-align: center;
+            padding: 52px 24px 20px;
+            max-width: 860px;
+            margin: 0 auto;
+        }
+        .header h1 {
+            font-family: 'Source Serif 4', Georgia, serif;
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: #1a2a3a;
+            letter-spacing: -0.5px;
+            margin-bottom: 10px;
+        }
+        .header .subtitle {
+            font-size: 0.92rem;
+            color: #7a8a9a;
+            font-weight: 300;
+            max-width: 640px;
+            margin: 0 auto;
+        }
+        .header .version-badge {
+            display: inline-block;
+            background: #9b5a30;
+            color: #fff;
+            padding: 3px 12px;
+            border-radius: 5px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-top: 10px;
+            letter-spacing: 0.5px;
+        }
+
+        .section { max-width: 1100px; margin: 28px auto; padding: 0 24px; }
+        .card {
+            background: #fff;
+            border-radius: 14px;
+            box-shadow: 0 2px 14px rgba(0,0,0,0.04);
+            border: 1px solid #ebebeb;
+            padding: 28px 32px;
+            margin-bottom: 24px;
+        }
+        .card h2 {
+            font-family: 'Source Serif 4', Georgia, serif;
+            font-size: 1.35rem;
+            margin-bottom: 14px;
+            color: #1a2a3a;
+        }
+        .card h3 { font-size: 0.95rem; font-weight: 600; color: #1a2a3a; margin: 18px 0 8px; }
+        .card p { font-size: 0.88rem; color: #5a6b7c; margin-bottom: 8px; }
+        .card ul { font-size: 0.88rem; color: #5a6b7c; padding-left: 20px; margin-bottom: 10px; }
+        .card li { margin-bottom: 4px; }
+
+        .formula-box {
+            background: #fef8f0;
+            padding: 14px 18px;
+            border-radius: 8px;
+            font-family: 'Courier New', 'Consolas', monospace;
+            font-size: 0.85rem;
+            margin: 14px 0;
+            color: #3a2a1a;
+            border-left: 4px solid #9b5a30;
+            overflow-x: auto;
+        }
+
+        .tab-nav { display: flex; gap: 4px; margin-bottom: 0; flex-wrap: wrap; }
+        .tab-btn {
+            padding: 10px 20px;
+            border: 1px solid #ddd;
+            border-bottom: none;
+            background: #f5f3ee;
+            border-radius: 8px 8px 0 0;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.82rem;
+            font-weight: 500;
+            color: #7a8a9a;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .tab-btn:hover { background: #fff; color: #1a2a3a; }
+        .tab-btn.active { background: #fff; color: #9b5a30; font-weight: 600; border-color: #ebebeb; }
+        .tab-content {
+            display: none;
+            background: #fff;
+            border: 1px solid #ebebeb;
+            border-radius: 0 14px 14px 14px;
+            padding: 24px 28px;
+            box-shadow: 0 2px 14px rgba(0,0,0,0.04);
+        }
+        .tab-content.active { display: block; }
+
+        .data-table-wrapper {
+            overflow-x: auto;
+            margin: 14px 0;
+            border-radius: 10px;
+            border: 1px solid #ebebeb;
+        }
+        table { width: 100%; border-collapse: collapse; font-size: 0.8rem; }
+        thead th {
+            background: #9b5a30;
+            color: #fff;
+            padding: 10px 12px;
+            text-align: left;
+            font-size: 0.72rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            white-space: nowrap;
+            position: sticky;
+            top: 0;
+        }
+        thead th:first-child { text-align: center; }
+        tbody td { padding: 8px 12px; border-bottom: 1px solid #f4f2ed; white-space: nowrap; }
+        tbody tr:last-child td { border-bottom: none; }
+        tbody tr:hover { background: #fef9f5; }
+        .rank-cell { text-align: center; font-weight: 700; color: #9b5a30; }
+        .score-cell { font-weight: 600; color: #9b5a30; }
+        .num-cell { text-align: center; font-variant-numeric: tabular-nums; }
+
+        .rating-1 { background: #ffe8e8; color: #8b1a1a; font-weight: 600; border-radius: 3px; text-align: center; }
+        .rating-2 { background: #fff3e0; color: #7a4000; font-weight: 600; border-radius: 3px; text-align: center; }
+        .rating-3 { background: #e6f4ea; color: #1a5e20; font-weight: 600; border-radius: 3px; text-align: center; }
+
+        .tier-badge {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.72rem;
+            font-weight: 600;
+        }
+        .tier-comprehensive { background: #5c2d10; color: #fff; }
+        .tier-developing { background: #9b5a30; color: #fff; }
+        .tier-ambiguous { background: #d4915c; color: #fff; }
+        .tier-hostile { background: #fef3e0; color: #7a4000; border: 1px solid #d4915c; }
+
+        .dim-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 14px;
+            margin: 14px 0;
+        }
+        .dim-card {
+            background: #fef8f0;
+            border-radius: 10px;
+            padding: 16px;
+            border-left: 4px solid #9b5a30;
+        }
+        .dim-card h4 { font-size: 0.85rem; color: #5c2d10; margin-bottom: 6px; font-weight: 600; }
+        .dim-card p { font-size: 0.8rem; color: #5a6b7c; margin-bottom: 6px; }
+        .dim-card .rating-row { font-size: 0.75rem; color: #7a8a9a; margin-top: 4px; }
+        .dim-card .rating-row strong { color: #5c2d10; }
+
+        .source-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 14px 0; }
+        .source-item { display: flex; flex-direction: column; background: #fef8f0; padding: 12px 14px; border-radius: 8px; }
+        .source-item .src-label { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.5px; color: #9aa5b0; margin-bottom: 2px; }
+        .source-item .src-name { font-size: 0.84rem; font-weight: 500; color: #2c3e50; }
+        .source-item .src-year { font-size: 0.75rem; color: #7a8a9a; }
+        .source-item a { font-size: 0.78rem; color: #9b5a30; }
+
+        .footer {
+            text-align: center;
+            padding: 24px;
+            font-size: 0.78rem;
+            color: #aab5c0;
+            border-top: 1px solid #eee;
+            margin-top: 20px;
+        }
+
+        .note-box {
+            background: #fff8f0;
+            border: 1px solid #f5d6a0;
+            border-radius: 8px;
+            padding: 12px 16px;
+            font-size: 0.82rem;
+            color: #7a5030;
+            margin: 14px 0;
+        }
+
+        @media (max-width: 900px) {
+            .dim-grid { grid-template-columns: 1fr 1fr; }
+        }
+        @media (max-width: 768px) {
+            .header h1 { font-size: 1.5rem; }
+            .source-grid { grid-template-columns: 1fr; }
+            .dim-grid { grid-template-columns: 1fr; }
+            .card { padding: 18px; }
+            .tab-content { padding: 16px; }
+            table { font-size: 0.72rem; }
+            thead th, tbody td { padding: 6px 8px; }
+        }
+    </style>
+</head>
+<body>
+
+    <a href="map.html#regulatory" class="home-btn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><path d="M15 18l-6-6 6-6"/></svg>
+        BACK TO MAP
+    </a>
+
+    <div style="text-align:center; padding: 72px 24px 0; font-size:0.78rem; color:#9aa5b0;">
+        Also see:
+        <a href="econ-methodology.html" style="color:#0a4c6a; margin: 0 8px;">Economic Methodology</a>
+        <a href="tech-methodology.html" style="color:#2e5fa1; margin: 0 8px;">Technical Methodology</a>
+    </div>
+
+    <div class="header">
+        <h1>Regulatory Clarity Methodology</h1>
+        <p class="subtitle">How the Regulatory Clarity Index is calculated &mdash; dimension ratings, scoring formula, tier thresholds, and primary data sources for 20 countries</p>
+        <div class="version-badge">6-DIMENSION RATING SCALE &middot; EQUAL WEIGHTS &middot; LIBRARY OF CONGRESS / PWC</div>
+    </div>
+
+    <!-- FORMULA OVERVIEW -->
+    <div class="section">
+        <div class="card">
+            <h2>Composite Formula</h2>
+            <p>The Regulatory Clarity Index assesses how comprehensively a country has codified rules for blockchain and crypto activity across six distinct legal dimensions. Each dimension receives a rating of 1, 2, or 3. The composite score is the sum of all six ratings divided by the maximum possible score of 18.</p>
+            <div class="formula-box">Regulatory Score = (Stablecoin + Licensing + Tax + Banking + Enforcement + DeFi) / 18</div>
+            <p style="font-size:0.84rem;color:#7a8a9a;">This formula gives equal weight to each dimension (each contributes a maximum of 3/18 = 0.167). A country with all ratings of 3 scores 18/18 = 1.0. A country with all ratings of 1 scores 6/18 = 0.333 (Hostile floor). No country can score 0 under this model.</p>
+
+            <h3>Rating Scale</h3>
+            <div style="display:flex;gap:12px;flex-wrap:wrap;margin:12px 0;">
+                <div style="flex:1;min-width:180px;padding:14px;background:#ffe8e8;border-radius:8px;border-left:4px solid #c0392b;">
+                    <div style="font-weight:700;color:#8b1a1a;margin-bottom:4px;">1 — Absent / Hostile</div>
+                    <div style="font-size:0.82rem;color:#7a4a40;">No legislation exists, activity is banned, or the government has actively opposed this dimension. Provides no legal clarity or pathway.</div>
+                </div>
+                <div style="flex:1;min-width:180px;padding:14px;background:#fff3e0;border-radius:8px;border-left:4px solid #e67e22;">
+                    <div style="font-weight:700;color:#7a4000;margin-bottom:4px;">2 — Partial / In Progress</div>
+                    <div style="font-size:0.82rem;color:#7a6040;">Some rules exist or are under development, but gaps, ambiguities, or pending legislation leave significant uncertainty.</div>
+                </div>
+                <div style="flex:1;min-width:180px;padding:14px;background:#e6f4ea;border-radius:8px;border-left:4px solid #2e7d32;">
+                    <div style="font-weight:700;color:#1a5e20;margin-bottom:4px;">3 — Clear &amp; Codified</div>
+                    <div style="font-size:0.82rem;color:#3a6040;">Comprehensive legislation or formal guidance exists, actively enforced, with defined rights and obligations for participants.</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- TABBED DATA SECTION -->
+    <div class="section">
+        <div class="tab-nav">
+            <button class="tab-btn active" onclick="switchTab('scores')">Final Scores</button>
+            <button class="tab-btn" onclick="switchTab('ratings')">Dimension Ratings</button>
+            <button class="tab-btn" onclick="switchTab('tiers')">Tier Analysis</button>
+        </div>
+
+        <!-- TAB 1: FINAL SCORES -->
+        <div class="tab-content active" id="tab-scores">
+            <p>All 20 countries ranked by Regulatory Clarity Index. Ratings shown are the raw 1&ndash;3 scores for each dimension.</p>
+            <div class="data-table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Rank</th>
+                            <th>Country</th>
+                            <th>Score</th>
+                            <th>Tier</th>
+                            <th>Stablecoin</th>
+                            <th>Licensing</th>
+                            <th>Tax</th>
+                            <th>Banking</th>
+                            <th>Enforcement</th>
+                            <th>DeFi</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td class="rank-cell">1</td><td>Japan</td><td class="score-cell">0.944</td><td><span class="tier-badge tier-comprehensive">Comprehensive</span></td><td class="rating-3">3</td><td class="rating-3">3</td><td class="rating-3">3</td><td class="rating-3">3</td><td class="rating-3">3</td><td class="rating-2">2</td></tr>
+                        <tr><td class="rank-cell">2</td><td>Ukraine</td><td class="score-cell">0.889</td><td><span class="tier-badge tier-comprehensive">Comprehensive</span></td><td class="rating-2">2</td><td class="rating-3">3</td><td class="rating-3">3</td><td class="rating-3">3</td><td class="rating-3">3</td><td class="rating-2">2</td></tr>
+                        <tr><td class="rank-cell">2</td><td>Brazil</td><td class="score-cell">0.889</td><td><span class="tier-badge tier-comprehensive">Comprehensive</span></td><td class="rating-2">2</td><td class="rating-3">3</td><td class="rating-3">3</td><td class="rating-3">3</td><td class="rating-3">3</td><td class="rating-2">2</td></tr>
+                        <tr><td class="rank-cell">4</td><td>Thailand</td><td class="score-cell">0.833</td><td><span class="tier-badge tier-comprehensive">Comprehensive</span></td><td class="rating-2">2</td><td class="rating-3">3</td><td class="rating-3">3</td><td class="rating-3">3</td><td class="rating-2">2</td><td class="rating-2">2</td></tr>
+                        <tr><td class="rank-cell">4</td><td>United Kingdom</td><td class="score-cell">0.833</td><td><span class="tier-badge tier-comprehensive">Comprehensive</span></td><td class="rating-2">2</td><td class="rating-3">3</td><td class="rating-3">3</td><td class="rating-2">2</td><td class="rating-3">3</td><td class="rating-2">2</td></tr>
+                        <tr><td class="rank-cell">6</td><td>Philippines</td><td class="score-cell">0.778</td><td><span class="tier-badge tier-developing">Developing</span></td><td class="rating-2">2</td><td class="rating-3">3</td><td class="rating-2">2</td><td class="rating-3">3</td><td class="rating-3">3</td><td class="rating-1">1</td></tr>
+                        <tr><td class="rank-cell">6</td><td>United States</td><td class="score-cell">0.778</td><td><span class="tier-badge tier-developing">Developing</span></td><td class="rating-2">2</td><td class="rating-2">2</td><td class="rating-3">3</td><td class="rating-2">2</td><td class="rating-3">3</td><td class="rating-2">2</td></tr>
+                        <tr><td class="rank-cell">8</td><td>Turkey</td><td class="score-cell">0.722</td><td><span class="tier-badge tier-developing">Developing</span></td><td class="rating-2">2</td><td class="rating-3">3</td><td class="rating-2">2</td><td class="rating-3">3</td><td class="rating-2">2</td><td class="rating-1">1</td></tr>
+                        <tr><td class="rank-cell">8</td><td>South Korea</td><td class="score-cell">0.722</td><td><span class="tier-badge tier-developing">Developing</span></td><td class="rating-2">2</td><td class="rating-3">3</td><td class="rating-2">2</td><td class="rating-2">2</td><td class="rating-2">2</td><td class="rating-2">2</td></tr>
+                        <tr><td class="rank-cell">10</td><td>Nigeria</td><td class="score-cell">0.667</td><td><span class="tier-badge tier-developing">Developing</span></td><td class="rating-2">2</td><td class="rating-2">2</td><td class="rating-2">2</td><td class="rating-3">3</td><td class="rating-2">2</td><td class="rating-1">1</td></tr>
+                        <tr><td class="rank-cell">10</td><td>Indonesia</td><td class="score-cell">0.667</td><td><span class="tier-badge tier-developing">Developing</span></td><td class="rating-1">1</td><td class="rating-3">3</td><td class="rating-3">3</td><td class="rating-2">2</td><td class="rating-2">2</td><td class="rating-1">1</td></tr>
+                        <tr><td class="rank-cell">12</td><td>India</td><td class="score-cell">0.611</td><td><span class="tier-badge tier-developing">Developing</span></td><td class="rating-1">1</td><td class="rating-2">2</td><td class="rating-3">3</td><td class="rating-2">2</td><td class="rating-2">2</td><td class="rating-1">1</td></tr>
+                        <tr><td class="rank-cell">12</td><td>Russia</td><td class="score-cell">0.611</td><td><span class="tier-badge tier-developing">Developing</span></td><td class="rating-1">1</td><td class="rating-2">2</td><td class="rating-3">3</td><td class="rating-2">2</td><td class="rating-2">2</td><td class="rating-1">1</td></tr>
+                        <tr><td class="rank-cell">12</td><td>Argentina</td><td class="score-cell">0.611</td><td><span class="tier-badge tier-developing">Developing</span></td><td class="rating-1">1</td><td class="rating-2">2</td><td class="rating-2">2</td><td class="rating-2">2</td><td class="rating-3">3</td><td class="rating-1">1</td></tr>
+                        <tr><td class="rank-cell">15</td><td>Vietnam</td><td class="score-cell">0.556</td><td><span class="tier-badge tier-ambiguous">Ambiguous</span></td><td class="rating-1">1</td><td class="rating-2">2</td><td class="rating-2">2</td><td class="rating-2">2</td><td class="rating-2">2</td><td class="rating-1">1</td></tr>
+                        <tr><td class="rank-cell">15</td><td>Venezuela</td><td class="score-cell">0.556</td><td><span class="tier-badge tier-ambiguous">Ambiguous</span></td><td class="rating-1">1</td><td class="rating-2">2</td><td class="rating-2">2</td><td class="rating-2">2</td><td class="rating-2">2</td><td class="rating-1">1</td></tr>
+                        <tr><td class="rank-cell">15</td><td>Pakistan</td><td class="score-cell">0.556</td><td><span class="tier-badge tier-ambiguous">Ambiguous</span></td><td class="rating-1">1</td><td class="rating-2">2</td><td class="rating-2">2</td><td class="rating-2">2</td><td class="rating-2">2</td><td class="rating-1">1</td></tr>
+                        <tr><td class="rank-cell">18</td><td>Bangladesh</td><td class="score-cell">0.333</td><td><span class="tier-badge tier-hostile">Hostile</span></td><td class="rating-1">1</td><td class="rating-1">1</td><td class="rating-1">1</td><td class="rating-1">1</td><td class="rating-1">1</td><td class="rating-1">1</td></tr>
+                        <tr><td class="rank-cell">18</td><td>Yemen</td><td class="score-cell">0.333</td><td><span class="tier-badge tier-hostile">Hostile</span></td><td class="rating-1">1</td><td class="rating-1">1</td><td class="rating-1">1</td><td class="rating-1">1</td><td class="rating-1">1</td><td class="rating-1">1</td></tr>
+                        <tr><td class="rank-cell">18</td><td>Ethiopia</td><td class="score-cell">0.333</td><td><span class="tier-badge tier-hostile">Hostile</span></td><td class="rating-1">1</td><td class="rating-1">1</td><td class="rating-1">1</td><td class="rating-1">1</td><td class="rating-1">1</td><td class="rating-1">1</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <p style="font-size:0.78rem; color:#9aa5b0;">Ratings sourced primarily from Library of Congress (Regulation of Cryptocurrency), PwC Global Crypto Regulation Report 2025, and national regulatory body announcements. No country scored above 0.944 due to universal gaps in DeFi-specific legislation.</p>
+        </div>
+
+        <!-- TAB 2: DIMENSION RATINGS -->
+        <div class="tab-content" id="tab-ratings">
+            <p>Each of the six dimensions captures a distinct layer of crypto legal maturity. Below are the rating criteria and country-level assessments for each dimension.</p>
+            <div class="dim-grid">
+                <div class="dim-card">
+                    <h4>Stablecoin Law</h4>
+                    <p>Legislation governing stablecoin issuance, reserve requirements, redemption rights, and authorized issuers.</p>
+                    <div class="rating-row"><strong>3:</strong> Dedicated stablecoin statute (e.g., Japan PSA, UK DSB)</div>
+                    <div class="rating-row"><strong>2:</strong> Covered under broader crypto or payments law</div>
+                    <div class="rating-row"><strong>1:</strong> No specific legal recognition or banned</div>
+                    <div style="margin-top:8px;font-size:0.78rem;color:#9aa5b0;">Rating 3: Japan &nbsp;|&nbsp; Rating 2: Ukraine, Brazil, Thailand, UK, Philippines, US, Turkey, South Korea, Nigeria &nbsp;|&nbsp; Rating 1: All others</div>
+                </div>
+                <div class="dim-card">
+                    <h4>Licensing Framework</h4>
+                    <p>Whether exchanges, custodians, and Virtual Asset Service Providers (VASPs) must register or obtain licenses.</p>
+                    <div class="rating-row"><strong>3:</strong> Mandatory licensing with clear criteria &amp; oversight</div>
+                    <div class="rating-row"><strong>2:</strong> Registration required but framework incomplete</div>
+                    <div class="rating-row"><strong>1:</strong> No formal licensing regime or prohibited</div>
+                    <div style="margin-top:8px;font-size:0.78rem;color:#9aa5b0;">Rating 3: Japan, Ukraine, Brazil, Thailand, UK, Philippines, Turkey, Indonesia, South Korea &nbsp;|&nbsp; Rating 1: Bangladesh, Yemen, Ethiopia</div>
+                </div>
+                <div class="dim-card">
+                    <h4>Tax Clarity</h4>
+                    <p>Whether the tax authority has issued clear guidance on crypto gains, income, mining rewards, and staking income.</p>
+                    <div class="rating-row"><strong>3:</strong> Formal guidance or legislation covering major event types</div>
+                    <div class="rating-row"><strong>2:</strong> Partial guidance; some categories remain unclear</div>
+                    <div class="rating-row"><strong>1:</strong> No guidance; treated as unregulated or banned</div>
+                    <div style="margin-top:8px;font-size:0.78rem;color:#9aa5b0;">Rating 3: Japan, Ukraine, Brazil, Thailand, UK, US, Indonesia, India, Russia &nbsp;|&nbsp; Rating 1: Bangladesh, Yemen, Ethiopia</div>
+                </div>
+                <div class="dim-card">
+                    <h4>Banking Access</h4>
+                    <p>Whether licensed crypto businesses can open bank accounts and access payment rails without systematic de-banking.</p>
+                    <div class="rating-row"><strong>3:</strong> Legally protected banking access for VASPs</div>
+                    <div class="rating-row"><strong>2:</strong> Access in practice but no explicit legal right</div>
+                    <div class="rating-row"><strong>1:</strong> Systemic de-banking or banking prohibited</div>
+                    <div style="margin-top:8px;font-size:0.78rem;color:#9aa5b0;">Rating 3: Japan, Ukraine, Brazil, Thailand, Philippines, Nigeria, Turkey &nbsp;|&nbsp; Rating 1: Bangladesh, Yemen, Ethiopia</div>
+                </div>
+                <div class="dim-card">
+                    <h4>Enforcement Stance</h4>
+                    <p>Whether regulators actively enforce existing crypto rules and have taken meaningful action against non-compliant actors.</p>
+                    <div class="rating-row"><strong>3:</strong> Active enforcement with track record of actions</div>
+                    <div class="rating-row"><strong>2:</strong> Selective or developing enforcement capacity</div>
+                    <div class="rating-row"><strong>1:</strong> No enforcement or enforcement used to suppress</div>
+                    <div style="margin-top:8px;font-size:0.78rem;color:#9aa5b0;">Rating 3: Japan, Ukraine, Brazil, UK, Philippines, US, Argentina &nbsp;|&nbsp; Rating 1: Bangladesh, Yemen, Ethiopia</div>
+                </div>
+                <div class="dim-card">
+                    <h4>DeFi Recognition</h4>
+                    <p>Whether DeFi protocols, DAOs, or decentralized exchanges are acknowledged within the legal framework.</p>
+                    <div class="rating-row"><strong>3:</strong> Explicit legal recognition or regulatory sandbox</div>
+                    <div class="rating-row"><strong>2:</strong> Acknowledged in policy but not formally defined</div>
+                    <div class="rating-row"><strong>1:</strong> Not recognized or implicitly prohibited</div>
+                    <div style="margin-top:8px;font-size:0.78rem;color:#9aa5b0;"><em>No country in the sample received a rating of 3.</em> Rating 2: Japan, Ukraine, Brazil, Thailand, UK, US, South Korea &nbsp;|&nbsp; Rating 1: All others</div>
+                </div>
+            </div>
+            <div class="note-box">
+                <strong>Note on DeFi Recognition:</strong> The absence of any country scoring 3 on DeFi Recognition reflects the current state of global regulation &mdash; no jurisdiction has comprehensively codified DeFi protocol status, DAO legal personhood, and decentralized exchange obligations into a single, enforced framework as of early 2026. This is a known frontier that all countries are navigating. The EU's MiCA framework (effective Dec 2024) goes furthest but explicitly defers full DeFi coverage to future legislation.
+            </div>
+        </div>
+
+        <!-- TAB 3: TIER ANALYSIS -->
+        <div class="tab-content" id="tab-tiers">
+            <p>Countries are grouped into four tiers based on their composite score. These thresholds reflect natural breaks in regulatory maturity rather than arbitrary cutpoints.</p>
+            <div class="data-table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Tier</th>
+                            <th>Score Range</th>
+                            <th>Countries (n)</th>
+                            <th>Characteristics</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><span class="tier-badge tier-comprehensive">Comprehensive</span></td>
+                            <td>0.83 &ndash; 1.0</td>
+                            <td>Japan, Ukraine, Brazil, Thailand, UK <em>(5)</em></td>
+                            <td style="white-space:normal;">Licensing, tax, banking, and enforcement all clearly defined. Stablecoin legislation exists or is close to enacted. DeFi acknowledged at policy level. Generally favorable for institutional participants.</td>
+                        </tr>
+                        <tr>
+                            <td><span class="tier-badge tier-developing">Developing</span></td>
+                            <td>0.61 &ndash; 0.82</td>
+                            <td>Philippines, USA, Turkey, S. Korea, Nigeria, Indonesia, India, Russia, Argentina <em>(9)</em></td>
+                            <td style="white-space:normal;">Core framework (licensing + tax) in place but gaps remain — often in stablecoin law or DeFi recognition. Regulatory uncertainty may still deter some institutional actors. Active enforcement developing.</td>
+                        </tr>
+                        <tr>
+                            <td><span class="tier-badge tier-ambiguous">Ambiguous</span></td>
+                            <td>0.40 &ndash; 0.60</td>
+                            <td>Vietnam, Venezuela, Pakistan <em>(3)</em></td>
+                            <td style="white-space:normal;">Rules exist but are inconsistently applied, frequently changed, or openly contradictory. Banking access unreliable. Users and businesses operate in a gray zone with meaningful legal risk.</td>
+                        </tr>
+                        <tr>
+                            <td><span class="tier-badge tier-hostile">Hostile</span></td>
+                            <td>&lt; 0.40</td>
+                            <td>Bangladesh, Yemen, Ethiopia <em>(3)</em></td>
+                            <td style="white-space:normal;">Crypto activity is banned, actively suppressed, or effectively impossible due to complete absence of legal infrastructure. No path to compliance exists for formal businesses.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <h3>Key Observations</h3>
+            <ul>
+                <li><strong>Japan leads (0.944):</strong> The only country in the sample with a dedicated stablecoin law (Payment Services Act revision), comprehensive VASP licensing, and full tax guidance. Japan's strict rules have also constrained adoption &mdash; it ranks 17th in economic adoption (0.284).</li>
+                <li><strong>Regulatory paradox:</strong> The top 5 regulatory countries include three with relatively low economic adoption scores (Japan, Thailand, UK). Comprehensive regulation appears to slow grassroots adoption while enabling institutional frameworks.</li>
+                <li><strong>US classified as Developing (0.778):</strong> Despite being the largest crypto market, the US lacks a unified federal framework &mdash; rules vary by state and agency (SEC vs. CFTC jurisdiction dispute). No stablecoin law passed as of data collection.</li>
+                <li><strong>Vietnam/Vietnam paradox:</strong> Vietnam ranks #1 in economic adoption but sits in the Ambiguous regulatory tier &mdash; the widest gap in the entire index between adoption and regulatory maturity.</li>
+                <li><strong>All Hostile countries have near-zero adoption:</strong> Bangladesh, Yemen, and Ethiopia all score below 0.28 in economic adoption. No country with Hostile regulation has achieved meaningful blockchain economic penetration in this sample.</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- RATING METHODOLOGY -->
+    <div class="section">
+        <div class="card">
+            <h2>Rating Methodology</h2>
+            <p>Ratings are assigned through a structured review of primary and secondary legal sources. The process for each country and dimension:</p>
+            <ul>
+                <li><strong>Primary source review:</strong> Check Library of Congress cryptocurrency regulation pages, national financial regulator websites (FSA, SEC, FCA, RBI, etc.), and official government announcements.</li>
+                <li><strong>Secondary source cross-reference:</strong> Verify against PwC Global Crypto Regulation Report 2025 and Chainalysis Geography of Cryptocurrency Report.</li>
+                <li><strong>Rating assignment:</strong> Apply the 1/2/3 rubric independently for each dimension based on whether clear, enforceable rules exist.</li>
+                <li><strong>Conflict resolution:</strong> Where sources disagree, the more conservative (lower) rating is applied and noted.</li>
+            </ul>
+            <div class="note-box">
+                <strong>Known data gaps:</strong> Ratings for Venezuela and Yemen are based on limited publicly available information. Venezuela's regulatory environment is particularly volatile and may lag real conditions. Yemen's regulatory situation is complicated by the ongoing conflict limiting government function. These are marked as lower-confidence entries. Pakistan's framework changed rapidly in 2025&ndash;2026 with the establishment of the Pakistan Digital Asset Authority (PDAA); ratings reflect the pre-PDAA baseline and may understate current progress.
+            </div>
+        </div>
+    </div>
+
+    <!-- LIMITATIONS -->
+    <div class="section">
+        <div class="card">
+            <h2>Key Limitations</h2>
+            <ul>
+                <li><strong>Ordinal ratings are subjective:</strong> The 1/2/3 rubric requires judgment calls at the 1/2 and 2/3 boundaries. Two analysts might rate the same country's licensing framework differently based on interpretation of "comprehensive." Inter-rater reliability has not been formally tested.</li>
+                <li><strong>Point-in-time snapshot:</strong> Regulatory environments change rapidly. Several countries had major legislative changes in 2025 (EU MiCA, UAE VARA, Pakistan PDAA). Ratings reflect the state at data collection and may be quickly outdated.</li>
+                <li><strong>No DeFi 3 rating possible (current state):</strong> The absence of any country achieving 3 on DeFi Recognition is a real constraint of the current regulatory landscape, not a modeling artifact. This will change as MiCA implementation progresses.</li>
+                <li><strong>Enforcement quality not captured:</strong> A country with a rating of 3 on Enforcement may be enforcing regulations aggressively against consumers (bad) or against fraud (good). The rating measures existence and activity of enforcement, not its quality or market-friendliness.</li>
+                <li><strong>20-country sample bias:</strong> The sample overrepresents countries with significant crypto activity. Countries with neither activity nor regulation (most of sub-Saharan Africa, Central Asia) are not represented and would largely score as Hostile.</li>
+                <li><strong>Federal vs. sub-national variation:</strong> For federal systems (US, India, Brazil, Australia), ratings reflect the national framework. Significant state/provincial variation may exist — e.g., Wyoming (US) has more progressive crypto laws than the federal baseline.</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- SOURCES -->
+    <div class="section">
+        <div class="card">
+            <h2>Data Sources</h2>
+            <div class="source-grid">
+                <div class="source-item">
+                    <span class="src-label">Primary Legal Research</span>
+                    <span class="src-name">Library of Congress — Regulation of Cryptocurrency</span>
+                    <span class="src-year">2024&ndash;2025</span>
+                    <a href="https://www.loc.gov/law/help/cryptocurrency/world-survey.php" target="_blank" rel="noopener">loc.gov</a>
+                </div>
+                <div class="source-item">
+                    <span class="src-label">Industry Benchmark</span>
+                    <span class="src-name">PwC Global Crypto Regulation Report</span>
+                    <span class="src-year">2025</span>
+                    <a href="https://www.pwc.com/gx/en/financial-services/pdf/global-crypto-regulation-report-2025.pdf" target="_blank" rel="noopener">pwc.com</a>
+                </div>
+                <div class="source-item">
+                    <span class="src-label">Adoption Context</span>
+                    <span class="src-name">Chainalysis Geography of Cryptocurrency Report</span>
+                    <span class="src-year">2025</span>
+                    <a href="https://www.chainalysis.com/blog/2025-global-crypto-adoption-index/" target="_blank" rel="noopener">chainalysis.com</a>
+                </div>
+                <div class="source-item">
+                    <span class="src-label">Japan Framework</span>
+                    <span class="src-name">Financial Services Agency (FSA) Japan &mdash; VASP licensing, PSA stablecoin rules</span>
+                    <span class="src-year">2024&ndash;2025</span>
+                    <a href="https://www.fsa.go.jp/en/" target="_blank" rel="noopener">fsa.go.jp</a>
+                </div>
+                <div class="source-item">
+                    <span class="src-label">European Union</span>
+                    <span class="src-name">MiCA Regulation (EU) 2023/1114 &mdash; Markets in Crypto-Assets</span>
+                    <span class="src-year">Effective Dec 2024</span>
+                    <a href="https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX%3A32023R1114" target="_blank" rel="noopener">eur-lex.europa.eu</a>
+                </div>
+                <div class="source-item">
+                    <span class="src-label">UK Framework</span>
+                    <span class="src-name">FCA Crypto Asset Registration &amp; HM Treasury Digital Securities Sandbox</span>
+                    <span class="src-year">2024&ndash;2025</span>
+                    <a href="https://www.fca.org.uk/cryptoassets" target="_blank" rel="noopener">fca.org.uk</a>
+                </div>
+                <div class="source-item">
+                    <span class="src-label">Brazil Framework</span>
+                    <span class="src-name">Banco Central do Brasil &amp; CVM — Lei das Criptomoedas 14.478/2022</span>
+                    <span class="src-year">2023&ndash;2025</span>
+                    <a href="https://www.bcb.gov.br" target="_blank" rel="noopener">bcb.gov.br</a>
+                </div>
+                <div class="source-item">
+                    <span class="src-label">US Framework</span>
+                    <span class="src-name">SEC / CFTC crypto guidance, FinCEN MSB requirements</span>
+                    <span class="src-year">2024&ndash;2025</span>
+                    <a href="https://www.sec.gov/crypto-assets" target="_blank" rel="noopener">sec.gov</a>
+                </div>
+            </div>
+            <p style="font-size:0.78rem; color:#9aa5b0; margin-top:12px;">Last updated: Early 2026. Country-level regulatory conditions are reviewed on an ongoing basis. The regulatory landscape is rapidly evolving &mdash; this snapshot may not reflect post-Q1 2026 developments.</p>
+        </div>
+    </div>
+
+    <div class="footer">
+        University Research Project &middot; Global Blockchain Adaptability Index &middot; Regulatory Clarity Methodology &middot; 2026
+    </div>
+
+    <script>
+    function switchTab(tabId) {
+        document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+        document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+        document.getElementById('tab-' + tabId).classList.add('active');
+        const tabs = ['scores', 'ratings', 'tiers'];
+        const idx = tabs.indexOf(tabId);
+        document.querySelectorAll('.tab-btn')[idx].classList.add('active');
+    }
+    </script>
+
+</body>
+</html>
