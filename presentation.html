@@ -1176,9 +1176,12 @@
             slides.forEach((s, i) => s.classList.toggle('is-active', i === current));
             counter.textContent = `${pad(current + 1)} / ${pad(total)}`;
             fill.style.width = `${((current + 1) / total) * 100}%`;
-            const url = new URL(window.location.href);
-            url.hash = `s${current + 1}`;
-            history.replaceState(null, '', url);
+            // Update hash silently for shareable links, but never use it on load
+            try {
+                const url = new URL(window.location.href);
+                url.hash = `s${current + 1}`;
+                history.replaceState(null, '', url);
+            } catch (e) { /* file:// in some browsers blocks history; safe to ignore */ }
         }
 
         document.addEventListener('keydown', (e) => {
@@ -1201,8 +1204,9 @@
             else if (x > (window.innerWidth * 2) / 3) show(current + 1);
         });
 
-        const initial = parseInt((window.location.hash || '#s1').replace(/[^0-9]/g, ''), 10);
-        show(Math.max(0, (isNaN(initial) ? 1 : initial) - 1));
+        // Always start at slide 1 on a fresh load. (Previously read the URL hash,
+        // which caused the deck to feel "stuck" if a user reloaded on the last slide.)
+        show(0);
 
         document.body.addEventListener('dblclick', () => {
             if (!document.fullscreenElement) document.documentElement.requestFullscreen?.();
