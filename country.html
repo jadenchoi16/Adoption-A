@@ -853,6 +853,25 @@
         return 'bottom tier';
     }
 
+    // Plain-English explanation of what each tier implies for the country's
+    // overall blockchain position. Designed to read as a continuation of
+    // "in the {band}, meaning ${rankBandMeaning(rank)}."
+    function rankBandMeaning(rank) {
+        if (rank <= 3) {
+            return 'the country is balancing real economic activity, clear regulation, and built-out infrastructure all at once, which puts it in the strongest combined position for blockchain adoption in the index';
+        }
+        if (rank <= 7) {
+            return 'the country is above average across the board, with at least two of the three pillars (economic, regulatory, technical) clearly working. A solid foundation with one or two gaps still to close';
+        }
+        if (rank <= 13) {
+            return 'the picture is mixed: meaningful activity in some pillars, real gaps in others. Often heavy consumer adoption without matching rules, or strong rules without matching usage';
+        }
+        if (rank <= 17) {
+            return 'the country lags on most dimensions, with strength in at most one pillar while the other two pull the overall position down';
+        }
+        return 'core pillars are largely missing or actively hostile, leaving little legal pathway for participation and limited infrastructure to support it';
+    }
+
     // Same dimension-specific band labels used on the map's score guide
     function scoreBand(score, dimKey) {
         const labels = {
@@ -921,7 +940,7 @@
         const overallBandLabel = scoreBand(c.overall, 'overall');
         const strongBandLabel = scoreBand(strong.score, strong.key);
         const weakBandLabel = scoreBand(weak.score, weak.key);
-        const contextLine = `An overall score of <strong>${c.overall.toFixed(3)}</strong> places ${c.country} at <strong>#${c.overallRank} of 20</strong> (${overallBandLabel}), in the ${band}. Its strongest dimension is <strong>${strong.label}</strong> (#${strong.rank}, score ${strong.score.toFixed(3)}, ${strongBandLabel}); its weakest is <strong>${weak.label}</strong> (#${weak.rank}, score ${weak.score.toFixed(3)}, ${weakBandLabel}).`;
+        const contextLine = `An overall score of <strong>${c.overall.toFixed(3)}</strong> places ${c.country} at <strong>#${c.overallRank} of 20</strong> (${overallBandLabel}), in the ${band}, meaning ${rankBandMeaning(c.overallRank)}. Its strongest dimension is <strong>${strong.label}</strong> (#${strong.rank}, score ${strong.score.toFixed(3)}, ${strongBandLabel}); its weakest is <strong>${weak.label}</strong> (#${weak.rank}, score ${weak.score.toFixed(3)}, ${weakBandLabel}).`;
 
         let html = `
         <!-- HERO -->
