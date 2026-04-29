@@ -980,27 +980,8 @@
                 </div>
             </div>
         </div>
-        <div class="score-guide-bands">
-            <div class="score-band band-leader">
-                <div class="score-band-range">0.70&ndash;1.00</div>
-                <div class="score-band-label">Leader</div>
-                <div class="score-band-detail">Top of the index, exemplifies the dimension.</div>
-            </div>
-            <div class="score-band band-strong">
-                <div class="score-band-range">0.50&ndash;0.70</div>
-                <div class="score-band-label">Strong</div>
-                <div class="score-band-detail">Well-developed, with clear strengths and visible gaps.</div>
-            </div>
-            <div class="score-band band-developing">
-                <div class="score-band-range">0.30&ndash;0.50</div>
-                <div class="score-band-label">Developing</div>
-                <div class="score-band-detail">Real activity but still uneven across sub-indicators.</div>
-            </div>
-            <div class="score-band band-limited">
-                <div class="score-band-range">0.00&ndash;0.30</div>
-                <div class="score-band-label">Limited</div>
-                <div class="score-band-detail">Floor of the index: missing pillars or hostile environment.</div>
-            </div>
+        <div class="score-guide-bands" id="score-guide-bands">
+            <!-- band cards rendered dynamically based on active dimension -->
         </div>
     </div>
 
@@ -1286,27 +1267,55 @@
     const dimMeta = {
         overall: {
             title: "Overall Score",
+            shortTitle: "overall score",
             min: 0.25, max: 0.80,
             colors: ["#f0f7fa","#7ec8d8","#2e8fa0","#1a5f70","#0a3d50"],
-            desc: "<strong>What you&rsquo;re looking at.</strong> An equal-weighted composite of all three pillars (Economic Adoption, Regulatory Clarity, Technical Infrastructure). All scores are normalized to a <strong>0&ndash;1</strong> scale where higher means a country is better positioned overall for blockchain adoption within our sample of 20 countries."
+            desc: "<strong>What you&rsquo;re looking at.</strong> An equal-weighted composite of all three pillars (Economic Adoption, Regulatory Clarity, Technical Infrastructure). All scores are normalized to a <strong>0&ndash;1</strong> scale where higher means a country is better positioned overall for blockchain adoption within our sample of 20 countries.",
+            bands: [
+                { range: "0.70&ndash;1.00", label: "Best-positioned",   detail: "Strong on all three pillars at once. Effectively ready for blockchain adoption end-to-end." },
+                { range: "0.50&ndash;0.70", label: "Well-positioned",   detail: "Two of three pillars are strong. A clear, working ecosystem with one visible gap." },
+                { range: "0.30&ndash;0.50", label: "Developing",        detail: "Activity is real but uneven across pillars. Often strong on one, weak on the others." },
+                { range: "0.00&ndash;0.30", label: "Lagging",           detail: "Bottom of the index. Missing pillars, hostile environment, or both." }
+            ]
         },
         economic: {
             title: "Economic Adoption",
+            shortTitle: "crypto adoption",
             min: 0.10, max: 0.85,
             colors: ["#f0faf4","#86d3a8","#2ebc7a","#1a7a4e","#0d3d28"],
-            desc: "<strong>What you&rsquo;re looking at.</strong> How much real-world crypto activity is happening in the country: ownership rate, exchange volume per GDP, remittances per capita, and Chainalysis CEX/DeFi sub-rankings. Higher = more crypto being used by actual people, not just legal on paper."
+            desc: "<strong>What you&rsquo;re looking at.</strong> How much real-world crypto activity is happening in the country: ownership rate, exchange volume per GDP, remittances per capita, and Chainalysis CEX/DeFi sub-rankings. Higher = more crypto being used by actual people, not just legal on paper.",
+            bands: [
+                { range: "0.70&ndash;1.00", label: "Highest adoption",  detail: "Among the most crypto-active populations in the world: deep CEX flows, high ownership, or major remittance corridors." },
+                { range: "0.50&ndash;0.70", label: "High adoption",     detail: "Active retail and/or institutional usage with one clear demand driver (ownership, remittances, trading scale)." },
+                { range: "0.30&ndash;0.50", label: "Moderate adoption", detail: "Some activity but limited to specific channels. Many citizens still rely on traditional finance." },
+                { range: "0.00&ndash;0.30", label: "Low adoption",      detail: "Crypto is rarely used by the general population. Activity, if any, is mostly speculative or driven by elites." }
+            ]
         },
         regulatory: {
             title: "Regulatory Clarity",
+            shortTitle: "legal clarity",
             min: 0.30, max: 0.95,
             colors: ["#fef3e0","#f5d6a0","#d4915c","#9b5a30","#5c2d10"],
-            desc: "<strong>What you&rsquo;re looking at.</strong> How clearly the country has defined its legal framework across six dimensions: stablecoin law, exchange licensing, tax treatment, banking access, enforcement, and DeFi recognition. Higher = more legal certainty for users and businesses; lower = ambiguous, hostile, or absent rules."
+            desc: "<strong>What you&rsquo;re looking at.</strong> How clearly the country has defined its legal framework across six dimensions: stablecoin law, exchange licensing, tax treatment, banking access, enforcement, and DeFi recognition. Higher = more legal certainty for users and businesses; lower = ambiguous, hostile, or absent rules.",
+            bands: [
+                { range: "0.70&ndash;1.00", label: "Most legally clear",   detail: "Comprehensive framework: licensing, tax, banking access, and enforcement all codified. Safest jurisdictions for crypto businesses." },
+                { range: "0.50&ndash;0.70", label: "Clear with gaps",      detail: "Core licensing and tax in place, but stablecoin or DeFi rules are still missing or in progress." },
+                { range: "0.30&ndash;0.50", label: "Partial framework",    detail: "Some areas defined, others ambiguous. Compliance is possible but uncertain in places." },
+                { range: "0.00&ndash;0.30", label: "Hostile or absent",    detail: "Crypto effectively banned or unregulated. Operating here means no legal protection at all." }
+            ]
         },
         technical: {
             title: "Technical Infrastructure",
+            shortTitle: "network infrastructure",
             min: 0.03, max: 0.80,
             colors: ["#e8f0fe","#a4c8f0","#5b8fd4","#2e5fa1","#143566"],
-            desc: "<strong>What you&rsquo;re looking at.</strong> How robust the country&rsquo;s blockchain network footprint is: BTC and ETH nodes per 100k internet users, Bitcoin mining hashrate share, Lightning Network density, and an enabling-environment factor (electricity, internet speed). Higher = stronger physical / network presence."
+            desc: "<strong>What you&rsquo;re looking at.</strong> How robust the country&rsquo;s blockchain network footprint is: BTC and ETH nodes per 100k internet users, Bitcoin mining hashrate share, Lightning Network density, and an enabling-environment factor (electricity, internet speed). Higher = stronger physical / network presence.",
+            bands: [
+                { range: "0.70&ndash;1.00", label: "Network leader",       detail: "Hosts a meaningful share of global mining or node infrastructure. Often a regional or global hub." },
+                { range: "0.50&ndash;0.70", label: "Strong network",       detail: "Solid node and Lightning density per capita. Well-connected, even if mining share is small." },
+                { range: "0.30&ndash;0.50", label: "Developing network",   detail: "Some node and Lightning presence, but per-capita density remains modest." },
+                { range: "0.00&ndash;0.30", label: "Minimal network",      detail: "Very thin physical footprint. Few nodes, no meaningful mining, weak enabling environment." }
+            ]
         }
     };
 
@@ -1364,15 +1373,12 @@
         if (data) {
             const rank = getRank(data);
             const score = getScore(data);
-            let bandClass = 't-limited', bandLabel = 'Limited';
-            if (score >= 0.70) { bandClass = 't-leader'; bandLabel = 'Leader'; }
-            else if (score >= 0.50) { bandClass = 't-strong'; bandLabel = 'Strong'; }
-            else if (score >= 0.30) { bandClass = 't-developing'; bandLabel = 'Developing'; }
+            const band = bandFor(score);
             let html = `
                 <h3>${data.country} <span class="rank-badge">#${rank}</span></h3>
                 <div class="score-label">${dimMeta[activeDim].title}</div>
                 <div class="score-line">${score.toFixed(3)}</div>
-                <span class="score-band-badge ${bandClass}">${bandLabel} &middot; ranked ${rank} of 20</span>
+                <span class="score-band-badge ${band.cls}">${band.label} &middot; #${rank} of 20</span>
                 <div class="sub-scores">
                     <div class="sub-score-item">
                         <div class="sub-score-label">Economic</div>
@@ -1584,6 +1590,29 @@
             ctx.fillStyle = colorScale(val);
             ctx.fillRect(i, 0, 1, canvas.height);
         }
+        renderBands();
+    }
+
+    function renderBands() {
+        const meta = dimMeta[activeDim];
+        const cls = ["band-leader","band-strong","band-developing","band-limited"];
+        const host = document.getElementById("score-guide-bands");
+        if (!host) return;
+        host.innerHTML = meta.bands.map((b, i) => `
+            <div class="score-band ${cls[i]}">
+                <div class="score-band-range">${b.range}</div>
+                <div class="score-band-label">${b.label}</div>
+                <div class="score-band-detail">${b.detail}</div>
+            </div>`).join("");
+    }
+
+    // Returns the band label for a given numeric score on the active dimension
+    function bandFor(score) {
+        const meta = dimMeta[activeDim];
+        if (score >= 0.70) return { label: meta.bands[0].label, cls: "t-leader" };
+        if (score >= 0.50) return { label: meta.bands[1].label, cls: "t-strong" };
+        if (score >= 0.30) return { label: meta.bands[2].label, cls: "t-developing" };
+        return { label: meta.bands[3].label, cls: "t-limited" };
     }
     renderLegend();
 

@@ -846,6 +846,21 @@
         return 'bottom tier';
     }
 
+    // Same dimension-specific band labels used on the map's score guide
+    function scoreBand(score, dimKey) {
+        const labels = {
+            overall:    ['Best-positioned',   'Well-positioned',   'Developing',          'Lagging'],
+            economic:   ['Highest adoption',  'High adoption',     'Moderate adoption',   'Low adoption'],
+            regulatory: ['Most legally clear','Clear with gaps',   'Partial framework',   'Hostile or absent'],
+            technical:  ['Network leader',    'Strong network',    'Developing network',  'Minimal network']
+        };
+        const set = labels[dimKey] || labels.overall;
+        if (score >= 0.70) return set[0];
+        if (score >= 0.50) return set[1];
+        if (score >= 0.30) return set[2];
+        return set[3];
+    }
+
     // Compute scores and ranks
     countries.forEach(c => {
         c.overall = +((c.economic.score + c.regulatory.score + c.technical.score) / 3).toFixed(3);
@@ -896,7 +911,10 @@
         const m = meanings[c.country] || { headline: '', takeaway: '' };
         const { strong, weak } = dimRanks(c);
         const band = rankBand(c.overallRank);
-        const contextLine = `An overall score of <strong>${c.overall.toFixed(3)}</strong> places ${c.country} at <strong>#${c.overallRank} of 20</strong>, in the ${band}. Its strongest dimension is <strong>${strong.label}</strong> (#${strong.rank}, score ${strong.score.toFixed(3)}); its weakest is <strong>${weak.label}</strong> (#${weak.rank}, score ${weak.score.toFixed(3)}).`;
+        const overallBandLabel = scoreBand(c.overall, 'overall');
+        const strongBandLabel = scoreBand(strong.score, strong.key);
+        const weakBandLabel = scoreBand(weak.score, weak.key);
+        const contextLine = `An overall score of <strong>${c.overall.toFixed(3)}</strong> places ${c.country} at <strong>#${c.overallRank} of 20</strong> (${overallBandLabel}), in the ${band}. Its strongest dimension is <strong>${strong.label}</strong> (#${strong.rank}, score ${strong.score.toFixed(3)}, ${strongBandLabel}); its weakest is <strong>${weak.label}</strong> (#${weak.rank}, score ${weak.score.toFixed(3)}, ${weakBandLabel}).`;
 
         let html = `
         <!-- HERO -->
