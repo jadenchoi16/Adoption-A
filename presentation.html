@@ -1,0 +1,949 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Capstone Seminar &middot; Global Blockchain Adaptability Index</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=VT323&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700;8..60,800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+        html, body {
+            height: 100%;
+            overflow: hidden;
+            background: #0a1620;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            color: #1a2a3a;
+        }
+
+        .deck {
+            position: fixed;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .slide {
+            position: absolute;
+            inset: 0;
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            background: #fafaf7;
+            padding: 60px 90px;
+            overflow: hidden;
+        }
+        .slide.is-active { display: flex; }
+        .slide.is-dark { background: #0a1620; color: #f0f4f8; }
+        .slide.is-tinted { background: #f4f0e8; }
+
+        /* === COMMON TYPOGRAPHY === */
+        .eyebrow {
+            font-family: 'VT323', monospace;
+            font-size: 1.05rem;
+            letter-spacing: 2.5px;
+            text-transform: uppercase;
+            color: #0a4c6a;
+            margin-bottom: 28px;
+        }
+        .slide.is-dark .eyebrow { color: #5ba8b5; }
+        .slide.is-tinted .eyebrow { color: #9b5a30; }
+
+        h1.title {
+            font-family: 'Source Serif 4', Georgia, serif;
+            font-size: 5.4rem;
+            font-weight: 800;
+            line-height: 1.02;
+            letter-spacing: -1.5px;
+            color: #f0f4f8;
+            max-width: 1100px;
+        }
+        h1.title .accent { color: #5ba8b5; }
+        h1.title .small { font-size: 2.6rem; font-weight: 600; color: #c0d2dc; display: block; margin-top: 24px; letter-spacing: -0.5px; }
+
+        h2 {
+            font-family: 'Source Serif 4', Georgia, serif;
+            font-size: 3.4rem;
+            font-weight: 700;
+            color: #1a2a3a;
+            line-height: 1.08;
+            letter-spacing: -0.8px;
+            max-width: 1100px;
+            margin-bottom: 28px;
+        }
+        .slide.is-dark h2 { color: #f0f4f8; }
+        .slide.is-dark h2 .accent { color: #5ba8b5; }
+        h2 .accent { color: #0a4c6a; }
+        h2 .accent-warm { color: #9b5a30; }
+
+        h3 {
+            font-family: 'Source Serif 4', Georgia, serif;
+            font-size: 2.1rem;
+            font-weight: 700;
+            color: #1a2a3a;
+            margin-bottom: 16px;
+            line-height: 1.2;
+        }
+        .slide.is-dark h3 { color: #f0f4f8; }
+
+        p, li {
+            font-size: 1.4rem;
+            line-height: 1.5;
+            color: #2c3e50;
+            max-width: 1000px;
+        }
+        .slide.is-dark p, .slide.is-dark li { color: #d0dae3; }
+        p.lede {
+            font-size: 1.6rem;
+            color: #3c4d5e;
+            margin-bottom: 24px;
+        }
+        .slide.is-dark p.lede { color: #c0d2dc; }
+        p strong { color: #0a3d62; }
+        .slide.is-dark p strong { color: #5ba8b5; }
+        em { font-style: italic; color: #1a6b7a; }
+        .slide.is-dark em { color: #9bdce8; }
+
+        ul {
+            list-style: none;
+            margin: 18px 0;
+        }
+        ul.bulleted li {
+            position: relative;
+            padding-left: 32px;
+            margin-bottom: 14px;
+        }
+        ul.bulleted li::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 12px;
+            width: 18px;
+            height: 2px;
+            background: #0a4c6a;
+        }
+        .slide.is-dark ul.bulleted li::before { background: #5ba8b5; }
+
+        /* === LAYOUTS === */
+        .two-col {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 64px;
+            align-items: start;
+        }
+        .two-col-3-7 {
+            display: grid;
+            grid-template-columns: 3fr 7fr;
+            gap: 56px;
+            align-items: start;
+        }
+        .three-col {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 28px;
+        }
+        .four-col {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 24px;
+        }
+
+        /* === PILLAR CARD === */
+        .pillar {
+            background: #fff;
+            border-radius: 14px;
+            padding: 28px 26px;
+            border: 1px solid #ebebeb;
+            border-top: 4px solid #ccc;
+        }
+        .pillar.p-econ { border-top-color: #1a7a4e; }
+        .pillar.p-reg  { border-top-color: #9b5a30; }
+        .pillar.p-tech { border-top-color: #2e5fa1; }
+        .pillar h4 {
+            font-family: 'Source Serif 4', Georgia, serif;
+            font-size: 1.3rem;
+            color: #1a2a3a;
+            margin-bottom: 4px;
+        }
+        .pillar .weight {
+            font-family: 'VT323', monospace;
+            font-size: 0.95rem;
+            color: #7a8a9a;
+            letter-spacing: 1.2px;
+            text-transform: uppercase;
+            margin-bottom: 14px;
+        }
+        .pillar p { font-size: 1.05rem; line-height: 1.5; color: #2c3e50; }
+
+        /* === INDICATOR LIST === */
+        .indicator-list {
+            margin-top: 20px;
+        }
+        .indicator-row {
+            display: grid;
+            grid-template-columns: 90px 1fr;
+            gap: 22px;
+            align-items: baseline;
+            padding: 14px 0;
+            border-bottom: 1px solid #ebe6db;
+        }
+        .indicator-row:last-child { border-bottom: none; }
+        .indicator-weight {
+            font-family: 'VT323', monospace;
+            font-size: 1.7rem;
+            color: #0a4c6a;
+            font-weight: 600;
+        }
+        .indicator-row.row-reg .indicator-weight { color: #9b5a30; }
+        .indicator-row.row-tech .indicator-weight { color: #2e5fa1; }
+        .indicator-name {
+            font-family: 'Source Serif 4', Georgia, serif;
+            font-size: 1.3rem;
+            color: #1a2a3a;
+            font-weight: 600;
+            margin-bottom: 3px;
+        }
+        .indicator-desc {
+            font-size: 1rem;
+            color: #5a6b7c;
+            line-height: 1.45;
+        }
+
+        /* === BIG STAT === */
+        .big-stat {
+            background: #fff;
+            border-radius: 14px;
+            padding: 36px 32px;
+            border-left: 5px solid #0a4c6a;
+        }
+        .big-stat.warm { border-left-color: #c06030; }
+        .big-stat.teal { border-left-color: #1a6b7a; }
+        .big-stat .num {
+            font-family: 'VT323', monospace;
+            font-size: 5rem;
+            color: #0a4c6a;
+            line-height: 1;
+            margin-bottom: 8px;
+        }
+        .big-stat.warm .num { color: #c06030; }
+        .big-stat.teal .num { color: #1a6b7a; }
+        .big-stat .label {
+            font-size: 1.1rem;
+            color: #2c3e50;
+            line-height: 1.45;
+        }
+
+        /* === FORMULA BOX === */
+        .formula {
+            background: #0a1620;
+            color: #d0dae3;
+            font-family: 'VT323', monospace;
+            font-size: 1.4rem;
+            padding: 18px 24px;
+            border-radius: 8px;
+            letter-spacing: 0.4px;
+            margin: 18px 0;
+        }
+        .formula .k { color: #5ba8b5; }
+
+        /* === LEADERBOARD === */
+        .leader-row {
+            display: grid;
+            grid-template-columns: 50px 1.4fr 2.4fr auto;
+            gap: 20px;
+            align-items: center;
+            padding: 14px 18px;
+            background: #fff;
+            border-radius: 10px;
+            border-left: 3px solid #1a6b7a;
+            margin-bottom: 8px;
+        }
+        .leader-rank {
+            font-family: 'VT323', monospace;
+            font-size: 1.3rem;
+            color: #0a4c6a;
+        }
+        .leader-country {
+            font-family: 'Source Serif 4', Georgia, serif;
+            font-size: 1.3rem;
+            color: #1a2a3a;
+            font-weight: 700;
+        }
+        .leader-driver {
+            font-size: 0.98rem;
+            color: #5a6b7c;
+            line-height: 1.45;
+        }
+        .leader-score {
+            font-family: 'VT323', monospace;
+            font-size: 1.45rem;
+            color: #0a4c6a;
+            text-align: right;
+            font-weight: 600;
+        }
+
+        /* === QUADRANT === */
+        .quadrant-wrap {
+            position: relative;
+            width: 100%;
+            max-width: 760px;
+            aspect-ratio: 1.1 / 1;
+            background: #fff;
+            border-radius: 14px;
+            border: 1px solid #ebebeb;
+            margin: 8px auto 0;
+        }
+        .quadrant-axis-x, .quadrant-axis-y {
+            position: absolute;
+            background: #d8dee4;
+        }
+        .quadrant-axis-x { left: 8%; right: 8%; top: 50%; height: 1px; }
+        .quadrant-axis-y { top: 8%; bottom: 8%; left: 50%; width: 1px; }
+        .qlabel {
+            position: absolute;
+            font-family: 'VT323', monospace;
+            font-size: 0.9rem;
+            color: #7a8a9a;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+        .qlabel-x-low { left: 8%; bottom: 1%; }
+        .qlabel-x-high { right: 8%; bottom: 1%; text-align: right; }
+        .qlabel-x-title { left: 50%; bottom: 1%; transform: translateX(-50%); color: #2c3e50; font-size: 1rem; font-weight: 700; }
+        .qlabel-y-low { left: 1%; bottom: 8%; transform: rotate(-90deg); transform-origin: 0 0; }
+        .qlabel-y-high { left: 1%; top: 8%; transform: rotate(-90deg); transform-origin: 0 0; }
+        .qlabel-y-title { left: 1%; top: 50%; transform: rotate(-90deg) translateX(50%); transform-origin: 0 0; color: #2c3e50; font-size: 1rem; font-weight: 700; }
+        .qregion {
+            position: absolute;
+            padding: 8px 14px;
+            font-size: 1.05rem;
+            font-family: 'Source Serif 4', Georgia, serif;
+            font-weight: 600;
+            color: #2c3e50;
+            background: rgba(255,255,255,0.85);
+            border-radius: 6px;
+            text-align: center;
+            line-height: 1.3;
+        }
+        .qregion .sub { font-size: 0.85rem; font-family: 'Inter', sans-serif; font-weight: 400; color: #5a6b7c; display: block; margin-top: 2px; }
+        .qregion-tl { top: 16%; left: 12%; }
+        .qregion-tr { top: 16%; right: 12%; }
+        .qregion-bl { bottom: 16%; left: 12%; }
+        .qregion-br { bottom: 16%; right: 12%; }
+        .qdot {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #0a4c6a;
+            transform: translate(-50%, -50%);
+        }
+        .qdot.warm { background: #c06030; }
+        .qdot::after {
+            content: attr(data-name);
+            position: absolute;
+            left: 14px;
+            top: -5px;
+            font-size: 0.8rem;
+            color: #2c3e50;
+            white-space: nowrap;
+            font-weight: 600;
+        }
+
+        /* === DEMO SLIDE === */
+        .demo-card {
+            background: #fff;
+            border-radius: 14px;
+            padding: 32px 36px;
+            border: 1px solid #ebebeb;
+            border-top: 4px solid #0a4c6a;
+        }
+        .demo-card h3 { margin-bottom: 14px; }
+        .demo-card ol {
+            counter-reset: demo;
+            list-style: none;
+            margin: 16px 0 0;
+        }
+        .demo-card ol li {
+            counter-increment: demo;
+            position: relative;
+            padding-left: 56px;
+            margin-bottom: 14px;
+            font-size: 1.2rem;
+            line-height: 1.5;
+        }
+        .demo-card ol li::before {
+            content: counter(demo, decimal-leading-zero);
+            position: absolute;
+            left: 0;
+            top: 0;
+            font-family: 'VT323', monospace;
+            font-size: 1.5rem;
+            color: #0a4c6a;
+            background: #eef5fa;
+            width: 42px;
+            text-align: center;
+            border-radius: 6px;
+        }
+
+        /* === COMPARISON / SPLIT BLOCK === */
+        .vs-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 22px;
+            margin-top: 14px;
+        }
+        .vs-card {
+            background: #fff;
+            border-radius: 12px;
+            padding: 22px 24px;
+            border-top: 4px solid #1a6b7a;
+        }
+        .vs-card.warm { border-top-color: #c06030; }
+        .vs-card .when {
+            font-family: 'VT323', monospace;
+            font-size: 0.95rem;
+            color: #7a8a9a;
+            letter-spacing: 1.2px;
+            text-transform: uppercase;
+            margin-bottom: 6px;
+        }
+        .vs-card .then {
+            font-family: 'Source Serif 4', Georgia, serif;
+            font-size: 1.5rem;
+            color: #1a2a3a;
+            font-weight: 700;
+            line-height: 1.3;
+            margin-bottom: 10px;
+        }
+        .vs-card p { font-size: 1.05rem; line-height: 1.5; color: #5a6b7c; }
+
+        /* === FOOTER / NAV === */
+        .deck-footer {
+            position: fixed;
+            bottom: 22px;
+            left: 0; right: 0;
+            display: flex;
+            justify-content: space-between;
+            padding: 0 36px;
+            font-family: 'VT323', monospace;
+            font-size: 0.95rem;
+            color: rgba(120,135,150,0.6);
+            letter-spacing: 1px;
+            pointer-events: none;
+            z-index: 100;
+        }
+        .deck-footer .left { color: rgba(120,135,150,0.55); }
+        .slide.is-dark ~ .deck-footer { /* no-op, rely on opacity */ }
+        .progress-bar {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            height: 3px;
+            background: rgba(0,0,0,0.05);
+            z-index: 100;
+        }
+        .progress-fill {
+            height: 100%;
+            width: 0;
+            background: linear-gradient(90deg, #0a4c6a, #5ba8b5);
+            transition: width 0.3s ease;
+        }
+
+        .help-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(10, 22, 32, 0.92);
+            color: #f0f4f8;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 999;
+            font-family: 'Inter', sans-serif;
+        }
+        .help-overlay.visible { display: flex; }
+        .help-card {
+            background: #122433;
+            padding: 36px 44px;
+            border-radius: 14px;
+            border: 1px solid #1f3445;
+            max-width: 480px;
+        }
+        .help-card h3 { font-family: 'Source Serif 4', Georgia, serif; font-size: 1.4rem; margin-bottom: 18px; color: #f0f4f8; }
+        .help-card .row { display: flex; justify-content: space-between; padding: 6px 0; font-size: 0.95rem; color: #c0d2dc; border-bottom: 1px solid #1f3445; }
+        .help-card .row:last-child { border-bottom: none; }
+        .help-card kbd {
+            font-family: 'VT323', monospace;
+            background: #1f3445;
+            color: #5ba8b5;
+            padding: 2px 10px;
+            border-radius: 4px;
+            font-size: 0.95rem;
+        }
+
+        @media print {
+            html, body { overflow: visible; height: auto; }
+            .deck { position: static; }
+            .slide { display: flex !important; position: relative !important; page-break-after: always; height: 100vh; min-height: 720px; }
+            .deck-footer, .progress-bar, .help-overlay { display: none !important; }
+        }
+
+        @media (max-width: 1100px) {
+            .slide { padding: 40px 50px; }
+            h1.title { font-size: 4rem; }
+            h2 { font-size: 2.6rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+
+    <div class="deck" id="deck">
+
+        <!-- ============ SLIDE 1: TITLE ============ -->
+        <section class="slide is-dark is-active">
+            <div class="eyebrow">TAC 456 &middot; Capstone Seminar &middot; April 2026</div>
+            <h1 class="title">
+                Global Blockchain<br>
+                <span class="accent">Adaptability Index</span>
+                <span class="small">Measuring blockchain readiness across economic, regulatory, and technical dimensions in 20 countries.</span>
+            </h1>
+            <p style="margin-top:48px; font-family:'VT323',monospace; font-size:1.1rem; letter-spacing:2px; color:#7e8c98;">ALEXIS &middot; ALON &middot; ARI &middot; FEDERICO &middot; JADEN &middot; NICO</p>
+        </section>
+
+        <!-- ============ SLIDE 2: THE QUESTION ============ -->
+        <section class="slide">
+            <div class="eyebrow">01 &middot; The Inquiry</div>
+            <h2>How should global blockchain adoption be <span class="accent">measured and visualized</span> across economic, technical, and regulatory dimensions?</h2>
+            <p class="lede" style="margin-top:24px;">Most public reports rank countries on a single composite number. That hides the mechanism. A country can land at the top because of speculative trading, remittance flows, cheap mining electricity, or favorable laws, and those four stories require completely different responses from policymakers, businesses, and users.</p>
+            <p style="margin-top:14px;">Our project starts from the assumption that <strong>any single-number ranking is misleading</strong>, and asks what a more honest measurement looks like.</p>
+        </section>
+
+        <!-- ============ SLIDE 3: WHY IT MATTERS ============ -->
+        <section class="slide is-tinted">
+            <div class="eyebrow">02 &middot; Why this matters</div>
+            <h2>Existing rankings answer the wrong question.</h2>
+            <div class="two-col" style="margin-top:18px;">
+                <div>
+                    <h3 style="font-size:1.5rem;">What others measure</h3>
+                    <ul class="bulleted">
+                        <li>Chainalysis: composite of on-chain activity, weighted toward CEX volume and DeFi flows.</li>
+                        <li>Triple-A: a single ownership-percentage statistic per country.</li>
+                        <li>Country reports (PwC, Library of Congress): legal status, no behavioral data.</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 style="font-size:1.5rem;">What is missing</h3>
+                    <ul class="bulleted">
+                        <li>None of these separate <em>why</em> a country ranks high. India, Vietnam, and the US are all near the top of Chainalysis for completely different reasons.</li>
+                        <li>None combine usage, legal clarity, and infrastructure into one comparable picture.</li>
+                        <li>None reveal the <em>tradeoff</em> between regulation and adoption.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============ SLIDE 4: ORIGINAL THESIS ============ -->
+        <section class="slide is-dark">
+            <div class="eyebrow">03 &middot; Original thesis</div>
+            <h2><span class="accent">High trading volume</span> in a country would <span style="color:#e0a070;">not</span> correlate with strong technical infrastructure or regulatory clarity.</h2>
+            <p class="lede" style="margin-top:30px; max-width:1000px;">In other words: countries with the most crypto activity aren&rsquo;t the ones with the best frameworks for it. Activity outruns regulation, and rule-making outruns the underlying network.</p>
+            <p style="color:#7e8c98; margin-top:30px; font-style:italic;">This is what we set out to test, and what we partly revised.</p>
+        </section>
+
+        <!-- ============ SLIDE 5: METHOD OVERVIEW ============ -->
+        <section class="slide">
+            <div class="eyebrow">04 &middot; Method</div>
+            <h2>We split the score into <span class="accent">three pillars</span>, weighted equally.</h2>
+            <p class="lede">Each country gets one score per pillar, normalized to 0&ndash;1. The overall score is their average. The point is to keep the pillars <em>separable</em>, so the underlying driver of any country&rsquo;s position stays visible.</p>
+            <div class="three-col" style="margin-top:20px;">
+                <div class="pillar p-econ">
+                    <h4>Economic Adoption</h4>
+                    <div class="weight">Weight 1/3</div>
+                    <p>Real-world crypto use: ownership, exchange volume per GDP, remittances, Chainalysis ranks.</p>
+                </div>
+                <div class="pillar p-reg">
+                    <h4>Regulatory Clarity</h4>
+                    <div class="weight">Weight 1/3</div>
+                    <p>How clearly six legal dimensions are codified: stablecoins, licensing, tax, banking, enforcement, DeFi.</p>
+                </div>
+                <div class="pillar p-tech">
+                    <h4>Technical Infrastructure</h4>
+                    <div class="weight">Weight 1/3</div>
+                    <p>BTC and ETH nodes, mining hashrate, Lightning density, electricity, internet quality.</p>
+                </div>
+            </div>
+            <div class="formula" style="margin-top:24px;"><span class="k">Overall</span> = (Economic &times; 0.333) + (Regulatory &times; 0.333) + (Technical &times; 0.333)</div>
+        </section>
+
+        <!-- ============ SLIDE 6: ECONOMIC PILLAR ============ -->
+        <section class="slide">
+            <div class="eyebrow" style="color:#1a7a4e;">05 &middot; Pillar I &middot; Economic Adoption</div>
+            <h2>Five indicators of <span style="color:#1a7a4e;">real-world usage</span>.</h2>
+            <p class="lede">We decomposed Chainalysis&rsquo; composite back into its retail and DeFi sub-rankings, then layered ownership, remittances, and trading-to-GDP on top to capture different demand drivers separately.</p>
+            <div class="indicator-list" style="margin-top:8px;">
+                <div class="indicator-row">
+                    <div class="indicator-weight">0.30</div>
+                    <div>
+                        <div class="indicator-name">Crypto Ownership %</div>
+                        <div class="indicator-desc">Population penetration rate from Triple-A. The most direct &ldquo;is this a real consumer market&rdquo; signal.</div>
+                    </div>
+                </div>
+                <div class="indicator-row">
+                    <div class="indicator-weight">0.20</div>
+                    <div>
+                        <div class="indicator-name">CEX Activity</div>
+                        <div class="indicator-desc">Average of Chainalysis Retail CEX and Institutional CEX sub-rankings, PPP-weighted and inverted to a 0&ndash;1 scale.</div>
+                    </div>
+                </div>
+                <div class="indicator-row">
+                    <div class="indicator-weight">0.20</div>
+                    <div>
+                        <div class="indicator-name">CEX Volume / GDP</div>
+                        <div class="indicator-desc">CoinGecko 24h exchange volume divided by national GDP, log-transformed. Catches Lira, Won, and Naira-style speculation cleanly.</div>
+                    </div>
+                </div>
+                <div class="indicator-row">
+                    <div class="indicator-weight">0.20</div>
+                    <div>
+                        <div class="indicator-name">Remittances per Capita</div>
+                        <div class="indicator-desc">World Bank inbound remittance flows divided by population. Captures the cross-border use case (Ukraine, Philippines, Bangladesh).</div>
+                    </div>
+                </div>
+                <div class="indicator-row">
+                    <div class="indicator-weight">0.10</div>
+                    <div>
+                        <div class="indicator-name">DeFi Activity</div>
+                        <div class="indicator-desc">Chainalysis DeFi value-received sub-rank. Down-weighted because it is volatile and concentrated in a small group of countries.</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============ SLIDE 7: REGULATORY PILLAR ============ -->
+        <section class="slide is-tinted">
+            <div class="eyebrow">06 &middot; Pillar II &middot; Regulatory Clarity</div>
+            <h2>Six dimensions, each rated <span class="accent-warm">1&ndash;3</span>.</h2>
+            <p class="lede">Built from Library of Congress and PwC primary sources. Each country is rated 1 (absent or hostile), 2 (partial), or 3 (clear and codified). The six ratings are summed and divided by 18 to normalize to 0&ndash;1. <strong>Equal weight</strong> on each dimension because no single dimension is sufficient on its own.</p>
+            <div class="indicator-list" style="margin-top:8px;">
+                <div class="indicator-row row-reg"><div class="indicator-weight">1/6</div><div><div class="indicator-name">Stablecoin Law</div><div class="indicator-desc">Specific legislation governing stablecoin issuance, reserves, and consumer protection.</div></div></div>
+                <div class="indicator-row row-reg"><div class="indicator-weight">1/6</div><div><div class="indicator-name">Exchange Licensing</div><div class="indicator-desc">A defined licensing regime for centralized exchanges and other VASPs.</div></div></div>
+                <div class="indicator-row row-reg"><div class="indicator-weight">1/6</div><div><div class="indicator-name">Tax Treatment</div><div class="indicator-desc">Clear, codified rules for taxing crypto gains, income, and corporate holdings.</div></div></div>
+                <div class="indicator-row row-reg"><div class="indicator-weight">1/6</div><div><div class="indicator-name">Banking Access</div><div class="indicator-desc">Whether crypto businesses can access traditional banking rails legally.</div></div></div>
+                <div class="indicator-row row-reg"><div class="indicator-weight">1/6</div><div><div class="indicator-name">Enforcement</div><div class="indicator-desc">Active, observable enforcement of the rules that exist on paper.</div></div></div>
+                <div class="indicator-row row-reg"><div class="indicator-weight">1/6</div><div><div class="indicator-name">DeFi Recognition</div><div class="indicator-desc">Whether DeFi protocols are acknowledged in the legal framework at all.</div></div></div>
+            </div>
+            <div class="formula" style="margin-top:18px;"><span class="k">Regulatory</span> = (Stablecoin + Licensing + Tax + Banking + Enforcement + DeFi) / 18</div>
+        </section>
+
+        <!-- ============ SLIDE 8: TECHNICAL PILLAR ============ -->
+        <section class="slide">
+            <div class="eyebrow" style="color:#2e5fa1;">07 &middot; Pillar III &middot; Technical Infrastructure</div>
+            <h2>Five pillars, weighted by what they reveal.</h2>
+            <p class="lede">Per-100k-internet-users normalization (rather than per capita) so high-internet countries aren&rsquo;t penalized for population size. Mining is the exception: it uses global hashrate share directly, since mining concentration is a global, not local, phenomenon.</p>
+            <div class="indicator-list">
+                <div class="indicator-row row-tech">
+                    <div class="indicator-weight">0.25</div>
+                    <div>
+                        <div class="indicator-name">Bitcoin Nodes</div>
+                        <div class="indicator-desc">Reachable BTC nodes per 100k internet users (Bitnodes).</div>
+                    </div>
+                </div>
+                <div class="indicator-row row-tech">
+                    <div class="indicator-weight">0.25</div>
+                    <div>
+                        <div class="indicator-name">Ethereum Nodes</div>
+                        <div class="indicator-desc">Ethereum nodes per 100k internet users (Ethernodes).</div>
+                    </div>
+                </div>
+                <div class="indicator-row row-tech">
+                    <div class="indicator-weight">0.20</div>
+                    <div>
+                        <div class="indicator-name">Lightning Network Density</div>
+                        <div class="indicator-desc">LN nodes per 100k internet users (mempool.emzy.de). A proxy for second-layer adoption depth.</div>
+                    </div>
+                </div>
+                <div class="indicator-row row-tech">
+                    <div class="indicator-weight">0.15</div>
+                    <div>
+                        <div class="indicator-name">Mining Hashrate Share</div>
+                        <div class="indicator-desc">Global hashrate % from Hashrate Index. Used directly because mining is geographically concentrated.</div>
+                    </div>
+                </div>
+                <div class="indicator-row row-tech">
+                    <div class="indicator-weight">0.15</div>
+                    <div>
+                        <div class="indicator-name">Enabling Environment</div>
+                        <div class="indicator-desc">World Bank electricity access + Speedtest internet quality, blended. The substrate everything else runs on.</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============ SLIDE 9: ARTIFACT / DEMO ============ -->
+        <section class="slide is-dark">
+            <div class="eyebrow">08 &middot; Artifact</div>
+            <h2>The deliverable is an <span class="accent">interactive web atlas</span>.</h2>
+            <p class="lede">Live at the project URL. Five linked surfaces: home, map, country profiles, findings, and three methodology pages.</p>
+            <div class="demo-card" style="background:#122433; border-color:#1f3445; color:#d0dae3; margin-top:14px;">
+                <h3 style="color:#f0f4f8;">Demo walkthrough</h3>
+                <ol>
+                    <li><strong style="color:#5ba8b5;">Map view.</strong> Switch dimension tabs to show how the same country shifts color across pillars. Hover for tier labels.</li>
+                    <li><strong style="color:#5ba8b5;">Country profile.</strong> Open Vietnam (#1 economic) and Japan (#1 regulatory) side by side. Compare radar shapes.</li>
+                    <li><strong style="color:#5ba8b5;">Findings page.</strong> Walk through the six findings briefly to set up the next slides.</li>
+                    <li><strong style="color:#5ba8b5;">Methodology page.</strong> Show the raw data table and source citations to demonstrate replicability.</li>
+                </ol>
+            </div>
+        </section>
+
+        <!-- ============ SLIDE 10: DATA SNAPSHOT ============ -->
+        <section class="slide">
+            <div class="eyebrow">09 &middot; Data &middot; Top 5 Economic Adoption</div>
+            <h2>Every top-five adopter has a <span class="accent">distress driver</span>.</h2>
+            <p class="lede">The leaders look nothing like a list of &ldquo;most regulated&rdquo; countries. The US is the only stable, developed economy in the top five.</p>
+            <div style="margin-top:14px;">
+                <div class="leader-row"><div class="leader-rank">#1</div><div class="leader-country">Vietnam</div><div class="leader-driver">Highest crypto ownership in the world (21.2%) + remittance corridors</div><div class="leader-score">0.761</div></div>
+                <div class="leader-row"><div class="leader-rank">#2</div><div class="leader-country">Ukraine</div><div class="leader-driver">Active conflict, currency stress, $503/capita remittances (highest in index)</div><div class="leader-score">0.733</div></div>
+                <div class="leader-row"><div class="leader-rank">#3</div><div class="leader-country">Philippines</div><div class="leader-driver">Major remittance corridor ($341/capita), 13.4% ownership</div><div class="leader-score">0.632</div></div>
+                <div class="leader-row"><div class="leader-rank">#4</div><div class="leader-country">United States</div><div class="leader-driver">Outlier: 15.6% ownership, $76.6B daily CEX volume, deep institutional flows</div><div class="leader-score">0.576</div></div>
+                <div class="leader-row"><div class="leader-rank">#5</div><div class="leader-country">Pakistan</div><div class="leader-driver">Currency volatility, financial exclusion, top-3 retail and institutional CEX ranks</div><div class="leader-score">0.494</div></div>
+            </div>
+        </section>
+
+        <!-- ============ SLIDE 11: QUADRANT FINDING ============ -->
+        <section class="slide is-tinted">
+            <div class="eyebrow">10 &middot; Finding I &middot; The Conditional Relationship</div>
+            <h2>Same restriction, opposite outcomes.</h2>
+            <p class="lede">When we plot Regulatory Clarity against Economic Adoption, four distinct country types appear. Restriction does not have a single, universal effect.</p>
+            <div class="two-col-3-7" style="margin-top:14px;">
+                <div>
+                    <div class="big-stat" style="margin-bottom:14px;">
+                        <div class="num">4</div>
+                        <div class="label">Distinct country profiles emerge once the score is split into pillars instead of averaged.</div>
+                    </div>
+                    <p style="font-size:1.05rem; color:#5a6b7c;">Restrictive policy fails to suppress adoption wherever any of four conditions is present: currency instability, large remittance flows, financial exclusion, or sanctions and conflict.</p>
+                </div>
+                <div class="quadrant-wrap">
+                    <div class="quadrant-axis-x"></div>
+                    <div class="quadrant-axis-y"></div>
+                    <span class="qlabel qlabel-x-low">Low</span>
+                    <span class="qlabel qlabel-x-high">High</span>
+                    <span class="qlabel qlabel-x-title">Regulatory Clarity &rarr;</span>
+                    <span class="qlabel qlabel-y-low">Low</span>
+                    <span class="qlabel qlabel-y-high">High</span>
+                    <span class="qlabel qlabel-y-title">Economic Adoption &rarr;</span>
+                    <div class="qregion qregion-tl">Necessity-driven<span class="sub">Vietnam, Pakistan</span></div>
+                    <div class="qregion qregion-tr">Aligned<span class="sub">Ukraine, US, Brazil</span></div>
+                    <div class="qregion qregion-bl">Limited<span class="sub">Bangladesh, Yemen, Ethiopia</span></div>
+                    <div class="qregion qregion-br">Japan paradox<span class="sub">Japan, UK, Thailand</span></div>
+                    <div class="qdot warm" style="left:32%; top:18%;" data-name="VN"></div>
+                    <div class="qdot warm" style="left:38%; top:24%;" data-name="PK"></div>
+                    <div class="qdot" style="left:78%; top:22%;" data-name="UA"></div>
+                    <div class="qdot" style="left:64%; top:38%;" data-name="US"></div>
+                    <div class="qdot" style="left:75%; top:48%;" data-name="BR"></div>
+                    <div class="qdot" style="left:88%; top:74%;" data-name="JP"></div>
+                    <div class="qdot" style="left:78%; top:80%;" data-name="UK"></div>
+                    <div class="qdot warm" style="left:24%; top:84%;" data-name="ET"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============ SLIDE 12: JAPAN PARADOX ============ -->
+        <section class="slide">
+            <div class="eyebrow">11 &middot; Finding II &middot; The Japan Paradox</div>
+            <h2>Comprehensive regulation does <span class="accent">not</span> produce adoption when there is no economic need.</h2>
+            <p class="lede">Japan is the single sharpest piece of evidence that &ldquo;more regulation = more adoption&rdquo; is wrong.</p>
+            <div class="vs-grid" style="margin-top:18px;">
+                <div class="vs-card">
+                    <div class="when">Regulatory Clarity</div>
+                    <div class="then">0.944 &middot; #1 of 20</div>
+                    <p>Highest score in the index. The only country in the dataset to reach a 3 (clear and codified) on stablecoin legislation.</p>
+                </div>
+                <div class="vs-card warm">
+                    <div class="when">Economic Adoption</div>
+                    <div class="then">0.205 &middot; #18 of 20</div>
+                    <p>Lower than Bangladesh, Yemen, and the UK. Few citizens own crypto, exchange volume is modest relative to GDP.</p>
+                </div>
+            </div>
+            <p style="margin-top:22px;">Clear rules without economic demand produce a regulated framework that few people actually use. Japan is the existence proof of one of the four quadrants on the previous slide.</p>
+        </section>
+
+        <!-- ============ SLIDE 13: INFRASTRUCTURE FINDINGS ============ -->
+        <section class="slide is-dark">
+            <div class="eyebrow">12 &middot; Finding III &middot; Concentration &amp; Blind Spots</div>
+            <h2>Crypto&rsquo;s &ldquo;decentralized&rdquo; layers are <span class="accent">narrowly held</span>.</h2>
+            <div class="three-col" style="margin-top:24px;">
+                <div class="big-stat teal" style="background:#122433; border-left-color:#5ba8b5;">
+                    <div class="num" style="color:#5ba8b5;">58.6%</div>
+                    <div class="label" style="color:#c0d2dc;">of global Bitcoin hashrate is produced by just four countries (US 37.5%, Russia 16.4%, Ethiopia 2.6%, Indonesia 2.1%).</div>
+                </div>
+                <div class="big-stat warm" style="background:#122433; border-left-color:#e0a070;">
+                    <div class="num" style="color:#e0a070;">0</div>
+                    <div class="label" style="color:#c0d2dc;">countries in the index reach a 3 on DeFi recognition. Even &ldquo;Comprehensive&rdquo;-tier regulators have not caught up.</div>
+                </div>
+                <div class="big-stat" style="background:#122433; border-left-color:#9bdce8;">
+                    <div class="num" style="color:#9bdce8;">12/20</div>
+                    <div class="label" style="color:#c0d2dc;">countries score a 1 on stablecoin law: no specific legislation. Stablecoins are how distressed economies actually use crypto.</div>
+                </div>
+            </div>
+            <p style="margin-top:30px; font-size:1.25rem; color:#c0d2dc;">Infrastructure concentration is a geopolitical question, not just a technical one. DeFi and stablecoins are the next regulatory frontier <em>everywhere</em>.</p>
+        </section>
+
+        <!-- ============ SLIDE 14: REVISED THESIS ============ -->
+        <section class="slide is-tinted">
+            <div class="eyebrow">13 &middot; Revised thesis</div>
+            <h2>High crypto activity does <span class="accent-warm">not</span> mean a country is truly blockchain-ready.</h2>
+            <p class="lede" style="margin-top:14px;">Some countries are active out of necessity. Others have built real infrastructure. You cannot tell the difference without looking at all three dimensions <em>separately</em>.</p>
+            <div class="two-col" style="margin-top:18px;">
+                <div>
+                    <h3 style="font-size:1.4rem;">What the original thesis got right</h3>
+                    <ul class="bulleted">
+                        <li>High trading volume does <em>not</em> reliably correlate with regulatory clarity.</li>
+                        <li>Activity outruns rules in most distressed economies (Vietnam, Nigeria, Argentina).</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 style="font-size:1.4rem;">What we revised</h3>
+                    <ul class="bulleted">
+                        <li>Economic adoption and technical infrastructure are <em>not correlated at all</em>: r = ~0.2 across our 20 countries.</li>
+                        <li>Countries reach &ldquo;blockchain-ready&rdquo; through completely different paths. The composite hides which path.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============ SLIDE 15: IMPLICATIONS ============ -->
+        <section class="slide">
+            <div class="eyebrow">14 &middot; Relevance</div>
+            <h2>Different audiences, different reads.</h2>
+            <p class="lede">The split-pillar score is most useful when it changes a decision. A few examples we identified.</p>
+            <div class="four-col" style="margin-top:14px;">
+                <div class="pillar p-econ" style="border-top-color:#2e5fa1;">
+                    <h4>Policymakers</h4>
+                    <div class="weight">Read</div>
+                    <p>Prohibition removes visibility, not demand, when economic conditions are driving usage. Channel through licensing instead.</p>
+                </div>
+                <div class="pillar p-reg">
+                    <h4>Investors / Analysts</h4>
+                    <div class="weight">Read</div>
+                    <p>Distress signals (remittances, currency stress) predict adoption better than legal-clarity rankings.</p>
+                </div>
+                <div class="pillar p-tech">
+                    <h4>Founders</h4>
+                    <div class="weight">Read</div>
+                    <p>Match the product to the country&rsquo;s underlying problem. Stablecoin rails fit Vietnam; compliance products fit Japan.</p>
+                </div>
+                <div class="pillar" style="border-top-color:#5ba8b5;">
+                    <h4>Researchers</h4>
+                    <div class="weight">Read</div>
+                    <p>Aggregate adoption rankings systematically obscure mechanism. Disaggregated frameworks are required to make causal claims.</p>
+                </div>
+            </div>
+            <p style="margin-top:24px; font-size:1.15rem; color:#5a6b7c;">Each of the six audiences on the artifact&rsquo;s findings page has a one-paragraph implication tied directly to a measurable variable.</p>
+        </section>
+
+        <!-- ============ SLIDE 16: LIMITATIONS / CLOSE ============ -->
+        <section class="slide is-dark">
+            <div class="eyebrow">15 &middot; Limitations &amp; what comes next</div>
+            <h2>Honest limits of the index.</h2>
+            <div class="two-col" style="margin-top:14px;">
+                <div>
+                    <h3 style="font-size:1.4rem; color:#f0f4f8;">Limits</h3>
+                    <ul class="bulleted">
+                        <li>20-country sample chosen for data availability and ecosystem relevance, not statistical representativeness.</li>
+                        <li>Equal pillar weights are a defensible choice, not a derived one. Different weights would produce different orderings near the middle.</li>
+                        <li>Snapshot at March 2026; Chainalysis data and regulatory ratings shift faster than this.</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 style="font-size:1.4rem; color:#f0f4f8;">What comes next</h3>
+                    <ul class="bulleted">
+                        <li>Add 10&ndash;15 more countries (notably China, despite policy ambiguity).</li>
+                        <li>Year-over-year deltas to track which pillar a country&rsquo;s score is moving on.</li>
+                        <li>Couple the legal ratings to enforcement actions data so &ldquo;Comprehensive&rdquo; doesn&rsquo;t mean &ldquo;on paper only.&rdquo;</li>
+                    </ul>
+                </div>
+            </div>
+            <p style="margin-top:32px; font-size:1.15rem; color:#9bdce8; font-family:'Source Serif 4',serif; font-style:italic;">Sources, raw data, and full methodology are linked on the artifact: <span style="color:#f0f4f8;">findings.html</span> &middot; <span style="color:#f0f4f8;">econ-methodology.html</span> &middot; <span style="color:#f0f4f8;">regulatory-methodology.html</span> &middot; <span style="color:#f0f4f8;">tech-methodology.html</span></p>
+        </section>
+
+        <!-- ============ SLIDE 17: THANK YOU / Q&A ============ -->
+        <section class="slide is-dark">
+            <h1 class="title" style="font-size:6rem;">Questions?<span class="small" style="font-size:2.2rem;">Global Blockchain Adaptability Index<br>TAC 456 &middot; Capstone &middot; April 2026</span></h1>
+        </section>
+
+    </div>
+
+    <div class="deck-footer">
+        <span class="left" id="slideCount">01 / 17</span>
+        <span class="left">Press <kbd style="font-family:'VT323',monospace; background:rgba(255,255,255,0.08); padding:1px 8px; border-radius:3px;">?</kbd> for help</span>
+    </div>
+
+    <div class="help-overlay" id="helpOverlay">
+        <div class="help-card">
+            <h3>Keyboard controls</h3>
+            <div class="row"><span>Next slide</span><kbd>&rarr;</kbd></div>
+            <div class="row"><span>Previous slide</span><kbd>&larr;</kbd></div>
+            <div class="row"><span>Next slide</span><kbd>Space</kbd></div>
+            <div class="row"><span>First slide</span><kbd>Home</kbd></div>
+            <div class="row"><span>Last slide</span><kbd>End</kbd></div>
+            <div class="row"><span>Print all slides</span><kbd>P</kbd></div>
+            <div class="row"><span>Toggle this help</span><kbd>?</kbd></div>
+            <div class="row"><span>Close help</span><kbd>Esc</kbd></div>
+        </div>
+    </div>
+
+    <script>
+        const slides = document.querySelectorAll('.slide');
+        const total = slides.length;
+        const counter = document.getElementById('slideCount');
+        const fill = document.getElementById('progressFill');
+        const help = document.getElementById('helpOverlay');
+        let current = 0;
+
+        function pad(n){ return String(n).padStart(2,'0'); }
+
+        function show(idx) {
+            current = Math.max(0, Math.min(total - 1, idx));
+            slides.forEach((s, i) => s.classList.toggle('is-active', i === current));
+            counter.textContent = `${pad(current + 1)} / ${pad(total)}`;
+            fill.style.width = `${((current + 1) / total) * 100}%`;
+            const url = new URL(window.location.href);
+            url.hash = `s${current + 1}`;
+            history.replaceState(null, '', url);
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (help.classList.contains('visible')) {
+                if (e.key === 'Escape' || e.key === '?') { help.classList.remove('visible'); }
+                return;
+            }
+            if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') { e.preventDefault(); show(current + 1); }
+            else if (e.key === 'ArrowLeft' || e.key === 'PageUp') { e.preventDefault(); show(current - 1); }
+            else if (e.key === 'Home') { show(0); }
+            else if (e.key === 'End') { show(total - 1); }
+            else if (e.key === '?') { help.classList.toggle('visible'); }
+            else if (e.key.toLowerCase() === 'p') { window.print(); }
+        });
+
+        document.addEventListener('click', (e) => {
+            if (e.target.closest('a') || e.target.closest('button')) return;
+            const x = e.clientX;
+            if (x < window.innerWidth / 3) show(current - 1);
+            else if (x > (window.innerWidth * 2) / 3) show(current + 1);
+        });
+
+        const initial = parseInt((window.location.hash || '#s1').replace(/[^0-9]/g, ''), 10);
+        show(Math.max(0, (isNaN(initial) ? 1 : initial) - 1));
+
+        document.body.addEventListener('dblclick', () => {
+            if (!document.fullscreenElement) document.documentElement.requestFullscreen?.();
+            else document.exitFullscreen?.();
+        });
+    </script>
+
+</body>
+</html>
