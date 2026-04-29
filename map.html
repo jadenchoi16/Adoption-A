@@ -882,6 +882,242 @@
             border-radius: 3px;
         }
 
+        /* === SEARCH + COMPARE TOOLBAR === */
+        .table-toolbar {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            margin: 0 0 14px;
+            flex-wrap: wrap;
+        }
+        .search-wrap {
+            flex: 1 1 280px;
+            position: relative;
+            min-width: 220px;
+        }
+        .search-input {
+            width: 100%;
+            padding: 10px 38px 10px 38px;
+            border: 1px solid #d4d4d4;
+            border-radius: 9px;
+            background: #fff;
+            font-family: 'Inter', system-ui, sans-serif;
+            font-size: 0.95rem;
+            color: #1a2a3a;
+            outline: none;
+            transition: border-color 0.15s, box-shadow 0.15s;
+        }
+        .search-input:focus {
+            border-color: #0a4c6a;
+            box-shadow: 0 0 0 3px rgba(10, 76, 106, 0.12);
+        }
+        .search-icon {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #7a8a9a;
+            pointer-events: none;
+            line-height: 0;
+            display: flex;
+            align-items: center;
+        }
+        .search-clear {
+            position: absolute;
+            right: 8px;
+            top: 50%;
+            transform: translateY(-50%);
+            border: none;
+            background: transparent;
+            color: #7a8a9a;
+            cursor: pointer;
+            font-size: 1.1rem;
+            padding: 4px 8px;
+            line-height: 1;
+            border-radius: 4px;
+            display: none;
+        }
+        .search-clear:hover { color: #c06030; background: #f7f7f7; }
+        .search-clear.is-visible { display: block; }
+        .compare-toggle {
+            flex: 0 0 auto;
+            padding: 10px 18px;
+            border: 1px solid #d4d4d4;
+            border-radius: 9px;
+            background: #fff;
+            color: #1a2a3a;
+            font-family: 'Inter', system-ui, sans-serif;
+            font-size: 0.92rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 9px;
+            transition: all 0.15s;
+        }
+        .compare-toggle:hover {
+            border-color: #0a4c6a;
+            color: #0a4c6a;
+        }
+        .compare-toggle.is-active {
+            background: #0a4c6a;
+            border-color: #0a4c6a;
+            color: #fff;
+        }
+        .compare-toggle .dot {
+            width: 8px; height: 8px; border-radius: 50%;
+            background: #d4d4d4; transition: background 0.15s;
+        }
+        .compare-toggle.is-active .dot { background: #5ba8b5; }
+        .compare-hint {
+            font-family: 'VT323', monospace;
+            font-size: 0.95rem;
+            color: #7a8a9a;
+            text-align: center;
+            margin: 0 0 12px;
+            letter-spacing: 0.6px;
+            display: none;
+        }
+        .compare-hint.is-visible { display: block; }
+
+        tbody tr.is-selected {
+            background: #f0faff !important;
+            box-shadow: inset 4px 0 0 #5ba8b5;
+        }
+        tbody tr.is-selected:hover {
+            background: #e6f4fc !important;
+        }
+        tbody tr.is-empty,
+        tbody tr.is-empty:hover { background: #fff; cursor: default; }
+        .empty-state-cell {
+            padding: 36px 16px !important;
+            text-align: center;
+            color: #7a8a9a;
+            font-style: italic;
+            font-size: 0.92rem;
+        }
+
+        /* === COMPARE PANEL === */
+        .compare-panel {
+            margin: 0 0 18px;
+            background: #fff;
+            border-radius: 14px;
+            box-shadow: 0 2px 14px rgba(0,0,0,0.04);
+            border: 1px solid #ebebeb;
+            padding: 18px 20px;
+            display: none;
+        }
+        .compare-panel.is-visible { display: block; }
+        .compare-panel-head {
+            display: flex; justify-content: space-between; align-items: baseline;
+            gap: 12px;
+            margin-bottom: 14px;
+        }
+        .compare-panel-title {
+            font-family: 'Source Serif 4', Georgia, serif;
+            font-size: 1rem;
+            color: #1a2a3a;
+            font-weight: 700;
+        }
+        .compare-panel-title .muted {
+            font-family: 'VT323', monospace;
+            font-size: 0.9rem;
+            color: #7a8a9a;
+            font-weight: 400;
+            margin-left: 8px;
+            letter-spacing: 0.6px;
+        }
+        .compare-clear {
+            font-family: 'Inter', system-ui, sans-serif;
+            font-size: 0.8rem;
+            color: #c06030;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            text-decoration: underline;
+            padding: 2px 4px;
+        }
+        .compare-clear:hover { color: #8b1a1a; }
+        .compare-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 12px;
+        }
+        .compare-card {
+            background: #faf8f3;
+            border-radius: 10px;
+            padding: 14px 16px;
+            border: 1px solid #ebebeb;
+            position: relative;
+        }
+        .compare-card .remove-btn {
+            position: absolute;
+            top: 6px;
+            right: 8px;
+            background: transparent;
+            border: none;
+            color: #7a8a9a;
+            cursor: pointer;
+            font-size: 1rem;
+            padding: 2px 8px;
+            border-radius: 4px;
+            line-height: 1;
+        }
+        .compare-card .remove-btn:hover { color: #c06030; background: #fff; }
+        .compare-card-name {
+            font-family: 'Source Serif 4', Georgia, serif;
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: #1a2a3a;
+            margin-bottom: 2px;
+            padding-right: 22px;
+        }
+        .compare-card-meta {
+            font-family: 'VT323', monospace;
+            font-size: 0.85rem;
+            color: #7a8a9a;
+            letter-spacing: 0.6px;
+            margin-bottom: 12px;
+        }
+        .compare-row {
+            display: grid;
+            grid-template-columns: 78px 1fr 42px;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 6px;
+        }
+        .compare-row .label {
+            font-size: 0.75rem;
+            color: #5a6a7a;
+            font-weight: 500;
+        }
+        .compare-row .bar-bg {
+            height: 6px;
+            border-radius: 3px;
+            background: #ebebeb;
+            overflow: hidden;
+        }
+        .compare-row .bar-fill { height: 100%; }
+        .compare-row .val {
+            font-family: 'VT323', monospace;
+            font-size: 0.95rem;
+            color: #0a4c6a;
+            font-weight: 700;
+            text-align: right;
+        }
+        .compare-card-link {
+            display: block;
+            margin-top: 10px;
+            text-align: center;
+            font-size: 0.78rem;
+            color: #0a4c6a;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 7px 0 0;
+            border-top: 1px solid #ebebeb;
+        }
+        .compare-card-link:hover { color: #5ba8b5; }
+
         /* === RESPONSIVE === */
         @media (max-width: 768px) {
             .site-nav-inner { padding: 11px 18px; gap: 12px; }
@@ -1057,6 +1293,33 @@
     <!-- TABLE -->
     <div class="table-section">
         <h2 id="table-title">Country Rankings &middot; Overall Score</h2>
+
+        <div class="table-toolbar">
+            <div class="search-wrap">
+                <span class="search-icon" aria-hidden="true">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.5" y2="16.5"></line></svg>
+                </span>
+                <input type="text" id="searchInput" class="search-input" placeholder="Search countries..." autocomplete="off" spellcheck="false">
+                <button type="button" class="search-clear" id="searchClear" aria-label="Clear search">&times;</button>
+            </div>
+            <button type="button" id="compareToggle" class="compare-toggle" aria-pressed="false">
+                <span class="dot" aria-hidden="true"></span>
+                <span>Compare countries</span>
+            </button>
+        </div>
+
+        <p class="compare-hint" id="compareHint">Click rows to add or remove (up to 3 countries)</p>
+
+        <div class="compare-panel" id="comparePanel" aria-live="polite">
+            <div class="compare-panel-head">
+                <div class="compare-panel-title">
+                    Comparing<span class="muted" id="compareCount">0 of 3</span>
+                </div>
+                <button type="button" id="compareClear" class="compare-clear">Clear all</button>
+            </div>
+            <div class="compare-cards" id="compareCards"></div>
+        </div>
+
         <div class="table-wrapper">
             <table>
                 <thead>
@@ -1595,6 +1858,12 @@
     // ========================================
     // TABLE
     // ========================================
+    // Search + compare state
+    let searchQuery = "";
+    let compareMode = false;
+    const MAX_COMPARE = 3;
+    const selectedIds = new Set();
+
     function renderTable() {
         document.getElementById("table-title").innerHTML = `Country Rankings &middot; ${dimMeta[activeDim].title}`;
 
@@ -1602,12 +1871,26 @@
         const tbody = document.getElementById("table-body");
         tbody.innerHTML = "";
 
-        sorted.forEach((c, i) => {
-            const rank = i + 1;
+        const q = searchQuery.trim().toLowerCase();
+        const filtered = q
+            ? sorted.filter(c => c.country.toLowerCase().includes(q))
+            : sorted;
+
+        if (filtered.length === 0) {
+            const tr = document.createElement("tr");
+            tr.className = "is-empty";
+            tr.innerHTML = `<td colspan="7" class="empty-state-cell">No countries match &ldquo;${q.replace(/[<>&"]/g, '')}&rdquo;.</td>`;
+            tbody.appendChild(tr);
+            return;
+        }
+
+        filtered.forEach(c => {
+            const rank = sorted.indexOf(c) + 1;
             const score = c.overall;
             const meta = dimMeta.overall;
             const barPct = Math.min(100, Math.max(0, ((score - meta.min) / (meta.max - meta.min) * 100))).toFixed(1);
             const tr = document.createElement("tr");
+            if (selectedIds.has(c.id)) tr.classList.add("is-selected");
             tr.innerHTML = `
                 <td class="rank-cell">${rank}</td>
                 <td>${c.country}</td>
@@ -1620,11 +1903,126 @@
                 <td class="sub-score-td">${c.economic.score.toFixed(3)}</td>
                 <td class="sub-score-td">${c.regulatory.score.toFixed(3)}</td>
                 <td class="sub-score-td">${c.technical.score.toFixed(3)}</td>`;
-            tr.addEventListener('click', () => showDetailModal(c));
+            tr.addEventListener('click', () => {
+                if (compareMode) {
+                    toggleSelected(c.id);
+                } else {
+                    showDetailModal(c);
+                }
+            });
             tbody.appendChild(tr);
         });
     }
     renderTable();
+
+    // ========================================
+    // SEARCH + COMPARE
+    // ========================================
+    const searchInput = document.getElementById("searchInput");
+    const searchClear = document.getElementById("searchClear");
+    const compareToggle = document.getElementById("compareToggle");
+    const compareHint = document.getElementById("compareHint");
+    const comparePanel = document.getElementById("comparePanel");
+    const compareCards = document.getElementById("compareCards");
+    const compareCount = document.getElementById("compareCount");
+    const compareClearBtn = document.getElementById("compareClear");
+
+    searchInput.addEventListener("input", e => {
+        searchQuery = e.target.value;
+        searchClear.classList.toggle("is-visible", searchQuery.length > 0);
+        renderTable();
+    });
+    searchClear.addEventListener("click", () => {
+        searchInput.value = "";
+        searchQuery = "";
+        searchClear.classList.remove("is-visible");
+        searchInput.focus();
+        renderTable();
+    });
+
+    compareToggle.addEventListener("click", () => {
+        compareMode = !compareMode;
+        compareToggle.classList.toggle("is-active", compareMode);
+        compareToggle.setAttribute("aria-pressed", compareMode ? "true" : "false");
+        compareHint.classList.toggle("is-visible", compareMode);
+        if (!compareMode) {
+            selectedIds.clear();
+            renderComparePanel();
+        }
+        renderTable();
+    });
+
+    compareClearBtn.addEventListener("click", () => {
+        selectedIds.clear();
+        renderComparePanel();
+        renderTable();
+    });
+
+    function toggleSelected(id) {
+        if (selectedIds.has(id)) {
+            selectedIds.delete(id);
+        } else {
+            if (selectedIds.size >= MAX_COMPARE) return;
+            selectedIds.add(id);
+        }
+        renderComparePanel();
+        renderTable();
+    }
+
+    function renderComparePanel() {
+        compareCount.textContent = `${selectedIds.size} of ${MAX_COMPARE}`;
+        if (selectedIds.size === 0) {
+            comparePanel.classList.remove("is-visible");
+            compareCards.innerHTML = "";
+            return;
+        }
+        comparePanel.classList.add("is-visible");
+
+        // Map selection back to country objects, ordered by selection sequence
+        const sortedAll = [...countries].sort((a, b) => b.overall - a.overall);
+        const overallRankById = {};
+        sortedAll.forEach((c, i) => { overallRankById[c.id] = i + 1; });
+
+        const selected = [...selectedIds].map(id => dataById[id]).filter(Boolean);
+        const dimColors = {
+            overall:    "#0a4c6a",
+            economic:   "#1a6b7a",
+            regulatory: "#9b5a30",
+            technical:  "#2e5fa1"
+        };
+
+        compareCards.innerHTML = selected.map(c => {
+            const rows = [
+                ["Overall",    c.overall,           "overall"],
+                ["Economic",   c.economic.score,    "economic"],
+                ["Regulatory", c.regulatory.score,  "regulatory"],
+                ["Technical",  c.technical.score,   "technical"]
+            ].map(([label, val, key]) => `
+                <div class="compare-row">
+                    <span class="label">${label}</span>
+                    <div class="bar-bg"><div class="bar-fill" style="width:${(val * 100).toFixed(1)}%; background:${dimColors[key]};"></div></div>
+                    <span class="val">${val.toFixed(3)}</span>
+                </div>
+            `).join("");
+
+            return `
+                <div class="compare-card">
+                    <button type="button" class="remove-btn" data-remove-id="${c.id}" aria-label="Remove ${c.country}">&times;</button>
+                    <div class="compare-card-name">${c.country}</div>
+                    <div class="compare-card-meta">#${overallRankById[c.id]} of 20 &middot; ${c.region.charAt(0).toUpperCase() + c.region.slice(1)}</div>
+                    ${rows}
+                    <a class="compare-card-link" href="country.html?id=${c.id}">View full profile &rarr;</a>
+                </div>`;
+        }).join("");
+
+        // Wire up remove buttons
+        compareCards.querySelectorAll("[data-remove-id]").forEach(btn => {
+            btn.addEventListener("click", e => {
+                e.stopPropagation();
+                toggleSelected(btn.getAttribute("data-remove-id"));
+            });
+        });
+    }
 
     // ========================================
     // DIMENSION TAB SWITCHING
