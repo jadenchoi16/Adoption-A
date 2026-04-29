@@ -328,9 +328,15 @@
             flex-wrap: wrap;
         }
         .radar-chart-container {
-            flex: 0 0 280px;
+            flex: 0 0 360px;
             display: flex;
             justify-content: center;
+        }
+        .radar-chart-container svg {
+            width: 100%;
+            height: auto;
+            max-width: 360px;
+            overflow: visible;
         }
         .dimension-cards {
             flex: 1;
@@ -1070,7 +1076,10 @@
     function drawRadar(data) {
         const container = document.getElementById('radarChart');
         if (!container) return;
-        const size = 280, cx = size / 2, cy = size / 2, r = 100;
+        // Wider canvas (W>H) so the bottom-left/right labels and their
+        // numeric values fit without clipping. Chart itself stays compact.
+        const W = 360, H = 300;
+        const cx = W / 2, cy = 140, r = 100;
         const dims = [
             { label: 'Economic', value: data.economic.score },
             { label: 'Regulatory', value: data.regulatory.score },
@@ -1079,7 +1088,7 @@
         const n = dims.length;
         const angleSlice = (Math.PI * 2) / n;
 
-        let svgHtml = `<svg width="${size}" height="${size}" viewBox="0 0 ${size} ${size}">`;
+        let svgHtml = `<svg width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg">`;
 
         // Grid rings
         [0.25, 0.5, 0.75, 1.0].forEach(level => {
