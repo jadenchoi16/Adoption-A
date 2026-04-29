@@ -21,6 +21,24 @@
             color: #2c3e50;
             line-height: 1.6;
             min-height: 100vh;
+            position: relative;
+            z-index: 0;
+        }
+        /* Subtle full-bleed paper-grain texture behind everything.
+           Desaturated and lightened so the warm yellow of the source image
+           reads as soft cream paper grain that matches the site palette. */
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            z-index: -1;
+            background-image: url('assets/paper-bg.png');
+            background-size: cover;
+            background-position: center center;
+            background-repeat: no-repeat;
+            filter: grayscale(0.85) brightness(1.12) contrast(0.85);
+            opacity: 0.22;
+            pointer-events: none;
         }
 
         /* === SITE NAV === */
@@ -28,10 +46,10 @@
             position: sticky;
             top: 0;
             z-index: 500;
-            background: rgba(255, 255, 255, 0.92);
+            background: rgba(252, 248, 240, 0.82);
             backdrop-filter: saturate(160%) blur(10px);
             -webkit-backdrop-filter: saturate(160%) blur(10px);
-            border-bottom: 1px solid #ececec;
+            border-bottom: 1px solid #e8dfc9;
         }
         .site-nav-inner {
             max-width: 1200px;
