@@ -21,36 +21,122 @@
             line-height: 1.6;
         }
 
-        /* === HOME BUTTON === */
-        .home-btn {
-            position: fixed;
-            top: 18px;
-            left: 20px;
+        /* === SITE NAV === */
+        .site-nav {
+            position: sticky;
+            top: 0;
+            z-index: 500;
+            background: rgba(255, 255, 255, 0.92);
+            backdrop-filter: saturate(160%) blur(10px);
+            -webkit-backdrop-filter: saturate(160%) blur(10px);
+            border-bottom: 1px solid #ececec;
+        }
+        .site-nav-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 13px 28px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 24px;
+        }
+        .site-brand {
             display: inline-flex;
             align-items: center;
-            gap: 6px;
+            gap: 10px;
             text-decoration: none;
-            color: #0a4c6a;
-            font-family: 'VT323', monospace;
+            color: #1a2a3a;
+            font-family: 'Source Serif 4', Georgia, serif;
             font-size: 1rem;
-            font-weight: 500;
-            padding: 7px 14px;
-            border-radius: 8px;
-            border: 1px solid #d8dce0;
-            background: #fff;
-            transition: all 0.2s;
-            z-index: 50;
-            letter-spacing: 0.5px;
+            font-weight: 600;
+            letter-spacing: -0.2px;
         }
-        .home-btn:hover {
-            background: #eef3f7;
-            border-color: #0a4c6a;
+        .brand-mark {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 28px;
+            height: 28px;
+            background: linear-gradient(135deg, #0a4c6a 0%, #1a6b7a 100%);
+            color: #fff;
+            border-radius: 7px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            box-shadow: 0 2px 6px rgba(10, 76, 106, 0.25);
+        }
+        .site-nav-links { display: flex; align-items: center; gap: 2px; }
+        .site-nav-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: #5a6a7a;
+            text-decoration: none;
+            background: none;
+            border: none;
+            cursor: pointer;
+            transition: background 0.15s, color 0.15s;
+        }
+        .site-nav-link:hover { background: #f0f4f8; color: #0a4c6a; }
+        .site-nav-link.is-active { color: #0a4c6a; background: #eef5fa; }
+        .site-nav-dropdown { position: relative; }
+        .site-nav-dropdown::after {
+            content: '';
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            height: 12px;
+        }
+        .site-nav-dropdown-btn .caret {
+            font-size: 0.7rem;
+            transition: transform 0.2s ease;
+            opacity: 0.7;
+        }
+        .site-nav-dropdown:hover .site-nav-dropdown-btn .caret { transform: rotate(180deg); }
+        .site-nav-dropdown-menu {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            margin-top: 12px;
+            background: #fff;
+            border: 1px solid #ececec;
+            border-radius: 10px;
+            box-shadow: 0 12px 32px rgba(0, 0, 0, 0.10);
+            min-width: 200px;
+            overflow: hidden;
+            z-index: 510;
+        }
+        .site-nav-dropdown:hover .site-nav-dropdown-menu,
+        .site-nav-dropdown:focus-within .site-nav-dropdown-menu { display: block; }
+        .site-nav-dropdown-menu a {
+            display: block;
+            padding: 12px 18px;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.84rem;
+            color: #2c3e50;
+            text-decoration: none;
+            transition: background 0.15s, color 0.15s;
+        }
+        .site-nav-dropdown-menu a:hover { background: #f0f4f8; color: #0a4c6a; }
+        .site-nav-dropdown-menu a.is-active { background: #eef5fa; color: #0a4c6a; font-weight: 600; }
+        .site-nav-dropdown-menu a:not(:last-child) { border-bottom: 1px solid #f4f4f4; }
+        @media (max-width: 768px) {
+            .site-nav-inner { padding: 11px 18px; gap: 12px; }
+            .brand-text { display: none; }
+            .site-nav-link { padding: 7px 12px; font-size: 0.8rem; }
         }
 
         /* === HEADER === */
         .header {
             text-align: center;
-            padding: 52px 24px 20px;
+            padding: 44px 24px 20px;
             max-width: 860px;
             margin: 0 auto;
         }
@@ -342,16 +428,29 @@
 </head>
 <body>
 
-    <a href="map.html#economic" class="home-btn">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
-        BACK TO MAP
-    </a>
-
-    <div style="text-align:center; padding: 72px 24px 0; font-size:0.78rem; color:#9aa5b0;">
-        Also see:
-        <a href="regulatory-methodology.html" style="color:#9b5a30; margin: 0 8px;">Regulatory Methodology</a>
-        <a href="tech-methodology.html" style="color:#2e5fa1; margin: 0 8px;">Technical Methodology</a>
-    </div>
+    <!-- SITE NAV -->
+    <nav class="site-nav">
+        <div class="site-nav-inner">
+            <a href="map.html" class="site-brand">
+                <span class="brand-mark">B</span>
+                <span class="brand-text">Blockchain Adaptability Index</span>
+            </a>
+            <div class="site-nav-links">
+                <a href="map.html" class="site-nav-link">Map</a>
+                <div class="site-nav-dropdown">
+                    <button type="button" class="site-nav-link site-nav-dropdown-btn is-active">
+                        Data <span class="caret">&#9662;</span>
+                    </button>
+                    <div class="site-nav-dropdown-menu">
+                        <a href="econ-methodology.html" class="is-active">Economic</a>
+                        <a href="regulatory-methodology.html">Regulatory</a>
+                        <a href="tech-methodology.html">Technical</a>
+                    </div>
+                </div>
+                <a href="findings.html" class="site-nav-link">Findings</a>
+            </div>
+        </div>
+    </nav>
 
     <!-- HEADER -->
     <div class="header">
