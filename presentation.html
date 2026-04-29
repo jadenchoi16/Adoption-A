@@ -485,10 +485,9 @@
         }
 
         /* === SECTION HEADER SLIDE === */
+        /* Only override alignment; do NOT set `display` here, so the base
+           .slide / .slide.is-active visibility rules continue to work. */
         .section-header {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
             align-items: flex-start;
         }
         .section-header .section-num {
