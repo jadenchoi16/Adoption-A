@@ -895,6 +895,11 @@
         }
 
         /* === SEARCH + COMPARE TOOLBAR === */
+        .map-toolbar-wrap {
+            max-width: 1100px;
+            margin: 18px auto 0;
+            padding: 0 24px;
+        }
         .table-toolbar {
             display: flex;
             gap: 12px;
@@ -1208,6 +1213,35 @@
         </div>
     </div>
 
+    <!-- SEARCH + COMPARE TOOLBAR (drives both the map and the rankings table) -->
+    <div class="map-toolbar-wrap">
+        <div class="table-toolbar">
+            <div class="search-wrap">
+                <span class="search-icon" aria-hidden="true">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.5" y2="16.5"></line></svg>
+                </span>
+                <input type="text" id="searchInput" class="search-input" placeholder="Search countries..." autocomplete="off" spellcheck="false">
+                <button type="button" class="search-clear" id="searchClear" aria-label="Clear search">&times;</button>
+            </div>
+            <button type="button" id="compareToggle" class="compare-toggle" aria-pressed="false">
+                <span class="dot" aria-hidden="true"></span>
+                <span>Compare countries</span>
+            </button>
+        </div>
+
+        <p class="compare-hint" id="compareHint">Click countries on the map or rows below to add or remove (up to 3)</p>
+
+        <div class="compare-panel" id="comparePanel" aria-live="polite">
+            <div class="compare-panel-head">
+                <div class="compare-panel-title">
+                    Comparing<span class="muted" id="compareCount">0 of 3</span>
+                </div>
+                <button type="button" id="compareClear" class="compare-clear">Clear all</button>
+            </div>
+            <div class="compare-cards" id="compareCards"></div>
+        </div>
+    </div>
+
     <!-- SCORE GUIDE -->
     <div class="score-guide" id="scoreGuide">
         <div class="score-guide-top">
@@ -1305,32 +1339,6 @@
     <!-- TABLE -->
     <div class="table-section">
         <h2 id="table-title">Country Rankings &middot; Overall Score</h2>
-
-        <div class="table-toolbar">
-            <div class="search-wrap">
-                <span class="search-icon" aria-hidden="true">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.5" y2="16.5"></line></svg>
-                </span>
-                <input type="text" id="searchInput" class="search-input" placeholder="Search countries..." autocomplete="off" spellcheck="false">
-                <button type="button" class="search-clear" id="searchClear" aria-label="Clear search">&times;</button>
-            </div>
-            <button type="button" id="compareToggle" class="compare-toggle" aria-pressed="false">
-                <span class="dot" aria-hidden="true"></span>
-                <span>Compare countries</span>
-            </button>
-        </div>
-
-        <p class="compare-hint" id="compareHint">Click rows to add or remove (up to 3 countries)</p>
-
-        <div class="compare-panel" id="comparePanel" aria-live="polite">
-            <div class="compare-panel-head">
-                <div class="compare-panel-title">
-                    Comparing<span class="muted" id="compareCount">0 of 3</span>
-                </div>
-                <button type="button" id="compareClear" class="compare-clear">Clear all</button>
-            </div>
-            <div class="compare-cards" id="compareCards"></div>
-        </div>
 
         <div class="table-wrapper">
             <table>
