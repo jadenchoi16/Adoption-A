@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Capstone Seminar &middot; Global Blockchain Adaptability Index</title>
+    <title>Capstone Seminar &middot; Blockchain Adoption Atlas</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=VT323&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700;8..60,800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -33,7 +33,7 @@
             flex-direction: column;
             justify-content: center;
             background: #fafaf7;
-            padding: 60px 90px;
+            padding: 56px 80px;
             overflow: hidden;
         }
         .slide.is-active { display: flex; }
@@ -43,14 +43,30 @@
         /* === COMMON TYPOGRAPHY === */
         .eyebrow {
             font-family: 'VT323', monospace;
-            font-size: 1.05rem;
+            font-size: 1rem;
             letter-spacing: 2.5px;
             text-transform: uppercase;
             color: #0a4c6a;
-            margin-bottom: 28px;
+            margin-bottom: 22px;
         }
         .slide.is-dark .eyebrow { color: #5ba8b5; }
         .slide.is-tinted .eyebrow { color: #9b5a30; }
+
+        .presenter-tag {
+            position: absolute;
+            top: 30px;
+            right: 36px;
+            font-family: 'VT323', monospace;
+            font-size: 0.85rem;
+            letter-spacing: 1.6px;
+            color: rgba(120,135,150,0.7);
+            text-transform: uppercase;
+        }
+        .slide.is-dark .presenter-tag { color: rgba(155,220,232,0.55); }
+        .slide.is-tinted .presenter-tag { color: rgba(155,90,48,0.7); }
+        .presenter-tag .who { color: #0a4c6a; font-weight: 600; }
+        .slide.is-dark .presenter-tag .who { color: #5ba8b5; }
+        .slide.is-tinted .presenter-tag .who { color: #9b5a30; }
 
         h1.title {
             font-family: 'Source Serif 4', Georgia, serif;
@@ -62,44 +78,53 @@
             max-width: 1100px;
         }
         h1.title .accent { color: #5ba8b5; }
-        h1.title .small { font-size: 2.6rem; font-weight: 600; color: #c0d2dc; display: block; margin-top: 24px; letter-spacing: -0.5px; }
+        h1.title .small {
+            font-size: 1.9rem;
+            font-weight: 500;
+            color: #c0d2dc;
+            display: block;
+            margin-top: 22px;
+            letter-spacing: -0.3px;
+            line-height: 1.35;
+        }
 
         h2 {
             font-family: 'Source Serif 4', Georgia, serif;
-            font-size: 3.4rem;
+            font-size: 3.2rem;
             font-weight: 700;
             color: #1a2a3a;
             line-height: 1.08;
-            letter-spacing: -0.8px;
+            letter-spacing: -0.7px;
             max-width: 1100px;
-            margin-bottom: 28px;
+            margin-bottom: 24px;
         }
         .slide.is-dark h2 { color: #f0f4f8; }
         .slide.is-dark h2 .accent { color: #5ba8b5; }
         h2 .accent { color: #0a4c6a; }
         h2 .accent-warm { color: #9b5a30; }
+        h2 .accent-coral { color: #c06030; }
 
         h3 {
             font-family: 'Source Serif 4', Georgia, serif;
-            font-size: 2.1rem;
+            font-size: 1.9rem;
             font-weight: 700;
             color: #1a2a3a;
-            margin-bottom: 16px;
+            margin-bottom: 14px;
             line-height: 1.2;
         }
         .slide.is-dark h3 { color: #f0f4f8; }
 
         p, li {
-            font-size: 1.4rem;
+            font-size: 1.3rem;
             line-height: 1.5;
             color: #2c3e50;
             max-width: 1000px;
         }
         .slide.is-dark p, .slide.is-dark li { color: #d0dae3; }
         p.lede {
-            font-size: 1.6rem;
+            font-size: 1.5rem;
             color: #3c4d5e;
-            margin-bottom: 24px;
+            margin-bottom: 22px;
         }
         .slide.is-dark p.lede { color: #c0d2dc; }
         p strong { color: #0a3d62; }
@@ -109,19 +134,20 @@
 
         ul {
             list-style: none;
-            margin: 18px 0;
+            margin: 16px 0;
         }
         ul.bulleted li {
             position: relative;
-            padding-left: 32px;
-            margin-bottom: 14px;
+            padding-left: 28px;
+            margin-bottom: 12px;
+            font-size: 1.2rem;
         }
         ul.bulleted li::before {
             content: '';
             position: absolute;
             left: 0;
             top: 12px;
-            width: 18px;
+            width: 16px;
             height: 2px;
             background: #0a4c6a;
         }
@@ -131,31 +157,31 @@
         .two-col {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 64px;
+            gap: 56px;
             align-items: start;
         }
         .two-col-3-7 {
             display: grid;
             grid-template-columns: 3fr 7fr;
-            gap: 56px;
+            gap: 48px;
             align-items: start;
         }
         .three-col {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 28px;
+            gap: 24px;
         }
         .four-col {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
-            gap: 24px;
+            gap: 18px;
         }
 
         /* === PILLAR CARD === */
         .pillar {
             background: #fff;
             border-radius: 14px;
-            padding: 28px 26px;
+            padding: 24px 22px;
             border: 1px solid #ebebeb;
             border-top: 4px solid #ccc;
         }
@@ -164,36 +190,34 @@
         .pillar.p-tech { border-top-color: #2e5fa1; }
         .pillar h4 {
             font-family: 'Source Serif 4', Georgia, serif;
-            font-size: 1.3rem;
+            font-size: 1.2rem;
             color: #1a2a3a;
             margin-bottom: 4px;
         }
         .pillar .weight {
             font-family: 'VT323', monospace;
-            font-size: 0.95rem;
+            font-size: 0.92rem;
             color: #7a8a9a;
             letter-spacing: 1.2px;
             text-transform: uppercase;
-            margin-bottom: 14px;
+            margin-bottom: 12px;
         }
-        .pillar p { font-size: 1.05rem; line-height: 1.5; color: #2c3e50; }
+        .pillar p { font-size: 1rem; line-height: 1.5; color: #2c3e50; }
 
         /* === INDICATOR LIST === */
-        .indicator-list {
-            margin-top: 20px;
-        }
+        .indicator-list { margin-top: 10px; }
         .indicator-row {
             display: grid;
-            grid-template-columns: 90px 1fr;
-            gap: 22px;
+            grid-template-columns: 80px 1fr;
+            gap: 20px;
             align-items: baseline;
-            padding: 14px 0;
+            padding: 11px 0;
             border-bottom: 1px solid #ebe6db;
         }
         .indicator-row:last-child { border-bottom: none; }
         .indicator-weight {
             font-family: 'VT323', monospace;
-            font-size: 1.7rem;
+            font-size: 1.55rem;
             color: #0a4c6a;
             font-weight: 600;
         }
@@ -201,13 +225,13 @@
         .indicator-row.row-tech .indicator-weight { color: #2e5fa1; }
         .indicator-name {
             font-family: 'Source Serif 4', Georgia, serif;
-            font-size: 1.3rem;
+            font-size: 1.2rem;
             color: #1a2a3a;
             font-weight: 600;
-            margin-bottom: 3px;
+            margin-bottom: 2px;
         }
         .indicator-desc {
-            font-size: 1rem;
+            font-size: 0.95rem;
             color: #5a6b7c;
             line-height: 1.45;
         }
@@ -216,14 +240,14 @@
         .big-stat {
             background: #fff;
             border-radius: 14px;
-            padding: 36px 32px;
+            padding: 30px 28px;
             border-left: 5px solid #0a4c6a;
         }
         .big-stat.warm { border-left-color: #c06030; }
         .big-stat.teal { border-left-color: #1a6b7a; }
         .big-stat .num {
             font-family: 'VT323', monospace;
-            font-size: 5rem;
+            font-size: 4.4rem;
             color: #0a4c6a;
             line-height: 1;
             margin-bottom: 8px;
@@ -231,7 +255,7 @@
         .big-stat.warm .num { color: #c06030; }
         .big-stat.teal .num { color: #1a6b7a; }
         .big-stat .label {
-            font-size: 1.1rem;
+            font-size: 1.05rem;
             color: #2c3e50;
             line-height: 1.45;
         }
@@ -241,138 +265,92 @@
             background: #0a1620;
             color: #d0dae3;
             font-family: 'VT323', monospace;
-            font-size: 1.4rem;
-            padding: 18px 24px;
+            font-size: 1.3rem;
+            padding: 16px 22px;
             border-radius: 8px;
             letter-spacing: 0.4px;
-            margin: 18px 0;
+            margin: 14px 0;
         }
         .formula .k { color: #5ba8b5; }
 
         /* === LEADERBOARD === */
         .leader-row {
             display: grid;
-            grid-template-columns: 50px 1.4fr 2.4fr auto;
-            gap: 20px;
+            grid-template-columns: 50px 1.4fr 2.5fr auto;
+            gap: 18px;
             align-items: center;
-            padding: 14px 18px;
+            padding: 12px 16px;
             background: #fff;
             border-radius: 10px;
             border-left: 3px solid #1a6b7a;
-            margin-bottom: 8px;
+            margin-bottom: 7px;
         }
-        .leader-rank {
+        .leader-rank { font-family: 'VT323', monospace; font-size: 1.2rem; color: #0a4c6a; }
+        .leader-country { font-family: 'Source Serif 4', Georgia, serif; font-size: 1.2rem; color: #1a2a3a; font-weight: 700; }
+        .leader-driver { font-size: 0.92rem; color: #5a6b7c; line-height: 1.4; }
+        .leader-score { font-family: 'VT323', monospace; font-size: 1.35rem; color: #0a4c6a; text-align: right; font-weight: 600; }
+
+        /* === TIER CARDS (regulatory score interpretation) === */
+        .tier-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+            margin-top: 12px;
+        }
+        .tier-card {
+            background: #fff;
+            border-radius: 10px;
+            padding: 18px 22px;
+            border-left: 4px solid #ccc;
+        }
+        .tier-card.tier-comp     { border-left-color: #2e7d32; }
+        .tier-card.tier-dev      { border-left-color: #d4915c; }
+        .tier-card.tier-amb      { border-left-color: #c06030; }
+        .tier-card.tier-host     { border-left-color: #8b1a1a; }
+        .tier-range {
             font-family: 'VT323', monospace;
-            font-size: 1.3rem;
+            font-size: 1.2rem;
             color: #0a4c6a;
+            margin-bottom: 4px;
+            font-weight: 600;
         }
-        .leader-country {
+        .tier-card.tier-comp .tier-range  { color: #2e7d32; }
+        .tier-card.tier-dev .tier-range   { color: #9b5a30; }
+        .tier-card.tier-amb .tier-range   { color: #c06030; }
+        .tier-card.tier-host .tier-range  { color: #8b1a1a; }
+        .tier-name {
             font-family: 'Source Serif 4', Georgia, serif;
-            font-size: 1.3rem;
+            font-size: 1.25rem;
             color: #1a2a3a;
             font-weight: 700;
+            margin-bottom: 6px;
         }
-        .leader-driver {
-            font-size: 0.98rem;
+        .tier-card p {
+            font-size: 0.95rem;
             color: #5a6b7c;
             line-height: 1.45;
-        }
-        .leader-score {
-            font-family: 'VT323', monospace;
-            font-size: 1.45rem;
-            color: #0a4c6a;
-            text-align: right;
-            font-weight: 600;
-        }
-
-        /* === QUADRANT === */
-        .quadrant-wrap {
-            position: relative;
-            width: 100%;
-            max-width: 760px;
-            aspect-ratio: 1.1 / 1;
-            background: #fff;
-            border-radius: 14px;
-            border: 1px solid #ebebeb;
-            margin: 8px auto 0;
-        }
-        .quadrant-axis-x, .quadrant-axis-y {
-            position: absolute;
-            background: #d8dee4;
-        }
-        .quadrant-axis-x { left: 8%; right: 8%; top: 50%; height: 1px; }
-        .quadrant-axis-y { top: 8%; bottom: 8%; left: 50%; width: 1px; }
-        .qlabel {
-            position: absolute;
-            font-family: 'VT323', monospace;
-            font-size: 0.9rem;
-            color: #7a8a9a;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-        }
-        .qlabel-x-low { left: 8%; bottom: 1%; }
-        .qlabel-x-high { right: 8%; bottom: 1%; text-align: right; }
-        .qlabel-x-title { left: 50%; bottom: 1%; transform: translateX(-50%); color: #2c3e50; font-size: 1rem; font-weight: 700; }
-        .qlabel-y-low { left: 1%; bottom: 8%; transform: rotate(-90deg); transform-origin: 0 0; }
-        .qlabel-y-high { left: 1%; top: 8%; transform: rotate(-90deg); transform-origin: 0 0; }
-        .qlabel-y-title { left: 1%; top: 50%; transform: rotate(-90deg) translateX(50%); transform-origin: 0 0; color: #2c3e50; font-size: 1rem; font-weight: 700; }
-        .qregion {
-            position: absolute;
-            padding: 8px 14px;
-            font-size: 1.05rem;
-            font-family: 'Source Serif 4', Georgia, serif;
-            font-weight: 600;
-            color: #2c3e50;
-            background: rgba(255,255,255,0.85);
-            border-radius: 6px;
-            text-align: center;
-            line-height: 1.3;
-        }
-        .qregion .sub { font-size: 0.85rem; font-family: 'Inter', sans-serif; font-weight: 400; color: #5a6b7c; display: block; margin-top: 2px; }
-        .qregion-tl { top: 16%; left: 12%; }
-        .qregion-tr { top: 16%; right: 12%; }
-        .qregion-bl { bottom: 16%; left: 12%; }
-        .qregion-br { bottom: 16%; right: 12%; }
-        .qdot {
-            position: absolute;
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-            background: #0a4c6a;
-            transform: translate(-50%, -50%);
-        }
-        .qdot.warm { background: #c06030; }
-        .qdot::after {
-            content: attr(data-name);
-            position: absolute;
-            left: 14px;
-            top: -5px;
-            font-size: 0.8rem;
-            color: #2c3e50;
-            white-space: nowrap;
-            font-weight: 600;
         }
 
         /* === DEMO SLIDE === */
         .demo-card {
-            background: #fff;
+            background: #122433;
             border-radius: 14px;
-            padding: 32px 36px;
-            border: 1px solid #ebebeb;
-            border-top: 4px solid #0a4c6a;
+            padding: 28px 32px;
+            border: 1px solid #1f3445;
+            color: #d0dae3;
         }
-        .demo-card h3 { margin-bottom: 14px; }
+        .demo-card h3 { color: #f0f4f8; margin-bottom: 12px; }
         .demo-card ol {
             counter-reset: demo;
             list-style: none;
-            margin: 16px 0 0;
+            margin: 12px 0 0;
         }
         .demo-card ol li {
             counter-increment: demo;
             position: relative;
-            padding-left: 56px;
-            margin-bottom: 14px;
-            font-size: 1.2rem;
+            padding-left: 50px;
+            margin-bottom: 12px;
+            font-size: 1.1rem;
             line-height: 1.5;
         }
         .demo-card ol li::before {
@@ -381,10 +359,10 @@
             left: 0;
             top: 0;
             font-family: 'VT323', monospace;
-            font-size: 1.5rem;
-            color: #0a4c6a;
-            background: #eef5fa;
-            width: 42px;
+            font-size: 1.4rem;
+            color: #5ba8b5;
+            background: #1f3445;
+            width: 38px;
             text-align: center;
             border-radius: 6px;
         }
@@ -393,7 +371,7 @@
         .vs-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 22px;
+            gap: 20px;
             margin-top: 14px;
         }
         .vs-card {
@@ -413,31 +391,146 @@
         }
         .vs-card .then {
             font-family: 'Source Serif 4', Georgia, serif;
-            font-size: 1.5rem;
+            font-size: 1.45rem;
             color: #1a2a3a;
             font-weight: 700;
             line-height: 1.3;
             margin-bottom: 10px;
         }
-        .vs-card p { font-size: 1.05rem; line-height: 1.5; color: #5a6b7c; }
+        .vs-card p { font-size: 1rem; line-height: 1.5; color: #5a6b7c; }
+
+        /* === MARKET ENTRY GRID === */
+        .market-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 12px;
+            margin-top: 14px;
+        }
+        .market-card {
+            background: #fff;
+            border-radius: 10px;
+            padding: 16px 14px;
+            border-top: 3px solid #ccc;
+        }
+        .market-card.m-low    { border-top-color: #2e7d32; }
+        .market-card.m-growth { border-top-color: #d4915c; }
+        .market-card.m-high   { border-top-color: #c06030; }
+        .market-card.m-infra  { border-top-color: #2e5fa1; }
+        .market-card.m-avoid  { border-top-color: #8b1a1a; }
+        .market-tier {
+            font-family: 'VT323', monospace;
+            font-size: 0.85rem;
+            color: #7a8a9a;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 4px;
+        }
+        .market-card h4 {
+            font-family: 'Source Serif 4', Georgia, serif;
+            font-size: 1.05rem;
+            color: #1a2a3a;
+            margin-bottom: 6px;
+            line-height: 1.25;
+        }
+        .market-card .countries {
+            font-size: 0.82rem;
+            color: #2c3e50;
+            font-weight: 600;
+            margin-bottom: 8px;
+            line-height: 1.4;
+        }
+        .market-card p {
+            font-size: 0.78rem;
+            color: #5a6b7c;
+            line-height: 1.4;
+        }
+
+        /* === AUDIENCE GRID === */
+        .audience-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 14px;
+            margin-top: 12px;
+        }
+        .aud-card {
+            background: #fff;
+            border-radius: 12px;
+            padding: 20px 18px;
+            border-top: 4px solid #5ba8b5;
+        }
+        .aud-card.aud-policy { border-top-color: #9b5a30; }
+        .aud-card.aud-biz    { border-top-color: #c06030; }
+        .aud-card.aud-legal  { border-top-color: #1a6b7a; }
+        .aud-card.aud-vc     { border-top-color: #2e5fa1; }
+        .aud-card.aud-dev    { border-top-color: #2e7d32; }
+        .aud-label {
+            font-family: 'VT323', monospace;
+            font-size: 0.85rem;
+            color: #7a8a9a;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 6px;
+        }
+        .aud-card h4 {
+            font-family: 'Source Serif 4', Georgia, serif;
+            font-size: 1.05rem;
+            color: #1a2a3a;
+            margin-bottom: 8px;
+            line-height: 1.25;
+        }
+        .aud-card p {
+            font-size: 0.82rem;
+            color: #5a6b7c;
+            line-height: 1.5;
+        }
+
+        /* === SECTION HEADER SLIDE === */
+        .section-header {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: flex-start;
+        }
+        .section-header .section-num {
+            font-family: 'VT323', monospace;
+            font-size: 1.2rem;
+            color: #5ba8b5;
+            letter-spacing: 4px;
+            margin-bottom: 28px;
+        }
+        .section-header h1 {
+            font-family: 'Source Serif 4', Georgia, serif;
+            font-size: 6rem;
+            font-weight: 800;
+            color: #f0f4f8;
+            line-height: 1;
+            letter-spacing: -2px;
+            max-width: 1100px;
+        }
+        .section-header h1 .accent { color: #5ba8b5; }
+        .section-header p {
+            margin-top: 30px;
+            font-size: 1.4rem;
+            color: #9bdce8;
+            font-style: italic;
+            max-width: 800px;
+        }
 
         /* === FOOTER / NAV === */
         .deck-footer {
             position: fixed;
-            bottom: 22px;
+            bottom: 18px;
             left: 0; right: 0;
             display: flex;
             justify-content: space-between;
-            padding: 0 36px;
+            padding: 0 32px;
             font-family: 'VT323', monospace;
-            font-size: 0.95rem;
-            color: rgba(120,135,150,0.6);
+            font-size: 0.9rem;
+            color: rgba(120,135,150,0.5);
             letter-spacing: 1px;
             pointer-events: none;
             z-index: 100;
         }
-        .deck-footer .left { color: rgba(120,135,150,0.55); }
-        .slide.is-dark ~ .deck-footer { /* no-op, rely on opacity */ }
         .progress-bar {
             position: fixed;
             top: 0; left: 0; right: 0;
@@ -466,13 +559,13 @@
         .help-overlay.visible { display: flex; }
         .help-card {
             background: #122433;
-            padding: 36px 44px;
+            padding: 32px 40px;
             border-radius: 14px;
             border: 1px solid #1f3445;
             max-width: 480px;
         }
-        .help-card h3 { font-family: 'Source Serif 4', Georgia, serif; font-size: 1.4rem; margin-bottom: 18px; color: #f0f4f8; }
-        .help-card .row { display: flex; justify-content: space-between; padding: 6px 0; font-size: 0.95rem; color: #c0d2dc; border-bottom: 1px solid #1f3445; }
+        .help-card h3 { font-family: 'Source Serif 4', Georgia, serif; font-size: 1.3rem; margin-bottom: 16px; color: #f0f4f8; }
+        .help-card .row { display: flex; justify-content: space-between; padding: 6px 0; font-size: 0.9rem; color: #c0d2dc; border-bottom: 1px solid #1f3445; }
         .help-card .row:last-child { border-bottom: none; }
         .help-card kbd {
             font-family: 'VT323', monospace;
@@ -480,7 +573,7 @@
             color: #5ba8b5;
             padding: 2px 10px;
             border-radius: 4px;
-            font-size: 0.95rem;
+            font-size: 0.92rem;
         }
 
         @media print {
@@ -491,9 +584,11 @@
         }
 
         @media (max-width: 1100px) {
-            .slide { padding: 40px 50px; }
-            h1.title { font-size: 4rem; }
-            h2 { font-size: 2.6rem; }
+            .slide { padding: 36px 44px; }
+            h1.title { font-size: 3.8rem; }
+            h2 { font-size: 2.4rem; }
+            .section-header h1 { font-size: 4rem; }
+            .market-grid, .audience-grid { grid-template-columns: repeat(2, 1fr); }
         }
     </style>
 </head>
@@ -507,28 +602,22 @@
         <section class="slide is-dark is-active">
             <div class="eyebrow">TAC 456 &middot; Capstone Seminar &middot; April 2026</div>
             <h1 class="title">
-                Global Blockchain<br>
-                <span class="accent">Adaptability Index</span>
+                Blockchain<br>
+                <span class="accent">Adoption Atlas</span>
                 <span class="small">Measuring blockchain readiness across economic, regulatory, and technical dimensions in 20 countries.</span>
             </h1>
-            <p style="margin-top:48px; font-family:'VT323',monospace; font-size:1.1rem; letter-spacing:2px; color:#7e8c98;">ALEXIS &middot; ALON &middot; ARI &middot; FEDERICO &middot; JADEN &middot; NICO</p>
+            <p style="margin-top:42px; font-family:'VT323',monospace; font-size:1.05rem; letter-spacing:2px; color:#7e8c98;">FEDERICO BECERRA &middot; NICO TAYLOR &middot; JADEN CHOI &middot; ALEXIS VO &middot; ALON MUTTER &middot; ARI CHOE</p>
         </section>
 
-        <!-- ============ SLIDE 2: THE QUESTION ============ -->
+        <!-- ============ SLIDE 2: THE PROBLEM ============ -->
         <section class="slide">
-            <div class="eyebrow">01 &middot; The Inquiry</div>
-            <h2>How should global blockchain adoption be <span class="accent">measured and visualized</span> across economic, technical, and regulatory dimensions?</h2>
-            <p class="lede" style="margin-top:24px;">Most public reports rank countries on a single composite number. That hides the mechanism. A country can land at the top because of speculative trading, remittance flows, cheap mining electricity, or favorable laws, and those four stories require completely different responses from policymakers, businesses, and users.</p>
-            <p style="margin-top:14px;">Our project starts from the assumption that <strong>any single-number ranking is misleading</strong>, and asks what a more honest measurement looks like.</p>
-        </section>
-
-        <!-- ============ SLIDE 3: WHY IT MATTERS ============ -->
-        <section class="slide is-tinted">
-            <div class="eyebrow">02 &middot; Why this matters</div>
-            <h2>Existing rankings answer the wrong question.</h2>
-            <div class="two-col" style="margin-top:18px;">
+            <div class="presenter-tag">Presented by <span class="who">ALON / ARI / ALEXIS</span></div>
+            <div class="eyebrow">01 &middot; The Problem</div>
+            <h2>Existing rankings answer the <span class="accent-coral">wrong question</span>.</h2>
+            <p class="lede">Current blockchain adoption metrics are fragmented and conflate speculation with genuine utility.</p>
+            <div class="two-col" style="margin-top:14px;">
                 <div>
-                    <h3 style="font-size:1.5rem;">What others measure</h3>
+                    <h3 style="font-size:1.4rem;">What others measure</h3>
                     <ul class="bulleted">
                         <li>Chainalysis: composite of on-chain activity, weighted toward CEX volume and DeFi flows.</li>
                         <li>Triple-A: a single ownership-percentage statistic per country.</li>
@@ -536,28 +625,49 @@
                     </ul>
                 </div>
                 <div>
-                    <h3 style="font-size:1.5rem;">What is missing</h3>
+                    <h3 style="font-size:1.4rem;">What is missing</h3>
                     <ul class="bulleted">
-                        <li>None of these separate <em>why</em> a country ranks high. India, Vietnam, and the US are all near the top of Chainalysis for completely different reasons.</li>
+                        <li>None separate <em>why</em> a country ranks high. India, Vietnam, and the US sit near the top of Chainalysis for completely different reasons.</li>
                         <li>None combine usage, legal clarity, and infrastructure into one comparable picture.</li>
-                        <li>None reveal the <em>tradeoff</em> between regulation and adoption.</li>
+                        <li>None reveal the tradeoff between regulation and adoption.</li>
                     </ul>
                 </div>
             </div>
         </section>
 
-        <!-- ============ SLIDE 4: ORIGINAL THESIS ============ -->
-        <section class="slide is-dark">
-            <div class="eyebrow">03 &middot; Original thesis</div>
-            <h2><span class="accent">High trading volume</span> in a country would <span style="color:#e0a070;">not</span> correlate with strong technical infrastructure or regulatory clarity.</h2>
-            <p class="lede" style="margin-top:30px; max-width:1000px;">In other words: countries with the most crypto activity aren&rsquo;t the ones with the best frameworks for it. Activity outruns regulation, and rule-making outruns the underlying network.</p>
-            <p style="color:#7e8c98; margin-top:30px; font-style:italic;">This is what we set out to test, and what we partly revised.</p>
+        <!-- ============ SLIDE 3: OUR QUESTION ============ -->
+        <section class="slide is-tinted">
+            <div class="presenter-tag">Presented by <span class="who">ALON / ARI / ALEXIS</span></div>
+            <div class="eyebrow">02 &middot; Our Question</div>
+            <h2>How should global blockchain adoption be <span class="accent">measured and visualized</span> across economic, technical, and regulatory dimensions?</h2>
+            <p class="lede" style="margin-top:24px;">A defensible answer requires keeping the three dimensions separable, not collapsing them into a single number that hides which one is doing the work.</p>
         </section>
 
-        <!-- ============ SLIDE 5: METHOD OVERVIEW ============ -->
+        <!-- ============ SLIDE 4: THESIS, ORIGINAL + REVISED ============ -->
+        <section class="slide is-dark">
+            <div class="presenter-tag">Presented by <span class="who">ALON / ARI / ALEXIS</span></div>
+            <div class="eyebrow">03 &middot; Our Thesis</div>
+            <h2>What we expected vs. <span class="accent">what we found</span>.</h2>
+            <div class="vs-grid" style="margin-top:18px;">
+                <div class="vs-card" style="background:#122433; border-top-color:#7e8c98;">
+                    <div class="when" style="color:#9aa5b0;">Original thesis</div>
+                    <div class="then" style="color:#f0f4f8;">High trading volume would not correlate with strong technical infrastructure or regulatory clarity.</div>
+                    <p style="color:#c0d2dc;">i.e., countries with the most activity aren&rsquo;t the ones with the best frameworks for it.</p>
+                </div>
+                <div class="vs-card warm" style="background:#122433;">
+                    <div class="when" style="color:#9aa5b0;">Revised thesis</div>
+                    <div class="then" style="color:#f0f4f8;">High crypto activity does <em style="color:#e0a070;">not</em> mean a country is truly blockchain-ready.</div>
+                    <p style="color:#c0d2dc;">Some countries are active out of necessity, others have built real infrastructure, and you can&rsquo;t tell the difference without looking at all three dimensions separately.</p>
+                </div>
+            </div>
+            <p style="margin-top:26px; font-size:1.15rem; color:#9bdce8; font-style:italic;">The original thesis was partially confirmed. The revised thesis is what the data actually showed.</p>
+        </section>
+
+        <!-- ============ SLIDE 5: METHOD ============ -->
         <section class="slide">
+            <div class="presenter-tag">Presented by <span class="who">ALON / ARI / ALEXIS</span></div>
             <div class="eyebrow">04 &middot; Method</div>
-            <h2>We split the score into <span class="accent">three pillars</span>, weighted equally.</h2>
+            <h2>Three pillars, weighted <span class="accent">equally</span>.</h2>
             <p class="lede">Each country gets one score per pillar, normalized to 0&ndash;1. The overall score is their average. The point is to keep the pillars <em>separable</em>, so the underlying driver of any country&rsquo;s position stays visible.</p>
             <div class="three-col" style="margin-top:20px;">
                 <div class="pillar p-econ">
@@ -568,7 +678,7 @@
                 <div class="pillar p-reg">
                     <h4>Regulatory Clarity</h4>
                     <div class="weight">Weight 1/3</div>
-                    <p>How clearly six legal dimensions are codified: stablecoins, licensing, tax, banking, enforcement, DeFi.</p>
+                    <p>Six legal sub-dimensions: stablecoins, licensing, tax, banking, enforcement, DeFi.</p>
                 </div>
                 <div class="pillar p-tech">
                     <h4>Technical Infrastructure</h4>
@@ -576,45 +686,45 @@
                     <p>BTC and ETH nodes, mining hashrate, Lightning density, electricity, internet quality.</p>
                 </div>
             </div>
-            <div class="formula" style="margin-top:24px;"><span class="k">Overall</span> = (Economic &times; 0.333) + (Regulatory &times; 0.333) + (Technical &times; 0.333)</div>
+            <div class="formula" style="margin-top:18px;"><span class="k">Overall</span> = (Economic &times; 0.333) + (Regulatory &times; 0.333) + (Technical &times; 0.333)</div>
         </section>
 
-        <!-- ============ SLIDE 6: ECONOMIC PILLAR ============ -->
+        <!-- ============ SLIDE 6: ECONOMIC PILLAR (Nico) ============ -->
         <section class="slide">
-            <div class="eyebrow" style="color:#1a7a4e;">05 &middot; Pillar I &middot; Economic Adoption</div>
-            <h2>Five indicators of <span style="color:#1a7a4e;">real-world usage</span>.</h2>
-            <p class="lede">We decomposed Chainalysis&rsquo; composite back into its retail and DeFi sub-rankings, then layered ownership, remittances, and trading-to-GDP on top to capture different demand drivers separately.</p>
+            <div class="presenter-tag">Presented by <span class="who" style="color:#1a7a4e;">NICO TAYLOR</span></div>
+            <div class="eyebrow" style="color:#1a7a4e;">05 &middot; Pillar I &middot; Economic Dimension</div>
+            <h2>How much economic value is flowing through blockchain, and is it speculation or <span style="color:#1a7a4e;">productive use</span>?</h2>
             <div class="indicator-list" style="margin-top:8px;">
                 <div class="indicator-row">
-                    <div class="indicator-weight">0.30</div>
+                    <div class="indicator-weight">30%</div>
                     <div>
-                        <div class="indicator-name">Crypto Ownership %</div>
-                        <div class="indicator-desc">Population penetration rate from Triple-A. The most direct &ldquo;is this a real consumer market&rdquo; signal.</div>
+                        <div class="indicator-name">Crypto Ownership</div>
+                        <div class="indicator-desc">Population penetration rate from Triple-A. The strongest signal of real consumer adoption.</div>
                     </div>
                 </div>
                 <div class="indicator-row">
-                    <div class="indicator-weight">0.20</div>
+                    <div class="indicator-weight">20%</div>
                     <div>
                         <div class="indicator-name">CEX Activity</div>
-                        <div class="indicator-desc">Average of Chainalysis Retail CEX and Institutional CEX sub-rankings, PPP-weighted and inverted to a 0&ndash;1 scale.</div>
+                        <div class="indicator-desc">Average of Chainalysis Retail and Institutional CEX sub-rankings, PPP-adjusted. Captures broad market participation.</div>
                     </div>
                 </div>
                 <div class="indicator-row">
-                    <div class="indicator-weight">0.20</div>
+                    <div class="indicator-weight">20%</div>
                     <div>
                         <div class="indicator-name">CEX Volume / GDP</div>
-                        <div class="indicator-desc">CoinGecko 24h exchange volume divided by national GDP, log-transformed. Catches Lira, Won, and Naira-style speculation cleanly.</div>
+                        <div class="indicator-desc">CoinGecko 24h exchange volume divided by national GDP, log-adjusted. Catches Lira, Won, and Naira-style speculation.</div>
                     </div>
                 </div>
                 <div class="indicator-row">
-                    <div class="indicator-weight">0.20</div>
+                    <div class="indicator-weight">20%</div>
                     <div>
                         <div class="indicator-name">Remittances per Capita</div>
-                        <div class="indicator-desc">World Bank inbound remittance flows divided by population. Captures the cross-border use case (Ukraine, Philippines, Bangladesh).</div>
+                        <div class="indicator-desc">World Bank inbound flows divided by population. Indicates real-world cross-border utility (Ukraine, Philippines, Bangladesh).</div>
                     </div>
                 </div>
                 <div class="indicator-row">
-                    <div class="indicator-weight">0.10</div>
+                    <div class="indicator-weight">10%</div>
                     <div>
                         <div class="indicator-name">DeFi Activity</div>
                         <div class="indicator-desc">Chainalysis DeFi value-received sub-rank. Down-weighted because it is volatile and concentrated in a small group of countries.</div>
@@ -623,263 +733,366 @@
             </div>
         </section>
 
-        <!-- ============ SLIDE 7: REGULATORY PILLAR ============ -->
-        <section class="slide is-tinted">
-            <div class="eyebrow">06 &middot; Pillar II &middot; Regulatory Clarity</div>
-            <h2>Six dimensions, each rated <span class="accent-warm">1&ndash;3</span>.</h2>
-            <p class="lede">Built from Library of Congress and PwC primary sources. Each country is rated 1 (absent or hostile), 2 (partial), or 3 (clear and codified). The six ratings are summed and divided by 18 to normalize to 0&ndash;1. <strong>Equal weight</strong> on each dimension because no single dimension is sufficient on its own.</p>
-            <div class="indicator-list" style="margin-top:8px;">
-                <div class="indicator-row row-reg"><div class="indicator-weight">1/6</div><div><div class="indicator-name">Stablecoin Law</div><div class="indicator-desc">Specific legislation governing stablecoin issuance, reserves, and consumer protection.</div></div></div>
-                <div class="indicator-row row-reg"><div class="indicator-weight">1/6</div><div><div class="indicator-name">Exchange Licensing</div><div class="indicator-desc">A defined licensing regime for centralized exchanges and other VASPs.</div></div></div>
-                <div class="indicator-row row-reg"><div class="indicator-weight">1/6</div><div><div class="indicator-name">Tax Treatment</div><div class="indicator-desc">Clear, codified rules for taxing crypto gains, income, and corporate holdings.</div></div></div>
-                <div class="indicator-row row-reg"><div class="indicator-weight">1/6</div><div><div class="indicator-name">Banking Access</div><div class="indicator-desc">Whether crypto businesses can access traditional banking rails legally.</div></div></div>
-                <div class="indicator-row row-reg"><div class="indicator-weight">1/6</div><div><div class="indicator-name">Enforcement</div><div class="indicator-desc">Active, observable enforcement of the rules that exist on paper.</div></div></div>
-                <div class="indicator-row row-reg"><div class="indicator-weight">1/6</div><div><div class="indicator-name">DeFi Recognition</div><div class="indicator-desc">Whether DeFi protocols are acknowledged in the legal framework at all.</div></div></div>
-            </div>
-            <div class="formula" style="margin-top:18px;"><span class="k">Regulatory</span> = (Stablecoin + Licensing + Tax + Banking + Enforcement + DeFi) / 18</div>
-        </section>
-
-        <!-- ============ SLIDE 8: TECHNICAL PILLAR ============ -->
+        <!-- ============ SLIDE 7: TECHNICAL PILLAR (Federico) ============ -->
         <section class="slide">
-            <div class="eyebrow" style="color:#2e5fa1;">07 &middot; Pillar III &middot; Technical Infrastructure</div>
-            <h2>Five pillars, weighted by what they reveal.</h2>
-            <p class="lede">Per-100k-internet-users normalization (rather than per capita) so high-internet countries aren&rsquo;t penalized for population size. Mining is the exception: it uses global hashrate share directly, since mining concentration is a global, not local, phenomenon.</p>
+            <div class="presenter-tag">Presented by <span class="who" style="color:#2e5fa1;">FEDERICO BECERRA</span></div>
+            <div class="eyebrow" style="color:#2e5fa1;">06 &middot; Pillar II &middot; Technical Infrastructure</div>
+            <h2>How is blockchain infrastructure being <span style="color:#2e5fa1;">built</span> and where?</h2>
             <div class="indicator-list">
                 <div class="indicator-row row-tech">
-                    <div class="indicator-weight">0.25</div>
+                    <div class="indicator-weight">25%</div>
                     <div>
                         <div class="indicator-name">Bitcoin Nodes</div>
                         <div class="indicator-desc">Reachable BTC nodes per 100k internet users (Bitnodes).</div>
                     </div>
                 </div>
                 <div class="indicator-row row-tech">
-                    <div class="indicator-weight">0.25</div>
+                    <div class="indicator-weight">25%</div>
                     <div>
                         <div class="indicator-name">Ethereum Nodes</div>
-                        <div class="indicator-desc">Ethereum nodes per 100k internet users (Ethernodes).</div>
+                        <div class="indicator-desc">Reachable ETH nodes per 100k internet users (Ethernodes).</div>
                     </div>
                 </div>
                 <div class="indicator-row row-tech">
-                    <div class="indicator-weight">0.20</div>
+                    <div class="indicator-weight">20%</div>
                     <div>
-                        <div class="indicator-name">Lightning Network Density</div>
+                        <div class="indicator-name">Lightning Network</div>
                         <div class="indicator-desc">LN nodes per 100k internet users (mempool.emzy.de). A proxy for second-layer adoption depth.</div>
                     </div>
                 </div>
                 <div class="indicator-row row-tech">
-                    <div class="indicator-weight">0.15</div>
+                    <div class="indicator-weight">15%</div>
                     <div>
-                        <div class="indicator-name">Mining Hashrate Share</div>
-                        <div class="indicator-desc">Global hashrate % from Hashrate Index. Used directly because mining is geographically concentrated.</div>
+                        <div class="indicator-name">Mining Hashrate</div>
+                        <div class="indicator-desc">Country share of global BTC hashrate (Hashrate Index). Used directly because mining is geographically concentrated.</div>
                     </div>
                 </div>
                 <div class="indicator-row row-tech">
-                    <div class="indicator-weight">0.15</div>
+                    <div class="indicator-weight">15%</div>
                     <div>
                         <div class="indicator-name">Enabling Environment</div>
-                        <div class="indicator-desc">World Bank electricity access + Speedtest internet quality, blended. The substrate everything else runs on.</div>
+                        <div class="indicator-desc">Composite of internet penetration (40%), electricity access (30%), and average internet speed (30%).</div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- ============ SLIDE 9: ARTIFACT / DEMO ============ -->
+        <!-- ============ SLIDE 8: TECHNICAL REASONING (Federico) ============ -->
+        <section class="slide is-tinted">
+            <div class="presenter-tag">Presented by <span class="who" style="color:#2e5fa1;">FEDERICO BECERRA</span></div>
+            <div class="eyebrow" style="color:#2e5fa1;">07 &middot; Why this technical weighting</div>
+            <h2>The reasoning behind the <span style="color:#2e5fa1;">five technical indicators</span>.</h2>
+            <ul class="bulleted" style="margin-top:18px;">
+                <li><strong>Balances decentralization and economic commitment.</strong> Nodes (BTC / ETH / LN) measure decentralization and participation, while hashrate captures capital-intensive commitment to the network.</li>
+                <li><strong>Per-100k-internet-users normalization improves cross-country comparability.</strong> Makes small but highly engaged countries comparable to large economies, instead of penalizing them for population size.</li>
+                <li><strong>Incorporates real-world infrastructure constraints.</strong> Crypto infrastructure cannot scale without underlying connectivity and energy systems, which is what the enabling-environment factor captures.</li>
+                <li><strong>Weights reflect ecosystem importance.</strong> Prioritizes core protocol infrastructure (BTC and ETH at 25% each) but also recognizes scalability and security layers (Lightning at 20%, Mining at 15%).</li>
+            </ul>
+        </section>
+
+        <!-- ============ SLIDE 9: REGULATORY PILLAR (Alon/Ari/Alexis) ============ -->
+        <section class="slide">
+            <div class="presenter-tag">Presented by <span class="who" style="color:#9b5a30;">ALON / ARI / ALEXIS</span></div>
+            <div class="eyebrow">08 &middot; Pillar III &middot; Regulatory Dimension</div>
+            <h2>How clear, comprehensive, and enforceable is each country&rsquo;s framework?</h2>
+            <p class="lede">Each country is rated on six sub-dimensions, scored 1 (absent or hostile), 2 (partial), or 3 (clear and codified). The six ratings sum and divide by 18 to normalize to 0&ndash;1. <strong>Equal weight</strong> on each because no single dimension is sufficient on its own.</p>
+            <div class="three-col" style="margin-top:14px;">
+                <div class="pillar p-reg">
+                    <h4>Exchange Legality</h4>
+                    <p>Whether centralized exchanges can operate legally at all in the jurisdiction.</p>
+                </div>
+                <div class="pillar p-reg">
+                    <h4>Licensing Framework (VASP)</h4>
+                    <p>Defined licensing regime for centralized exchanges and other Virtual Asset Service Providers.</p>
+                </div>
+                <div class="pillar p-reg">
+                    <h4>Stablecoin Regulation</h4>
+                    <p>Specific legislation governing stablecoin issuance, reserves, and consumer protection.</p>
+                </div>
+                <div class="pillar p-reg">
+                    <h4>Tax Clarity</h4>
+                    <p>Codified rules for taxing crypto gains, income, and corporate holdings.</p>
+                </div>
+                <div class="pillar p-reg">
+                    <h4>Banking System Access</h4>
+                    <p>Whether crypto businesses can access traditional banking rails legally.</p>
+                </div>
+                <div class="pillar p-reg">
+                    <h4>Enforcement &amp; Stance</h4>
+                    <p>Active, observable enforcement of the rules that exist on paper, plus government posture.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============ SLIDE 10: SCORE INTERPRETATION (Alon/Ari/Alexis) ============ -->
+        <section class="slide is-tinted">
+            <div class="presenter-tag">Presented by <span class="who" style="color:#9b5a30;">ALON / ARI / ALEXIS</span></div>
+            <div class="eyebrow">09 &middot; Score Interpretation</div>
+            <h2>Higher scores reflect <span class="accent-warm">clarity and usability</span>, not strictness.</h2>
+            <div class="tier-grid">
+                <div class="tier-card tier-comp">
+                    <div class="tier-range">0.8 &ndash; 1.0</div>
+                    <div class="tier-name">Comprehensive</div>
+                    <p>Clear legal frameworks across all categories. Businesses and users can operate with high certainty.</p>
+                </div>
+                <div class="tier-card tier-dev">
+                    <div class="tier-range">0.6 &ndash; 0.8</div>
+                    <div class="tier-name">Developing</div>
+                    <p>Partial regulation with some gaps. Key areas defined, but inconsistencies remain.</p>
+                </div>
+                <div class="tier-card tier-amb">
+                    <div class="tier-range">0.4 &ndash; 0.6</div>
+                    <div class="tier-name">Ambiguous</div>
+                    <p>Unclear or fragmented rules. High uncertainty for users and companies.</p>
+                </div>
+                <div class="tier-card tier-host">
+                    <div class="tier-range">0.2 &ndash; 0.4</div>
+                    <div class="tier-name">Hostile</div>
+                    <p>Restrictive or prohibitive policies. Limited or no legal pathway for participation.</p>
+                </div>
+            </div>
+            <p style="margin-top:14px; font-size:1.05rem; color:#5a6b7c;">Five of 20 countries reach Comprehensive: <strong>Japan (0.944), Ukraine (0.889), Brazil (0.889), Thailand (0.833), United Kingdom (0.833).</strong></p>
+        </section>
+
+        <!-- ============ SLIDE 11: ARTIFACT / DEMO (Jaden) ============ -->
         <section class="slide is-dark">
-            <div class="eyebrow">08 &middot; Artifact</div>
+            <div class="presenter-tag">Presented by <span class="who">JADEN CHOI</span></div>
+            <div class="eyebrow">10 &middot; Live Demo</div>
             <h2>The deliverable is an <span class="accent">interactive web atlas</span>.</h2>
-            <p class="lede">Live at the project URL. Five linked surfaces: home, map, country profiles, findings, and three methodology pages.</p>
-            <div class="demo-card" style="background:#122433; border-color:#1f3445; color:#d0dae3; margin-top:14px;">
-                <h3 style="color:#f0f4f8;">Demo walkthrough</h3>
+            <p class="lede">Five linked surfaces: home, map, country profiles, findings, and three methodology pages.</p>
+            <div class="demo-card" style="margin-top:14px;">
+                <h3>Demo walkthrough</h3>
                 <ol>
-                    <li><strong style="color:#5ba8b5;">Map view.</strong> Switch dimension tabs to show how the same country shifts color across pillars. Hover for tier labels.</li>
-                    <li><strong style="color:#5ba8b5;">Country profile.</strong> Open Vietnam (#1 economic) and Japan (#1 regulatory) side by side. Compare radar shapes.</li>
-                    <li><strong style="color:#5ba8b5;">Findings page.</strong> Walk through the six findings briefly to set up the next slides.</li>
-                    <li><strong style="color:#5ba8b5;">Methodology page.</strong> Show the raw data table and source citations to demonstrate replicability.</li>
+                    <li><strong style="color:#5ba8b5;">Map view.</strong> Show the geographic heat map. Switch dimension tabs (Overall / Economic / Regulatory / Technical) to show how the same country shifts color across pillars. Hover for tier labels.</li>
+                    <li><strong style="color:#5ba8b5;">Map features.</strong> Search countries from the rankings table; compare ranks across the three dimensions; click into any country.</li>
+                    <li><strong style="color:#5ba8b5;">Country profile.</strong> Open Vietnam (#1 economic) and Japan (#1 regulatory) to compare radar shapes and the &ldquo;What this score means&rdquo; section.</li>
+                    <li><strong style="color:#5ba8b5;">Findings page.</strong> Skim the six findings to set up the next slides.</li>
                 </ol>
             </div>
         </section>
 
-        <!-- ============ SLIDE 10: DATA SNAPSHOT ============ -->
+        <!-- ============ SLIDE 12: DATA BREAKDOWNS (Federico, Nico) ============ -->
         <section class="slide">
-            <div class="eyebrow">09 &middot; Data &middot; Top 5 Economic Adoption</div>
-            <h2>Every top-five adopter has a <span class="accent">distress driver</span>.</h2>
+            <div class="presenter-tag">Presented by <span class="who">FEDERICO &amp; NICO</span></div>
+            <div class="eyebrow">11 &middot; Data Breakdowns</div>
+            <h2>Three full data pages, one per pillar.</h2>
+            <p class="lede">Every claim on the site is auditable. The three methodology pages expose the raw indicators, normalization, and source citations behind each score.</p>
+            <div class="three-col" style="margin-top:18px;">
+                <div class="pillar p-econ">
+                    <h4>econ-methodology.html</h4>
+                    <div class="weight">Pillar I &middot; Economic</div>
+                    <p>Raw ownership, volume, remittance, and Chainalysis sub-rank tables for all 20 countries. Three views: scored, raw, and normalized.</p>
+                </div>
+                <div class="pillar p-reg">
+                    <h4>regulatory-methodology.html</h4>
+                    <div class="weight">Pillar III &middot; Regulatory</div>
+                    <p>Per-country 1&ndash;3 ratings on each of the six sub-dimensions, with source citations from Library of Congress and PwC.</p>
+                </div>
+                <div class="pillar p-tech">
+                    <h4>tech-methodology.html</h4>
+                    <div class="weight">Pillar II &middot; Technical</div>
+                    <p>Node counts, hashrate share, Lightning density, and the enabling-environment composite. All values per 100k internet users where applicable.</p>
+                </div>
+            </div>
+            <p style="margin-top:18px; font-size:1.05rem; color:#5a6b7c;">The full data is also accessible via the country profile pages, which surface a per-country rollup with links to the underlying methodology.</p>
+        </section>
+
+        <!-- ============ SLIDE 13: SECTION HEADER ============ -->
+        <section class="slide is-dark section-header">
+            <div class="section-num">PART TWO</div>
+            <h1>Key <span class="accent">Findings</span></h1>
+            <p>Six insights from analyzing 20 countries across the three dimensions.</p>
+        </section>
+
+        <!-- ============ SLIDE 14: FINDING 1 (Alon) ============ -->
+        <section class="slide">
+            <div class="presenter-tag">Presented by <span class="who">ALON MUTTER</span></div>
+            <div class="eyebrow">12 &middot; Finding I &middot; Adoption vs. Regulation</div>
+            <h2>An <span class="accent-warm">inverse relationship</span>, with two notable exceptions.</h2>
+            <p class="lede">Heavy regulation slows consumer-led adoption. Light regulation enables rapid but potentially risky growth.</p>
+            <div class="vs-grid" style="margin-top:14px;">
+                <div class="vs-card">
+                    <div class="when">The exceptions</div>
+                    <div class="then">Ukraine &amp; Brazil</div>
+                    <p>The only countries achieving both high adoption (#2 and #11 economic) and Comprehensive regulation (0.889 each). Both reached this through proactive frameworks responding to existing demand.</p>
+                </div>
+                <div class="vs-card warm">
+                    <div class="when">The pattern</div>
+                    <div class="then">High adoption, low clarity</div>
+                    <p>Vietnam (0.761 econ / 0.556 reg), Pakistan (0.494 / 0.556), Argentina (0.262 / 0.611). Activity outruns rules wherever economic necessity is the driver.</p>
+                </div>
+            </div>
+            <p style="margin-top:18px; font-size:1.1rem;"><strong>The takeaway.</strong> The ideal balance, high adoption with clear rules, remains rare globally. Most countries pick one or the other.</p>
+        </section>
+
+        <!-- ============ SLIDE 15: FINDING 2 (Ari) ============ -->
+        <section class="slide is-tinted">
+            <div class="presenter-tag">Presented by <span class="who">ARI CHOE</span></div>
+            <div class="eyebrow">13 &middot; Finding II &middot; Developing Nations Lead</div>
+            <h2>Every top-five adopter has a <span class="accent-warm">distress driver</span>.</h2>
             <p class="lede">The leaders look nothing like a list of &ldquo;most regulated&rdquo; countries. The US is the only stable, developed economy in the top five.</p>
-            <div style="margin-top:14px;">
+            <div style="margin-top:12px;">
                 <div class="leader-row"><div class="leader-rank">#1</div><div class="leader-country">Vietnam</div><div class="leader-driver">Highest crypto ownership in the world (21.2%) + remittance corridors</div><div class="leader-score">0.761</div></div>
                 <div class="leader-row"><div class="leader-rank">#2</div><div class="leader-country">Ukraine</div><div class="leader-driver">Active conflict, currency stress, $503/capita remittances (highest in index)</div><div class="leader-score">0.733</div></div>
                 <div class="leader-row"><div class="leader-rank">#3</div><div class="leader-country">Philippines</div><div class="leader-driver">Major remittance corridor ($341/capita), 13.4% ownership</div><div class="leader-score">0.632</div></div>
                 <div class="leader-row"><div class="leader-rank">#4</div><div class="leader-country">United States</div><div class="leader-driver">Outlier: 15.6% ownership, $76.6B daily CEX volume, deep institutional flows</div><div class="leader-score">0.576</div></div>
                 <div class="leader-row"><div class="leader-rank">#5</div><div class="leader-country">Pakistan</div><div class="leader-driver">Currency volatility, financial exclusion, top-3 retail and institutional CEX ranks</div><div class="leader-score">0.494</div></div>
             </div>
+            <p style="margin-top:14px; font-size:1.05rem;">Three structural drivers recur: <strong>currency instability</strong> (Venezuela 10.3% / Argentina 9.7% ownership), <strong>remittance corridors</strong>, and <strong>financial exclusion</strong>, all more powerful predictors than favorable policy.</p>
         </section>
 
-        <!-- ============ SLIDE 11: QUADRANT FINDING ============ -->
-        <section class="slide is-tinted">
-            <div class="eyebrow">10 &middot; Finding I &middot; The Conditional Relationship</div>
-            <h2>Same restriction, opposite outcomes.</h2>
-            <p class="lede">When we plot Regulatory Clarity against Economic Adoption, four distinct country types appear. Restriction does not have a single, universal effect.</p>
+        <!-- ============ SLIDE 16: FINDING 3 (Alexis) ============ -->
+        <section class="slide">
+            <div class="presenter-tag">Presented by <span class="who">ALEXIS VO</span></div>
+            <div class="eyebrow">14 &middot; Finding III &middot; The Regulatory Landscape</div>
+            <h2>Only <span class="accent">5 of 20</span> countries have comprehensive regulation.</h2>
+            <div class="three-col" style="margin-top:18px;">
+                <div class="big-stat">
+                    <div class="num">5/20</div>
+                    <div class="label"><strong>Comprehensive only.</strong> Japan (0.944), Ukraine (0.889), Brazil (0.889), Thailand (0.833), UK (0.833). The remaining 15 are Developing, Ambiguous, or Hostile.</div>
+                </div>
+                <div class="big-stat warm">
+                    <div class="num">0/20</div>
+                    <div class="label"><strong>DeFi recognition.</strong> No country in the index scores a 3 on DeFi recognition. Traditional legal frameworks cannot classify decentralized protocols.</div>
+                </div>
+                <div class="big-stat teal">
+                    <div class="num">3</div>
+                    <div class="label"><strong>Hostile-tier countries.</strong> Bangladesh, Yemen, and Ethiopia all score 0.333 across all six sub-dimensions. Operating there carries maximum legal risk.</div>
+                </div>
+            </div>
+            <p style="margin-top:24px; font-size:1.15rem;"><strong>The takeaway.</strong> Even the most regulated jurisdictions still have a global blind spot: stablecoin and DeFi rules. That is the next regulatory frontier <em>everywhere</em>.</p>
+        </section>
+
+        <!-- ============ SLIDE 17: FINDING 4 (Jaden) ============ -->
+        <section class="slide is-dark">
+            <div class="presenter-tag">Presented by <span class="who">JADEN CHOI</span></div>
+            <div class="eyebrow">15 &middot; Finding IV &middot; Infrastructure Concentration</div>
+            <h2>Crypto&rsquo;s &ldquo;decentralized&rdquo; layer is <span class="accent">geographically concentrated</span>.</h2>
             <div class="two-col-3-7" style="margin-top:14px;">
                 <div>
-                    <div class="big-stat" style="margin-bottom:14px;">
-                        <div class="num">4</div>
-                        <div class="label">Distinct country profiles emerge once the score is split into pillars instead of averaged.</div>
+                    <div class="big-stat teal" style="background:#122433; border-left-color:#5ba8b5;">
+                        <div class="num" style="color:#5ba8b5;">58.6%</div>
+                        <div class="label" style="color:#c0d2dc;">of global Bitcoin hashrate is produced by just <strong style="color:#5ba8b5;">four countries</strong>: US (37.5%), Russia (16.4%), Ethiopia (2.6%), Indonesia (2.1%).</div>
                     </div>
-                    <p style="font-size:1.05rem; color:#5a6b7c;">Restrictive policy fails to suppress adoption wherever any of four conditions is present: currency instability, large remittance flows, financial exclusion, or sanctions and conflict.</p>
                 </div>
-                <div class="quadrant-wrap">
-                    <div class="quadrant-axis-x"></div>
-                    <div class="quadrant-axis-y"></div>
-                    <span class="qlabel qlabel-x-low">Low</span>
-                    <span class="qlabel qlabel-x-high">High</span>
-                    <span class="qlabel qlabel-x-title">Regulatory Clarity &rarr;</span>
-                    <span class="qlabel qlabel-y-low">Low</span>
-                    <span class="qlabel qlabel-y-high">High</span>
-                    <span class="qlabel qlabel-y-title">Economic Adoption &rarr;</span>
-                    <div class="qregion qregion-tl">Necessity-driven<span class="sub">Vietnam, Pakistan</span></div>
-                    <div class="qregion qregion-tr">Aligned<span class="sub">Ukraine, US, Brazil</span></div>
-                    <div class="qregion qregion-bl">Limited<span class="sub">Bangladesh, Yemen, Ethiopia</span></div>
-                    <div class="qregion qregion-br">Japan paradox<span class="sub">Japan, UK, Thailand</span></div>
-                    <div class="qdot warm" style="left:32%; top:18%;" data-name="VN"></div>
-                    <div class="qdot warm" style="left:38%; top:24%;" data-name="PK"></div>
-                    <div class="qdot" style="left:78%; top:22%;" data-name="UA"></div>
-                    <div class="qdot" style="left:64%; top:38%;" data-name="US"></div>
-                    <div class="qdot" style="left:75%; top:48%;" data-name="BR"></div>
-                    <div class="qdot" style="left:88%; top:74%;" data-name="JP"></div>
-                    <div class="qdot" style="left:78%; top:80%;" data-name="UK"></div>
-                    <div class="qdot warm" style="left:24%; top:84%;" data-name="ET"></div>
+                <div>
+                    <h3 style="color:#f0f4f8;">Exception: The Ethiopia Paradox</h3>
+                    <p style="color:#c0d2dc;">Hostile regulation (0.333). Near-zero consumer adoption (0.173). Yet Ethiopia produces <strong style="color:#5ba8b5;">2.6% of global Bitcoin hashrate</strong>, powered by cheap hydroelectric energy from the Grand Ethiopian Renaissance Dam.</p>
+                    <p style="color:#c0d2dc; margin-top:10px;">Indonesia mirrors this pattern: 2.1% global hashrate driven by geothermal energy, while also being the #1 country for DeFi adoption per Chainalysis.</p>
+                    <p style="color:#9bdce8; margin-top:14px; font-style:italic; font-size:1.05rem;">Mining concentration is now an energy-policy and geopolitical question, not just a technical one.</p>
                 </div>
             </div>
         </section>
 
-        <!-- ============ SLIDE 12: JAPAN PARADOX ============ -->
+        <!-- ============ SLIDE 18: FINDING 5 (Nico) ============ -->
         <section class="slide">
-            <div class="eyebrow">11 &middot; Finding II &middot; The Japan Paradox</div>
-            <h2>Comprehensive regulation does <span class="accent">not</span> produce adoption when there is no economic need.</h2>
-            <p class="lede">Japan is the single sharpest piece of evidence that &ldquo;more regulation = more adoption&rdquo; is wrong.</p>
-            <div class="vs-grid" style="margin-top:18px;">
+            <div class="presenter-tag">Presented by <span class="who">NICO TAYLOR</span></div>
+            <div class="eyebrow">16 &middot; Finding V &middot; Crisis Drives Adoption</div>
+            <h2>Sanctions and economic crisis are <span class="accent-coral">stronger catalysts</span> than policy.</h2>
+            <p class="lede">Restrictive rules alone cannot prevent adoption when citizens face economic necessity.</p>
+            <div class="vs-grid" style="margin-top:14px;">
                 <div class="vs-card">
-                    <div class="when">Regulatory Clarity</div>
-                    <div class="then">0.944 &middot; #1 of 20</div>
-                    <p>Highest score in the index. The only country in the dataset to reach a 3 (clear and codified) on stablecoin legislation.</p>
+                    <div class="when">Russia</div>
+                    <div class="then">Sanctions, regulation labeled &ldquo;Developing&rdquo; (0.611)</div>
+                    <p>Yet 16.4% of global Bitcoin hashrate (#2 worldwide) and an &ldquo;Advanced&rdquo;-tier technical infrastructure score (0.584). International isolation has paradoxically deepened the country&rsquo;s crypto presence.</p>
                 </div>
                 <div class="vs-card warm">
-                    <div class="when">Economic Adoption</div>
-                    <div class="then">0.205 &middot; #18 of 20</div>
-                    <p>Lower than Bangladesh, Yemen, and the UK. Few citizens own crypto, exchange volume is modest relative to GDP.</p>
+                    <div class="when">Venezuela</div>
+                    <div class="then">Ambiguous regulation (0.556), hyperinflation</div>
+                    <p>10.3% crypto ownership, higher than Japan, South Korea, or the United Kingdom. USDT is functionally a parallel dollar; restrictive policy hasn&rsquo;t slowed it.</p>
                 </div>
             </div>
-            <p style="margin-top:22px;">Clear rules without economic demand produce a regulated framework that few people actually use. Japan is the existence proof of one of the four quadrants on the previous slide.</p>
+            <p style="margin-top:20px; font-size:1.15rem;"><strong>For policymakers.</strong> Channel adoption through clear frameworks rather than attempting to block it. Bans push usage into P2P and self-custody, where regulators have less visibility, not more control.</p>
         </section>
 
-        <!-- ============ SLIDE 13: INFRASTRUCTURE FINDINGS ============ -->
-        <section class="slide is-dark">
-            <div class="eyebrow">12 &middot; Finding III &middot; Concentration &amp; Blind Spots</div>
-            <h2>Crypto&rsquo;s &ldquo;decentralized&rdquo; layers are <span class="accent">narrowly held</span>.</h2>
-            <div class="three-col" style="margin-top:24px;">
-                <div class="big-stat teal" style="background:#122433; border-left-color:#5ba8b5;">
-                    <div class="num" style="color:#5ba8b5;">58.6%</div>
-                    <div class="label" style="color:#c0d2dc;">of global Bitcoin hashrate is produced by just four countries (US 37.5%, Russia 16.4%, Ethiopia 2.6%, Indonesia 2.1%).</div>
-                </div>
-                <div class="big-stat warm" style="background:#122433; border-left-color:#e0a070;">
-                    <div class="num" style="color:#e0a070;">0</div>
-                    <div class="label" style="color:#c0d2dc;">countries in the index reach a 3 on DeFi recognition. Even &ldquo;Comprehensive&rdquo;-tier regulators have not caught up.</div>
-                </div>
-                <div class="big-stat" style="background:#122433; border-left-color:#9bdce8;">
-                    <div class="num" style="color:#9bdce8;">12/20</div>
-                    <div class="label" style="color:#c0d2dc;">countries score a 1 on stablecoin law: no specific legislation. Stablecoins are how distressed economies actually use crypto.</div>
-                </div>
-            </div>
-            <p style="margin-top:30px; font-size:1.25rem; color:#c0d2dc;">Infrastructure concentration is a geopolitical question, not just a technical one. DeFi and stablecoins are the next regulatory frontier <em>everywhere</em>.</p>
-        </section>
-
-        <!-- ============ SLIDE 14: REVISED THESIS ============ -->
+        <!-- ============ SLIDE 19: FINDING 6 (Federico) ============ -->
         <section class="slide is-tinted">
-            <div class="eyebrow">13 &middot; Revised thesis</div>
-            <h2>High crypto activity does <span class="accent-warm">not</span> mean a country is truly blockchain-ready.</h2>
-            <p class="lede" style="margin-top:14px;">Some countries are active out of necessity. Others have built real infrastructure. You cannot tell the difference without looking at all three dimensions <em>separately</em>.</p>
-            <div class="two-col" style="margin-top:18px;">
-                <div>
-                    <h3 style="font-size:1.4rem;">What the original thesis got right</h3>
-                    <ul class="bulleted">
-                        <li>High trading volume does <em>not</em> reliably correlate with regulatory clarity.</li>
-                        <li>Activity outruns rules in most distressed economies (Vietnam, Nigeria, Argentina).</li>
-                    </ul>
+            <div class="presenter-tag">Presented by <span class="who" style="color:#2e5fa1;">FEDERICO BECERRA</span></div>
+            <div class="eyebrow">17 &middot; Finding VI &middot; Market Entry Recommendations</div>
+            <h2>Five distinct <span style="color:#2e5fa1;">risk-reward profiles</span>.</h2>
+            <p class="lede">The split-pillar score lets us group countries by the kind of opportunity (and risk) they actually offer.</p>
+            <div class="market-grid">
+                <div class="market-card m-low">
+                    <div class="market-tier">Low Risk</div>
+                    <h4>Proven Markets</h4>
+                    <div class="countries">US, UK, Japan, Brazil</div>
+                    <p>Legal certainty + strong infrastructure. Best for regulated exchanges and institutional / enterprise products.</p>
                 </div>
-                <div>
-                    <h3 style="font-size:1.4rem;">What we revised</h3>
-                    <ul class="bulleted">
-                        <li>Economic adoption and technical infrastructure are <em>not correlated at all</em>: r = ~0.2 across our 20 countries.</li>
-                        <li>Countries reach &ldquo;blockchain-ready&rdquo; through completely different paths. The composite hides which path.</li>
-                    </ul>
+                <div class="market-card m-growth">
+                    <div class="market-tier">High Growth</div>
+                    <h4>Developing Regulation</h4>
+                    <div class="countries">Ukraine, India, Philippines, Indonesia, Thailand</div>
+                    <p>Large user bases with regulation moving in the right direction. Ideal for wallets, remittance, DeFi, P2P.</p>
+                </div>
+                <div class="market-card m-high">
+                    <div class="market-tier">High Risk</div>
+                    <h4>Necessity-Driven</h4>
+                    <div class="countries">Vietnam, Nigeria, Pakistan, Argentina, Venezuela</div>
+                    <p>Massive necessity-driven adoption. Regulatory standing can shift rapidly. High reward, high downside.</p>
+                </div>
+                <div class="market-card m-infra">
+                    <div class="market-tier">Infrastructure</div>
+                    <h4>Mining / Node Plays</h4>
+                    <div class="countries">Russia, Ethiopia, Indonesia</div>
+                    <p>Mining and node infrastructure opportunities driven by cheap energy, regardless of regulatory environment.</p>
+                </div>
+                <div class="market-card m-avoid">
+                    <div class="market-tier">Avoid</div>
+                    <h4>No Viable Path</h4>
+                    <div class="countries">Bangladesh, Yemen</div>
+                    <p>Hostile regulation plus minimal infrastructure. No viable entry point currently.</p>
                 </div>
             </div>
         </section>
 
-        <!-- ============ SLIDE 15: IMPLICATIONS ============ -->
+        <!-- ============ SLIDE 20: FINAL CONCLUSION (Federico) ============ -->
         <section class="slide">
-            <div class="eyebrow">14 &middot; Relevance</div>
-            <h2>Different audiences, different reads.</h2>
-            <p class="lede">The split-pillar score is most useful when it changes a decision. A few examples we identified.</p>
-            <div class="four-col" style="margin-top:14px;">
-                <div class="pillar p-econ" style="border-top-color:#2e5fa1;">
-                    <h4>Policymakers</h4>
-                    <div class="weight">Read</div>
-                    <p>Prohibition removes visibility, not demand, when economic conditions are driving usage. Channel through licensing instead.</p>
+            <div class="presenter-tag">Presented by <span class="who" style="color:#2e5fa1;">FEDERICO BECERRA</span></div>
+            <div class="eyebrow">18 &middot; Final Conclusion &middot; Who Should Act</div>
+            <h2>Different audiences, <span class="accent">different reads</span>.</h2>
+            <p class="lede">The split-pillar score is most useful when it changes a decision. Five audiences, five concrete reads.</p>
+            <div class="audience-grid">
+                <div class="aud-card aud-biz">
+                    <div class="aud-label">Business Executives</div>
+                    <h4>Identify entry markets and allocate resources with legal certainty.</h4>
+                    <p>Use the risk-reward profiles to match the product to the country&rsquo;s underlying problem.</p>
                 </div>
-                <div class="pillar p-reg">
-                    <h4>Investors / Analysts</h4>
-                    <div class="weight">Read</div>
-                    <p>Distress signals (remittances, currency stress) predict adoption better than legal-clarity rankings.</p>
+                <div class="aud-card aud-legal">
+                    <div class="aud-label">Lawyers &amp; Compliance</div>
+                    <h4>Pinpoint legal risk by jurisdiction.</h4>
+                    <p>Sub-dimension breakdown (stablecoin, licensing, tax, DeFi) makes risk legible at a granular level.</p>
                 </div>
-                <div class="pillar p-tech">
-                    <h4>Founders</h4>
-                    <div class="weight">Read</div>
-                    <p>Match the product to the country&rsquo;s underlying problem. Stablecoin rails fit Vietnam; compliance products fit Japan.</p>
+                <div class="aud-card aud-policy">
+                    <div class="aud-label">Policymakers</div>
+                    <h4>Pursue balance, not restriction.</h4>
+                    <p>Ukraine and Brazil prove comprehensive regulation and high adoption can coexist. Bans push usage out of view.</p>
                 </div>
-                <div class="pillar" style="border-top-color:#5ba8b5;">
-                    <h4>Researchers</h4>
-                    <div class="weight">Read</div>
-                    <p>Aggregate adoption rankings systematically obscure mechanism. Disaggregated frameworks are required to make causal claims.</p>
+                <div class="aud-card aud-vc">
+                    <div class="aud-label">Investors &amp; VCs</div>
+                    <h4>Read the trajectory, not just the level.</h4>
+                    <p>Adoption + improving regulation signals the highest-potential markets. Infrastructure scores reveal where the network is being built.</p>
                 </div>
-            </div>
-            <p style="margin-top:24px; font-size:1.15rem; color:#5a6b7c;">Each of the six audiences on the artifact&rsquo;s findings page has a one-paragraph implication tied directly to a measurable variable.</p>
-        </section>
-
-        <!-- ============ SLIDE 16: LIMITATIONS / CLOSE ============ -->
-        <section class="slide is-dark">
-            <div class="eyebrow">15 &middot; Limitations &amp; what comes next</div>
-            <h2>Honest limits of the index.</h2>
-            <div class="two-col" style="margin-top:14px;">
-                <div>
-                    <h3 style="font-size:1.4rem; color:#f0f4f8;">Limits</h3>
-                    <ul class="bulleted">
-                        <li>20-country sample chosen for data availability and ecosystem relevance, not statistical representativeness.</li>
-                        <li>Equal pillar weights are a defensible choice, not a derived one. Different weights would produce different orderings near the middle.</li>
-                        <li>Snapshot at March 2026; Chainalysis data and regulatory ratings shift faster than this.</li>
-                    </ul>
-                </div>
-                <div>
-                    <h3 style="font-size:1.4rem; color:#f0f4f8;">What comes next</h3>
-                    <ul class="bulleted">
-                        <li>Add 10&ndash;15 more countries (notably China, despite policy ambiguity).</li>
-                        <li>Year-over-year deltas to track which pillar a country&rsquo;s score is moving on.</li>
-                        <li>Couple the legal ratings to enforcement actions data so &ldquo;Comprehensive&rdquo; doesn&rsquo;t mean &ldquo;on paper only.&rdquo;</li>
-                    </ul>
+                <div class="aud-card aud-dev">
+                    <div class="aud-label">Blockchain Developers</div>
+                    <h4>Where to build infrastructure next.</h4>
+                    <p>Node and validator concentration data guides network expansion, validator location selection, and underserved-region targeting.</p>
                 </div>
             </div>
-            <p style="margin-top:32px; font-size:1.15rem; color:#9bdce8; font-family:'Source Serif 4',serif; font-style:italic;">Sources, raw data, and full methodology are linked on the artifact: <span style="color:#f0f4f8;">findings.html</span> &middot; <span style="color:#f0f4f8;">econ-methodology.html</span> &middot; <span style="color:#f0f4f8;">regulatory-methodology.html</span> &middot; <span style="color:#f0f4f8;">tech-methodology.html</span></p>
+            <p style="margin-top:22px; font-size:1.1rem;"><strong>One takeaway.</strong> No single number captures blockchain readiness. The split-pillar approach is the contribution: it makes the underlying driver of every country&rsquo;s position legible to whoever needs to act on it.</p>
         </section>
 
-        <!-- ============ SLIDE 17: THANK YOU / Q&A ============ -->
-        <section class="slide is-dark">
-            <h1 class="title" style="font-size:6rem;">Questions?<span class="small" style="font-size:2.2rem;">Global Blockchain Adaptability Index<br>TAC 456 &middot; Capstone &middot; April 2026</span></h1>
+        <!-- ============ SLIDE 21: Q&A ============ -->
+        <section class="slide is-dark section-header">
+            <div class="section-num">FIN</div>
+            <h1>Questions?</h1>
+            <p style="font-style:normal; color:#c0d2dc; margin-top:36px; font-size:1.2rem;">Blockchain Adoption Atlas &middot; TAC 456 Capstone &middot; April 2026<br>Federico Becerra &middot; Nico Taylor &middot; Jaden Choi &middot; Alexis Vo &middot; Alon Mutter &middot; Ari Choe</p>
         </section>
 
     </div>
 
     <div class="deck-footer">
-        <span class="left" id="slideCount">01 / 17</span>
-        <span class="left">Press <kbd style="font-family:'VT323',monospace; background:rgba(255,255,255,0.08); padding:1px 8px; border-radius:3px;">?</kbd> for help</span>
+        <span id="slideCount">01 / 21</span>
+        <span>Press <kbd style="font-family:'VT323',monospace; background:rgba(255,255,255,0.08); padding:1px 8px; border-radius:3px;">?</kbd> for help</span>
     </div>
 
     <div class="help-overlay" id="helpOverlay">
@@ -891,6 +1104,7 @@
             <div class="row"><span>First slide</span><kbd>Home</kbd></div>
             <div class="row"><span>Last slide</span><kbd>End</kbd></div>
             <div class="row"><span>Print all slides</span><kbd>P</kbd></div>
+            <div class="row"><span>Toggle fullscreen</span><kbd>Double-click</kbd></div>
             <div class="row"><span>Toggle this help</span><kbd>?</kbd></div>
             <div class="row"><span>Close help</span><kbd>Esc</kbd></div>
         </div>
