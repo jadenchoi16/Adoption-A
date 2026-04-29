@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Economic Scoring Methodology | Adoption-A</title>
-    <meta property="og:title" content="Economic Scoring Methodology — Blockchain Adaptability Index">
-    <meta property="og:description" content="Full breakdown of the economic adoption scoring model — raw data, normalization, Chainalysis decomposition, and sources.">
+    <meta property="og:title" content="Economic Scoring Methodology, Blockchain Adaptability Index">
+    <meta property="og:description" content="Full breakdown of the economic adoption scoring model, raw data, normalization, Chainalysis decomposition, and sources.">
     <meta property="og:type" content="website">
     <meta name="twitter:card" content="summary_large_image">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -455,7 +455,7 @@
     <!-- HEADER -->
     <div class="header">
         <h1>Economic Scoring Methodology</h1>
-        <p class="subtitle">How the Economic Adoption Score is calculated &mdash; raw data, normalization methods, weights, and final composite scores for all 20 countries</p>
+        <p class="subtitle">How the Economic Adoption Score is calculated ,  raw data, normalization methods, weights, and final composite scores for all 20 countries</p>
     </div>
 
     <!-- FORMULA OVERVIEW -->
@@ -494,12 +494,12 @@
                 </div>
             </div>
 
-            <p style="font-size:0.82rem; color:#7a8a9a; margin-top:12px;"><strong>Total Chainalysis influence:</strong> 30% (20% CEX + 10% DeFi) &mdash; using Chainalysis's raw sub-index ranks with our own weighting instead of importing their composite score.</p>
+            <p style="font-size:0.82rem; color:#7a8a9a; margin-top:12px;"><strong>Total Chainalysis influence:</strong> 30% (20% CEX + 10% DeFi) ,  using Chainalysis's raw sub-index ranks with our own weighting instead of importing their composite score.</p>
 
             <h3>Indicators Removed (with justification)</h3>
             <ul style="font-size:0.86rem; color:#5a6b7c; padding-left:20px;">
-                <li style="margin-bottom:8px;"><strong>Internet Penetration (was 10%)</strong> &mdash; Removed by team and faculty consensus. Internet access is an infrastructure / technical indicator, not an economic one. Better suited for the Technical Scoring Index.</li>
-                <li style="margin-bottom:8px;"><strong>Currency Instability (was 10%)</strong> &mdash; Removed after statistical significance testing. Pearson r with Chainalysis adoption rank: &minus;0.334 (p &gt; 0.10); Spearman rank correlation: &minus;0.287 (p &gt; 0.10); not significant at &alpha; = 0.05 or &alpha; = 0.10. The correlation is actually slightly negative &mdash; countries with higher instability tend to have lower adoption, likely because instability correlates with poor infrastructure and low income that prevent crypto access.</li>
+                <li style="margin-bottom:8px;"><strong>Internet Penetration (was 10%)</strong> ,  Removed by team and faculty consensus. Internet access is an infrastructure / technical indicator, not an economic one. Better suited for the Technical Scoring Index.</li>
+                <li style="margin-bottom:8px;"><strong>Currency Instability (was 10%)</strong> ,  Removed after statistical significance testing. Pearson r with Chainalysis adoption rank: &minus;0.334 (p &gt; 0.10); Spearman rank correlation: &minus;0.287 (p &gt; 0.10); not significant at &alpha; = 0.05 or &alpha; = 0.10. The correlation is actually slightly negative ,  countries with higher instability tend to have lower adoption, likely because instability correlates with poor infrastructure and low income that prevent crypto access.</li>
             </ul>
         </div>
     </div>
@@ -689,7 +689,7 @@
             <ul>
                 <li><strong>Our own weighting:</strong> Using Chainalysis's composite rank (geometric mean of all sub-indexes) would mean importing their weighting decisions. Decomposing lets us weight CEX vs DeFi activity ourselves.</li>
                 <li><strong>Surface hidden signals:</strong> Countries like Ethiopia (#7 DeFi) and Nigeria (#3 DeFi) show strong decentralized activity that gets diluted in Chainalysis's composite. Our decomposition surfaces this.</li>
-                <li><strong>Avoid double-counting:</strong> Our CEX Volume/GDP metric uses CoinGecko data (raw exchange volume), while Chainalysis measures PPP-weighted on-chain flows. Pearson correlation between them is 0.382 &mdash; well below the 0.7 concern threshold.</li>
+                <li><strong>Avoid double-counting:</strong> Our CEX Volume/GDP metric uses CoinGecko data (raw exchange volume), while Chainalysis measures PPP-weighted on-chain flows. Pearson correlation between them is 0.382 ,  well below the 0.7 concern threshold.</li>
             </ul>
             <h3>2025 Methodology Changes (by Chainalysis)</h3>
             <ul>
@@ -704,7 +704,7 @@
     <div class="section">
         <div class="card">
             <h2>Normalization Methods</h2>
-            <p>Every indicator uses different units &mdash; ranks, percentages, dollars, ratios. You cannot add "rank #3" to "21% ownership." Normalization converts everything to a 0&ndash;1 scale so indicators are comparable and can be combined into a weighted composite score.</p>
+            <p>Every indicator uses different units ,  ranks, percentages, dollars, ratios. You cannot add "rank #3" to "21% ownership." Normalization converts everything to a 0&ndash;1 scale so indicators are comparable and can be combined into a weighted composite score.</p>
 
             <div class="norm-grid">
                 <div class="norm-card">
@@ -717,7 +717,7 @@
                     <h4>2. Inverted Min-Max</h4>
                     <div class="used-for">Used for: CEX Activity Rank, DeFi Rank</div>
                     <p>Formula: <code>(max &minus; x) / (max &minus; min)</code><br>
-                    Same as standard but flipped &mdash; because for ranks, lower is better. Without inverting, rank #1 (India) would score lowest. After inverting: rank #1 = highest score.</p>
+                    Same as standard but flipped ,  because for ranks, lower is better. Without inverting, rank #1 (India) would score lowest. After inverting: rank #1 = highest score.</p>
                 </div>
                 <div class="norm-card">
                     <h4>3. Log Transform &rarr; Min-Max</h4>
@@ -727,7 +727,7 @@
                 <div class="norm-card">
                     <h4>4. Arithmetic Average of Ranks</h4>
                     <div class="used-for">Used for: CEX Activity (Retail + Inst. CEX)</div>
-                    <p>Retail CEX rank and Institutional CEX rank are averaged before normalization. Rewards balanced activity across both grassroots and institutional flows.</p>
+                    <p>Retail CEX rank and Institutional CEX rank are averaged before normalization. Rewards balanced activity across both retail and institutional flows.</p>
                 </div>
             </div>
         </div>
@@ -741,7 +741,7 @@
             <ul>
                 <li><strong>Ownership data fragility:</strong> Triple-A survey data carries the highest weight (30%) but has unpublished confidence intervals. Sensitivity analysis shows rankings remain directionally stable at &plusmn;30% variation.</li>
                 <li><strong>CEX volume is a snapshot:</strong> CoinGecko 24h volume is a single day's reading (March 2026). A 30&ndash;90 day average would be more robust but is unavailable via the free-tier API.</li>
-                <li><strong>Mixed data vintages:</strong> Indicators span different periods &mdash; Chainalysis 2025, Ownership 2024, CEX volume live (Mar 2026), GDP 2024.</li>
+                <li><strong>Mixed data vintages:</strong> Indicators span different periods ,  Chainalysis 2025, Ownership 2024, CEX volume live (Mar 2026), GDP 2024.</li>
                 <li><strong>Min-max sample dependency:</strong> Scores are normalized within only 20 countries. Adding or removing a country would shift all normalized values.</li>
                 <li><strong>Chainalysis ranks are ordinal:</strong> We treat ranks as cardinal (equal intervals). Underlying cardinal values require an enterprise license.</li>
                 <li><strong>No P2P or stablecoin data:</strong> Important for Nigeria, Venezuela, and Ethiopia where informal channels dominate, but no public country-level data available.</li>

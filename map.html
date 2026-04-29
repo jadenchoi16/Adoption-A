@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Global Blockchain Adaptability Index</title>
     <meta property="og:title" content="Global Blockchain Adaptability Index">
-    <meta property="og:description" content="Interactive map measuring blockchain readiness across 20 nations — economic adoption, regulatory clarity, and technical infrastructure.">
+    <meta property="og:description" content="Interactive map measuring blockchain readiness across 20 nations, economic adoption, regulatory clarity, and technical infrastructure.">
     <meta property="og:type" content="website">
     <meta name="twitter:card" content="summary_large_image">
     <script src="https://d3js.org/d3.v7.min.js"></script>
@@ -901,12 +901,12 @@
             <div class="insight-card accent-cross">
                 <span class="insight-tag tag-cross">Adoption vs. Regulation</span>
                 <h4>Vietnam Leads Adoption, Trails in Regulation</h4>
-                <p>Vietnam ranks #1 in economic adoption (<span class="insight-stat">0.761</span>) but only &ldquo;Ambiguous&rdquo; in regulatory clarity (<span class="insight-stat">0.556</span>)&mdash;the widest gap between adoption and regulation in the index.</p>
+                <p>Vietnam ranks #1 in economic adoption (<span class="insight-stat">0.761</span>) but only &ldquo;Ambiguous&rdquo; in regulatory clarity (<span class="insight-stat">0.556</span>), the widest gap between adoption and regulation in the index.</p>
             </div>
             <div class="insight-card accent-reg">
                 <span class="insight-tag tag-reg">The Japan Paradox</span>
                 <h4>Best Regulation, Low Adoption</h4>
-                <p>Japan has the most comprehensive regulatory framework (<span class="insight-stat">0.944</span>) yet ranks 18th in economic adoption (<span class="insight-stat">0.205</span>)&mdash;suggesting heavy regulation may constrain grassroots growth.</p>
+                <p>Japan has the most comprehensive regulatory framework (<span class="insight-stat">0.944</span>) yet ranks 18th in economic adoption (<span class="insight-stat">0.205</span>), suggesting heavy regulation may constrain consumer-led growth.</p>
             </div>
             <div class="insight-card accent-tech">
                 <span class="insight-tag tag-tech">Infrastructure</span>
@@ -916,7 +916,7 @@
             <div class="insight-card accent-cross">
                 <span class="insight-tag tag-cross">Pattern</span>
                 <h4>Hostile Regulation = Minimal Adoption</h4>
-                <p>All three &ldquo;Hostile&rdquo; regulation countries (Bangladesh, Yemen, Ethiopia) score below <span class="insight-stat">0.28</span> economically&mdash;no country with hostile regulation has achieved meaningful adoption.</p>
+                <p>All three &ldquo;Hostile&rdquo; regulation countries (Bangladesh, Yemen, Ethiopia) score below <span class="insight-stat">0.28</span> economically, no country with hostile regulation has achieved meaningful adoption.</p>
             </div>
         </div>
     </div>
@@ -930,7 +930,7 @@
     <!-- METHODOLOGY -->
     <div class="methodology" id="methodology">
         <h2>Methodology</h2>
-        <p>The <strong>Overall Blockchain Adaptability Score</strong> measures how well-positioned a country is for blockchain adoption. Each of the three dimensions is weighted equally at ~33.3%, reflecting the view that no single factor&mdash;market demand, legal clarity, or network infrastructure&mdash;can drive sustainable blockchain adoption on its own.</p>
+        <p>The <strong>Overall Blockchain Adaptability Score</strong> measures how well-positioned a country is for blockchain adoption. Each of the three dimensions is weighted equally at ~33.3%, reflecting the view that no single factor, market demand, legal clarity, or network infrastructure, can drive sustainable blockchain adoption on its own.</p>
         <div class="formula-box">Overall = (Economic &times; 0.333) + (Regulatory &times; 0.333) + (Technical &times; 0.333)</div>
         <p style="font-size:0.84rem; color:#7a8a9a;"><strong>Why equal weights?</strong> Economic adoption without regulatory clarity creates legal risk. Regulatory clarity without infrastructure means no network to regulate. Infrastructure without adoption means unused capacity. All three pillars must be present for a country to be truly blockchain-ready.</p>
 
@@ -940,11 +940,11 @@
                 <p>Quantifies real-world blockchain economic penetration using five normalized, weighted indicators. Decomposes the Chainalysis composite index into separate CEX and DeFi sub-indexes for independent weighting.</p>
                 <div class="formula-box">Economic = (CEX Activity &times; 0.20) + (DeFi &times; 0.10) + (Ownership &times; 0.30) + (Remittances &times; 0.20) + (CEX/GDP &times; 0.20)</div>
                 <ul>
-                    <li><strong>Crypto Ownership % &times; 0.30</strong> &mdash; Population penetration rate from Triple-A data.</li>
-                    <li><strong>CEX Activity &times; 0.20</strong> &mdash; Average of Chainalysis Retail CEX and Institutional CEX sub-index ranks (PPP-weighted, inverted).</li>
-                    <li><strong>CEX Volume / GDP &times; 0.20</strong> &mdash; CoinGecko 24h exchange volume divided by national GDP, log-transformed.</li>
-                    <li><strong>Remittances per Capita &times; 0.20</strong> &mdash; World Bank remittance inflows divided by population.</li>
-                    <li><strong>DeFi Activity &times; 0.10</strong> &mdash; Chainalysis DeFi value received sub-index rank (PPP-weighted, inverted).</li>
+                    <li><strong>Crypto Ownership % &times; 0.30</strong> ,  Population penetration rate from Triple-A data.</li>
+                    <li><strong>CEX Activity &times; 0.20</strong> ,  Average of Chainalysis Retail CEX and Institutional CEX sub-index ranks (PPP-weighted, inverted).</li>
+                    <li><strong>CEX Volume / GDP &times; 0.20</strong> ,  CoinGecko 24h exchange volume divided by national GDP, log-transformed.</li>
+                    <li><strong>Remittances per Capita &times; 0.20</strong> ,  World Bank remittance inflows divided by population.</li>
+                    <li><strong>DeFi Activity &times; 0.10</strong> ,  Chainalysis DeFi value received sub-index rank (PPP-weighted, inverted).</li>
                 </ul>
                 <p style="margin-top:14px;"><a href="econ-methodology.html" style="display:inline-block;padding:8px 18px;background:#0a4c6a;color:#fff;border-radius:7px;text-decoration:none;font-size:0.82rem;font-weight:500;">View full data breakdown &rarr;</a></p>
             </div>
@@ -974,10 +974,10 @@
                 <p>Measures each country's blockchain network footprint using five continuous, per-capita pillars aggregated with a <strong>weighted geometric mean</strong> (non-compensatory). All node/LN metrics are normalized per 100k internet users to fairly compare countries of different sizes.</p>
                 <div class="formula-box">Technical = BTC_Score<sup>0.25</sup> &times; ETH_Score<sup>0.25</sup> &times; Mining_Score<sup>0.15</sup> &times; LN_Score<sup>0.20</sup> &times; Enabling_Score<sup>0.15</sup></div>
                 <ul>
-                    <li><strong>BTC Nodes (w=0.25):</strong> Reachable BTC nodes per 100k internet users &mdash; ceiling 1.1/100k. Source: <a href="https://bitnodes.io" target="_blank" style="color:#0a4c6a;">Bitnodes.io</a></li>
-                    <li><strong>ETH Nodes (w=0.25):</strong> Reachable ETH nodes per 100k internet users &mdash; ceiling 1.2/100k. Source: <a href="https://ethernodes.org" target="_blank" style="color:#0a4c6a;">Ethernodes.org</a></li>
-                    <li><strong>Mining Hashrate (w=0.15):</strong> Country share of global BTC hashrate, log-normalized &mdash; ceiling 40%. Source: <a href="https://hashrateindex.com" target="_blank" style="color:#0a4c6a;">Hashrate Index</a></li>
-                    <li><strong>Lightning Network (w=0.20):</strong> LN nodes per 100k internet users &mdash; ceiling 1.5/100k. Source: <a href="https://mempool.emzy.de/graphs/lightning/nodes-per-country" target="_blank" style="color:#0a4c6a;">mempool.emzy.de</a></li>
+                    <li><strong>BTC Nodes (w=0.25):</strong> Reachable BTC nodes per 100k internet users ,  ceiling 1.1/100k. Source: <a href="https://bitnodes.io" target="_blank" style="color:#0a4c6a;">Bitnodes.io</a></li>
+                    <li><strong>ETH Nodes (w=0.25):</strong> Reachable ETH nodes per 100k internet users ,  ceiling 1.2/100k. Source: <a href="https://ethernodes.org" target="_blank" style="color:#0a4c6a;">Ethernodes.org</a></li>
+                    <li><strong>Mining Hashrate (w=0.15):</strong> Country share of global BTC hashrate, log-normalized ,  ceiling 40%. Source: <a href="https://hashrateindex.com" target="_blank" style="color:#0a4c6a;">Hashrate Index</a></li>
+                    <li><strong>Lightning Network (w=0.20):</strong> LN nodes per 100k internet users ,  ceiling 1.5/100k. Source: <a href="https://mempool.emzy.de/graphs/lightning/nodes-per-country" target="_blank" style="color:#0a4c6a;">mempool.emzy.de</a></li>
                     <li><strong>Enabling Environment (w=0.15):</strong> Composite of internet penetration (40%), electricity access (30%), avg internet speed (30%). Sources: ITU, World Bank, Speedtest Global Index</li>
                 </ul>
                 <p style="font-size:0.84rem; color:#7a8a9a; margin-top:6px;">Tier thresholds: <strong>Network Leader</strong> (&ge;0.70) &middot; <strong>Advanced</strong> (0.45&ndash;0.69) &middot; <strong>Developing</strong> (0.20&ndash;0.44) &middot; <strong>Emerging</strong> (0.08&ndash;0.19) &middot; <strong>Nascent</strong> (&lt;0.08)</p>
@@ -990,7 +990,7 @@
 
     <!-- TABLE -->
     <div class="table-section">
-        <h2 id="table-title">Country Rankings &mdash; Overall Score</h2>
+        <h2 id="table-title">Country Rankings ,  Overall Score</h2>
         <div class="table-wrapper">
             <table>
                 <thead>
@@ -1454,7 +1454,7 @@
     // TABLE
     // ========================================
     function renderTable() {
-        document.getElementById("table-title").innerHTML = `Country Rankings &mdash; Overall Score`;
+        document.getElementById("table-title").innerHTML = `Country Rankings ,  Overall Score`;
 
         const sorted = [...countries].sort((a, b) => b.overall - a.overall);
         const tbody = document.getElementById("table-body");

@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Technical Infrastructure Methodology | Adoption-A</title>
-    <meta property="og:title" content="Technical Infrastructure Methodology — Blockchain Adaptability Index">
-    <meta property="og:description" content="Full breakdown of the Technical Infrastructure scoring model — pillar scores, normalization, weighted geometric mean, and data sources.">
+    <meta property="og:title" content="Technical Infrastructure Methodology, Blockchain Adaptability Index">
+    <meta property="og:description" content="Full breakdown of the Technical Infrastructure scoring model, pillar scores, normalization, weighted geometric mean, and data sources.">
     <meta property="og:type" content="website">
     <meta name="twitter:card" content="summary_large_image">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -316,7 +316,7 @@
 
     <div class="header">
         <h1>Technical Infrastructure Methodology</h1>
-        <p class="subtitle">How the Technical Infrastructure Score is calculated &mdash; pillar scores, normalization method, weighted geometric mean, and all data sources for 20 countries</p>
+        <p class="subtitle">How the Technical Infrastructure Score is calculated ,  pillar scores, normalization method, weighted geometric mean, and all data sources for 20 countries</p>
     </div>
 
     <!-- FORMULA OVERVIEW -->
@@ -325,7 +325,7 @@
             <h2>Composite Formula</h2>
             <p>The Technical Infrastructure Score uses a <strong>weighted geometric mean</strong> across five per-capita pillars. Unlike an arithmetic mean, the geometric mean is non-compensatory: near-zero performance on any single pillar pulls the composite score toward zero, preventing a dominant pillar from masking weakness elsewhere.</p>
             <div class="formula-box">Technical = BTC_Score<sup>0.25</sup> &times; ETH_Score<sup>0.25</sup> &times; Mining_Score<sup>0.15</sup> &times; LN_Score<sup>0.20</sup> &times; Enabling_Score<sup>0.15</sup></div>
-            <p style="font-size:0.84rem;color:#7a8a9a;"><strong>Each pillar score</strong> = min(1, ln(raw_per_100k + 1) / ln(ceiling + 1)), yielding a continuous 0&ndash;1 value. Mining uses global hashrate % directly. All node/LN counts are per 100k internet users — not raw population — to fairly compare countries of different sizes.</p>
+            <p style="font-size:0.84rem;color:#7a8a9a;"><strong>Each pillar score</strong> = min(1, ln(raw_per_100k + 1) / ln(ceiling + 1)), yielding a continuous 0&ndash;1 value. Mining uses global hashrate % directly. All node/LN counts are per 100k internet users, not raw population, to fairly compare countries of different sizes.</p>
 
             <h3>Pillar Weights</h3>
             <div class="weight-list">
@@ -522,7 +522,7 @@
                 <div class="norm-card">
                     <h4>Why Per 100k Internet Users?</h4>
                     <div class="used-for">Denominator choice rationale</div>
-                    <p>Internet users (not total population) is the correct denominator because node operators must have internet access. Using total population would unfairly penalize countries with low internet penetration twice &mdash; once in the enabling environment and again in node density.</p>
+                    <p>Internet users (not total population) is the correct denominator because node operators must have internet access. Using total population would unfairly penalize countries with low internet penetration twice ,  once in the enabling environment and again in node density.</p>
                 </div>
             </div>
         </div>
@@ -537,7 +537,7 @@
                 <li><strong>Mining attribution is approximate:</strong> Hashrate Index country attribution is based on IP geolocation of mining pool connections, which may not accurately reflect physical location of mining hardware (VPN usage, data center diversity).</li>
                 <li><strong>Lightning Network data:</strong> Only publicly announced LN nodes are counted. Private channels are a significant and growing portion of capacity, especially among merchant and institutional users.</li>
                 <li><strong>Min-max sample dependency:</strong> All normalization is relative within the 20-country sample. Adding/removing a country would shift all scores.</li>
-                <li><strong>Enabling environment speed index:</strong> Speedtest Global Index reflects consumer-grade speeds; enterprise and datacenter connectivity — more relevant for node operators — is not measured.</li>
+                <li><strong>Enabling environment speed index:</strong> Speedtest Global Index reflects consumer-grade speeds; enterprise and datacenter connectivity, more relevant for node operators, is not measured.</li>
                 <li><strong>No Solana/other L1 nodes:</strong> The model focuses on BTC and ETH infrastructure as the two largest networks by market cap, security, and node count. Other L1 ecosystems are not captured.</li>
             </ul>
         </div>
@@ -550,25 +550,25 @@
             <div class="source-grid">
                 <div class="source-item">
                     <span class="src-label">BTC Nodes</span>
-                    <span class="src-name">Bitnodes.io — Reachable Bitcoin Nodes</span>
+                    <span class="src-name">Bitnodes.io, Reachable Bitcoin Nodes</span>
                     <span class="src-year">2025&ndash;2026 snapshot</span>
                     <a href="https://bitnodes.io" target="_blank" rel="noopener">bitnodes.io</a>
                 </div>
                 <div class="source-item">
                     <span class="src-label">ETH Nodes</span>
-                    <span class="src-name">Ethernodes.org — Ethereum Node Map</span>
+                    <span class="src-name">Ethernodes.org, Ethereum Node Map</span>
                     <span class="src-year">2025&ndash;2026 snapshot</span>
                     <a href="https://ethernodes.org" target="_blank" rel="noopener">ethernodes.org</a>
                 </div>
                 <div class="source-item">
                     <span class="src-label">Mining Hashrate</span>
-                    <span class="src-name">Hashrate Index — Country Hashrate Distribution</span>
+                    <span class="src-name">Hashrate Index, Country Hashrate Distribution</span>
                     <span class="src-year">Early 2026</span>
                     <a href="https://hashrateindex.com" target="_blank" rel="noopener">hashrateindex.com</a>
                 </div>
                 <div class="source-item">
                     <span class="src-label">Lightning Network</span>
-                    <span class="src-name">mempool.emzy.de — LN Nodes by Country</span>
+                    <span class="src-name">mempool.emzy.de, LN Nodes by Country</span>
                     <span class="src-year">2025&ndash;2026 snapshot</span>
                     <a href="https://mempool.emzy.de/graphs/lightning/nodes-per-country" target="_blank" rel="noopener">mempool.emzy.de</a>
                 </div>
@@ -586,7 +586,7 @@
                 </div>
                 <div class="source-item">
                     <span class="src-label">Electricity Access</span>
-                    <span class="src-name">World Bank — Access to Electricity (% of population)</span>
+                    <span class="src-name">World Bank, Access to Electricity (% of population)</span>
                     <span class="src-year">2022&ndash;2023</span>
                     <a href="https://data.worldbank.org/indicator/EG.ELC.ACCS.ZS" target="_blank" rel="noopener">data.worldbank.org</a>
                 </div>

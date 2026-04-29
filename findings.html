@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Key Findings — Global Blockchain Adaptability Index</title>
-    <meta property="og:title" content="Key Findings — Blockchain Adaptability Index">
+    <title>Key Findings, Global Blockchain Adaptability Index</title>
+    <meta property="og:title" content="Key Findings, Blockchain Adaptability Index">
     <meta property="og:description" content="What the data revealed about regulation, adoption, and economic context.">
     <meta property="og:type" content="website">
     <meta name="twitter:card" content="summary_large_image">
@@ -209,7 +209,7 @@
         .finding-card.insight-cross { border-left-color: #5ba8b5; }
         .finding-card.insight-business { border-left-color: #c06030; }
 
-        /* Headline finding (Finding 1) — slightly more prominent */
+        /* Headline finding (Finding 1), slightly more prominent */
         .finding-headline {
             padding: 36px 40px;
             border-left-width: 6px;
@@ -400,7 +400,138 @@
             border-top: 1px solid #ebebeb;
         }
 
-        /* Comparison block (Nigeria vs Egypt) */
+        /* Leaders list (top 5 with drivers) */
+        .leaders-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin: 16px 0 8px;
+        }
+        .leader-row {
+            display: grid;
+            grid-template-columns: 32px 1.6fr 2fr auto;
+            align-items: center;
+            gap: 14px;
+            padding: 12px 16px;
+            background: #f8f7f4;
+            border-radius: 10px;
+            border-left: 3px solid #1a6b7a;
+        }
+        .leader-rank {
+            font-family: 'VT323', monospace;
+            font-size: 1.05rem;
+            color: #1a6b7a;
+            text-align: center;
+            letter-spacing: 1px;
+        }
+        .leader-country {
+            font-family: 'Source Serif 4', Georgia, serif;
+            font-size: 0.98rem;
+            color: #1a2a3a;
+            font-weight: 600;
+        }
+        .leader-driver {
+            font-size: 0.82rem;
+            color: #5a6b7c;
+            line-height: 1.45;
+        }
+        .leader-score {
+            font-family: 'VT323', monospace;
+            font-size: 1.15rem;
+            color: #0a4c6a;
+            text-align: right;
+        }
+
+        /* Mining concentration bar chart */
+        .mining-chart {
+            margin: 18px 0 8px;
+        }
+        .mining-row {
+            display: grid;
+            grid-template-columns: 110px 1fr 60px;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 8px;
+        }
+        .mining-country {
+            font-size: 0.86rem;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+        .mining-bar-bg {
+            height: 22px;
+            background: #f0ece4;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+        .mining-bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #0a4c6a 0%, #1a6b7a 100%);
+            border-radius: 5px;
+            min-width: 4px;
+        }
+        .mining-row.mining-other .mining-bar-fill {
+            background: #c0c8d0;
+        }
+        .mining-pct {
+            font-family: 'VT323', monospace;
+            font-size: 1rem;
+            color: #0a4c6a;
+            text-align: right;
+        }
+        .mining-summary {
+            margin-top: 14px;
+            padding: 12px 18px;
+            background: #f0f6fa;
+            border-left: 3px solid #0a4c6a;
+            border-radius: 8px;
+            font-size: 0.88rem;
+            color: #2c3e50;
+        }
+        .mining-summary strong { color: #0a3d62; }
+
+        /* DeFi blind-spot table */
+        .gap-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            margin: 16px 0 8px;
+            border-radius: 10px;
+            overflow: hidden;
+            border: 1px solid #ebebeb;
+            font-size: 0.88rem;
+        }
+        .gap-table th, .gap-table td {
+            padding: 11px 14px;
+            text-align: center;
+        }
+        .gap-table th {
+            background: #f4f2ed;
+            font-weight: 600;
+            color: #5a6b7c;
+            font-size: 0.72rem;
+            text-transform: uppercase;
+            letter-spacing: 0.6px;
+        }
+        .gap-table td:first-child, .gap-table th:first-child {
+            text-align: left;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+        .gap-table tbody tr:nth-child(odd) { background: #fafaf7; }
+        .gap-cell-1 { color: #c06030; font-weight: 600; }
+        .gap-cell-2 { color: #9b5a30; font-weight: 600; }
+        .gap-cell-3 { color: #1a6b7a; font-weight: 700; }
+        .gap-note {
+            font-size: 0.86rem;
+            color: #5a6b7c;
+            margin-top: 12px;
+            padding: 10px 16px;
+            background: #faf8f3;
+            border-radius: 8px;
+        }
+
+        /* Comparison block (legacy) */
         .compare-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -492,6 +623,9 @@
         .audience-card.audience-policy { border-top-color: #9b5a30; }
         .audience-card.audience-business { border-top-color: #c06030; }
         .audience-card.audience-research { border-top-color: #1a6b7a; }
+        .audience-card.audience-citizens { border-top-color: #2e5fa1; }
+        .audience-card.audience-founders { border-top-color: #0a4c6a; }
+        .audience-card.audience-legal { border-top-color: #5ba8b5; }
         .audience-card h4 {
             font-family: 'Source Serif 4', Georgia, serif;
             font-size: 1.05rem;
@@ -558,6 +692,9 @@
             .stat-vs-value { font-size: 2.4rem; }
             .conditions-grid { grid-template-columns: repeat(2, 1fr); }
             .compare-grid { grid-template-columns: 1fr; }
+            .leader-row { grid-template-columns: 28px 1fr auto; gap: 10px; }
+            .leader-driver { display: none; }
+            .mining-row { grid-template-columns: 90px 1fr 50px; gap: 10px; }
             .audience-grid { grid-template-columns: 1fr; }
             .closing-note { margin-left: 14px; margin-right: 14px; padding: 20px; }
         }
@@ -598,7 +735,7 @@
 
     <section class="findings">
 
-        <!-- FINDING 1 — HEADLINE -->
+        <!-- FINDING 1, HEADLINE: CONDITIONAL REGULATION -->
         <div class="finding-card finding-headline">
             <span class="finding-tag tag-headline">The Headline Finding</span>
             <h2>The relationship between regulation and crypto adoption is conditional, not uniform.</h2>
@@ -608,22 +745,63 @@
                 <div class="split-side split-stable">
                     <div class="split-label">In stable economies</div>
                     <div class="split-headline-text">Restriction suppresses adoption.</div>
-                    <div class="split-detail">When citizens have functional banks, stable currency, and financial access, regulatory friction does what it&rsquo;s designed to do.</div>
+                    <div class="split-detail">When citizens have functional banks, stable currency, and financial access, regulatory friction does what it is designed to do.</div>
                 </div>
                 <div class="split-divider"></div>
                 <div class="split-side split-distressed">
                     <div class="split-label">In distressed economies</div>
                     <div class="split-headline-text">Restriction accelerates independent, decentralized adoption.</div>
-                    <div class="split-detail">When the financial system is failing, restriction pushes demand into P2P, underground, and self-custodial channels&mdash;outside any regulator&rsquo;s reach.</div>
+                    <div class="split-detail">When the financial system is failing, restriction pushes demand into P2P, underground, and self-custodial channels, outside any regulator&rsquo;s reach.</div>
                 </div>
             </div>
         </div>
 
-        <!-- FINDING 2 — JAPAN PARADOX -->
+        <!-- FINDING 2, DEMAND FOLLOWS NECESSITY -->
+        <div class="finding-card insight-economic">
+            <span class="finding-tag tag-economic">Necessity Beats Clarity</span>
+            <h3>Adoption tracks economic distress, not regulatory quality.</h3>
+            <p>Every country in the top 5 for Economic Adoption has at least one driver of financial necessity: large remittance corridors, currency instability, an unbanked population, or active conflict / sanctions. The United States is the only developed economy in the group, and it gets there primarily through scale of trading and crypto ownership rather than crisis.</p>
+
+            <div class="leaders-list">
+                <div class="leader-row">
+                    <div class="leader-rank">#1</div>
+                    <div class="leader-country">Vietnam</div>
+                    <div class="leader-driver">Highest crypto ownership in the world (21.2%); large remittance economy</div>
+                    <div class="leader-score">0.761</div>
+                </div>
+                <div class="leader-row">
+                    <div class="leader-rank">#2</div>
+                    <div class="leader-country">Ukraine</div>
+                    <div class="leader-driver">Active conflict, currency stress, $503/capita in remittances (highest in index)</div>
+                    <div class="leader-score">0.733</div>
+                </div>
+                <div class="leader-row">
+                    <div class="leader-rank">#3</div>
+                    <div class="leader-country">Philippines</div>
+                    <div class="leader-driver">Major remittance corridor ($341/capita), high crypto ownership (13.4%)</div>
+                    <div class="leader-score">0.632</div>
+                </div>
+                <div class="leader-row">
+                    <div class="leader-rank">#4</div>
+                    <div class="leader-country">United States</div>
+                    <div class="leader-driver">Outlier: 15.6% ownership, $76.6B daily CEX volume, deep institutional flows</div>
+                    <div class="leader-score">0.576</div>
+                </div>
+                <div class="leader-row">
+                    <div class="leader-rank">#5</div>
+                    <div class="leader-country">Pakistan</div>
+                    <div class="leader-driver">Currency volatility, financial exclusion, top-3 retail and institutional CEX ranks</div>
+                    <div class="leader-score">0.494</div>
+                </div>
+            </div>
+            <div class="conditions-note">Read together with the Japan Paradox below: Japan has every regulatory advantage and almost none of the demand drivers. The result is a clean legal framework that hardly anyone actually uses.</div>
+        </div>
+
+        <!-- FINDING 3, JAPAN PARADOX -->
         <div class="finding-card insight-regulatory">
             <span class="finding-tag tag-regulatory">The Japan Paradox</span>
             <h3>Comprehensive regulation does not produce adoption when there is no economic need.</h3>
-            <p>Japan has the highest Regulatory Clarity score in the index but ranks 18th in Economic Adoption. It is the single clearest piece of evidence that <strong>&ldquo;more regulation = more adoption&rdquo; is wrong.</strong></p>
+            <p>Japan has the highest Regulatory Clarity score in the index but ranks 18th in Economic Adoption. It is the single clearest piece of evidence in our data that <strong>&ldquo;more regulation = more adoption&rdquo; is wrong.</strong></p>
 
             <div class="stat-vs">
                 <div class="stat-vs-side">
@@ -641,88 +819,137 @@
             <p>Clear rules without economic demand produce a regulated framework that few people actually use.</p>
         </div>
 
-        <!-- FINDING 3 — FOUR ECONOMIC CONDITIONS -->
+        <!-- FINDING 4, FOUR ECONOMIC CONDITIONS -->
         <div class="finding-card insight-economic">
             <span class="finding-tag tag-economic">The Four Conditions</span>
-            <h3>Restriction backfires when one of these is present.</h3>
-            <p>Across the dataset, restrictive policy fails to suppress adoption&mdash;and often inflames it&mdash;wherever at least one of the following economic conditions exists.</p>
+            <h3>Restriction backfires whenever one of these is present.</h3>
+            <p>Across the dataset, restrictive policy fails to suppress adoption (and often inflames it) wherever at least one of the following economic conditions exists. When none of them are present, the same policy tools work as intended.</p>
 
             <div class="conditions-grid">
                 <div class="condition-card">
                     <div class="condition-num">01</div>
                     <div class="condition-title">High currency instability</div>
-                    <div class="condition-examples">Naira, peso, lira losing value</div>
+                    <div class="condition-examples">Naira, peso, lira, bol&iacute;var losing value against USD</div>
                 </div>
                 <div class="condition-card">
                     <div class="condition-num">02</div>
                     <div class="condition-title">Large remittance flows</div>
-                    <div class="condition-examples">Philippines, Mexico</div>
+                    <div class="condition-examples">Ukraine, Philippines, Vietnam, Pakistan</div>
                 </div>
                 <div class="condition-card">
                     <div class="condition-num">03</div>
                     <div class="condition-title">Financial exclusion</div>
-                    <div class="condition-examples">Large unbanked population</div>
+                    <div class="condition-examples">Large unbanked population, weak retail banking</div>
                 </div>
                 <div class="condition-card">
                     <div class="condition-num">04</div>
-                    <div class="condition-title">Sanctions exposure</div>
+                    <div class="condition-title">Sanctions or conflict</div>
                     <div class="condition-examples">Russia, Venezuela, Ukraine</div>
                 </div>
             </div>
-            <div class="conditions-note">When <strong>none</strong> of these conditions are present, restriction works as intended. When any are, it doesn&rsquo;t.</div>
+            <div class="conditions-note">Use this as a screening checklist. Every country in the index that scores high on Economic Adoption hits at least one of these. Every country that scores low on Adoption despite strong regulation hits none of them.</div>
         </div>
 
-        <!-- FINDING 4 — NIGERIA vs EGYPT -->
+        <!-- FINDING 5, MINING CONCENTRATION -->
+        <div class="finding-card insight-technical">
+            <span class="finding-tag tag-technical">Infrastructure Concentration</span>
+            <h3>Four countries control nearly 60% of global Bitcoin mining.</h3>
+            <p>Bitcoin mining hashrate, often described as the most decentralized layer of crypto, is highly geographically concentrated. The United States and Russia alone account for more than half of all global hashrate. Add Ethiopia and Indonesia and you reach 58.6%, leaving the other 100+ mining countries to share the rest.</p>
+
+            <div class="mining-chart">
+                <div class="mining-row">
+                    <div class="mining-country">United States</div>
+                    <div class="mining-bar-bg"><div class="mining-bar-fill" style="width:93.75%;"></div></div>
+                    <div class="mining-pct">37.5%</div>
+                </div>
+                <div class="mining-row">
+                    <div class="mining-country">Russia</div>
+                    <div class="mining-bar-bg"><div class="mining-bar-fill" style="width:41%;"></div></div>
+                    <div class="mining-pct">16.4%</div>
+                </div>
+                <div class="mining-row">
+                    <div class="mining-country">Ethiopia</div>
+                    <div class="mining-bar-bg"><div class="mining-bar-fill" style="width:6.5%;"></div></div>
+                    <div class="mining-pct">2.6%</div>
+                </div>
+                <div class="mining-row">
+                    <div class="mining-country">Indonesia</div>
+                    <div class="mining-bar-bg"><div class="mining-bar-fill" style="width:5.25%;"></div></div>
+                    <div class="mining-pct">2.1%</div>
+                </div>
+                <div class="mining-row mining-other">
+                    <div class="mining-country">Rest of world</div>
+                    <div class="mining-bar-bg"><div class="mining-bar-fill" style="width:100%;"></div></div>
+                    <div class="mining-pct">41.4%</div>
+                </div>
+            </div>
+            <div class="mining-summary">
+                <strong>Why it matters.</strong> Mining concentration is now an energy-policy and geopolitical question, not just a technical one. Ethiopia is a particularly striking case: a country with Hostile-tier regulation (0.333) and one of the lowest Economic Adoption scores in the index (0.173) is still a top-ten Bitcoin mining nation, powered by hydro from the Grand Ethiopian Renaissance Dam.
+            </div>
+        </div>
+
+        <!-- FINDING 6, DEFI / STABLECOIN BLIND SPOT -->
         <div class="finding-card insight-cross">
-            <span class="finding-tag tag-cross">Nigeria vs. Egypt</span>
-            <h3>Same regulatory tool. Opposite outcomes.</h3>
-            <p>Two countries, two restrictive policies, two completely different trajectories. The regulation isn&rsquo;t the variable&mdash;the underlying economy is.</p>
+            <span class="finding-tag tag-cross">The Regulatory Blind Spot</span>
+            <h3>Even &ldquo;Comprehensive&rdquo; regulators have not caught up to DeFi or stablecoins.</h3>
+            <p>Five countries reach the &ldquo;Comprehensive&rdquo; tier on overall Regulatory Clarity (Japan, Ukraine, Brazil, Thailand, United Kingdom). Inside that group, every single country still scores below the maximum on DeFi recognition, and only Japan has a top-rated stablecoin law. Stablecoins are the actual on-ramp for crypto in distressed economies, which means the gap between how stablecoins are <em>used</em> and how they are <em>regulated</em> is global.</p>
 
-            <div class="compare-grid">
-                <div class="compare-card outcome-backfire">
-                    <div class="compare-country">Nigeria</div>
-                    <div class="compare-policy">Banking ban &middot; Feb 2021</div>
-                    <div class="compare-flow">
-                        Ban issued <strong>&rarr;</strong> P2P trading volume rose <span class="finding-stat">+16%</span> <strong>&rarr;</strong> underground market reached <span class="finding-stat">$17B</span> annually by 2023 <strong>&rarr;</strong> ban reversed Dec 2023.
-                    </div>
-                    <span class="compare-outcome">Backfired</span>
-                </div>
-                <div class="compare-card outcome-worked">
-                    <div class="compare-country">Egypt</div>
-                    <div class="compare-policy">Prior-approval requirement</div>
-                    <div class="compare-flow">
-                        Restriction issued <strong>&rarr;</strong> adoption stayed low <strong>&rarr;</strong> policy still in force.
-                    </div>
-                    <span class="compare-outcome">Worked as intended</span>
-                </div>
-            </div>
-
-            <div class="compare-takeaway">
-                <strong>The difference is not the regulation.</strong> Nigeria has currency instability, large remittance flows, and 33.9 million financially excluded adults. Egypt does not.
-            </div>
+            <table class="gap-table">
+                <thead>
+                    <tr>
+                        <th>Country</th>
+                        <th>Overall reg.</th>
+                        <th>Stablecoin law</th>
+                        <th>DeFi recognition</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>Japan</td><td>0.944</td><td class="gap-cell-3">3</td><td class="gap-cell-2">2</td></tr>
+                    <tr><td>Ukraine</td><td>0.889</td><td class="gap-cell-2">2</td><td class="gap-cell-2">2</td></tr>
+                    <tr><td>Brazil</td><td>0.889</td><td class="gap-cell-2">2</td><td class="gap-cell-2">2</td></tr>
+                    <tr><td>Thailand</td><td>0.833</td><td class="gap-cell-2">2</td><td class="gap-cell-2">2</td></tr>
+                    <tr><td>United Kingdom</td><td>0.833</td><td class="gap-cell-2">2</td><td class="gap-cell-2">2</td></tr>
+                </tbody>
+            </table>
+            <div class="gap-note">Across all 20 countries, <strong>no</strong> country scores 3 on DeFi recognition, and 12 of 20 score 1 (no stablecoin-specific law). DeFi and stablecoin policy are the next major regulatory frontier, even for the jurisdictions that look the most advanced on paper.</div>
         </div>
 
     </section>
 
     <!-- IMPLICATIONS BY AUDIENCE -->
     <section class="audience-section">
-        <h2>Implications</h2>
-        <p class="audience-sub">What these findings mean for the people who use them.</p>
+        <h2>What this means for you</h2>
+        <p class="audience-sub">Concrete takeaways depending on how you interact with crypto.</p>
         <div class="audience-grid">
+            <div class="audience-card audience-citizens">
+                <div class="audience-label">For everyday users</div>
+                <h4>Your country&rsquo;s economy shapes your access more than its laws do.</h4>
+                <p>If you live somewhere with a stable currency and good banking, expect strong consumer protections but also more friction (KYC, taxes, limits on what services exist locally). If you live in a country with currency stress or weak banking, expect easier informal access but much higher legal and counterparty risk.</p>
+            </div>
             <div class="audience-card audience-policy">
                 <div class="audience-label">For policymakers</div>
                 <h4>Prohibition removes visibility, not demand.</h4>
-                <p>When crypto is being driven by economic necessity, prohibition is the wrong tool. It pushes activity underground rather than reducing it&mdash;leaving regulators with less insight, not more control.</p>
+                <p>When crypto is being driven by economic necessity, bans are the wrong tool. They push activity into P2P, foreign exchanges, and self-custodial wallets, leaving regulators with less insight into the real flows, not more control. Channel the demand through licensing instead of trying to suppress it.</p>
             </div>
             <div class="audience-card audience-business">
-                <div class="audience-label">For businesses &amp; investors</div>
-                <h4>Grassroots demand follows failure, not clarity.</h4>
-                <p>The strongest grassroots crypto markets are in countries where the financial system is failing&mdash;not in the most regulated jurisdictions. Read economic distress signals before reading regulatory league tables.</p>
+                <div class="audience-label">For investors and analysts</div>
+                <h4>Distress signals predict adoption better than legal-clarity rankings.</h4>
+                <p>If you are forecasting where crypto demand goes next, look at remittance dependency, inflation, capital controls, and unbanked rates first. The regulatory league tables tell you where products can be sold cleanly, not where users actually are.</p>
+            </div>
+            <div class="audience-card audience-founders">
+                <div class="audience-label">For founders and operators</div>
+                <h4>Match the product to the country&rsquo;s underlying problem.</h4>
+                <p>Stablecoin remittance rails and on/off-ramps fit Vietnam, the Philippines, Ukraine, and Pakistan. Compliance-first institutional products fit Japan, the UK, and Brazil. Mining and infrastructure plays follow cheap energy: the US, Russia, Ethiopia, Indonesia. Mismatched products fail not because they are bad but because they are aimed at the wrong demand driver.</p>
+            </div>
+            <div class="audience-card audience-legal">
+                <div class="audience-label">For lawyers and compliance teams</div>
+                <h4>Hostile-tier countries are uniform risk; DeFi is a global gap.</h4>
+                <p>Bangladesh, Yemen, and Ethiopia all sit at the floor of the regulatory index (0.333) with a 1 across every sub-dimension. Operating there means no framework to rely on, period. Even in the top-tier countries, DeFi recognition never reaches a 3, so DeFi-touching products carry residual legal risk almost everywhere.</p>
             </div>
             <div class="audience-card audience-research">
-                <div class="audience-label">For researchers</div>
-                <h4>Single-index rankings hide the mechanism.</h4>
-                <p>Aggregate adoption rankings (like Chainalysis) systematically obscure the regulatory and economic context that explains <em>why</em> countries score the way they do. Disaggregated frameworks are necessary.</p>
+                <div class="audience-label">For researchers and journalists</div>
+                <h4>A single global ranking hides the mechanism.</h4>
+                <p>Aggregate adoption rankings (such as Chainalysis&rsquo; composite) systematically obscure <em>why</em> countries score the way they do. Splitting the score into Economic Adoption, Regulatory Clarity, and Technical Infrastructure surfaces the actual story: countries cluster by which dimension is leading their score, not by overall rank.</p>
             </div>
         </div>
     </section>
