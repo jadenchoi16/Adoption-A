@@ -121,6 +121,36 @@
             margin: 0 auto;
             padding: 80px 28px 64px;
             text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .hero-bg {
+            position: absolute;
+            inset: 0;
+            z-index: 0;
+            pointer-events: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            /* fade map toward the edges so it sits softly inside the page */
+            -webkit-mask-image: radial-gradient(ellipse 70% 75% at center, rgba(0,0,0,1) 35%, rgba(0,0,0,0.55) 70%, rgba(0,0,0,0) 100%);
+                    mask-image: radial-gradient(ellipse 70% 75% at center, rgba(0,0,0,1) 35%, rgba(0,0,0,0.55) 70%, rgba(0,0,0,0) 100%);
+        }
+        .hero-bg svg {
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+        .hero-bg .map-country {
+            fill: #5ba8b5;
+            opacity: 0.22;
+            stroke: #0a4c6a;
+            stroke-width: 0.4;
+            stroke-opacity: 0.18;
+        }
+        .hero-content {
+            position: relative;
+            z-index: 1;
         }
         .hero-eyebrow {
             display: inline-block;
@@ -571,12 +601,17 @@
 
     <!-- HERO -->
     <header class="hero">
-        <span class="hero-eyebrow">USC Blockchain Capstone Project &middot; 2026</span>
-        <h1>How ready is each country for <span class="accent">blockchain adoption</span>?</h1>
-        <p class="lede">A research index covering 20 countries that scores three things together: how much crypto is actually being used, how clearly the country&rsquo;s laws govern it, and how strong its underlying network is. Higher score, better positioned for blockchain to be adopted there sustainably.</p>
-        <div class="hero-ctas">
-            <a href="map.html" class="btn btn-primary">Explore the interactive map <span class="arrow">&rarr;</span></a>
-            <a href="findings.html" class="btn btn-secondary">Read key findings</a>
+        <div class="hero-bg" aria-hidden="true">
+            <svg id="heroMapSvg" viewBox="0 0 960 480" preserveAspectRatio="xMidYMid slice"></svg>
+        </div>
+        <div class="hero-content">
+            <span class="hero-eyebrow">USC Blockchain Capstone Project &middot; 2026</span>
+            <h1>How ready is each country for <span class="accent">blockchain adoption</span>?</h1>
+            <p class="lede">A research index covering 20 countries that scores three things together: how much crypto is actually being used, how clearly the country&rsquo;s laws govern it, and how strong its underlying network is. Higher score, better positioned for blockchain to be adopted there sustainably.</p>
+            <div class="hero-ctas">
+                <a href="map.html" class="btn btn-primary">Explore the interactive map <span class="arrow">&rarr;</span></a>
+                <a href="findings.html" class="btn btn-secondary">Read key findings</a>
+            </div>
         </div>
     </header>
 
@@ -736,5 +771,34 @@
         <a href="econ-methodology.html">Methodology</a>
     </div>
 
+    <!-- Hero world-map background. d3 + topojson load lazily; the hero text
+         renders immediately, then the decorative map paints in once data arrives. -->
+    <script src="https://d3js.org/d3.v7.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/topojson-client@3" defer></script>
+    <script defer>
+        window.addEventListener('load', function () {
+            const svg = document.getElementById('heroMapSvg');
+            if (!svg || typeof d3 === 'undefined' || typeof topojson === 'undefined') return;
+
+            const W = 960, H = 480;
+            const projection = d3.geoNaturalEarth1()
+                .scale(178)
+                .translate([W / 2, H / 2 + 6]);
+            const pathGen = d3.geoPath(projection);
+
+            d3.json('https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json')
+                .then(world => {
+                    const feats = topojson.feature(world, world.objects.countries).features;
+                    d3.select(svg)
+                        .selectAll('path.map-country')
+                        .data(feats)
+                        .enter()
+                        .append('path')
+                        .attr('class', 'map-country')
+                        .attr('d', pathGen);
+                })
+                .catch(() => { /* decorative only; silently no-op on failure */ });
+        });
+    </script>
 </body>
 </html>
