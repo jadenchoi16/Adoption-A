@@ -2,10 +2,739 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="refresh" content="0; url=map.html">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Global Blockchain Adaptability Index</title>
+    <meta name="description" content="A research index scoring 20 countries on how ready they are for blockchain adoption across economic, regulatory, and technical dimensions.">
+    <meta property="og:title" content="Global Blockchain Adaptability Index">
+    <meta property="og:description" content="An equal-weighted index across 20 countries scoring economic adoption, regulatory clarity, and technical infrastructure.">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=VT323&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #fafaf7;
+            color: #2c3e50;
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        /* === SITE NAV === */
+        .site-nav {
+            position: sticky;
+            top: 0;
+            z-index: 500;
+            background: rgba(255, 255, 255, 0.92);
+            backdrop-filter: saturate(160%) blur(10px);
+            -webkit-backdrop-filter: saturate(160%) blur(10px);
+            border-bottom: 1px solid #ececec;
+        }
+        .site-nav-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 13px 28px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 24px;
+        }
+        .site-brand {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            color: #1a2a3a;
+            font-family: 'Source Serif 4', Georgia, serif;
+            font-size: 1rem;
+            font-weight: 600;
+            letter-spacing: -0.2px;
+        }
+        .brand-mark {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 28px;
+            height: 28px;
+            background: linear-gradient(135deg, #0a4c6a 0%, #1a6b7a 100%);
+            color: #fff;
+            border-radius: 7px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            box-shadow: 0 2px 6px rgba(10, 76, 106, 0.25);
+        }
+        .site-nav-links { display: flex; align-items: center; gap: 2px; }
+        .site-nav-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: #5a6a7a;
+            text-decoration: none;
+            background: none;
+            border: none;
+            cursor: pointer;
+            transition: background 0.15s, color 0.15s;
+        }
+        .site-nav-link:hover { background: #f0f4f8; color: #0a4c6a; }
+        .site-nav-link.is-active { color: #0a4c6a; background: #eef5fa; }
+        .site-nav-dropdown { position: relative; }
+        .site-nav-dropdown::after { content: ''; position: absolute; top: 100%; left: 0; right: 0; height: 12px; }
+        .site-nav-dropdown-btn .caret { font-size: 0.7rem; transition: transform 0.2s ease; opacity: 0.7; }
+        .site-nav-dropdown:hover .site-nav-dropdown-btn .caret { transform: rotate(180deg); }
+        .site-nav-dropdown-menu {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            margin-top: 12px;
+            background: #fff;
+            border: 1px solid #ececec;
+            border-radius: 8px;
+            box-shadow: 0 6px 24px rgba(0,0,0,0.08);
+            min-width: 180px;
+            padding: 6px;
+        }
+        .site-nav-dropdown:hover .site-nav-dropdown-menu,
+        .site-nav-dropdown:focus-within .site-nav-dropdown-menu { display: block; }
+        .site-nav-dropdown-menu a {
+            display: block;
+            padding: 8px 14px;
+            font-size: 0.84rem;
+            color: #2c3e50;
+            text-decoration: none;
+            border-radius: 6px;
+        }
+        .site-nav-dropdown-menu a:hover { background: #f0f4f8; color: #0a4c6a; }
+
+        /* === HERO === */
+        .hero {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 80px 28px 64px;
+            text-align: center;
+        }
+        .hero-eyebrow {
+            display: inline-block;
+            font-family: 'VT323', monospace;
+            font-size: 0.95rem;
+            color: #0a4c6a;
+            background: #eef5fa;
+            padding: 4px 14px;
+            border-radius: 6px;
+            margin-bottom: 22px;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+        }
+        .hero h1 {
+            font-family: 'Source Serif 4', Georgia, serif;
+            font-size: 3.4rem;
+            font-weight: 700;
+            color: #1a2a3a;
+            line-height: 1.1;
+            margin-bottom: 22px;
+            letter-spacing: -0.5px;
+        }
+        .hero h1 .accent {
+            color: #0a4c6a;
+            position: relative;
+        }
+        .hero h1 .accent::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: -2px;
+            height: 8px;
+            background: linear-gradient(90deg, rgba(94,168,181,0.35), rgba(155,90,48,0.35));
+            border-radius: 4px;
+            z-index: -1;
+        }
+        .hero p.lede {
+            font-size: 1.15rem;
+            color: #3c4d5e;
+            max-width: 760px;
+            margin: 0 auto 36px;
+            line-height: 1.6;
+        }
+        .hero-ctas {
+            display: inline-flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 13px 26px;
+            border-radius: 9px;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.92rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: transform 0.15s, box-shadow 0.15s, background 0.15s;
+            border: none;
+            cursor: pointer;
+        }
+        .btn-primary {
+            background: #0a4c6a;
+            color: #fff;
+            box-shadow: 0 4px 14px rgba(10, 76, 106, 0.25);
+        }
+        .btn-primary:hover {
+            background: #073a52;
+            transform: translateY(-1px);
+            box-shadow: 0 6px 18px rgba(10, 76, 106, 0.35);
+        }
+        .btn-secondary {
+            background: #fff;
+            color: #0a4c6a;
+            border: 1px solid #c8d4dc;
+        }
+        .btn-secondary:hover {
+            background: #f0f6fa;
+            border-color: #0a4c6a;
+        }
+        .btn .arrow { font-size: 1rem; }
+
+        /* === STATS STRIP === */
+        .stats-strip {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 28px 80px;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 18px;
+        }
+        .stat-tile {
+            background: #fff;
+            border: 1px solid #ebebeb;
+            border-radius: 12px;
+            padding: 22px 22px;
+            text-align: center;
+        }
+        .stat-tile .num {
+            font-family: 'VT323', monospace;
+            font-size: 2.4rem;
+            color: #0a4c6a;
+            line-height: 1;
+            margin-bottom: 6px;
+        }
+        .stat-tile .label {
+            font-size: 0.78rem;
+            color: #7a8a9a;
+            text-transform: uppercase;
+            letter-spacing: 0.6px;
+        }
+
+        /* === SECTION === */
+        .section {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 64px 28px;
+        }
+        .section.tinted {
+            background: #f4f0e8;
+            max-width: none;
+            padding: 64px 28px;
+        }
+        .section-inner {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+        .section-eyebrow {
+            display: inline-block;
+            font-family: 'VT323', monospace;
+            font-size: 0.85rem;
+            color: #9b5a30;
+            background: #fef3e0;
+            padding: 3px 12px;
+            border-radius: 4px;
+            margin-bottom: 14px;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+        }
+        .section-eyebrow.eyebrow-blue { color: #0a4c6a; background: #eef5fa; }
+        .section-eyebrow.eyebrow-teal { color: #1a6b7a; background: #e0f2f1; }
+        .section h2 {
+            font-family: 'Source Serif 4', Georgia, serif;
+            font-size: 2.2rem;
+            color: #1a2a3a;
+            font-weight: 700;
+            margin-bottom: 14px;
+            line-height: 1.2;
+            letter-spacing: -0.3px;
+        }
+        .section .lede {
+            font-size: 1.05rem;
+            color: #3c4d5e;
+            max-width: 760px;
+            margin-bottom: 36px;
+            line-height: 1.6;
+        }
+
+        /* === THREE PILLARS === */
+        .pillars-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 18px;
+        }
+        .pillar {
+            background: #fff;
+            border-radius: 14px;
+            padding: 28px 26px;
+            border: 1px solid #ebebeb;
+            border-top: 4px solid #ccc;
+        }
+        .pillar.p-econ { border-top-color: #1a7a4e; }
+        .pillar.p-reg  { border-top-color: #9b5a30; }
+        .pillar.p-tech { border-top-color: #2e5fa1; }
+        .pillar h3 {
+            font-family: 'Source Serif 4', Georgia, serif;
+            font-size: 1.2rem;
+            color: #1a2a3a;
+            margin-bottom: 8px;
+        }
+        .pillar .weight {
+            font-family: 'VT323', monospace;
+            font-size: 0.82rem;
+            color: #7a8a9a;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 14px;
+        }
+        .pillar p {
+            font-size: 0.94rem;
+            color: #3c4d5e;
+            line-height: 1.6;
+            margin-bottom: 14px;
+        }
+        .pillar a {
+            font-size: 0.84rem;
+            color: #0a4c6a;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        .pillar a:hover { text-decoration: underline; }
+        .pillar.p-reg a  { color: #9b5a30; }
+        .pillar.p-tech a { color: #2e5fa1; }
+
+        /* === HEADLINE FINDING === */
+        .headline-finding {
+            background: #fff;
+            border-radius: 16px;
+            padding: 44px 48px;
+            border: 1px solid #ebebeb;
+            box-shadow: 0 4px 24px rgba(0,0,0,0.04);
+            border-left: 5px solid #0a4c6a;
+        }
+        .headline-finding h2 {
+            font-family: 'Source Serif 4', Georgia, serif;
+            font-size: 1.8rem;
+            color: #1a2a3a;
+            margin-bottom: 16px;
+            line-height: 1.25;
+        }
+        .headline-finding p {
+            font-size: 1.02rem;
+            color: #3c4d5e;
+            line-height: 1.65;
+            margin-bottom: 14px;
+        }
+        .headline-finding p:last-child { margin-bottom: 0; }
+        .headline-finding .micro-pair {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+            margin: 22px 0 22px;
+        }
+        .micro-card {
+            padding: 18px 20px;
+            border-radius: 10px;
+            background: #f8f7f4;
+        }
+        .micro-card.suppress { border-left: 3px solid #1a6b7a; }
+        .micro-card.amplify  { border-left: 3px solid #c06030; }
+        .micro-card .when {
+            font-size: 0.72rem;
+            text-transform: uppercase;
+            letter-spacing: 0.7px;
+            color: #7a8a9a;
+            margin-bottom: 6px;
+        }
+        .micro-card .then {
+            font-family: 'Source Serif 4', Georgia, serif;
+            font-size: 1rem;
+            color: #1a2a3a;
+            font-weight: 600;
+        }
+
+        /* === SELECTED FINDINGS === */
+        .findings-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 18px;
+        }
+        .finding-tile {
+            background: #fff;
+            border-radius: 14px;
+            padding: 26px 26px;
+            border: 1px solid #ebebeb;
+            transition: transform 0.15s, box-shadow 0.15s;
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+        .finding-tile:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.06);
+        }
+        .finding-tile .num {
+            font-family: 'VT323', monospace;
+            font-size: 1rem;
+            color: #0a4c6a;
+            letter-spacing: 1.5px;
+            margin-bottom: 10px;
+        }
+        .finding-tile h4 {
+            font-family: 'Source Serif 4', Georgia, serif;
+            font-size: 1.2rem;
+            color: #1a2a3a;
+            margin-bottom: 8px;
+            line-height: 1.3;
+        }
+        .finding-tile p {
+            font-size: 0.92rem;
+            color: #5a6b7c;
+            line-height: 1.55;
+        }
+        .finding-tile .read-more {
+            display: inline-block;
+            margin-top: 12px;
+            font-size: 0.82rem;
+            color: #0a4c6a;
+            font-weight: 500;
+        }
+
+        /* === PATHS / CTA CARDS === */
+        .paths-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 18px;
+        }
+        .path-card {
+            background: #fff;
+            border-radius: 14px;
+            padding: 30px 28px;
+            border: 1px solid #ebebeb;
+            text-decoration: none;
+            color: inherit;
+            transition: all 0.2s;
+            display: block;
+            position: relative;
+        }
+        .path-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            border-color: #0a4c6a;
+        }
+        .path-card .icon {
+            font-family: 'VT323', monospace;
+            font-size: 1.6rem;
+            color: #0a4c6a;
+            margin-bottom: 12px;
+            display: inline-block;
+        }
+        .path-card h4 {
+            font-family: 'Source Serif 4', Georgia, serif;
+            font-size: 1.25rem;
+            color: #1a2a3a;
+            margin-bottom: 8px;
+        }
+        .path-card p {
+            font-size: 0.9rem;
+            color: #5a6b7c;
+            line-height: 1.55;
+            margin-bottom: 14px;
+        }
+        .path-card .go {
+            font-size: 0.85rem;
+            color: #0a4c6a;
+            font-weight: 600;
+        }
+
+        /* === ABOUT === */
+        .about-card {
+            background: #fff;
+            border-radius: 14px;
+            padding: 32px 36px;
+            border: 1px solid #ebebeb;
+        }
+        .about-card h2 {
+            margin-bottom: 12px;
+        }
+        .about-card p {
+            color: #3c4d5e;
+            font-size: 0.96rem;
+            margin-bottom: 12px;
+        }
+        .about-card .meta-row {
+            margin-top: 18px;
+            padding-top: 18px;
+            border-top: 1px solid #f0ece4;
+            display: flex;
+            gap: 28px;
+            flex-wrap: wrap;
+            font-size: 0.85rem;
+            color: #5a6b7c;
+        }
+        .about-card .meta-row strong {
+            display: block;
+            font-size: 0.7rem;
+            color: #9aa5b0;
+            text-transform: uppercase;
+            letter-spacing: 0.6px;
+            margin-bottom: 2px;
+        }
+
+        /* === FOOTER === */
+        .site-footer {
+            text-align: center;
+            padding: 32px 24px 50px;
+            font-size: 0.84rem;
+            color: #7a8a9a;
+            border-top: 1px solid #ececec;
+        }
+        .site-footer a {
+            color: #0a4c6a;
+            text-decoration: none;
+            margin: 0 4px;
+        }
+        .site-footer a:hover { text-decoration: underline; }
+
+        /* === RESPONSIVE === */
+        @media (max-width: 900px) {
+            .pillars-grid, .findings-grid, .paths-grid { grid-template-columns: 1fr; }
+            .stats-strip { grid-template-columns: repeat(2, 1fr); }
+            .hero { padding: 56px 24px 44px; }
+            .hero h1 { font-size: 2.4rem; }
+            .hero p.lede { font-size: 1rem; }
+            .section { padding: 48px 24px; }
+            .section h2 { font-size: 1.7rem; }
+            .headline-finding { padding: 32px 26px; }
+            .headline-finding h2 { font-size: 1.4rem; }
+            .headline-finding .micro-pair { grid-template-columns: 1fr; }
+            .about-card { padding: 26px 22px; }
+        }
+        @media (max-width: 768px) {
+            .site-nav-inner { padding: 11px 18px; gap: 12px; }
+            .brand-text { display: none; }
+            .site-nav-link { padding: 7px 12px; font-size: 0.8rem; }
+        }
+    </style>
 </head>
 <body>
-    <p>Redirecting to <a href="map.html">map</a>...</p>
+
+    <!-- SITE NAV -->
+    <nav class="site-nav">
+        <div class="site-nav-inner">
+            <a href="index.html" class="site-brand">
+                <span class="brand-mark">B</span>
+                <span class="brand-text">Blockchain Adaptability Index</span>
+            </a>
+            <div class="site-nav-links">
+                <a href="index.html" class="site-nav-link is-active">Home</a>
+                <a href="map.html" class="site-nav-link">Map</a>
+                <div class="site-nav-dropdown">
+                    <button type="button" class="site-nav-link site-nav-dropdown-btn">
+                        Data <span class="caret">&#9662;</span>
+                    </button>
+                    <div class="site-nav-dropdown-menu">
+                        <a href="econ-methodology.html">Economic</a>
+                        <a href="regulatory-methodology.html">Regulatory</a>
+                        <a href="tech-methodology.html">Technical</a>
+                    </div>
+                </div>
+                <a href="findings.html" class="site-nav-link">Findings</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- HERO -->
+    <header class="hero">
+        <span class="hero-eyebrow">University Research Project &middot; 2026</span>
+        <h1>How ready is each country for <span class="accent">blockchain adoption</span>?</h1>
+        <p class="lede">A research index covering 20 countries that scores three things together: how much crypto is actually being used, how clearly the country&rsquo;s laws govern it, and how strong its underlying network is. Higher score, better positioned for blockchain to be adopted there sustainably.</p>
+        <div class="hero-ctas">
+            <a href="map.html" class="btn btn-primary">Explore the interactive map <span class="arrow">&rarr;</span></a>
+            <a href="findings.html" class="btn btn-secondary">Read key findings</a>
+        </div>
+    </header>
+
+    <!-- STATS STRIP -->
+    <div class="stats-strip">
+        <div class="stat-tile">
+            <div class="num">20</div>
+            <div class="label">Countries</div>
+        </div>
+        <div class="stat-tile">
+            <div class="num">3</div>
+            <div class="label">Pillars</div>
+        </div>
+        <div class="stat-tile">
+            <div class="num">15+</div>
+            <div class="label">Indicators</div>
+        </div>
+        <div class="stat-tile">
+            <div class="num">8</div>
+            <div class="label">Data sources</div>
+        </div>
+    </div>
+
+    <!-- WHAT WE MEASURE -->
+    <section class="section">
+        <span class="section-eyebrow eyebrow-blue">What we measure</span>
+        <h2>Three pillars, weighted equally.</h2>
+        <p class="lede">Any one pillar alone is misleading. Adoption without rules is risky for users; rules without adoption is dead law; infrastructure without users is unused capacity. The overall score is the average of all three.</p>
+        <div class="pillars-grid">
+            <div class="pillar p-econ">
+                <h3>Economic Adoption</h3>
+                <div class="weight">Weight 1/3</div>
+                <p>Real-world crypto use: ownership rate, exchange volume per GDP, remittances per capita, and Chainalysis CEX and DeFi sub-rankings.</p>
+                <a href="econ-methodology.html">Methodology &rarr;</a>
+            </div>
+            <div class="pillar p-reg">
+                <h3>Regulatory Clarity</h3>
+                <div class="weight">Weight 1/3</div>
+                <p>How clearly the country has codified six legal dimensions: stablecoin law, exchange licensing, tax treatment, banking access, enforcement, and DeFi recognition.</p>
+                <a href="regulatory-methodology.html">Methodology &rarr;</a>
+            </div>
+            <div class="pillar p-tech">
+                <h3>Technical Infrastructure</h3>
+                <div class="weight">Weight 1/3</div>
+                <p>The country&rsquo;s on-chain footprint: BTC and ETH nodes per 100k internet users, Bitcoin mining hashrate share, Lightning Network density, and an enabling-environment factor.</p>
+                <a href="tech-methodology.html">Methodology &rarr;</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- HEADLINE FINDING -->
+    <section class="section tinted">
+        <div class="section-inner">
+            <span class="section-eyebrow">The headline finding</span>
+            <div class="headline-finding">
+                <h2>The relationship between regulation and crypto adoption is conditional, not uniform.</h2>
+                <p>The same restrictive law produces opposite outcomes in different countries depending on the economic conditions underneath it. That single observation, drawn from comparing the regulatory and economic scores across all 20 countries, is what drives every other finding in this project.</p>
+                <div class="micro-pair">
+                    <div class="micro-card suppress">
+                        <div class="when">In stable economies</div>
+                        <div class="then">Restriction suppresses adoption.</div>
+                    </div>
+                    <div class="micro-card amplify">
+                        <div class="when">In distressed economies</div>
+                        <div class="then">Restriction accelerates independent adoption.</div>
+                    </div>
+                </div>
+                <p>If you take only one thing from this site, take that: regulation alone does not predict adoption. Necessity does most of the work, and policy reacts to it.</p>
+                <p style="margin-top:14px;"><a href="findings.html" style="color:#0a4c6a;font-weight:600;text-decoration:none;">See all six findings &rarr;</a></p>
+            </div>
+        </div>
+    </section>
+
+    <!-- SELECTED FINDINGS PREVIEW -->
+    <section class="section">
+        <span class="section-eyebrow eyebrow-teal">Selected discoveries</span>
+        <h2>Four numbers worth remembering.</h2>
+        <p class="lede">Every claim on the site is grounded in the data. Here are the most striking single-number findings.</p>
+        <div class="findings-grid">
+            <a href="findings.html" class="finding-tile">
+                <div class="num">FINDING 03</div>
+                <h4>Japan: best regulation, almost no adoption.</h4>
+                <p>Highest regulatory clarity in the index (0.944) yet 18th of 20 in economic adoption (0.205). The single sharpest piece of evidence that comprehensive regulation does not guarantee users.</p>
+                <span class="read-more">Read more &rarr;</span>
+            </a>
+            <a href="findings.html" class="finding-tile">
+                <div class="num">FINDING 05</div>
+                <h4>Four countries control 58.6% of Bitcoin mining.</h4>
+                <p>The US (37.5%), Russia (16.4%), Ethiopia (2.6%), and Indonesia (2.1%) together produce nearly 60% of global hashrate. Crypto&rsquo;s most decentralized layer is geographically concentrated.</p>
+                <span class="read-more">Read more &rarr;</span>
+            </a>
+            <a href="findings.html" class="finding-tile">
+                <div class="num">FINDING 02</div>
+                <h4>Every top-5 adopter has a distress driver.</h4>
+                <p>Vietnam, Ukraine, Philippines, US, Pakistan: each one is in the top five for a different reason (currency stress, conflict, remittances, market scale). The US is the only stable economy in the group.</p>
+                <span class="read-more">Read more &rarr;</span>
+            </a>
+            <a href="findings.html" class="finding-tile">
+                <div class="num">FINDING 06</div>
+                <h4>DeFi is unregulated everywhere.</h4>
+                <p>Across all 20 countries in the index, no country scores a 3 (full recognition) on DeFi, including the five &lsquo;Comprehensive&rsquo; regulators. Stablecoin and DeFi rules are the global blind spot.</p>
+                <span class="read-more">Read more &rarr;</span>
+            </a>
+        </div>
+    </section>
+
+    <!-- PATHS / WHERE TO GO -->
+    <section class="section tinted">
+        <div class="section-inner">
+            <span class="section-eyebrow">Start here</span>
+            <h2>Three ways to use the project.</h2>
+            <p class="lede">Pick the path that matches what you need.</p>
+            <div class="paths-grid">
+                <a href="map.html" class="path-card">
+                    <span class="icon">[ MAP ]</span>
+                    <h4>Explore visually</h4>
+                    <p>Hover any country on the world map to see scores and ranks. Switch tabs to view economic, regulatory, or technical scores. Click for the full country profile.</p>
+                    <span class="go">Open the map &rarr;</span>
+                </a>
+                <a href="findings.html" class="path-card">
+                    <span class="icon">[ READ ]</span>
+                    <h4>Read the findings</h4>
+                    <p>Six data-driven findings with implications for everyday users, policymakers, investors, founders, lawyers, and researchers. Start here if you want the conclusions.</p>
+                    <span class="go">Read findings &rarr;</span>
+                </a>
+                <a href="econ-methodology.html" class="path-card">
+                    <span class="icon">[ DATA ]</span>
+                    <h4>Browse the methodology</h4>
+                    <p>Full breakdown of how every score is built, including raw data, normalization, weights, and source citations. Three separate documents, one per pillar.</p>
+                    <span class="go">Open methodology &rarr;</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section class="section">
+        <span class="section-eyebrow eyebrow-blue">About this project</span>
+        <div class="about-card">
+            <h2>Why this index exists.</h2>
+            <p>Most reports on crypto adoption rank countries on a single composite number. That hides the mechanism. A country can land near the top of an aggregate ranking because of speculative trading, because of remittances, because it has cheap mining electricity, or because its laws happen to be welcoming, and those four stories require completely different responses from policymakers, businesses, and users.</p>
+            <p>This index splits the score into three pillars on purpose so the underlying driver of each country&rsquo;s position is legible. The findings page then ties those pillars back together to argue something specific: that regulation only behaves the way most policymakers expect it to when it is read against the economic conditions underneath it.</p>
+            <div class="meta-row">
+                <div><strong>Format</strong>University research project</div>
+                <div><strong>Coverage</strong>20 countries, 3 pillars</div>
+                <div><strong>Data window</strong>March 2026</div>
+                <div><strong>Sources</strong>Chainalysis, World Bank, Triple-A, Library of Congress, PwC, Bitnodes, Hashrate Index, mempool.emzy.de</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <div class="site-footer">
+        University Research Project &middot; Global Blockchain Adaptability Index &middot; 2026 &middot;
+        <a href="map.html">Interactive Map</a> &middot;
+        <a href="findings.html">Findings</a> &middot;
+        <a href="econ-methodology.html">Methodology</a>
+    </div>
+
 </body>
 </html>
