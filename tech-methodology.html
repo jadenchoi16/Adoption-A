@@ -64,18 +64,6 @@
             max-width: 640px;
             margin: 0 auto;
         }
-        .header .version-badge {
-            display: inline-block;
-            background: #2e5fa1;
-            color: #fff;
-            padding: 3px 12px;
-            border-radius: 5px;
-            font-size: 0.75rem;
-            font-weight: 600;
-            margin-top: 10px;
-            letter-spacing: 0.5px;
-        }
-
         .section { max-width: 1100px; margin: 28px auto; padding: 0 24px; }
         .card {
             background: #fff;
@@ -237,7 +225,6 @@
     <div class="header">
         <h1>Technical Infrastructure Methodology</h1>
         <p class="subtitle">How the Technical Infrastructure Score is calculated &mdash; pillar scores, normalization method, weighted geometric mean, and all data sources for 20 countries</p>
-        <div class="version-badge">VERSION 2 &middot; WEIGHTED GEOMETRIC MEAN &middot; PER-CAPITA NORMALIZATION</div>
     </div>
 
     <!-- FORMULA OVERVIEW -->
@@ -461,7 +448,6 @@
                 <li><strong>Enabling environment speed index:</strong> Speedtest Global Index reflects consumer-grade speeds; enterprise and datacenter connectivity — more relevant for node operators — is not measured.</li>
                 <li><strong>No Solana/other L1 nodes:</strong> The model focuses on BTC and ETH infrastructure as the two largest networks by market cap, security, and node count. Other L1 ecosystems are not captured.</li>
             </ul>
-            <p style="font-size:0.82rem; color:#7a8a9a; margin-top:8px; font-style:italic;">Version 2 introduced per-capita normalization against internet users (vs. population in v1) and the weighted geometric mean (vs. arithmetic weighted average in v1). These changes significantly affected countries with very large internet user bases (India, Indonesia).</p>
         </div>
     </div>
 

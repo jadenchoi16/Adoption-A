@@ -9,7 +9,6 @@
     <meta property="og:type" content="website">
     <meta name="twitter:card" content="summary_large_image">
     <script src="https://d3js.org/d3.v7.min.js"></script>
-    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/topojson-client@3"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -54,21 +53,154 @@
             letter-spacing: 0.5px;
         }
 
-        /* === CONTROLS BAR (tabs + search + compare) === */
-        .controls-bar {
+        /* === SITE NAV === */
+        .site-nav {
+            position: sticky;
+            top: 0;
+            z-index: 500;
+            background: rgba(255, 255, 255, 0.92);
+            backdrop-filter: saturate(160%) blur(10px);
+            -webkit-backdrop-filter: saturate(160%) blur(10px);
+            border-bottom: 1px solid #ececec;
+        }
+        .site-nav-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 13px 28px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 24px;
+        }
+        .site-brand {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            color: #1a2a3a;
+            font-family: 'Source Serif 4', Georgia, serif;
+            font-size: 1rem;
+            font-weight: 600;
+            letter-spacing: -0.2px;
+        }
+        .brand-mark {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 28px;
+            height: 28px;
+            background: linear-gradient(135deg, #0a4c6a 0%, #1a6b7a 100%);
+            color: #fff;
+            border-radius: 7px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            box-shadow: 0 2px 6px rgba(10, 76, 106, 0.25);
+        }
+        .site-nav-links {
+            display: flex;
+            align-items: center;
+            gap: 2px;
+        }
+        .site-nav-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: #5a6a7a;
+            text-decoration: none;
+            background: none;
+            border: none;
+            cursor: pointer;
+            transition: background 0.15s, color 0.15s;
+        }
+        .site-nav-link:hover {
+            background: #f0f4f8;
+            color: #0a4c6a;
+        }
+        .site-nav-link.is-active {
+            color: #0a4c6a;
+            background: #eef5fa;
+        }
+        .site-nav-dropdown {
+            position: relative;
+        }
+        .site-nav-dropdown::after {
+            content: '';
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            height: 12px;
+        }
+        .site-nav-dropdown-btn .caret {
+            font-size: 0.7rem;
+            transition: transform 0.2s ease;
+            opacity: 0.7;
+        }
+        .site-nav-dropdown:hover .site-nav-dropdown-btn .caret {
+            transform: rotate(180deg);
+        }
+        .site-nav-dropdown-menu {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            margin-top: 12px;
+            background: #fff;
+            border: 1px solid #ececec;
+            border-radius: 10px;
+            box-shadow: 0 12px 32px rgba(0, 0, 0, 0.10);
+            min-width: 200px;
+            overflow: hidden;
+            z-index: 510;
+        }
+        .site-nav-dropdown:hover .site-nav-dropdown-menu,
+        .site-nav-dropdown:focus-within .site-nav-dropdown-menu {
+            display: block;
+        }
+        .site-nav-dropdown-menu a {
+            display: block;
+            padding: 12px 18px;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.84rem;
+            color: #2c3e50;
+            text-decoration: none;
+            transition: background 0.15s, color 0.15s;
+        }
+        .site-nav-dropdown-menu a:hover {
+            background: #f0f4f8;
+            color: #0a4c6a;
+        }
+        .site-nav-dropdown-menu a:not(:last-child) {
+            border-bottom: 1px solid #f4f4f4;
+        }
+        .site-nav-dropdown-menu .menu-label {
+            display: block;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.6px;
+            color: #aab5c0;
+            margin-top: 2px;
+        }
+
+        /* === DIMENSION TABS (map controls) === */
+        .tabs-bar {
             max-width: 1100px;
-            margin: 16px auto 0;
+            margin: 22px auto 0;
             padding: 0 24px;
         }
-        .controls-row {
+        .tabs-row {
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 6px;
             flex-wrap: wrap;
         }
-
-        /* === DIMENSION TABS === */
         .dim-tab {
             padding: 9px 20px;
             border: 1px solid #ddd;
@@ -89,83 +221,6 @@
             background: #0a4c6a;
             color: #fff;
             border-color: #0a4c6a;
-        }
-        a.data-link {
-            text-decoration: none;
-            margin-left: 8px;
-            border-color: #0a4c6a;
-            color: #0a4c6a;
-            background: #eef5fa;
-        }
-        a.data-link:hover {
-            background: #0a4c6a;
-            color: #fff;
-        }
-
-        /* === SEARCH & FILTER ROW === */
-        .search-row {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            margin-top: 12px;
-            flex-wrap: wrap;
-        }
-        .search-box {
-            position: relative;
-        }
-        .search-box input {
-            font-family: 'Inter', sans-serif;
-            font-size: 0.82rem;
-            padding: 8px 14px 8px 34px;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            background: #fff;
-            width: 220px;
-            outline: none;
-            transition: border-color 0.2s;
-        }
-        .search-box input:focus {
-            border-color: #0a4c6a;
-        }
-        .search-box svg {
-            position: absolute;
-            left: 10px;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 16px;
-            height: 16px;
-            color: #aab5c0;
-            pointer-events: none;
-        }
-        .region-select {
-            font-family: 'Inter', sans-serif;
-            font-size: 0.82rem;
-            padding: 8px 14px;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            background: #fff;
-            color: #5a6a7a;
-            cursor: pointer;
-            outline: none;
-        }
-        .region-select:focus { border-color: #0a4c6a; }
-        .compare-toggle {
-            font-family: 'Inter', sans-serif;
-            font-size: 0.82rem;
-            padding: 8px 16px;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            background: #fff;
-            color: #5a6a7a;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-        .compare-toggle:hover { background: #f0f4f8; border-color: #bcc; }
-        .compare-toggle.active {
-            background: #c06030;
-            color: #fff;
-            border-color: #c06030;
         }
 
         /* === MAP === */
@@ -205,14 +260,6 @@
         .country-path.highlighted {
             stroke: #ff6b35;
             stroke-width: 2;
-        }
-        .country-path.compare-selected {
-            stroke: #c06030;
-            stroke-width: 2.5;
-            stroke-dasharray: 4 2;
-        }
-        .country-path.dimmed {
-            opacity: 0.25;
         }
         .border-mesh {
             fill: none;
@@ -338,10 +385,10 @@
             font-style: italic;
             font-size: 0.88rem;
         }
-        .tooltip .compare-hint {
+        .tooltip .click-hint {
             margin-top: 8px;
             font-size: 0.72rem;
-            color: #c06030;
+            color: #aab5c0;
             font-weight: 500;
         }
 
@@ -518,106 +565,6 @@
             color: #6b7c8d;
             font-size: 0.88rem;
             text-align: center;
-        }
-
-        /* === COMPARISON PANEL === */
-        .compare-panel {
-            max-width: 1100px;
-            margin: 24px auto 0;
-            padding: 0 24px;
-            display: none;
-        }
-        .compare-panel.visible { display: block; }
-        .compare-panel-inner {
-            background: #fff;
-            border-radius: 14px;
-            padding: 24px;
-            box-shadow: 0 2px 14px rgba(0,0,0,0.04);
-            border: 1px solid #ebebeb;
-        }
-        .compare-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 16px;
-        }
-        .compare-header h3 {
-            font-family: 'Source Serif 4', Georgia, serif;
-            font-size: 1.15rem;
-            color: #1a2a3a;
-        }
-        .compare-clear {
-            font-family: 'Inter', sans-serif;
-            font-size: 0.78rem;
-            padding: 6px 14px;
-            border: 1px solid #ddd;
-            border-radius: 6px;
-            background: #fff;
-            color: #888;
-            cursor: pointer;
-        }
-        .compare-clear:hover { background: #f5f5f5; }
-        .compare-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-            gap: 16px;
-        }
-        .compare-country {
-            text-align: center;
-            padding: 16px 12px;
-            background: #faf8f4;
-            border-radius: 12px;
-            position: relative;
-        }
-        .compare-country h4 {
-            font-family: 'Source Serif 4', Georgia, serif;
-            font-size: 1rem;
-            color: #1a2a3a;
-            margin-bottom: 8px;
-        }
-        .compare-country .compare-overall {
-            font-size: 1.8rem;
-            font-weight: 700;
-            color: #0a4c6a;
-        }
-        .compare-dims {
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
-            margin-top: 10px;
-        }
-        .compare-dim-row {
-            display: flex;
-            justify-content: space-between;
-            font-size: 0.78rem;
-            color: #5a6a7a;
-        }
-        .compare-dim-row .val {
-            font-weight: 600;
-            color: #1a2a3a;
-        }
-        .compare-remove {
-            position: absolute;
-            top: 8px;
-            right: 8px;
-            width: 22px;
-            height: 22px;
-            border: none;
-            background: #e8e4da;
-            border-radius: 50%;
-            cursor: pointer;
-            font-size: 0.7rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #888;
-        }
-        .compare-remove:hover { background: #ddd; }
-        .compare-empty {
-            text-align: center;
-            padding: 20px;
-            color: #aab5c0;
-            font-size: 0.88rem;
         }
 
         /* === METHODOLOGY === */
@@ -798,80 +745,6 @@
         }
         .site-footer a:hover { text-decoration: underline; }
 
-        /* === VIEW TOGGLE === */
-        .view-toggle {
-            display: inline-flex;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            overflow: hidden;
-            margin-left: 12px;
-        }
-        .view-btn {
-            padding: 8px 16px;
-            border: none;
-            background: #fff;
-            font-family: 'Inter', sans-serif;
-            font-size: 0.82rem;
-            font-weight: 500;
-            color: #5a6a7a;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-        .view-btn:not(:last-child) { border-right: 1px solid #ddd; }
-        .view-btn:hover { background: #f0f4f8; }
-        .view-btn.active { background: #0a4c6a; color: #fff; }
-
-        /* === SCATTER CHART === */
-        .scatter-section {
-            max-width: 1100px;
-            margin: 20px auto 0;
-            padding: 0 24px;
-            display: none;
-        }
-        .scatter-section.visible { display: block; }
-        .scatter-wrapper {
-            background: #fff;
-            border-radius: 14px;
-            box-shadow: 0 2px 20px rgba(0,0,0,0.06);
-            border: 1px solid #ebebeb;
-            padding: 24px;
-            position: relative;
-        }
-        .scatter-wrapper svg {
-            display: block;
-            width: 100%;
-            height: auto;
-        }
-        .scatter-title {
-            font-family: 'Source Serif 4', Georgia, serif;
-            font-size: 1.1rem;
-            color: #1a2a3a;
-            margin-bottom: 4px;
-        }
-        .scatter-subtitle {
-            font-size: 0.78rem;
-            color: #9aa5b0;
-            margin-bottom: 16px;
-        }
-        .scatter-legend {
-            display: flex;
-            gap: 16px;
-            flex-wrap: wrap;
-            margin-top: 12px;
-            font-size: 0.75rem;
-            color: #7a8a9a;
-        }
-        .scatter-legend-item {
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
-        .scatter-legend-dot {
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-        }
-
         /* === KEY INSIGHTS === */
         .insights-section {
             max-width: 1100px;
@@ -934,52 +807,11 @@
             border-radius: 3px;
         }
 
-        /* === EXPORT BAR === */
-        .export-bar {
-            display: flex;
-            gap: 8px;
-            margin-left: auto;
-        }
-        .export-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 5px;
-            padding: 7px 14px;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            background: #fff;
-            font-family: 'Inter', sans-serif;
-            font-size: 0.78rem;
-            font-weight: 500;
-            color: #5a6a7a;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-        .export-btn:hover { background: #f0f4f8; border-color: #bcc; }
-        .export-btn svg { width: 14px; height: 14px; }
-        .export-toast {
-            position: fixed;
-            bottom: 24px;
-            left: 50%;
-            transform: translateX(-50%) translateY(20px);
-            background: #0a4c6a;
-            color: #fff;
-            padding: 10px 24px;
-            border-radius: 8px;
-            font-size: 0.84rem;
-            font-weight: 500;
-            opacity: 0;
-            transition: all 0.3s ease;
-            z-index: 3000;
-            pointer-events: none;
-        }
-        .export-toast.visible {
-            opacity: 1;
-            transform: translateX(-50%) translateY(0);
-        }
-
         /* === RESPONSIVE === */
         @media (max-width: 768px) {
+            .site-nav-inner { padding: 11px 18px; gap: 12px; }
+            .brand-text { display: none; }
+            .site-nav-link { padding: 7px 12px; font-size: 0.8rem; }
             .header h1 { font-size: 1.6rem; }
             .header .subtitle { font-size: 0.84rem; }
             .tooltip { max-width: 280px; padding: 14px 16px; }
@@ -991,20 +823,36 @@
             .hide-mobile { display: none; }
             .methodology { padding: 20px; }
             .dim-tab { padding: 7px 14px; font-size: 0.76rem; }
-            .search-box input { width: 160px; }
             .detail-card { padding: 24px 20px; }
             .insights-grid { grid-template-columns: 1fr; }
-            .view-toggle { margin-left: 0; margin-top: 8px; }
-            .export-bar { margin-left: 0; margin-top: 8px; }
-            .scatter-wrapper { padding: 16px; }
         }
     </style>
 </head>
 <body>
 
-    <!-- EXPORT TOAST -->
-    <div class="export-toast" id="exportToast"></div>
-
+    <!-- SITE NAV -->
+    <nav class="site-nav">
+        <div class="site-nav-inner">
+            <a href="map.html" class="site-brand">
+                <span class="brand-mark">B</span>
+                <span class="brand-text">Blockchain Adaptability Index</span>
+            </a>
+            <div class="site-nav-links">
+                <a href="map.html" class="site-nav-link is-active">Map</a>
+                <div class="site-nav-dropdown">
+                    <button type="button" class="site-nav-link site-nav-dropdown-btn">
+                        Data <span class="caret">&#9662;</span>
+                    </button>
+                    <div class="site-nav-dropdown-menu">
+                        <a href="econ-methodology.html">Economic</a>
+                        <a href="regulatory-methodology.html">Regulatory</a>
+                        <a href="tech-methodology.html">Technical</a>
+                    </div>
+                </div>
+                <a href="findings.html" class="site-nav-link">Findings</a>
+            </div>
+        </div>
+    </nav>
 
     <!-- HEADER -->
     <div class="header">
@@ -1013,48 +861,13 @@
         <div class="date-stamp">DATA LAST UPDATED: MARCH 2026</div>
     </div>
 
-    <!-- CONTROLS -->
-    <div class="controls-bar">
-        <div class="controls-row">
+    <!-- DIMENSION TABS -->
+    <div class="tabs-bar">
+        <div class="tabs-row">
             <button class="dim-tab active" data-dim="overall">Overall Score</button>
             <button class="dim-tab" data-dim="economic">Economic Adoption</button>
             <button class="dim-tab" data-dim="regulatory">Regulatory Clarity</button>
             <button class="dim-tab" data-dim="technical">Technical Infrastructure</button>
-            <a href="data.html" class="dim-tab data-link">Data &rarr;</a>
-            <a href="findings.html" class="dim-tab data-link">Findings &rarr;</a>
-        </div>
-        <div class="search-row">
-            <div class="search-box">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
-                <input type="text" id="searchInput" placeholder="Search country..." autocomplete="off">
-            </div>
-            <select class="region-select" id="regionFilter">
-                <option value="all">All Regions</option>
-                <option value="asia">Asia</option>
-                <option value="europe">Europe</option>
-                <option value="americas">Americas</option>
-                <option value="africa">Africa</option>
-                <option value="middleeast">Middle East</option>
-            </select>
-            <button class="compare-toggle" id="compareToggle">Compare Countries</button>
-            <div class="view-toggle">
-                <button class="view-btn active" data-view="map">Map</button>
-                <button class="view-btn" data-view="scatter">Scatter</button>
-            </div>
-            <div class="export-bar">
-                <button class="export-btn" onclick="exportPNG()" title="Download map as image">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-                    PNG
-                </button>
-                <button class="export-btn" onclick="exportCSV()" title="Download data as CSV">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-                    CSV
-                </button>
-                <button class="export-btn" onclick="copyShareLink()" title="Copy link to clipboard">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
-                    Share
-                </button>
-            </div>
         </div>
     </div>
 
@@ -1082,28 +895,18 @@
         </div>
     </div>
 
-    <!-- SCATTER CHART -->
-    <div class="scatter-section" id="scatterSection">
-        <div class="scatter-wrapper">
-            <div class="scatter-title">Adoption vs. Regulation vs. Infrastructure</div>
-            <div class="scatter-subtitle">X = Economic Adoption &middot; Y = Regulatory Clarity &middot; Bubble size = Technical Infrastructure</div>
-            <div id="scatterChart"></div>
-            <div class="scatter-legend" id="scatterLegend"></div>
-        </div>
-    </div>
-
     <!-- KEY INSIGHTS -->
     <div class="insights-section">
         <div class="insights-grid">
             <div class="insight-card accent-cross">
                 <span class="insight-tag tag-cross">Adoption vs. Regulation</span>
                 <h4>Vietnam Leads Adoption, Trails in Regulation</h4>
-                <p>Vietnam ranks #1 in economic adoption (<span class="insight-stat">0.737</span>) but only &ldquo;Ambiguous&rdquo; in regulatory clarity (<span class="insight-stat">0.556</span>)&mdash;the widest gap between adoption and regulation in the index.</p>
+                <p>Vietnam ranks #1 in economic adoption (<span class="insight-stat">0.761</span>) but only &ldquo;Ambiguous&rdquo; in regulatory clarity (<span class="insight-stat">0.556</span>)&mdash;the widest gap between adoption and regulation in the index.</p>
             </div>
             <div class="insight-card accent-reg">
                 <span class="insight-tag tag-reg">The Japan Paradox</span>
                 <h4>Best Regulation, Low Adoption</h4>
-                <p>Japan has the most comprehensive regulatory framework (<span class="insight-stat">0.944</span>) yet ranks 17th in economic adoption (<span class="insight-stat">0.284</span>)&mdash;suggesting heavy regulation may constrain grassroots growth.</p>
+                <p>Japan has the most comprehensive regulatory framework (<span class="insight-stat">0.944</span>) yet ranks 18th in economic adoption (<span class="insight-stat">0.205</span>)&mdash;suggesting heavy regulation may constrain grassroots growth.</p>
             </div>
             <div class="insight-card accent-tech">
                 <span class="insight-tag tag-tech">Infrastructure</span>
@@ -1118,18 +921,6 @@
         </div>
     </div>
 
-    <!-- COMPARISON PANEL -->
-    <div class="compare-panel" id="comparePanel">
-        <div class="compare-panel-inner">
-            <div class="compare-header">
-                <h3>Country Comparison</h3>
-                <button class="compare-clear" id="compareClear">Clear All</button>
-            </div>
-            <div id="compareContent">
-                <div class="compare-empty">Click countries on the map to compare (up to 3)</div>
-            </div>
-        </div>
-    </div>
 
     <!-- COUNTRY DETAIL MODAL -->
     <div class="detail-overlay" id="detailOverlay">
@@ -1146,16 +937,14 @@
         <details>
             <summary>1. Economic Adoption Score</summary>
             <div class="detail-body">
-                <p>Quantifies real-world blockchain economic penetration using seven normalized, weighted indicators. Decomposes the Chainalysis composite index into separate CEX and DeFi sub-indexes for independent weighting.</p>
-                <div class="formula-box">Economic = (CEX Activity &times; 0.15) + (DeFi &times; 0.10) + (Ownership &times; 0.25) + (Remittances &times; 0.15) + (Currency Instability &times; 0.10) + (CEX/GDP &times; 0.15) + (Internet &times; 0.10)</div>
+                <p>Quantifies real-world blockchain economic penetration using five normalized, weighted indicators. Decomposes the Chainalysis composite index into separate CEX and DeFi sub-indexes for independent weighting.</p>
+                <div class="formula-box">Economic = (CEX Activity &times; 0.20) + (DeFi &times; 0.10) + (Ownership &times; 0.30) + (Remittances &times; 0.20) + (CEX/GDP &times; 0.20)</div>
                 <ul>
-                    <li><strong>Crypto Ownership % &times; 0.25</strong> &mdash; Population penetration rate from Triple-A data.</li>
-                    <li><strong>CEX Activity &times; 0.15</strong> &mdash; Average of Chainalysis Retail CEX and Institutional CEX sub-index ranks (PPP-weighted, inverted).</li>
-                    <li><strong>CEX Volume / GDP &times; 0.15</strong> &mdash; CoinGecko 24h exchange volume divided by national GDP, log-transformed.</li>
-                    <li><strong>Remittances per Capita &times; 0.15</strong> &mdash; World Bank remittance inflows divided by population.</li>
+                    <li><strong>Crypto Ownership % &times; 0.30</strong> &mdash; Population penetration rate from Triple-A data.</li>
+                    <li><strong>CEX Activity &times; 0.20</strong> &mdash; Average of Chainalysis Retail CEX and Institutional CEX sub-index ranks (PPP-weighted, inverted).</li>
+                    <li><strong>CEX Volume / GDP &times; 0.20</strong> &mdash; CoinGecko 24h exchange volume divided by national GDP, log-transformed.</li>
+                    <li><strong>Remittances per Capita &times; 0.20</strong> &mdash; World Bank remittance inflows divided by population.</li>
                     <li><strong>DeFi Activity &times; 0.10</strong> &mdash; Chainalysis DeFi value received sub-index rank (PPP-weighted, inverted).</li>
-                    <li><strong>Currency Instability &times; 0.10</strong> &mdash; Composite of log(inflation), 5-year depreciation vs USD, and Heritage capital controls.</li>
-                    <li><strong>Internet Penetration &times; 0.10</strong> &mdash; Infrastructure gating variable.</li>
                 </ul>
                 <p style="margin-top:14px;"><a href="econ-methodology.html" style="display:inline-block;padding:8px 18px;background:#0a4c6a;color:#fff;border-radius:7px;text-decoration:none;font-size:0.82rem;font-weight:500;">View full data breakdown &rarr;</a></p>
             </div>
@@ -1235,83 +1024,83 @@
     // ========================================
     const countries = [
         { country: "Vietnam", id: "704", region: "asia",
-            economic: { score: 0.737, ownership: "21.19%", volume: "$2,500M", remitCapita: "$180.90", chainalysisRank: "4", confidence: "High", keyDriver: "Highest ownership (21.2%) + strong CEX ranks" },
+            economic: { score: 0.761, ownership: "21.19%", volume: "$2,500M", remitCapita: "$180.90", chainalysisRank: "4", confidence: "High", keyDriver: "Highest ownership (21.2%) + strong CEX ranks" },
             regulatory: { score: 0.556, label: "Ambiguous", stablecoin: 1, licensing: 2, tax: 2, banking: 2, enforcement: 2, defi: 1 },
             technical: { score: 0.133, label: "Emerging", btcScore: 0.149, ethScore: 0.128, miningScore: 0.010, lnScore: 0.233, enablingScore: 0.730 } },
         { country: "Ukraine", id: "804", region: "europe",
-            economic: { score: 0.705, ownership: "10.57%", volume: "$1,800M", remitCapita: "$502.70", chainalysisRank: "8", confidence: "High", keyDriver: "Highest remittances/capita + currency instability" },
+            economic: { score: 0.733, ownership: "10.57%", volume: "$1,800M", remitCapita: "$502.70", chainalysisRank: "5", confidence: "High", keyDriver: "Highest remittances/capita ($503) + strong CEX activity" },
             regulatory: { score: 0.889, label: "Comprehensive", stablecoin: 2, licensing: 3, tax: 3, banking: 3, enforcement: 3, defi: 2 },
             technical: { score: 0.244, label: "Developing", btcScore: 0.367, ethScore: 0.317, miningScore: 0.013, lnScore: 0.426, enablingScore: 0.708 } },
         { country: "India", id: "356", region: "asia",
-            economic: { score: 0.493, ownership: "6.55%", volume: "$3,500M", remitCapita: "$89.71", chainalysisRank: "1", confidence: "High", keyDriver: "#1 across all Chainalysis sub-indexes" },
+            economic: { score: 0.484, ownership: "6.55%", volume: "$3,500M", remitCapita: "$89.71", chainalysisRank: "1", confidence: "High", keyDriver: "#1 across all Chainalysis sub-indexes" },
             regulatory: { score: 0.611, label: "Developing", stablecoin: 1, licensing: 2, tax: 3, banking: 2, enforcement: 2, defi: 1 },
             technical: { score: 0.060, label: "Nascent", btcScore: 0.061, ethScore: 0.051, miningScore: 0.013, lnScore: 0.040, enablingScore: 0.600 } },
         { country: "Philippines", id: "608", region: "asia",
-            economic: { score: 0.616, ownership: "13.43%", volume: "$1,500M", remitCapita: "$341.01", chainalysisRank: "9", confidence: "High", keyDriver: "High ownership + strong remittances/capita" },
+            economic: { score: 0.632, ownership: "13.43%", volume: "$1,500M", remitCapita: "$341.01", chainalysisRank: "8", confidence: "High", keyDriver: "High ownership + strong remittances/capita" },
             regulatory: { score: 0.778, label: "Developing", stablecoin: 2, licensing: 3, tax: 2, banking: 3, enforcement: 3, defi: 1 },
             technical: { score: 0.098, label: "Emerging", btcScore: 0.091, ethScore: 0.105, miningScore: 0.010, lnScore: 0.126, enablingScore: 0.676 } },
         { country: "Nigeria", id: "566", region: "africa",
-            economic: { score: 0.484, ownership: "5.93%", volume: "$2,800M", remitCapita: "$84.78", chainalysisRank: "6", confidence: "High", keyDriver: "DeFi #3 + strong CEX/GDP ratio" },
+            economic: { score: 0.489, ownership: "5.93%", volume: "$2,800M", remitCapita: "$84.78", chainalysisRank: "8", confidence: "High", keyDriver: "DeFi #3 + strong CEX/GDP ratio" },
             regulatory: { score: 0.667, label: "Developing", stablecoin: 2, licensing: 2, tax: 2, banking: 3, enforcement: 2, defi: 1 },
             technical: { score: 0.070, label: "Nascent", btcScore: 0.079, ethScore: 0.048, miningScore: 0.010, lnScore: 0.119, enablingScore: 0.381 } },
         { country: "Indonesia", id: "360", region: "asia",
-            economic: { score: 0.440, ownership: "4.40%", volume: "$4,200M", remitCapita: "$44.79", chainalysisRank: "7", confidence: "High", keyDriver: "DeFi #4 + strong CEX activity" },
+            economic: { score: 0.399, ownership: "4.40%", volume: "$4,200M", remitCapita: "$44.79", chainalysisRank: "8", confidence: "High", keyDriver: "DeFi #4 + strong CEX activity" },
             regulatory: { score: 0.667, label: "Developing", stablecoin: 1, licensing: 3, tax: 3, banking: 2, enforcement: 2, defi: 1 },
             technical: { score: 0.092, label: "Emerging", btcScore: 0.049, ethScore: 0.052, miningScore: 0.305, lnScore: 0.041, enablingScore: 0.597 } },
         { country: "United States", id: "840", region: "americas",
-            economic: { score: 0.585, ownership: "15.56%", volume: "$76,659M", remitCapita: "$23.88", chainalysisRank: "2", confidence: "High", keyDriver: "DeFi #2, Inst CEX #2 + high ownership" },
+            economic: { score: 0.576, ownership: "15.56%", volume: "$76,659M", remitCapita: "$23.88", chainalysisRank: "6", confidence: "High", keyDriver: "DeFi #2, Inst CEX #2 + high ownership" },
             regulatory: { score: 0.778, label: "Developing", stablecoin: 2, licensing: 2, tax: 3, banking: 2, enforcement: 3, defi: 2 },
             technical: { score: 0.799, label: "Network Leader", btcScore: 0.754, ethScore: 0.653, miningScore: 0.983, lnScore: 0.821, enablingScore: 0.964 } },
         { country: "Venezuela", id: "862", region: "americas",
-            economic: { score: 0.442, ownership: "10.30%", volume: "$300M", remitCapita: "$105.63", chainalysisRank: "18", confidence: "Medium+", keyDriver: "Extreme currency instability drives adoption" },
+            economic: { score: 0.357, ownership: "10.30%", volume: "$300M", remitCapita: "$105.63", chainalysisRank: "14", confidence: "Medium+", keyDriver: "Mid-range ownership (10.3%); active remittances flow" },
             regulatory: { score: 0.556, label: "Ambiguous", stablecoin: 1, licensing: 2, tax: 2, banking: 2, enforcement: 2, defi: 1 },
             technical: { score: 0.092, label: "Emerging", btcScore: 0.107, ethScore: 0.069, miningScore: 0.013, lnScore: 0.119, enablingScore: 0.600 } },
         { country: "Pakistan", id: "586", region: "asia",
-            economic: { score: 0.481, ownership: "6.60%", volume: "$800M", remitCapita: "$137.21", chainalysisRank: "3", confidence: "High", keyDriver: "Retail CEX #2, Inst CEX #3" },
+            economic: { score: 0.494, ownership: "6.60%", volume: "$800M", remitCapita: "$137.21", chainalysisRank: "3", confidence: "High", keyDriver: "Retail CEX #2, Inst CEX #3" },
             regulatory: { score: 0.556, label: "Ambiguous", stablecoin: 1, licensing: 2, tax: 2, banking: 2, enforcement: 2, defi: 1 },
             technical: { score: 0.066, label: "Nascent", btcScore: 0.075, ethScore: 0.052, miningScore: 0.010, lnScore: 0.074, enablingScore: 0.457 } },
         { country: "Brazil", id: "76", region: "americas",
-            economic: { score: 0.523, ownership: "11.99%", volume: "$2,200M", remitCapita: "$21.26", chainalysisRank: "5", confidence: "High", keyDriver: "Balanced #5 across all Chainalysis sub-indexes" },
+            economic: { score: 0.491, ownership: "11.99%", volume: "$2,200M", remitCapita: "$21.26", chainalysisRank: "5", confidence: "High", keyDriver: "Balanced #5 across all Chainalysis sub-indexes" },
             regulatory: { score: 0.889, label: "Comprehensive", stablecoin: 2, licensing: 3, tax: 3, banking: 3, enforcement: 3, defi: 2 },
             technical: { score: 0.231, label: "Developing", btcScore: 0.294, ethScore: 0.244, miningScore: 0.026, lnScore: 0.338, enablingScore: 0.749 } },
         { country: "Argentina", id: "32", region: "americas",
-            economic: { score: 0.363, ownership: "9.73%", volume: "$600M", remitCapita: "$25.70", chainalysisRank: "20", confidence: "High", keyDriver: "Weak Chainalysis ranks; currency instability offsets" },
+            economic: { score: 0.262, ownership: "9.73%", volume: "$600M", remitCapita: "$25.70", chainalysisRank: "19", confidence: "High", keyDriver: "Weakest Chainalysis ranks; mid ownership (9.7%)" },
             regulatory: { score: 0.611, label: "Developing", stablecoin: 1, licensing: 2, tax: 2, banking: 2, enforcement: 3, defi: 1 },
             technical: { score: 0.342, label: "Developing", btcScore: 0.392, ethScore: 0.359, miningScore: 0.071, lnScore: 0.474, enablingScore: 0.780 } },
         { country: "Thailand", id: "764", region: "asia",
-            economic: { score: 0.387, ownership: "9.61%", volume: "$500M", remitCapita: "$114.21", chainalysisRank: "17", confidence: "High", keyDriver: "Weak Chainalysis CEX ranks drag score down" },
+            economic: { score: 0.331, ownership: "9.61%", volume: "$500M", remitCapita: "$114.21", chainalysisRank: "19", confidence: "High", keyDriver: "Weak Chainalysis CEX ranks drag score down" },
             regulatory: { score: 0.833, label: "Comprehensive", stablecoin: 2, licensing: 3, tax: 3, banking: 3, enforcement: 2, defi: 2 },
             technical: { score: 0.150, label: "Emerging", btcScore: 0.185, ethScore: 0.160, miningScore: 0.010, lnScore: 0.232, enablingScore: 0.783 } },
         { country: "Russia", id: "643", region: "europe",
-            economic: { score: 0.421, ownership: "6.06%", volume: "$1,200M", remitCapita: "$54.09", chainalysisRank: "10", confidence: "High", keyDriver: "Solid mid-range CEX + currency instability boost" },
+            economic: { score: 0.343, ownership: "6.06%", volume: "$1,200M", remitCapita: "$54.09", chainalysisRank: "10", confidence: "High", keyDriver: "Solid mid-range CEX activity" },
             regulatory: { score: 0.611, label: "Developing", stablecoin: 1, licensing: 2, tax: 3, banking: 2, enforcement: 2, defi: 1 },
             technical: { score: 0.584, label: "Advanced", btcScore: 0.660, ethScore: 0.534, miningScore: 0.769, lnScore: 0.355, enablingScore: 0.814 } },
         { country: "Turkey", id: "792", region: "middleeast",
-            economic: { score: 0.407, ownership: "5.62%", volume: "$6,018M", remitCapita: "$12.82", chainalysisRank: "14", confidence: "High", keyDriver: "Strong CEX/GDP ratio; Lira instability" },
+            economic: { score: 0.334, ownership: "5.62%", volume: "$6,018M", remitCapita: "$12.82", chainalysisRank: "12", confidence: "High", keyDriver: "Strong CEX/GDP ratio (Lira-driven trading)" },
             regulatory: { score: 0.722, label: "Developing", stablecoin: 2, licensing: 3, tax: 2, banking: 3, enforcement: 2, defi: 1 },
             technical: { score: 0.212, label: "Developing", btcScore: 0.308, ethScore: 0.254, miningScore: 0.013, lnScore: 0.323, enablingScore: 0.775 } },
         { country: "United Kingdom", id: "826", region: "europe",
-            economic: { score: 0.293, ownership: "5.74%", volume: "$400M", remitCapita: "$92.24", chainalysisRank: "11", confidence: "High", keyDriver: "Highest internet access; lowest CEX/GDP" },
+            economic: { score: 0.210, ownership: "5.74%", volume: "$400M", remitCapita: "$92.24", chainalysisRank: "18", confidence: "High", keyDriver: "Lowest CEX/GDP ratio in the index" },
             regulatory: { score: 0.833, label: "Comprehensive", stablecoin: 2, licensing: 3, tax: 3, banking: 2, enforcement: 3, defi: 2 },
             technical: { score: 0.470, label: "Advanced", btcScore: 0.956, ethScore: 0.827, miningScore: 0.013, lnScore: 0.854, enablingScore: 0.917 } },
         { country: "South Korea", id: "410", region: "asia",
-            economic: { score: 0.465, ownership: "4.09%", volume: "$82,816M", remitCapita: "$179.88", chainalysisRank: "15", confidence: "High", keyDriver: "Highest CEX/GDP ratio (Upbit/Bithumb)" },
+            economic: { score: 0.441, ownership: "4.09%", volume: "$82,816M", remitCapita: "$179.88", chainalysisRank: "13", confidence: "High", keyDriver: "Highest CEX/GDP ratio (Upbit/Bithumb)" },
             regulatory: { score: 0.722, label: "Developing", stablecoin: 2, licensing: 3, tax: 2, banking: 2, enforcement: 2, defi: 2 },
             technical: { score: 0.303, label: "Developing", btcScore: 0.466, ethScore: 0.425, miningScore: 0.013, lnScore: 0.510, enablingScore: 0.988 } },
         { country: "Japan", id: "392", region: "asia",
-            economic: { score: 0.284, ownership: "4.13%", volume: "$8,084M", remitCapita: "$20.97", chainalysisRank: "19", confidence: "High", keyDriver: "Worst CEX avg rank; moderate DeFi + internet" },
+            economic: { score: 0.205, ownership: "4.13%", volume: "$8,084M", remitCapita: "$20.97", chainalysisRank: "22", confidence: "High", keyDriver: "Worst CEX avg rank (#22); low ownership (4.1%)" },
             regulatory: { score: 0.944, label: "Comprehensive", stablecoin: 3, licensing: 3, tax: 3, banking: 3, enforcement: 3, defi: 2 },
             technical: { score: 0.360, label: "Developing", btcScore: 0.646, ethScore: 0.574, miningScore: 0.013, lnScore: 0.573, enablingScore: 0.930 } },
         { country: "Bangladesh", id: "50", region: "asia",
-            economic: { score: 0.277, ownership: "2.50%", volume: "$100M", remitCapita: "$131.65", chainalysisRank: "13", confidence: "Medium+", keyDriver: "Strong Chainalysis ranks (#14 retail, #14 DeFi)" },
+            economic: { score: 0.234, ownership: "2.50%", volume: "$100M", remitCapita: "$131.65", chainalysisRank: "14", confidence: "Medium+", keyDriver: "Strong Chainalysis ranks (#14 retail, #14 DeFi)" },
             regulatory: { score: 0.333, label: "Hostile", stablecoin: 1, licensing: 1, tax: 1, banking: 1, enforcement: 1, defi: 1 },
             technical: { score: 0.035, label: "Nascent", btcScore: 0.032, ethScore: 0.022, miningScore: 0.010, lnScore: 0.024, enablingScore: 0.488 } },
         { country: "Yemen", id: "887", region: "middleeast",
-            economic: { score: 0.228, ownership: "1.00%", volume: "$10M", remitCapita: "$110.47", chainalysisRank: "16", confidence: "Low*", keyDriver: "Currency instability + limited infrastructure" },
+            economic: { score: 0.198, ownership: "1.00%", volume: "$10M", remitCapita: "$110.47", chainalysisRank: "16", confidence: "Low*", keyDriver: "Lowest ownership (1.0%); limited infrastructure" },
             regulatory: { score: 0.333, label: "Hostile", stablecoin: 1, licensing: 1, tax: 1, banking: 1, enforcement: 1, defi: 1 },
             technical: { score: 0.047, label: "Nascent", btcScore: 0.052, ethScore: 0.033, miningScore: 0.010, lnScore: 0.055, enablingScore: 0.279 } },
         { country: "Ethiopia", id: "231", region: "africa",
-            economic: { score: 0.207, ownership: "1.79%", volume: "$50M", remitCapita: "$16.28", chainalysisRank: "12", confidence: "Medium+", keyDriver: "DeFi #7 exceptional; worst internet access (17.7%)" },
+            economic: { score: 0.173, ownership: "1.79%", volume: "$50M", remitCapita: "$16.28", chainalysisRank: "18", confidence: "Medium+", keyDriver: "DeFi #7 exceptional; very low ownership (1.79%)" },
             regulatory: { score: 0.333, label: "Hostile", stablecoin: 1, licensing: 1, tax: 1, banking: 1, enforcement: 1, defi: 1 },
             technical: { score: 0.068, label: "Nascent", btcScore: 0.040, ethScore: 0.024, miningScore: 0.345, lnScore: 0.059, enablingScore: 0.236 } }
     ];
@@ -1377,10 +1166,6 @@
     // STATE
     // ========================================
     let activeDim = "overall";
-    let compareMode = false;
-    let compareList = []; // array of country IDs
-    let searchQuery = "";
-    let activeRegion = "all";
 
     function getScore(c) {
         return activeDim === "overall" ? c.overall : c[activeDim].score;
@@ -1395,10 +1180,6 @@
         regulatory: { title: "Regulatory Clarity",       min: 0.30, max: 0.95, colors: ["#fef3e0","#f5d6a0","#d4915c","#9b5a30","#5c2d10"] },
         technical:  { title: "Technical Infrastructure", min: 0.03, max: 0.80, colors: ["#e8f0fe","#a4c8f0","#5b8fd4","#2e5fa1","#143566"] }
     };
-
-    // Region mapping for non-indexed countries (for dimming)
-    const regionById = {};
-    countries.forEach(c => { regionById[c.id] = c.region; });
 
     // ========================================
     // COLOR SCALE
@@ -1474,12 +1255,8 @@
                         <div class="sub-score-tier">${data.technical.label}</div>
                     </div>
                 </div>
-                <div class="key-driver">&ldquo;${data.economic.keyDriver}&rdquo;</div>`;
-            if (compareMode) {
-                html += '<div class="compare-hint">Click to ' + (compareList.includes(id) ? 'remove from' : 'add to') + ' comparison</div>';
-            } else {
-                html += '<div class="compare-hint" style="color:#aab5c0;">Click for full details</div>';
-            }
+                <div class="key-driver">&ldquo;${data.economic.keyDriver}&rdquo;</div>
+                <div class="click-hint">Click for full details</div>`;
             tooltip.innerHTML = html;
         } else {
             tooltip.innerHTML = `<h3>${name}</h3><p class="no-data-msg">No data available</p>`;
@@ -1505,25 +1282,13 @@
     document.addEventListener("touchstart", hideTooltip, { passive: true });
 
     // ========================================
-    // COUNTRY CLICK → Detail or Compare
+    // COUNTRY CLICK → Detail
     // ========================================
     function onCountryClick(event, d) {
         const id = String(d.id);
         const data = dataById[id];
         if (!data) return;
-
-        if (compareMode) {
-            const idx = compareList.indexOf(id);
-            if (idx >= 0) {
-                compareList.splice(idx, 1);
-            } else if (compareList.length < 3) {
-                compareList.push(id);
-            }
-            updateMapHighlights();
-            renderComparePanel();
-        } else {
-            showDetailModal(data);
-        }
+        showDetailModal(data);
     }
 
     // ========================================
@@ -1640,175 +1405,6 @@
     }
 
     // ========================================
-    // COMPARE MODE
-    // ========================================
-    const compareToggle = document.getElementById('compareToggle');
-    const comparePanel = document.getElementById('comparePanel');
-
-    compareToggle.addEventListener('click', () => {
-        compareMode = !compareMode;
-        compareToggle.classList.toggle('active', compareMode);
-        compareToggle.textContent = compareMode ? 'Exit Compare' : 'Compare Countries';
-        comparePanel.classList.toggle('visible', compareMode);
-        if (!compareMode) {
-            compareList = [];
-            updateMapHighlights();
-        }
-        renderComparePanel();
-    });
-
-    document.getElementById('compareClear').addEventListener('click', () => {
-        compareList = [];
-        updateMapHighlights();
-        renderComparePanel();
-    });
-
-    function renderComparePanel() {
-        const content = document.getElementById('compareContent');
-        if (compareList.length === 0) {
-            content.innerHTML = '<div class="compare-empty">Click countries on the map to compare (up to 3)</div>';
-            return;
-        }
-
-        const compareColors = ['#0a4c6a', '#c06030', '#2e7d32'];
-
-        // Build overlaid radar + cards
-        let html = '<div style="display:flex; align-items:center; gap:24px; flex-wrap:wrap;">';
-
-        // Overlaid radar chart
-        html += '<div style="flex:0 0 220px; display:flex; justify-content:center;" id="compareRadar"></div>';
-
-        // Country cards
-        html += '<div class="compare-grid" style="flex:1; min-width:200px;">';
-        compareList.forEach((id, idx) => {
-            const c = dataById[id];
-            if (!c) return;
-            html += `
-                <div class="compare-country" style="border-top: 3px solid ${compareColors[idx]};">
-                    <button class="compare-remove" onclick="removeCompare('${id}')">&times;</button>
-                    <h4>${c.country}</h4>
-                    <div class="compare-overall">${c.overall.toFixed(3)}</div>
-                    <div class="compare-dims">
-                        <div class="compare-dim-row"><span>Economic</span><span class="val">${c.economic.score.toFixed(3)}</span></div>
-                        <div class="compare-dim-row"><span>Regulatory</span><span class="val">${c.regulatory.score.toFixed(3)}</span></div>
-                        <div class="compare-dim-row"><span>Technical</span><span class="val">${c.technical.score.toFixed(3)}</span></div>
-                    </div>
-                </div>`;
-        });
-        html += '</div></div>';
-        content.innerHTML = html;
-
-        // Draw overlaid radar
-        drawCompareRadar(compareList, compareColors);
-    }
-
-    function drawCompareRadar(ids, colors) {
-        const container = document.getElementById('compareRadar');
-        if (!container) return;
-        const size = 220, cx = size / 2, cy = size / 2, r = 80;
-        const dims = ['Economic', 'Regulatory', 'Technical'];
-        const n = dims.length;
-        const angleSlice = (Math.PI * 2) / n;
-
-        let svgHtml = `<svg width="${size}" height="${size}" viewBox="0 0 ${size} ${size}">`;
-
-        // Grid rings
-        [0.25, 0.5, 0.75, 1.0].forEach(level => {
-            let points = [];
-            for (let i = 0; i < n; i++) {
-                const angle = angleSlice * i - Math.PI / 2;
-                points.push(`${cx + r * level * Math.cos(angle)},${cy + r * level * Math.sin(angle)}`);
-            }
-            svgHtml += `<polygon points="${points.join(' ')}" fill="none" stroke="#e0e0e0" stroke-width="1"/>`;
-        });
-
-        // Axis lines
-        for (let i = 0; i < n; i++) {
-            const angle = angleSlice * i - Math.PI / 2;
-            svgHtml += `<line x1="${cx}" y1="${cy}" x2="${cx + r * Math.cos(angle)}" y2="${cy + r * Math.sin(angle)}" stroke="#ddd" stroke-width="1"/>`;
-        }
-
-        // Data polygons (one per country)
-        ids.forEach((id, idx) => {
-            const c = dataById[id];
-            if (!c) return;
-            const scores = [c.economic.score, c.regulatory.score, c.technical.score];
-            let points = [];
-            for (let i = 0; i < n; i++) {
-                const angle = angleSlice * i - Math.PI / 2;
-                points.push(`${cx + r * scores[i] * Math.cos(angle)},${cy + r * scores[i] * Math.sin(angle)}`);
-            }
-            const color = colors[idx];
-            svgHtml += `<polygon points="${points.join(' ')}" fill="${color}22" stroke="${color}" stroke-width="2"/>`;
-
-            // Dots
-            for (let i = 0; i < n; i++) {
-                const angle = angleSlice * i - Math.PI / 2;
-                const dx = cx + r * scores[i] * Math.cos(angle);
-                const dy = cy + r * scores[i] * Math.sin(angle);
-                svgHtml += `<circle cx="${dx}" cy="${dy}" r="4" fill="${color}" stroke="#fff" stroke-width="1.5"/>`;
-            }
-        });
-
-        // Labels
-        for (let i = 0; i < n; i++) {
-            const angle = angleSlice * i - Math.PI / 2;
-            const lx = cx + (r + 22) * Math.cos(angle);
-            const ly = cy + (r + 22) * Math.sin(angle);
-            const anchor = Math.abs(Math.cos(angle)) < 0.1 ? 'middle' : Math.cos(angle) > 0 ? 'start' : 'end';
-            svgHtml += `<text x="${lx}" y="${ly}" text-anchor="${anchor}" dominant-baseline="middle" font-family="Inter,sans-serif" font-size="11" fill="#5a6a7a" font-weight="500">${dims[i]}</text>`;
-        }
-
-        svgHtml += '</svg>';
-        container.innerHTML = svgHtml;
-    }
-
-    function removeCompare(id) {
-        compareList = compareList.filter(x => x !== id);
-        updateMapHighlights();
-        renderComparePanel();
-    }
-
-    // ========================================
-    // SEARCH & FILTER
-    // ========================================
-    const searchInput = document.getElementById('searchInput');
-    const regionFilter = document.getElementById('regionFilter');
-
-    searchInput.addEventListener('input', () => {
-        searchQuery = searchInput.value.trim().toLowerCase();
-        updateMapHighlights();
-    });
-
-    regionFilter.addEventListener('change', () => {
-        activeRegion = regionFilter.value;
-        updateMapHighlights();
-    });
-
-    function updateMapHighlights() {
-        if (!countryPaths) return;
-        countryPaths
-            .classed('highlighted', d => {
-                if (!searchQuery) return false;
-                const name = (countryNames[String(d.id)] || "").toLowerCase();
-                return name.includes(searchQuery) && dataById[String(d.id)];
-            })
-            .classed('compare-selected', d => compareList.includes(String(d.id)))
-            .classed('dimmed', d => {
-                const id = String(d.id);
-                const data = dataById[id];
-                // Dim if region filter active and country not in region
-                if (activeRegion !== 'all' && data && data.region !== activeRegion) return true;
-                // Dim if search active and doesn't match
-                if (searchQuery && data) {
-                    const name = data.country.toLowerCase();
-                    if (!name.includes(searchQuery)) return true;
-                }
-                return false;
-            });
-    }
-
-    // ========================================
     // LOAD & RENDER MAP
     // ========================================
     let countryPaths;
@@ -1922,247 +1518,6 @@
         if (target) target.click();
     }
 
-    // ========================================
-    // VIEW TOGGLE (Map vs Scatter)
-    // ========================================
-    const mapSection = document.querySelector('.map-section');
-    const scatterSection = document.getElementById('scatterSection');
-
-    document.querySelectorAll('.view-btn').forEach(btn => {
-        btn.addEventListener('click', function() {
-            document.querySelector('.view-btn.active').classList.remove('active');
-            this.classList.add('active');
-            const view = this.dataset.view;
-            if (view === 'scatter') {
-                mapSection.style.display = 'none';
-                scatterSection.classList.add('visible');
-                renderScatter();
-            } else {
-                mapSection.style.display = '';
-                scatterSection.classList.remove('visible');
-            }
-        });
-    });
-
-    // ========================================
-    // SCATTER / BUBBLE CHART
-    // ========================================
-    const regionColors = {
-        asia: '#1a6b7a',
-        europe: '#5ba8b5',
-        americas: '#c06030',
-        africa: '#2e5fa1',
-        middleeast: '#9b5a30'
-    };
-    const regionLabels = {
-        asia: 'Asia',
-        europe: 'Europe',
-        americas: 'Americas',
-        africa: 'Africa',
-        middleeast: 'Middle East'
-    };
-
-    let scatterRendered = false;
-
-    function renderScatter() {
-        if (scatterRendered) return;
-        scatterRendered = true;
-
-        const container = document.getElementById('scatterChart');
-        const margin = { top: 20, right: 30, bottom: 50, left: 55 };
-        const w = 700, h = 420;
-        const innerW = w - margin.left - margin.right;
-        const innerH = h - margin.top - margin.bottom;
-
-        const svg = d3.select(container).append('svg')
-            .attr('viewBox', `0 0 ${w} ${h}`)
-            .attr('preserveAspectRatio', 'xMidYMid meet');
-
-        const g = svg.append('g')
-            .attr('transform', `translate(${margin.left},${margin.top})`);
-
-        const x = d3.scaleLinear().domain([0.15, 0.80]).range([0, innerW]);
-        const y = d3.scaleLinear().domain([0.25, 1.0]).range([innerH, 0]);
-        const sizeScale = d3.scaleSqrt().domain([0, 0.85]).range([5, 35]);
-
-        // Grid lines
-        g.append('g')
-            .attr('transform', `translate(0,${innerH})`)
-            .call(d3.axisBottom(x).ticks(6).tickFormat(d3.format('.2f')))
-            .call(g => g.select('.domain').attr('stroke', '#ddd'))
-            .call(g => g.selectAll('.tick line').attr('stroke', '#eee').clone()
-                .attr('y2', -innerH).attr('stroke', '#f0f0f0'));
-
-        g.append('g')
-            .call(d3.axisLeft(y).ticks(6).tickFormat(d3.format('.2f')))
-            .call(g => g.select('.domain').attr('stroke', '#ddd'))
-            .call(g => g.selectAll('.tick line').attr('stroke', '#eee').clone()
-                .attr('x2', innerW).attr('stroke', '#f0f0f0'));
-
-        // Axis labels
-        svg.append('text')
-            .attr('x', w / 2).attr('y', h - 6)
-            .attr('text-anchor', 'middle')
-            .attr('font-family', 'Inter, sans-serif')
-            .attr('font-size', '12px')
-            .attr('fill', '#7a8a9a')
-            .text('Economic Adoption Score');
-
-        svg.append('text')
-            .attr('transform', `rotate(-90)`)
-            .attr('x', -h / 2).attr('y', 16)
-            .attr('text-anchor', 'middle')
-            .attr('font-family', 'Inter, sans-serif')
-            .attr('font-size', '12px')
-            .attr('fill', '#7a8a9a')
-            .text('Regulatory Clarity Score');
-
-        // Bubbles
-        const bubbles = g.selectAll('g.bubble')
-            .data(countries)
-            .join('g')
-            .attr('class', 'bubble')
-            .attr('transform', d => `translate(${x(d.economic.score)},${y(d.regulatory.score)})`)
-            .style('cursor', 'pointer')
-            .on('click', (event, d) => showDetailModal(d))
-            .on('mouseover', function(event, d) {
-                d3.select(this).select('circle').attr('stroke-width', 3).attr('stroke', '#333');
-                showTooltip(event, { id: d.id });
-            })
-            .on('mousemove', function(event) { positionTooltip(event); })
-            .on('mouseout', function() {
-                d3.select(this).select('circle').attr('stroke-width', 1.5).attr('stroke', '#fff');
-                hideTooltip();
-            });
-
-        bubbles.append('circle')
-            .attr('r', d => sizeScale(d.technical.score))
-            .attr('fill', d => regionColors[d.region] || '#999')
-            .attr('fill-opacity', 0.7)
-            .attr('stroke', '#fff')
-            .attr('stroke-width', 1.5);
-
-        bubbles.append('text')
-            .attr('dy', d => -sizeScale(d.technical.score) - 5)
-            .attr('text-anchor', 'middle')
-            .attr('font-family', 'Inter, sans-serif')
-            .attr('font-size', '10px')
-            .attr('fill', '#5a6a7a')
-            .attr('font-weight', '500')
-            .text(d => d.country.length > 12 ? d.country.slice(0, 10) + '..' : d.country);
-
-        // Legend
-        const legendContainer = document.getElementById('scatterLegend');
-        let legendHtml = '';
-        Object.keys(regionColors).forEach(key => {
-            legendHtml += `<div class="scatter-legend-item"><div class="scatter-legend-dot" style="background:${regionColors[key]}"></div>${regionLabels[key]}</div>`;
-        });
-        legendHtml += '<div class="scatter-legend-item" style="margin-left:16px;"><span style="opacity:0.6;">Bubble size = Technical score</span></div>';
-        legendContainer.innerHTML = legendHtml;
-    }
-
-    // ========================================
-    // EXPORT: PNG
-    // ========================================
-    function exportPNG() {
-        const target = document.querySelector('.view-btn.active').dataset.view === 'scatter'
-            ? document.querySelector('.scatter-wrapper')
-            : document.querySelector('.map-wrapper');
-        showExportToast('Generating image...');
-        html2canvas(target, { backgroundColor: '#fff', scale: 2 }).then(canvas => {
-            const link = document.createElement('a');
-            link.download = 'blockchain-index-map.png';
-            link.href = canvas.toDataURL('image/png');
-            link.click();
-            showExportToast('PNG downloaded!');
-        }).catch(() => {
-            showExportToast('PNG export failed');
-        });
-    }
-
-    // ========================================
-    // EXPORT: CSV
-    // ========================================
-    function exportCSV() {
-        const headers = ['Rank','Country','Region','Overall','Economic','Regulatory','Reg. Label','Technical','Tech Label','Ownership','Volume','Remit/Capita','Chainalysis Rank','Key Driver'];
-        const sorted = [...countries].sort((a, b) => b.overall - a.overall);
-        let csv = headers.join(',') + '\n';
-        sorted.forEach((c, i) => {
-            const row = [
-                i + 1,
-                '"' + c.country + '"',
-                c.region,
-                c.overall.toFixed(3),
-                c.economic.score.toFixed(3),
-                c.regulatory.score.toFixed(3),
-                c.regulatory.label,
-                c.technical.score.toFixed(3),
-                c.technical.label,
-                '"' + c.economic.ownership + '"',
-                '"' + c.economic.volume + '"',
-                '"' + c.economic.remitCapita + '"',
-                c.economic.chainalysisRank,
-                '"' + c.economic.keyDriver + '"'
-            ];
-            csv += row.join(',') + '\n';
-        });
-        const blob = new Blob([csv], { type: 'text/csv' });
-        const link = document.createElement('a');
-        link.download = 'blockchain-adaptability-index.csv';
-        link.href = URL.createObjectURL(blob);
-        link.click();
-        URL.revokeObjectURL(link.href);
-        showExportToast('CSV downloaded!');
-    }
-
-    // ========================================
-    // EXPORT: Share Link
-    // ========================================
-    function copyShareLink() {
-        const url = window.location.origin + window.location.pathname + (activeDim !== 'overall' ? '#' + activeDim : '');
-        navigator.clipboard.writeText(url).then(() => {
-            showExportToast('Link copied to clipboard!');
-        }).catch(() => {
-            // Fallback
-            const input = document.createElement('input');
-            input.value = url;
-            document.body.appendChild(input);
-            input.select();
-            document.execCommand('copy');
-            document.body.removeChild(input);
-            showExportToast('Link copied to clipboard!');
-        });
-    }
-
-    function showExportToast(msg) {
-        const toast = document.getElementById('exportToast');
-        toast.textContent = msg;
-        toast.classList.add('visible');
-        setTimeout(() => toast.classList.remove('visible'), 2500);
-    }
-
-    // ========================================
-    // DIMENSION SWITCH ENHANCEMENT — pulse on countries
-    // ========================================
-    const origDimTabHandler = document.querySelectorAll(".dim-tab");
-    origDimTabHandler.forEach(tab => {
-        tab.addEventListener("click", function() {
-            // After the main handler runs, pulse the top-ranked country
-            if (countryPaths) {
-                const sorted = [...countries].sort((a, b) => getScore(b) - getScore(a));
-                const topId = sorted[0].id;
-                countryPaths.each(function(d) {
-                    if (String(d.id) === topId) {
-                        d3.select(this)
-                            .transition().duration(200)
-                            .attr('stroke-width', 3).attr('stroke', '#ff6b35')
-                            .transition().duration(600)
-                            .attr('stroke-width', 0.4).attr('stroke', '#ffffff');
-                    }
-                });
-            }
-        });
-    });
     </script>
 </body>
 </html>

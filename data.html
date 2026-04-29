@@ -340,11 +340,11 @@
     <section class="data-section">
         <div class="section-header">
             <h2>Technical Infrastructure Score</h2>
-            <p>Five continuous pillars measured per 100k internet users, aggregated via weighted geometric mean (v2). Near-zero performance on any pillar pulls the full score toward zero.</p>
+            <p>Five continuous pillars measured per 100k internet users, aggregated via weighted geometric mean. Near-zero performance on any pillar pulls the full score toward zero.</p>
         </div>
 
         <div class="formula-card">
-            <h3>Scoring Formula &mdash; Version 2 <span style="font-size:0.78rem;font-weight:400;color:#7a8a9a;">(Weighted Geometric Mean, Per-Capita Adjusted)</span></h3>
+            <h3>Scoring Formula <span style="font-size:0.78rem;font-weight:400;color:#7a8a9a;">(Weighted Geometric Mean, Per-Capita Adjusted)</span></h3>
             <div class="formula-box">Technical Score = BTC<sup>0.25</sup> &times; ETH<sup>0.25</sup> &times; Mining<sup>0.15</sup> &times; LN<sup>0.20</sup> &times; Enabling<sup>0.15</sup></div>
             <div class="formula-box" style="font-size:0.80rem;">Each pillar (except Enabling) = min(1, ln(nodes_per_100k_internet_users + 1) / ln(ceiling + 1))</div>
             <div class="rating-grid">
@@ -414,7 +414,7 @@
                 <li><strong>Internet penetration &amp; speed:</strong> ITU / <a href="https://saily.com/blog/internet-connectivity-index/" target="_blank" rel="noopener" style="color:#0a4c6a;">Speedtest Global Index 2025</a></li>
                 <li><strong>Electricity access:</strong> World Bank / <a href="https://trackingsdg7.esmap.org" target="_blank" rel="noopener" style="color:#0a4c6a;">Tracking SDG7 Report</a></li>
                 <li><strong>Methodology basis:</strong> OECD Handbook on Composite Indicators (geometric mean); Chainalysis Global Adoption Index (internet-user denominator)</li>
-                <li><strong>v2 key findings:</strong> India drops to Nascent (0.060) &mdash; 759M internet users makes per-capita node density tiny. UK is Advanced not a leader &mdash; near-zero mining pulls geometric mean down. Ethiopia drops from Emerging to Nascent: 2.6% mining cannot compensate for near-zero nodes.</li>
+                <li><strong>Key findings:</strong> India drops to Nascent (0.060) &mdash; 759M internet users makes per-capita node density tiny. UK is Advanced, not a leader &mdash; near-zero mining pulls the geometric mean down. Ethiopia falls into Nascent: 2.6% mining cannot compensate for near-zero nodes.</li>
             </ul>
         </div>
     </section>
@@ -427,7 +427,7 @@
     </div>
 
     <script>
-    // v2 Technical Infrastructure Data
+    // Technical Infrastructure Data
     // Pillar scores are continuous 0-1 (log-scaled per 100k internet users)
     // Composite = weighted geometric mean
     const techData = [
