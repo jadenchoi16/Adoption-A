@@ -127,22 +127,35 @@
         /* Hero */
         .hero {
             max-width: 1000px;
-            margin: 0 auto 36px;
+            margin: 0 auto 18px;
             padding: 0 28px;
         }
         .hero-card {
             border-radius: 18px;
             overflow: hidden;
-            background: linear-gradient(135deg, #0a3d62 0%, #1a6b7a 50%, #5ba8b5 100%);
             padding: 48px;
             position: relative;
+            background-color: #0a3d62;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            color: #fff;
+            min-height: 220px;
         }
         .hero-card::before {
             content: '';
             position: absolute;
             top: 0; right: 0; bottom: 0; left: 0;
-            background: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.06'/%3E%3C/svg%3E");
-            opacity: 0.3;
+            background:
+                linear-gradient(135deg, rgba(8,30,50,0.78) 0%, rgba(8,30,50,0.55) 55%, rgba(8,30,50,0.85) 100%);
+            pointer-events: none;
+        }
+        .hero-card::after {
+            content: '';
+            position: absolute;
+            top: 0; right: 0; bottom: 0; left: 0;
+            background: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.05'/%3E%3C/svg%3E");
+            opacity: 0.5;
             pointer-events: none;
         }
         .hero-top {
@@ -152,6 +165,7 @@
             flex-wrap: wrap;
             gap: 20px;
             position: relative;
+            z-index: 1;
         }
         .hero-left h1 {
             font-family: 'Source Serif 4', Georgia, serif;
@@ -159,20 +173,27 @@
             font-weight: 700;
             color: #fff;
             margin-bottom: 4px;
+            text-shadow: 0 2px 14px rgba(0,0,0,0.45);
         }
         .hero-rank {
             display: inline-block;
-            background: rgba(255,255,255,0.2);
+            background: rgba(0,0,0,0.42);
             color: #fff;
             padding: 4px 14px;
             border-radius: 6px;
             font-size: 0.85rem;
             font-weight: 600;
             backdrop-filter: blur(4px);
+            border: 1px solid rgba(255,255,255,0.18);
         }
         .hero-right {
             text-align: center;
             position: relative;
+            background: rgba(0,0,0,0.32);
+            padding: 18px 28px;
+            border-radius: 12px;
+            backdrop-filter: blur(6px);
+            border: 1px solid rgba(255,255,255,0.16);
         }
         .hero-score-label {
             font-size: 0.72rem;
@@ -229,6 +250,65 @@
             white-space: nowrap;
         }
         .share-toast.visible { opacity: 1; }
+
+        /* What this score means */
+        .meaning-section {
+            max-width: 1000px;
+            margin: 0 auto 32px;
+            padding: 0 28px;
+        }
+        .meaning-card {
+            background: #fff;
+            border-radius: 14px;
+            padding: 28px 32px;
+            box-shadow: 0 2px 14px rgba(0,0,0,0.04);
+            border: 1px solid #ebebeb;
+            border-left: 4px solid #0a4c6a;
+        }
+        .meaning-eyebrow {
+            display: inline-block;
+            font-size: 0.7rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #0a4c6a;
+            background: #eef5fa;
+            padding: 4px 10px;
+            border-radius: 4px;
+            margin-bottom: 12px;
+        }
+        .meaning-headline {
+            font-family: 'Source Serif 4', Georgia, serif;
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #1a2a3a;
+            margin-bottom: 10px;
+            line-height: 1.35;
+        }
+        .meaning-context {
+            font-size: 0.95rem;
+            color: #3c4d5e;
+            line-height: 1.65;
+            margin-bottom: 12px;
+        }
+        .meaning-context strong { color: #0a3d62; }
+        .meaning-takeaway {
+            margin-top: 14px;
+            padding: 14px 18px;
+            background: #f8f7f4;
+            border-radius: 8px;
+            font-size: 0.92rem;
+            color: #2c3e50;
+            line-height: 1.6;
+        }
+        .meaning-takeaway strong {
+            color: #0a3d62;
+            display: block;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            margin-bottom: 4px;
+        }
 
         /* Radar section */
         .radar-section {
@@ -496,9 +576,12 @@
         }
 
         @media (max-width: 768px) {
-            .hero-card { padding: 32px 24px; }
+            .hero-card { padding: 32px 24px; min-height: 0; }
             .hero-left h1 { font-size: 1.8rem; }
             .hero-score { font-size: 2.4rem; }
+            .hero-right { padding: 14px 20px; }
+            .meaning-card { padding: 22px 22px; }
+            .meaning-headline { font-size: 1.1rem; }
             .radar-card { flex-direction: column; padding: 24px; }
             .radar-chart-container { flex: none; }
             .dimension-cards { grid-template-columns: 1fr; min-width: auto; }
@@ -650,6 +733,119 @@
             narrative: "Ethiopia is a paradox: hostile regulation and the worst internet access in the index (17.7%) coexist with 2.6% of global Bitcoin mining hashrate, powered by cheap hydroelectric energy from the Grand Ethiopian Renaissance Dam. This makes Ethiopia a top-10 mining country globally despite having almost no crypto adoption, regulation, or broader digital infrastructure." }
     ];
 
+    // ISO 3166-1 numeric -> alpha-2 (for flag CDN)
+    const isoMap = {
+        "704": "vn", "804": "ua", "356": "in", "608": "ph", "566": "ng",
+        "360": "id", "840": "us", "862": "ve", "586": "pk",  "76": "br",
+         "32": "ar", "764": "th", "643": "ru", "792": "tr", "826": "gb",
+        "410": "kr", "392": "jp",  "50": "bd", "887": "ye", "231": "et"
+    };
+
+    // Country-specific interpretation: how to read this country's score in the
+    // bigger context of the project (the conditional-regulation thesis).
+    const meanings = {
+        "Vietnam": {
+            headline: "The clearest case of adoption running ahead of regulation.",
+            takeaway: "Vietnam shows that when economic conditions push citizens toward crypto (currency stress, remittance corridors, a young online population), demand emerges with or without legal infrastructure. It is a useful model for what other Southeast Asian countries may look like before their regulators catch up."
+        },
+        "Ukraine": {
+            headline: "The best-balanced country in the index, under the worst circumstances.",
+            takeaway: "Active conflict and currency stress drove organic demand; rather than fight it, the government wrote licensing and tax rules around it. Ukraine is the strongest piece of evidence in the dataset that comprehensive regulation and high adoption can coexist when they are responding to the same underlying need."
+        },
+        "India": {
+            headline: "The biggest crypto market by volume is not the most ready by per-capita penetration.",
+            takeaway: "India ranks #1 across every Chainalysis sub-index but only #7 in our composite economic score, because population scale dilutes per-capita activity. A 30% punitive tax and the absence of DeFi recognition keep regulatory clarity capped. India is a reminder that aggregate adoption rankings can mislead anyone planning country-level strategy."
+        },
+        "Philippines": {
+            headline: "The remittance-driven adoption playbook, executed cleanly.",
+            takeaway: "A massive overseas-worker remittance corridor ($341/capita) plus weak retail banking produced real consumer demand, and the BSP responded with licensing rather than prohibition. The Philippines is the practical template for any country whose primary crypto use case is cross-border payments."
+        },
+        "Nigeria": {
+            headline: "Africa's clearest test case for &lsquo;adoption defeats prohibition.&rsquo;",
+            takeaway: "Nigeria banned crypto banking in 2021, P2P trading kept growing, and the ban was reversed in 2023. Combined with a #3 global DeFi rank, Nigeria is one of the strongest pieces of evidence that restriction does not reduce demand when financial exclusion is the underlying driver."
+        },
+        "Indonesia": {
+            headline: "A surprising mining state with selective consumer adoption.",
+            takeaway: "Indonesia delivers a top-5 global DeFi rank and 2.1% of global Bitcoin mining hashrate from cheap energy, while ownership remains moderate. Treating crypto as a commodity (not a currency) has given it a usable, if narrow, regulatory framework."
+        },
+        "United States": {
+            headline: "The only developed economy in the top 5 for adoption.",
+            takeaway: "The US wins on infrastructure, hosting 37.5% of global Bitcoin mining and the most BTC, ETH, and Lightning nodes of any country, and on raw market scale ($76.6B daily exchange volume). What holds it back from the top of the regulatory dimension is the still-unresolved status of stablecoin and DeFi legislation. The US is the cleanest example of how legal ambiguity and deep markets can coexist."
+        },
+        "Venezuela": {
+            headline: "The clearest currency-substitute case in the world.",
+            takeaway: "10.3% of Venezuelans own crypto, more than Japan, South Korea, or the United Kingdom, despite no infrastructure, no regulatory framework, and active hyperinflation. USDT is functionally a parallel dollar. Venezuela is the strongest single argument that demand follows necessity, not policy."
+        },
+        "Pakistan": {
+            headline: "Necessity-driven adoption with no regulation in place.",
+            takeaway: "Pakistan ranks #3 on Chainalysis with a top-3 retail and institutional CEX presence, while still having no stablecoin law, no DeFi recognition, and only ambiguous overall guidance. It is one of the most attractive corridors for stablecoin remittance products and one of the riskiest jurisdictions to deploy them in."
+        },
+        "Brazil": {
+            headline: "The model for how an emerging market can regulate cleanly without killing adoption.",
+            takeaway: "Brazil is tied with Ukraine for the highest regulatory clarity score in the index and still ranks #5 on Chainalysis. Clear tax treatment, licensed exchanges, and banking access for crypto businesses make it the most legally certain crypto market in Latin America, and the practical reference design for the rest of the region."
+        },
+        "Argentina": {
+            headline: "Persistent currency crisis is enough to drive adoption even without recognition.",
+            takeaway: "Despite ranking last on Chainalysis, Argentina has ~9.7% crypto ownership, the highest Lightning Network density in Latin America, and a generation accustomed to keeping savings out of pesos. Argentina is the case study for how everyday users build their own infrastructure when official rails are unstable."
+        },
+        "Thailand": {
+            headline: "Comprehensive regulation that did not unlock the kind of adoption that was expected.",
+            takeaway: "Thailand has one of the cleanest licensing and tax frameworks in Asia but weak Chainalysis CEX rankings. The implication is that activity is happening in informal or P2P channels that the framework does not capture, a useful warning that regulating exchanges is not the same as regulating adoption."
+        },
+        "Russia": {
+            headline: "Sanctions and cheap energy made Russia a top mining nation almost regardless of policy.",
+            takeaway: "16.4% of global Bitcoin hashrate sits in Russia, second only to the US. Sanctions exposure has made crypto an attractive alternative payment channel, while stablecoin and DeFi rules remain absent. Russia is a reminder that geopolitics and energy economics can shape adoption more than any regulator."
+        },
+        "Turkey": {
+            headline: "The trader-country profile: huge volume relative to GDP, moderate ownership.",
+            takeaway: "Persistent Lira instability fuels $6B in daily exchange volume despite only 5.6% ownership. Turkey shows what happens when a population uses crypto primarily as a hedge rather than as a payment system: high CEX/GDP, narrow user base, ongoing regulatory friction."
+        },
+        "United Kingdom": {
+            headline: "The clearest case of regulation without economic need.",
+            takeaway: "The UK has the highest per-capita BTC and Lightning Network node density in the index and one of the strongest regulatory frameworks, yet consumer adoption sits below most developing economies. It pairs with Japan as the project's twin example that legal clarity does not, on its own, produce users."
+        },
+        "South Korea": {
+            headline: "The world&rsquo;s most concentrated speculative market.",
+            takeaway: "South Korea has the highest CEX-to-GDP ratio in the world ($82.8B daily volume), driven by Upbit and Bithumb, but only 4.1% of citizens own crypto. The lesson is that aggregate volume can hide a thin user base when policy concentrates trading rather than spreading access."
+        },
+        "Japan": {
+            headline: "The exhibit A of the project's thesis: comprehensive regulation does not guarantee adoption.",
+            takeaway: "Japan has the highest regulatory clarity score in the index (0.944) and is the only country to score a 3 on stablecoin legislation, yet ranks 18th in economic adoption. This is the single sharpest piece of evidence that &lsquo;more regulation = more users&rsquo; is wrong."
+        },
+        "Bangladesh": {
+            headline: "Hostile regulation has not stopped underground adoption.",
+            takeaway: "Crypto is effectively banned in Bangladesh, yet it still ranks #14 on Chainalysis, driven by $131/capita in remittances from Gulf-state diaspora. Bangladesh is one of the strongest pieces of evidence that prohibition removes visibility, not demand."
+        },
+        "Yemen": {
+            headline: "The floor of the index: conflict, collapse, and hostility combined.",
+            takeaway: "Yemen has the lowest ownership rate (1.0%), hostile regulation, almost no infrastructure, and an active conflict. Yet remittance flows still exceed $110/capita, hinting at meaningful underground use. Yemen is included as the boundary condition: it shows what the bottom of every dimension looks like at once."
+        },
+        "Ethiopia": {
+            headline: "Mining without adoption: a structural anomaly worth understanding.",
+            takeaway: "Ethiopia has hostile regulation, the worst internet access in the index, and almost no consumer adoption. It also produces 2.6% of global Bitcoin hashrate, powered by hydro from the Grand Ethiopian Renaissance Dam. Ethiopia is a reminder that crypto's three pillars (economy, regulation, infrastructure) do not have to move together."
+        }
+    };
+
+    // Strongest / weakest dimension by rank, used by the meaning section
+    function dimRanks(c) {
+        const dims = [
+            { key: 'economic', label: 'Economic Adoption', score: c.economic.score, rank: c.economic.rank },
+            { key: 'regulatory', label: 'Regulatory Clarity', score: c.regulatory.score, rank: c.regulatory.rank },
+            { key: 'technical', label: 'Technical Infrastructure', score: c.technical.score, rank: c.technical.rank }
+        ];
+        const strong = [...dims].sort((a, b) => a.rank - b.rank)[0];
+        const weak = [...dims].sort((a, b) => b.rank - a.rank)[0];
+        return { strong, weak };
+    }
+
+    function rankBand(rank) {
+        if (rank <= 3) return 'top tier';
+        if (rank <= 7) return 'upper tier';
+        if (rank <= 13) return 'middle of the index';
+        if (rank <= 17) return 'lower tier';
+        return 'bottom tier';
+    }
+
     // Compute scores and ranks
     countries.forEach(c => {
         c.overall = +((c.economic.score + c.regulatory.score + c.technical.score) / 3).toFixed(3);
@@ -679,7 +875,7 @@
                 <a href="map.html">Back to Map</a>
             </div>`;
     } else {
-        document.title = data.country + ' ,  Blockchain Adaptability Index';
+        document.title = data.country + ' | Blockchain Adaptability Index';
         renderCountryPage(data);
     }
 
@@ -693,10 +889,19 @@
             : c.technical.label === 'Developing' ? 'tier-developing-tech'
             : c.technical.label === 'Emerging' ? 'tier-emerging' : 'tier-nascent';
 
+        const iso2 = isoMap[c.id] || '';
+        const flagUrl = iso2 ? `https://flagcdn.com/w1280/${iso2}.png` : '';
+        const heroStyle = flagUrl ? `style="background-image:url('${flagUrl}');"` : '';
+
+        const m = meanings[c.country] || { headline: '', takeaway: '' };
+        const { strong, weak } = dimRanks(c);
+        const band = rankBand(c.overallRank);
+        const contextLine = `An overall score of <strong>${c.overall.toFixed(3)}</strong> places ${c.country} at <strong>#${c.overallRank} of 20</strong>, in the ${band}. Its strongest dimension is <strong>${strong.label}</strong> (#${strong.rank}, score ${strong.score.toFixed(3)}); its weakest is <strong>${weak.label}</strong> (#${weak.rank}, score ${weak.score.toFixed(3)}).`;
+
         let html = `
         <!-- HERO -->
         <section class="hero">
-            <div class="hero-card">
+            <div class="hero-card" ${heroStyle}>
                 <div class="hero-top">
                     <div class="hero-left">
                         <h1>${c.country}</h1>
@@ -713,6 +918,16 @@
                         <div class="hero-score">${c.overall.toFixed(3)}</div>
                     </div>
                 </div>
+            </div>
+        </section>
+
+        <!-- WHAT THIS SCORE MEANS -->
+        <section class="meaning-section">
+            <div class="meaning-card">
+                <div class="meaning-eyebrow">What this score means</div>
+                <div class="meaning-headline">${m.headline}</div>
+                <p class="meaning-context">${contextLine}</p>
+                <div class="meaning-takeaway"><strong>The bigger picture</strong>${m.takeaway}</div>
             </div>
         </section>
 

@@ -346,6 +346,20 @@
             letter-spacing: 0.5px;
             margin-bottom: 4px;
         }
+        .tooltip .score-band-badge {
+            display: inline-block;
+            font-size: 0.7rem;
+            font-weight: 600;
+            padding: 2px 8px;
+            border-radius: 4px;
+            margin-top: 2px;
+            text-transform: uppercase;
+            letter-spacing: 0.4px;
+        }
+        .tooltip .score-band-badge.t-leader { background: #eef5fa; color: #0a4c6a; }
+        .tooltip .score-band-badge.t-strong { background: #e0f2f1; color: #1a6b7a; }
+        .tooltip .score-band-badge.t-developing { background: #fef3e0; color: #9b5a30; }
+        .tooltip .score-band-badge.t-limited { background: #fbe6dc; color: #c06030; }
         .tooltip .sub-scores {
             display: grid;
             grid-template-columns: 1fr 1fr 1fr;
@@ -392,51 +406,112 @@
             font-weight: 500;
         }
 
-        /* === LEGEND (sticky) === */
-        .legend-section {
+        /* === SCORE GUIDE === */
+        .score-guide {
             max-width: 1100px;
             margin: 18px auto 0;
-            padding: 0 24px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 14px;
-            font-size: 0.8rem;
-            color: #7a8a9a;
-            position: sticky;
-            top: 0;
-            background: #fafaf7;
-            z-index: 20;
-            padding-top: 10px;
-            padding-bottom: 10px;
+            padding: 18px 24px;
+            background: #fff;
+            border: 1px solid #ebebeb;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.03);
         }
-        .legend-title {
-            font-weight: 600;
-            color: #5a6a7a;
-            font-size: 0.75rem;
+        .score-guide-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 18px;
+            flex-wrap: wrap;
+        }
+        .score-guide-title {
+            font-size: 0.7rem;
+            font-weight: 700;
+            color: #0a4c6a;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
-            margin-right: 4px;
+            letter-spacing: 1px;
+            margin-bottom: 4px;
+        }
+        .score-guide-desc {
+            font-size: 0.92rem;
+            color: #2c3e50;
+            line-height: 1.5;
+            max-width: 560px;
+        }
+        .score-guide-desc strong { color: #0a3d62; }
+        .score-guide-scale {
+            min-width: 280px;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
         }
         .legend-canvas {
             width: 280px;
-            height: 14px;
-            border-radius: 7px;
+            height: 12px;
+            border-radius: 6px;
             border: 1px solid #ddd;
         }
-        .legend-labels {
-            font-weight: 500;
-            color: #5a6a7a;
-        }
-        .legend-no-data {
-            margin-left: 24px;
+        .legend-labels-row {
             display: flex;
+            justify-content: space-between;
+            font-size: 0.72rem;
+            color: #7a8a9a;
+            font-weight: 500;
+        }
+        .legend-labels-row .legend-end-label {
+            font-size: 0.66rem;
+            color: #9aa5b0;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-top: 2px;
+        }
+        .score-guide-bands {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 8px;
+            margin-top: 14px;
+            padding-top: 14px;
+            border-top: 1px solid #f0ece4;
+        }
+        .score-band {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            padding: 8px 10px;
+            border-radius: 8px;
+            background: #faf9f5;
+            border-left: 3px solid #ccd5dc;
+            font-size: 0.78rem;
+        }
+        .score-band-range {
+            font-family: 'VT323', monospace;
+            font-size: 0.95rem;
+            color: #0a4c6a;
+            font-weight: 600;
+        }
+        .score-band-label {
+            color: #2c3e50;
+            font-weight: 600;
+        }
+        .score-band-detail {
+            color: #7a8a9a;
+            font-size: 0.7rem;
+        }
+        .score-band.band-leader { border-left-color: #0a4c6a; background: #eef5fa; }
+        .score-band.band-strong { border-left-color: #1a6b7a; }
+        .score-band.band-developing { border-left-color: #c89060; }
+        .score-band.band-limited { border-left-color: #c06030; }
+
+        .score-guide-noter {
+            display: inline-flex;
             align-items: center;
             gap: 6px;
+            font-size: 0.75rem;
+            color: #7a8a9a;
+            margin-top: 6px;
         }
-        .legend-no-data .swatch {
-            width: 14px;
-            height: 14px;
+        .score-guide-noter .swatch {
+            width: 12px;
+            height: 12px;
             border-radius: 3px;
             background: #e0e0e0;
             border: 1px solid #ccc;
@@ -815,9 +890,10 @@
             .header h1 { font-size: 1.6rem; }
             .header .subtitle { font-size: 0.84rem; }
             .tooltip { max-width: 280px; padding: 14px 16px; }
-            .legend-canvas { width: 180px; }
-            .legend-no-data { margin-left: 12px; }
-            .legend-title { display: none; }
+            .legend-canvas { width: 100%; max-width: 280px; }
+            .score-guide-top { flex-direction: column; gap: 14px; }
+            .score-guide-bands { grid-template-columns: repeat(2, 1fr); }
+            .score-guide-scale { width: 100%; }
             thead th, tbody td { padding: 8px 8px; font-size: 0.74rem; }
             .score-bar-cell { display: none; }
             .hide-mobile { display: none; }
@@ -883,15 +959,48 @@
         </div>
     </div>
 
-    <!-- LEGEND (sticky) -->
-    <div class="legend-section">
-        <span class="legend-title" id="legend-title">Score</span>
-        <span class="legend-labels" id="legend-min">0.29</span>
-        <canvas id="legend-canvas" class="legend-canvas" width="280" height="14"></canvas>
-        <span class="legend-labels" id="legend-max">0.79</span>
-        <div class="legend-no-data">
-            <div class="swatch"></div>
-            <span>No data</span>
+    <!-- SCORE GUIDE -->
+    <div class="score-guide" id="scoreGuide">
+        <div class="score-guide-top">
+            <div>
+                <div class="score-guide-title" id="guide-title">Overall Score</div>
+                <div class="score-guide-desc" id="guide-desc">
+                    <strong>What you&rsquo;re looking at.</strong> An equal-weighted composite of all three pillars (Economic Adoption, Regulatory Clarity, Technical Infrastructure). All scores are normalized to a <strong>0&ndash;1</strong> scale where higher means a country is better positioned for blockchain adoption on this dimension within our sample of 20 countries.
+                </div>
+                <div class="score-guide-noter">
+                    <span class="swatch"></span>
+                    <span>Grey countries are not in the index, no score available.</span>
+                </div>
+            </div>
+            <div class="score-guide-scale">
+                <canvas id="legend-canvas" class="legend-canvas" width="280" height="12"></canvas>
+                <div class="legend-labels-row">
+                    <span><span id="legend-min">0.25</span><div class="legend-end-label">Lowest in index</div></span>
+                    <span style="text-align:right;"><span id="legend-max">0.80</span><div class="legend-end-label">Highest in index</div></span>
+                </div>
+            </div>
+        </div>
+        <div class="score-guide-bands">
+            <div class="score-band band-leader">
+                <div class="score-band-range">0.70&ndash;1.00</div>
+                <div class="score-band-label">Leader</div>
+                <div class="score-band-detail">Top of the index, exemplifies the dimension.</div>
+            </div>
+            <div class="score-band band-strong">
+                <div class="score-band-range">0.50&ndash;0.70</div>
+                <div class="score-band-label">Strong</div>
+                <div class="score-band-detail">Well-developed, with clear strengths and visible gaps.</div>
+            </div>
+            <div class="score-band band-developing">
+                <div class="score-band-range">0.30&ndash;0.50</div>
+                <div class="score-band-label">Developing</div>
+                <div class="score-band-detail">Real activity but still uneven across sub-indicators.</div>
+            </div>
+            <div class="score-band band-limited">
+                <div class="score-band-range">0.00&ndash;0.30</div>
+                <div class="score-band-label">Limited</div>
+                <div class="score-band-detail">Floor of the index: missing pillars or hostile environment.</div>
+            </div>
         </div>
     </div>
 
@@ -990,7 +1099,7 @@
 
     <!-- TABLE -->
     <div class="table-section">
-        <h2 id="table-title">Country Rankings ,  Overall Score</h2>
+        <h2 id="table-title">Country Rankings &middot; Overall Score</h2>
         <div class="table-wrapper">
             <table>
                 <thead>
@@ -1175,10 +1284,30 @@
     }
 
     const dimMeta = {
-        overall:    { title: "Overall Score",            min: 0.25, max: 0.80, colors: ["#f0f7fa","#7ec8d8","#2e8fa0","#1a5f70","#0a3d50"] },
-        economic:   { title: "Economic Adoption",        min: 0.10, max: 0.85, colors: ["#f0faf4","#86d3a8","#2ebc7a","#1a7a4e","#0d3d28"] },
-        regulatory: { title: "Regulatory Clarity",       min: 0.30, max: 0.95, colors: ["#fef3e0","#f5d6a0","#d4915c","#9b5a30","#5c2d10"] },
-        technical:  { title: "Technical Infrastructure", min: 0.03, max: 0.80, colors: ["#e8f0fe","#a4c8f0","#5b8fd4","#2e5fa1","#143566"] }
+        overall: {
+            title: "Overall Score",
+            min: 0.25, max: 0.80,
+            colors: ["#f0f7fa","#7ec8d8","#2e8fa0","#1a5f70","#0a3d50"],
+            desc: "<strong>What you&rsquo;re looking at.</strong> An equal-weighted composite of all three pillars (Economic Adoption, Regulatory Clarity, Technical Infrastructure). All scores are normalized to a <strong>0&ndash;1</strong> scale where higher means a country is better positioned overall for blockchain adoption within our sample of 20 countries."
+        },
+        economic: {
+            title: "Economic Adoption",
+            min: 0.10, max: 0.85,
+            colors: ["#f0faf4","#86d3a8","#2ebc7a","#1a7a4e","#0d3d28"],
+            desc: "<strong>What you&rsquo;re looking at.</strong> How much real-world crypto activity is happening in the country: ownership rate, exchange volume per GDP, remittances per capita, and Chainalysis CEX/DeFi sub-rankings. Higher = more crypto being used by actual people, not just legal on paper."
+        },
+        regulatory: {
+            title: "Regulatory Clarity",
+            min: 0.30, max: 0.95,
+            colors: ["#fef3e0","#f5d6a0","#d4915c","#9b5a30","#5c2d10"],
+            desc: "<strong>What you&rsquo;re looking at.</strong> How clearly the country has defined its legal framework across six dimensions: stablecoin law, exchange licensing, tax treatment, banking access, enforcement, and DeFi recognition. Higher = more legal certainty for users and businesses; lower = ambiguous, hostile, or absent rules."
+        },
+        technical: {
+            title: "Technical Infrastructure",
+            min: 0.03, max: 0.80,
+            colors: ["#e8f0fe","#a4c8f0","#5b8fd4","#2e5fa1","#143566"],
+            desc: "<strong>What you&rsquo;re looking at.</strong> How robust the country&rsquo;s blockchain network footprint is: BTC and ETH nodes per 100k internet users, Bitcoin mining hashrate share, Lightning Network density, and an enabling-environment factor (electricity, internet speed). Higher = stronger physical / network presence."
+        }
     };
 
     // ========================================
@@ -1235,10 +1364,15 @@
         if (data) {
             const rank = getRank(data);
             const score = getScore(data);
+            let bandClass = 't-limited', bandLabel = 'Limited';
+            if (score >= 0.70) { bandClass = 't-leader'; bandLabel = 'Leader'; }
+            else if (score >= 0.50) { bandClass = 't-strong'; bandLabel = 'Strong'; }
+            else if (score >= 0.30) { bandClass = 't-developing'; bandLabel = 'Developing'; }
             let html = `
                 <h3>${data.country} <span class="rank-badge">#${rank}</span></h3>
                 <div class="score-label">${dimMeta[activeDim].title}</div>
                 <div class="score-line">${score.toFixed(3)}</div>
+                <span class="score-band-badge ${bandClass}">${bandLabel} &middot; ranked ${rank} of 20</span>
                 <div class="sub-scores">
                     <div class="sub-score-item">
                         <div class="sub-score-label">Economic</div>
@@ -1439,7 +1573,10 @@
         const meta = dimMeta[activeDim];
         document.getElementById("legend-min").textContent = meta.min.toFixed(2);
         document.getElementById("legend-max").textContent = meta.max.toFixed(2);
-        document.getElementById("legend-title").textContent = meta.title;
+        const titleEl = document.getElementById("guide-title");
+        const descEl = document.getElementById("guide-desc");
+        if (titleEl) titleEl.textContent = meta.title;
+        if (descEl) descEl.innerHTML = meta.desc;
         const canvas = document.getElementById("legend-canvas");
         const ctx = canvas.getContext("2d");
         for (let i = 0; i < canvas.width; i++) {
@@ -1454,7 +1591,7 @@
     // TABLE
     // ========================================
     function renderTable() {
-        document.getElementById("table-title").innerHTML = `Country Rankings ,  Overall Score`;
+        document.getElementById("table-title").innerHTML = `Country Rankings &middot; ${dimMeta[activeDim].title}`;
 
         const sorted = [...countries].sort((a, b) => b.overall - a.overall);
         const tbody = document.getElementById("table-body");
