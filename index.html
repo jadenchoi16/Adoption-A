@@ -260,7 +260,7 @@
             margin: 0 auto;
             padding: 0 28px 80px;
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
+            grid-template-columns: repeat(3, 1fr);
             gap: 18px;
         }
         .stat-tile {
@@ -572,7 +572,7 @@
         /* === RESPONSIVE === */
         @media (max-width: 900px) {
             .pillars-grid, .findings-grid, .paths-grid { grid-template-columns: 1fr; }
-            .stats-strip { grid-template-columns: repeat(2, 1fr); }
+            .stats-strip { grid-template-columns: 1fr; }
             .hero { padding: 56px 24px 44px; }
             .hero h1 { font-size: 2.4rem; }
             .hero p.lede { font-size: 1rem; }
@@ -646,10 +646,6 @@
         <div class="stat-tile">
             <div class="num">15+</div>
             <div class="label">Indicators</div>
-        </div>
-        <div class="stat-tile">
-            <div class="num">8</div>
-            <div class="label">Data sources</div>
         </div>
     </div>
 
