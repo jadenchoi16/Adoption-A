@@ -261,6 +261,18 @@
             stroke: #ff6b35;
             stroke-width: 2;
         }
+        .country-path.is-selected {
+            stroke: #5ba8b5;
+            stroke-width: 2.5;
+        }
+        .country-path.is-selected:hover {
+            stroke: #1a6b7a;
+            stroke-width: 2.8;
+        }
+        .country-path.is-dimmed {
+            opacity: 0.18;
+            transition: opacity 0.2s ease;
+        }
         .border-mesh {
             fill: none;
             stroke: #ffffff;
@@ -1604,6 +1616,16 @@
     // ========================================
     const tooltip = document.getElementById("tooltip");
 
+    // Click-action hint inside the tooltip, varies by mode + selection state.
+    function tooltipHint(id) {
+        if (typeof compareMode !== 'undefined' && compareMode) {
+            if (selectedIds.has(id)) return "Click to remove from compare";
+            if (selectedIds.size >= MAX_COMPARE) return "Compare limit reached (3)";
+            return "Click to add to compare";
+        }
+        return "Click for full details";
+    }
+
     function showTooltip(event, d) {
         const id = String(d.id);
         const data = dataById[id];
@@ -1635,7 +1657,7 @@
                     </div>
                 </div>
                 <div class="key-driver">&ldquo;${data.economic.keyDriver}&rdquo;</div>
-                <div class="click-hint">Click for full details</div>`;
+                <div class="click-hint">${tooltipHint(id)}</div>`;
             tooltip.innerHTML = html;
         } else {
             tooltip.innerHTML = `<h3>${name}</h3><p class="no-data-msg">No data available</p>`;
@@ -1661,13 +1683,36 @@
     document.addEventListener("touchstart", hideTooltip, { passive: true });
 
     // ========================================
-    // COUNTRY CLICK → Detail
+    // COUNTRY CLICK → Detail (or compare-mode toggle)
     // ========================================
     function onCountryClick(event, d) {
         const id = String(d.id);
         const data = dataById[id];
         if (!data) return;
-        showDetailModal(data);
+        if (typeof compareMode !== 'undefined' && compareMode) {
+            toggleSelected(id);
+            // refresh tooltip text in place since the action just changed
+            showTooltip(event, d);
+        } else {
+            showDetailModal(data);
+        }
+    }
+
+    // Apply selection / search styling to the SVG country paths.
+    // Safe to call before the map has loaded; no-ops until countryPaths is set.
+    function updateMapSelection() {
+        if (!countryPaths) return;
+        countryPaths.classed("is-selected", d => selectedIds.has(String(d.id)));
+    }
+    function updateMapSearch() {
+        if (!countryPaths) return;
+        const q = (searchQuery || "").trim().toLowerCase();
+        countryPaths.classed("is-dimmed", d => {
+            if (!q) return false;
+            const data = dataById[String(d.id)];
+            if (!data) return true;
+            return !data.country.toLowerCase().includes(q);
+        });
     }
 
     // ========================================
@@ -1809,6 +1854,10 @@
                 const touch = event.touches[0];
                 showTooltip({ clientX: touch.clientX, clientY: touch.clientY }, d);
             }, { passive: false });
+
+        // Sync any selection / search state set before the map finished loading.
+        updateMapSelection();
+        updateMapSearch();
     });
 
     // ========================================
@@ -1931,6 +1980,7 @@
         searchQuery = e.target.value;
         searchClear.classList.toggle("is-visible", searchQuery.length > 0);
         renderTable();
+        updateMapSearch();
     });
     searchClear.addEventListener("click", () => {
         searchInput.value = "";
@@ -1938,6 +1988,7 @@
         searchClear.classList.remove("is-visible");
         searchInput.focus();
         renderTable();
+        updateMapSearch();
     });
 
     compareToggle.addEventListener("click", () => {
@@ -1950,12 +2001,14 @@
             renderComparePanel();
         }
         renderTable();
+        updateMapSelection();
     });
 
     compareClearBtn.addEventListener("click", () => {
         selectedIds.clear();
         renderComparePanel();
         renderTable();
+        updateMapSelection();
     });
 
     function toggleSelected(id) {
@@ -1967,6 +2020,7 @@
         }
         renderComparePanel();
         renderTable();
+        updateMapSelection();
     }
 
     function renderComparePanel() {
