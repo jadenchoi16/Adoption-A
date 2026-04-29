@@ -8,7 +8,6 @@
     <meta property="og:description" content="Detailed breakdown of blockchain network footprint across 20 countries — nodes, mining hashrate, Lightning Network, and more.">
     <meta property="og:type" content="website">
     <meta name="twitter:card" content="summary_large_image">
-    <script type="module" src="https://unpkg.com/@splinetool/viewer@1.9.82/build/spline-viewer.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -68,77 +67,28 @@
             padding: 0 28px;
         }
         .hero-card {
-            display: flex;
             border-radius: 18px;
             overflow: hidden;
-            background: linear-gradient(135deg, #e8edf2 0%, #dce4ec 50%, #d0dbe6 100%);
-            border: 1px solid #d0d6dc;
+            background: #fff;
+            border: 1px solid #e4e8ec;
             box-shadow: 0 4px 24px rgba(0,0,0,0.06);
-            min-height: 420px;
-            position: relative;
-        }
-
-        /* Spotlight SVG */
-        .spotlight-svg {
-            position: absolute;
-            top: -40%;
-            left: -10%;
-            width: 120%;
-            height: 170%;
-            pointer-events: none;
-            z-index: 1;
-            opacity: 0;
-            animation: spotlightFadeIn 1.5s ease forwards 0.5s;
-        }
-        @keyframes spotlightFadeIn {
-            to { opacity: 1; }
-        }
-
-        .hero-text {
-            flex: 1;
             padding: 48px 40px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
             position: relative;
-            z-index: 2;
         }
-        .hero-text h1 {
+
+        .hero-card h1 {
             font-family: 'Source Serif 4', Georgia, serif;
             font-size: 2.6rem;
             font-weight: 700;
             line-height: 1.15;
             margin-bottom: 16px;
-            background: linear-gradient(to bottom, #1a2a3a, #4a6a8a);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            color: #1a2a3a;
         }
-        .hero-text p {
+        .hero-card p {
             font-size: 0.95rem;
             color: #5a6b7c;
             max-width: 420px;
             line-height: 1.7;
-        }
-        .hero-spline {
-            flex: 1;
-            position: relative;
-            z-index: 2;
-            min-height: 380px;
-        }
-        .hero-spline spline-viewer {
-            width: 100%;
-            height: 100%;
-            display: block;
-        }
-        /* Override Spline's default dark canvas background */
-        .hero-spline spline-viewer::part(canvas) {
-            background: transparent !important;
-        }
-        /* Hide Spline watermark */
-        .hero-spline spline-viewer #logo,
-        .hero-spline spline-viewer a[href*="spline"] {
-            display: none !important;
         }
 
         /* === DATA TABLE SECTION === */
@@ -296,7 +246,7 @@
         .score-bar-fill {
             height: 100%;
             border-radius: 4px;
-            background: linear-gradient(90deg, #6a9bc0, #1a3a5c);
+            background: #1a3a5c;
         }
 
         /* Sources */
@@ -352,10 +302,8 @@
 
         /* Responsive */
         @media (max-width: 768px) {
-            .hero-card { flex-direction: column; min-height: auto; }
-            .hero-text { padding: 32px 24px; }
-            .hero-text h1 { font-size: 1.8rem; }
-            .hero-spline { min-height: 300px; }
+            .hero-card { padding: 32px 24px; }
+            .hero-card h1 { font-size: 1.8rem; }
             thead th, tbody td { padding: 8px 10px; font-size: 0.74rem; }
             .score-bar-cell { display: none; }
             .hide-mobile { display: none; }
@@ -375,41 +323,16 @@
         <span class="nav-title">Blockchain Adaptability Index</span>
     </nav>
 
-    <!-- HERO WITH SPLINE 3D -->
+    <!-- HERO -->
     <section class="hero">
         <div class="hero-card">
-            <!-- Spotlight effect -->
-            <svg class="spotlight-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 3787 2842" fill="none">
-                <g filter="url(#spotlight-filter)">
-                    <ellipse cx="1924.71" cy="273.501" rx="1924.71" ry="273.501"
-                        transform="matrix(-0.822377 -0.568943 -0.568943 0.822377 3631.88 2291.09)"
-                        fill="#8ab4d6" fill-opacity="0.18" />
-                </g>
-                <defs>
-                    <filter id="spotlight-filter" x="0.86" y="0.84" width="3785.16" height="2840.26"
-                        filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
-                        <feFlood flood-opacity="0" result="BackgroundImageFix"/>
-                        <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
-                        <feGaussianBlur stdDeviation="151" result="blur"/>
-                    </filter>
-                </defs>
-            </svg>
-
-            <div class="hero-text">
-                <h1>Technical Infrastructure Data</h1>
-                <p>
-                    Detailed breakdown of each country's blockchain network footprint —
-                    Bitcoin and Ethereum node counts, mining hashrate share, and
-                    Lightning Network / validator participation. This raw data powers
-                    the Technical Infrastructure dimension of our composite index.
-                </p>
-            </div>
-            <div class="hero-spline">
-                <spline-viewer
-                    url="https://prod.spline.design/kZDDjO5HuC9GJUM2/scene.splinecode"
-                    loading="lazy"
-                ></spline-viewer>
-            </div>
+            <h1>Technical Infrastructure Data</h1>
+            <p>
+                Detailed breakdown of each country's blockchain network footprint —
+                Bitcoin and Ethereum node counts, mining hashrate share, and
+                Lightning Network / validator participation. This raw data powers
+                the Technical Infrastructure dimension of our composite index.
+            </p>
         </div>
     </section>
 
@@ -504,36 +427,6 @@
     </div>
 
     <script>
-    // Remove Spline watermark from shadow DOM
-    function hideSplineLogo() {
-        const viewer = document.querySelector('spline-viewer');
-        if (!viewer || !viewer.shadowRoot) return;
-        const logo = viewer.shadowRoot.querySelector('#logo');
-        if (logo) { logo.style.display = 'none'; return; }
-        // Also try anchor links
-        viewer.shadowRoot.querySelectorAll('a').forEach(a => {
-            if (a.href && a.href.includes('spline')) a.style.display = 'none';
-        });
-        // Hide any div overlay after the canvas
-        const canvas = viewer.shadowRoot.querySelector('canvas');
-        if (canvas) {
-            let sib = canvas.nextElementSibling;
-            while (sib) { sib.style.display = 'none'; sib = sib.nextElementSibling; }
-        }
-    }
-    // Retry until the shadow DOM is ready
-    const logoInterval = setInterval(() => {
-        const viewer = document.querySelector('spline-viewer');
-        if (viewer && viewer.shadowRoot) {
-            hideSplineLogo();
-            // Watch for late-added elements
-            const observer = new MutationObserver(hideSplineLogo);
-            observer.observe(viewer.shadowRoot, { childList: true, subtree: true });
-            clearInterval(logoInterval);
-        }
-    }, 500);
-    setTimeout(() => clearInterval(logoInterval), 15000);
-
     // v2 Technical Infrastructure Data
     // Pillar scores are continuous 0-1 (log-scaled per 100k internet users)
     // Composite = weighted geometric mean
